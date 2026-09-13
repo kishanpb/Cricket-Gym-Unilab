@@ -1,5 +1,30 @@
 <h1 align="center"> UniLab </h1>
 
+## Gym-Cricket Integration by Kishan
+
+This public fork is maintained by [Kishan (@kishanpb)](https://github.com/kishanpb)
+for [Gym-Cricket](https://github.com/kishanpb/gym-cricket). It contains the optional
+cricket batting and bowling task configurations proposed in
+[upstream PR #1560](https://github.com/Motphys/UniLab/pull/1560).
+UniLab remains an upstream project; this fork does not imply upstream acceptance.
+
+| Batting: both stances | Bowling: both arms |
+| --- | --- |
+| [![Gym-Cricket batting highlight](https://raw.githubusercontent.com/kishanpb/gym-cricket/28e1f00d882cdf82a22642e907a19a0f05a2581c/release/batting_preview.gif)](https://github.com/kishanpb/gym-cricket/releases/download/v0.1.0/gym_cricket_batting_human_motion.mp4) | [![Gym-Cricket running-bowling highlight](https://raw.githubusercontent.com/kishanpb/gym-cricket/28e1f00d882cdf82a22642e907a19a0f05a2581c/release/bowling_preview.gif)](https://github.com/kishanpb/gym-cricket/releases/download/v0.1.0/gym_cricket_bowling_runup.mp4) |
+
+Click either preview for the full video, including slow-motion replays and misses.
+These are Gym-Cricket's SKRL PPO/A2C checkpoint demos; the contribution here adds
+separate **UniLab PPO** task configurations, not A2C training inside UniLab.
+Batting uses learned motor residuals around a reference swing; bowling uses learned
+release parameters with a scripted run-up. Neither is learned whole-body locomotion.
+
+[Batting task](src/unilab/conf/ppo/task/cricket_motor/mujoco.yaml) ·
+[Bowling task](src/unilab/conf/ppo/task/cricket_bowling/mujoco.yaml) ·
+[Setup and reproduction](https://github.com/kishanpb/gym-cricket/blob/main/integrations/unilab/README.md) ·
+[Related mjbatch fork](https://github.com/kishanpb/mjbatch)
+
+---
+
 <h3 align="center">
 Contract-driven infrastructure for robot learning across physics backends and hardware
 </h3>
