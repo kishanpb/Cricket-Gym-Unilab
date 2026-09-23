@@ -1,0 +1,270 @@
+{
+  "scope": "native_CPU_PPO_pipeline_smoke_not_trained_cricket",
+  "training": {
+    "actual_transitions": 960,
+    "updates": 10,
+    "last_zero_indexed_iteration": 9,
+    "training_seed": 1,
+    "training_hand": "right",
+    "learner_device": "cpu",
+    "torch_threads": 2,
+    "python_cpu_count": 2,
+    "reward": "upright minus action-rate penalty; no cricket reward"
+  },
+  "checkpoint": {
+    "path": "g1_cricket_results/ppo_smoke/model_9.pt",
+    "sha256": "8099c19c03ffd3ba3659ba50e5db89c1c7084ed1446d6a4f2a2366e6557ca19f",
+    "bytes": 335111,
+    "actor_dimensions": [
+      127,
+      64,
+      64,
+      29
+    ]
+  },
+  "task_source_commit": "b2352de40f48afcaf75078120c024f600bc93d6d",
+  "source_hashes": {
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "aa90937c7253238ea8671dd1b9bbba9a7f04aaf4583afacdbdde938818efe212",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "0c9f36901d3cc403ef7ededdfb9bb4ca914d9bdcb6fc67f5a9a25130764f44b1",
+    "src/unilab/conf/ppo/task/g1_cricket_batting/mujoco.yaml": "3891495ddf79f5f72f3d696c29fa6bdea35f0cd9fdf689d2b115e78ce29ed7cd",
+    "scripts/evaluate_g1_cricket_smoke.py": "821d6a03124983da1debb04fb0d7ab82beda7c94e5b324d4cf8811b94ab98698"
+  },
+  "versions": {
+    "torch": "2.8.0",
+    "rsl-rl-lib": "5.0.1",
+    "unilab-rl": "1.2.0",
+    "unisim-core": "1.2.0",
+    "mujoco": "3.11.0"
+  },
+  "evaluation": {
+    "seeds": [
+      4101,
+      4102,
+      4103,
+      4104
+    ],
+    "hands": [
+      "right",
+      "left"
+    ],
+    "policies": [
+      "zero",
+      "ppo"
+    ],
+    "expected_episodes": 16,
+    "action_selection": "deterministic actor mean; zero baseline",
+    "reset_scope": "deterministic reset; seeds do not provide independent initial-state variation",
+    "left_hand_scope": "untrained handedness transfer diagnostic",
+    "contact_scope": "end-of-control sensor snapshots; not complete impact detection",
+    "rows": [
+      {
+        "policy": "zero",
+        "hand": "right",
+        "seed": 4101,
+        "steps": 139,
+        "seconds": 1.3900000000000001,
+        "return": 1.337635451927781,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0258750319480896,
+        "max_raw_action_abs": 0.0
+      },
+      {
+        "policy": "zero",
+        "hand": "right",
+        "seed": 4102,
+        "steps": 139,
+        "seconds": 1.3900000000000001,
+        "return": 1.337635451927781,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0258750319480896,
+        "max_raw_action_abs": 0.0
+      },
+      {
+        "policy": "zero",
+        "hand": "right",
+        "seed": 4103,
+        "steps": 139,
+        "seconds": 1.3900000000000001,
+        "return": 1.337635451927781,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0258750319480896,
+        "max_raw_action_abs": 0.0
+      },
+      {
+        "policy": "zero",
+        "hand": "right",
+        "seed": 4104,
+        "steps": 139,
+        "seconds": 1.3900000000000001,
+        "return": 1.337635451927781,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0258750319480896,
+        "max_raw_action_abs": 0.0
+      },
+      {
+        "policy": "ppo",
+        "hand": "right",
+        "seed": 4101,
+        "steps": 133,
+        "seconds": 1.33,
+        "return": 1.2782915416173637,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.026788175106048584,
+        "max_raw_action_abs": 0.5210562944412231
+      },
+      {
+        "policy": "ppo",
+        "hand": "right",
+        "seed": 4102,
+        "steps": 133,
+        "seconds": 1.33,
+        "return": 1.2782915416173637,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.026788175106048584,
+        "max_raw_action_abs": 0.5210562944412231
+      },
+      {
+        "policy": "ppo",
+        "hand": "right",
+        "seed": 4103,
+        "steps": 133,
+        "seconds": 1.33,
+        "return": 1.2782915416173637,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.026788175106048584,
+        "max_raw_action_abs": 0.5210562944412231
+      },
+      {
+        "policy": "ppo",
+        "hand": "right",
+        "seed": 4104,
+        "steps": 133,
+        "seconds": 1.33,
+        "return": 1.2782915416173637,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.026788175106048584,
+        "max_raw_action_abs": 0.5210562944412231
+      },
+      {
+        "policy": "zero",
+        "hand": "left",
+        "seed": 4101,
+        "steps": 139,
+        "seconds": 1.3900000000000001,
+        "return": 1.337544706184417,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.02488231658935547,
+        "max_raw_action_abs": 0.0
+      },
+      {
+        "policy": "zero",
+        "hand": "left",
+        "seed": 4102,
+        "steps": 139,
+        "seconds": 1.3900000000000001,
+        "return": 1.337544706184417,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.02488231658935547,
+        "max_raw_action_abs": 0.0
+      },
+      {
+        "policy": "zero",
+        "hand": "left",
+        "seed": 4103,
+        "steps": 139,
+        "seconds": 1.3900000000000001,
+        "return": 1.337544706184417,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.02488231658935547,
+        "max_raw_action_abs": 0.0
+      },
+      {
+        "policy": "zero",
+        "hand": "left",
+        "seed": 4104,
+        "steps": 139,
+        "seconds": 1.3900000000000001,
+        "return": 1.337544706184417,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.02488231658935547,
+        "max_raw_action_abs": 0.0
+      },
+      {
+        "policy": "ppo",
+        "hand": "left",
+        "seed": 4101,
+        "steps": 134,
+        "seconds": 1.34,
+        "return": 1.2876869454048574,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.01844048500061035,
+        "max_raw_action_abs": 0.5282091498374939
+      },
+      {
+        "policy": "ppo",
+        "hand": "left",
+        "seed": 4102,
+        "steps": 134,
+        "seconds": 1.34,
+        "return": 1.2876869454048574,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.01844048500061035,
+        "max_raw_action_abs": 0.5282091498374939
+      },
+      {
+        "policy": "ppo",
+        "hand": "left",
+        "seed": 4103,
+        "steps": 134,
+        "seconds": 1.34,
+        "return": 1.2876869454048574,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.01844048500061035,
+        "max_raw_action_abs": 0.5282091498374939
+      },
+      {
+        "policy": "ppo",
+        "hand": "left",
+        "seed": 4104,
+        "steps": 134,
+        "seconds": 1.34,
+        "return": 1.2876869454048574,
+        "fallen": true,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.01844048500061035,
+        "max_raw_action_abs": 0.5282091498374939
+      }
+    ]
+  }
+}

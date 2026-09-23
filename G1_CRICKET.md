@@ -69,3 +69,53 @@ fixture component is 10.52 N and 2.10 Nm. These failed stability diagnostics
 are retained intentionally and are not a learned-policy or force-validation
 success. The next required step is a bounded balance/stance curriculum before
 attempting bat-ball interception, followed by full contact and legality gates.
+
+## Native PPO pipeline smoke
+
+A bounded **10-update / 960-transition** run exercised UniLab's existing
+`unilab.scripts.train_rsl_rl` entrypoint, `uni_rl` integration and RSL-RL PPO,
+not a custom learner. The right-hand task trained with seed 1, four environments,
+24 rollout steps/update, a 127-64-64-29 actor, and CPU thread caps of two.
+`model_9.pt` is the final checkpoint because iteration numbering starts at zero.
+
+[Full evaluation](g1_cricket_results/ppo_smoke/evaluation.json) retains all 16
+declared episodes: PPO and zero control, both hands, seeds 4101-4104. Reset is
+currently deterministic, so changing seeds does not create independent test
+conditions. Left-hand evaluation is an untrained transfer diagnostic.
+
+| Control | Right-hand falls / duration | Left-hand falls / duration |
+| --- | --- | --- |
+| Zero offsets | 4/4, 1.39 s each | 4/4, 1.39 s each |
+| PPO after 960 transitions | 4/4, 1.33 s each | 4/4, 1.34 s each |
+
+No bat strike was detected at the sampled control instants. This is **pipeline
+verification with worse stability than zero control**, not learned cricket.
+No new video is advertised from this checkpoint. The run config, summary,
+final checkpoint and complete evaluation are retained; initial checkpoint,
+TensorBoard events and an irrelevant installed-runtime git snapshot are omitted.
+Task source hashes and the foundation commit in the evaluation are authoritative.
+
+Reproduce from the repository root with Python 3.13, CPU MuJoCo and the existing
+UniLab/uni_rl dependencies installed:
+
+```sh
+export PYTHONPATH=src PYTHON_CPU_COUNT=2
+export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 NUMBA_NUM_THREADS=2
+uv run python -m unilab.scripts.train_rsl_rl \
+  task=g1_cricket_batting/mujoco training.device=cpu training.no_play=true \
+  training.log_dir=g1_cricket_results/ppo_smoke algo.max_iterations=10 \
+  algo.num_envs=4 algo.num_steps_per_env=24 algo.save_interval=10 \
+  env.adaptive_chunk_size=false
+uv run python scripts/evaluate_g1_cricket_smoke.py \
+  --run-dir g1_cricket_results/ppo_smoke
+```
+
+On this machine the verified interpreter was
+`../unilab_submission_checkout/.venv/bin/python`, selected with
+`uv run --no-project --python <interpreter> python ...` for both commands.
+`PYTHON_CPU_COUNT=2` also bounds native worker sizing on this Python 3.13/macOS
+runtime; `env.cpu_ids` is a Linux-only affinity interface and fails on macOS.
+The existing interactive/evaluation entrypoint is
+`unilab.cli.eval_main`, which routes PPO to the same runner's playback loader;
+the retained headless evaluator additionally enumerates every test episode and
+fails instead of falling back to zero actions when a checkpoint is missing.

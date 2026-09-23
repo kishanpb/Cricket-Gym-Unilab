@@ -29,6 +29,9 @@ sensor-timing limits. These are simulated contact loads, not hardware taxels. Th
 next extension is learned cricket on the repository's Unitree G1 model; the current
 videos are not G1 demonstrations.
 
+**G1 work in progress:** [native foundation and PPO pipeline smoke](G1_CRICKET.md).
+All evaluated policies still fall; this is not learned cricket or a new showcase.
+
 ---
 
 <h3 align="center">
