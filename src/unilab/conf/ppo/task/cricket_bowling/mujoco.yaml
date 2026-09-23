@@ -23,3 +23,4 @@ reward:
 env:
   base_seed: ${algo.seed}
   handedness: right
+  contact_telemetry: false

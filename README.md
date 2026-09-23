@@ -23,6 +23,12 @@ release parameters with a scripted run-up. Neither is learned whole-body locomot
 [Setup and reproduction](https://github.com/kishanpb/gym-cricket/blob/main/integrations/unilab/README.md) ·
 [Related mjbatch fork](https://github.com/kishanpb/mjbatch)
 
+**Contact diagnostics:** [force and simulated-touch reporting](CRICKET_CONTACTS.md)
+now includes complete reference-control traces, terminal-reset handling and explicit
+sensor-timing limits. These are simulated contact loads, not hardware taxels. The
+next extension is learned cricket on the repository's Unitree G1 model; the current
+videos are not G1 demonstrations.
+
 ---
 
 <h3 align="center">
