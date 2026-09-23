@@ -1,0 +1,147 @@
+{
+  "scope": "untrained_native_G1_batting_foundation_not_release_evidence",
+  "mujoco_version": "3.11.0",
+  "source_hashes": {
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "0c9f36901d3cc403ef7ededdfb9bb4ca914d9bdcb6fc67f5a9a25130764f44b1",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "aa90937c7253238ea8671dd1b9bbba9a7f04aaf4583afacdbdde938818efe212",
+    "src/unilab/conf/ppo/task/g1_cricket_batting/mujoco.yaml": "3891495ddf79f5f72f3d696c29fa6bdea35f0cd9fdf689d2b115e78ce29ed7cd"
+  },
+  "rows": [
+    {
+      "hand": "right",
+      "control": "zero_position_offset_no_learned_policy",
+      "seed": 4,
+      "num_envs": 2,
+      "steps": 139,
+      "elapsed_seconds": 1.3900000000000001,
+      "terminated": [
+        true,
+        true
+      ],
+      "truncated": [
+        false,
+        false
+      ],
+      "initial_max_penetration_m": 0.0,
+      "contact_sampling": "end_of_control_step_sensor_snapshot",
+      "ball_bat_snapshot_contact": false,
+      "fixture_component_max_abs_N_Nm": [
+        5.41677713394165,
+        6.6773681640625,
+        10.519354820251465,
+        0.5929849743843079,
+        2.097723960876465,
+        0.562450110912323
+      ],
+      "foot_support_snapshot_max_N": [
+        180.85092163085938,
+        279.0777282714844
+      ],
+      "max_soft_joint_limit_excess_rad": 0.0258750319480896,
+      "robot_root": [
+        [
+          0.5896386504173279,
+          0.2556169331073761,
+          0.5313275456428528
+        ],
+        [
+          0.5896386504173279,
+          0.2556169331073761,
+          0.5313275456428528
+        ]
+      ],
+      "bat_center": [
+        [
+          0.22476992011070251,
+          0.06238788738846779,
+          0.3287816047668457
+        ],
+        [
+          0.22476992011070251,
+          0.06238788738846779,
+          0.3287816047668457
+        ]
+      ],
+      "ball": [
+        [
+          -0.4754948914051056,
+          1.7218039735999129e-16,
+          0.03584327548742294
+        ],
+        [
+          -0.4754948914051056,
+          1.7218039735999129e-16,
+          0.03584327548742294
+        ]
+      ]
+    },
+    {
+      "hand": "left",
+      "control": "zero_position_offset_no_learned_policy",
+      "seed": 4,
+      "num_envs": 2,
+      "steps": 139,
+      "elapsed_seconds": 1.3900000000000001,
+      "terminated": [
+        true,
+        true
+      ],
+      "truncated": [
+        false,
+        false
+      ],
+      "initial_max_penetration_m": 0.0,
+      "contact_sampling": "end_of_control_step_sensor_snapshot",
+      "ball_bat_snapshot_contact": false,
+      "fixture_component_max_abs_N_Nm": [
+        5.410897731781006,
+        10.22239875793457,
+        9.112439155578613,
+        0.5878676772117615,
+        1.9611905813217163,
+        0.6044830679893494
+      ],
+      "foot_support_snapshot_max_N": [
+        240.12669372558594,
+        180.87753295898438
+      ],
+      "max_soft_joint_limit_excess_rad": 0.02488231658935547,
+      "robot_root": [
+        [
+          0.5879083275794983,
+          -0.25444450974464417,
+          0.5327461957931519
+        ],
+        [
+          0.5879083275794983,
+          -0.25444450974464417,
+          0.5327461957931519
+        ]
+      ],
+      "bat_center": [
+        [
+          0.22133296728134155,
+          -0.06346375495195389,
+          0.33122146129608154
+        ],
+        [
+          0.22133296728134155,
+          -0.06346375495195389,
+          0.33122146129608154
+        ]
+      ],
+      "ball": [
+        [
+          -0.4754948914051056,
+          1.7218039735999129e-16,
+          0.03584327548742294
+        ],
+        [
+          -0.4754948914051056,
+          1.7218039735999129e-16,
+          0.03584327548742294
+        ]
+      ]
+    }
+  ]
+}
