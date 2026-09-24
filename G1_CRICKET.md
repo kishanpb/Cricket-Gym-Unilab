@@ -433,8 +433,8 @@ This candidate is closed without promotion. The next hypothesis returns to the
 contact-seeking parent's reward and changes only the residual action mapping:
 test `tanh(raw) * limits` instead of hard clipping, with the same physical bounds.
 The headroom evidence motivates avoiding exactly flat clipped tails, not enlarging
-motor limits or claiming a guaranteed forward swing. That candidate is not yet
-implemented or trained. Both-hand learned batting, bowling, mjbatch transfer and
+motor limits or claiming a guaranteed forward swing. The completed follow-up is
+reported below. Both-hand learned batting, bowling, mjbatch transfer and
 validated videos in both fork READMEs remain unfinished; earlier highlights are
 preserved and are not relabeled as Unitree demonstrations.
 
@@ -444,6 +444,60 @@ uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_swing_v1/mujoco \
   training.log_dir=g1_cricket_results/swing_v1/right
 uv run scripts/retain_g1_training_diagnostics.py g1_cricket_results/swing_v1/right
 uv run scripts/evaluate_g1_cricket_swing.py
+```
+
+### Smooth Residual v1: Cleaner Interception, No Forward Shot
+
+The [action-only contract](docs/g1_cricket_tanh_v1.md) returns to the impact-events
+parent reward and replaces `clip(raw, -1, 1) * limits` with `tanh(raw) * limits`.
+Physical limits, prior, observations and raw Gaussian PPO action history are
+unchanged. Tanh also reduces interior amplitudes; this is not simply a tail fix
+or an increase in actuator power. Old hard-clipped checkpoints are rejected by
+the owner contract even though policy dimensions match.
+
+Fresh seed-1 right-hand PPO completed **199,680 transitions / 2,080 updates** in
+**933.13 seconds**. The [preflight](g1_cricket_results/tanh_v1/preflight.json),
+[final run](g1_cricket_results/tanh_v1/right/run_summary.json), checkpoint and
+[all scalar iterations](g1_cricket_results/tanh_v1/right/training_scalars.csv)
+are retained. Native tests cover raw-array aliasing/history, partial resets,
+bounds and exact zero-action physics/reward/observation parity for both hands.
+
+The [full final evaluation](g1_cricket_results/tanh_v1/trained_evaluation.json)
+retains 96 cases at each of 0.25 and 0.125 ms, without selecting successful rows:
+
+| Hand / controller | Blade contacts | Valid shots | Outcome at both timesteps |
+| --- | ---: | ---: | --- |
+| Right / zero residual | 8/24 | 0/24 | Exact parent baseline, including returns |
+| Right / PPO | 24/24 | 0/24 | Blade-first contacts; every first exit remains backward |
+| Left / zero residual | 8/24 | 0/24 | Exact parent baseline, including returns |
+| Left / PPO transfer | 0/24 | 0/24 | All lanes missed; no incidental bat contact |
+
+All 192 trials reach two seconds. Right PPO has no ball/robot contacts (parent:
+seven per timestep), no guarded bat contacts, no joint-limit excess and maximum
+blade penetration below 5.78 mm. Its sole shot failure in every row is outgoing
+velocity: **-0.3091 to -0.0260 m/s** at 0.25 ms and **-0.2988 to -0.0172 m/s** at
+0.125 ms, versus the unchanged strict **>1 m/s** requirement. Left transfer no
+longer contacts the hip, but staying upright while missing is not learned batting.
+
+At the finer timestep, right-hand episode peak blade-force norms span
+**245.29-263.55 N**; wrist-fixture peak force and torque norms span
+**34.09-41.70 N** and **13.88-15.67 Nm**. These are solved-phase simulated loads,
+not hardware-calibrated tactile readings. Every native endpoint and named sensor
+matches serial replay exactly. Numerical comparison passes **85/96 pairs**, or
+**29/40 contact-bearing pairs**; 11 penetration differences still fail tolerance.
+Both-resolution contact coverage is not proof of impact convergence.
+
+This bounded candidate is closed without promotion: cleaner interception does
+not meet the forward-shot goal. No budget extension, earlier-checkpoint selection,
+gate relaxation or new showcase video is used to turn this into a success claim.
+The original run commands were:
+
+```bash
+uv run scripts/evaluate_g1_cricket_tanh.py --preflight
+uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_tanh_v1/mujoco \
+  training.log_dir=g1_cricket_results/tanh_v1/right
+uv run scripts/retain_g1_training_diagnostics.py g1_cricket_results/tanh_v1/right
+uv run scripts/evaluate_g1_cricket_tanh.py
 ```
 
 ## Historical Contact Resolution: Excessive Compliance

@@ -1,4 +1,4 @@
-"""Reward-only training and all-row physical evidence stay independently checkable."""
+"""Single-axis learning variants retain independently checkable full-pool evidence."""
 
 import copy
 import csv
@@ -11,10 +11,17 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
+import evaluate_g1_cricket_swing as swing
+import evaluate_g1_cricket_tanh as tanh
 from evaluate_g1_cricket_impact_events_learning import validate_baseline, validate_pool
 from evaluate_g1_cricket_impact_resolution import compare
 from evaluate_g1_cricket_residual import sha256
-from evaluate_g1_cricket_swing import DIRECTORY, PARENT, check_hashes, validate_config
+from evaluate_g1_cricket_swing import check_hashes
+
+
+@pytest.fixture(params=[(swing, False), (tanh, True)], ids=["swing", "tanh"])
+def variant(request):
+    return request.param
 
 
 @pytest.mark.parametrize(
@@ -29,29 +36,40 @@ from evaluate_g1_cricket_swing import DIRECTORY, PARENT, check_hashes, validate_
         ("reward", "failure", {}),
     ],
 )
-def test_config_rejects_other_axes(section, key, value):
+def test_config_rejects_other_axes(variant, section, key, value):
+    runner, same_reward = variant
+    PARENT, DIRECTORY = runner.PARENT, runner.DIRECTORY
     reference = json.loads((PARENT / "right/run_config.json").read_text())["config"]
     config = copy.deepcopy(reference)
-    config["reward"]["batting"]["func"] = (
-        "unilab.tasks.manipulation.g1_cricket.swing_reward.ForwardSwingReward"
-    )
-    config["training"]["log_dir"] = "g1_cricket_results/swing_v1/right"
-    validate_config(config, reference)
+    if same_reward:
+        config["env"]["actions"]["residual"]["_target_"] = (
+            "unilab.tasks.manipulation.g1_cricket.tanh_residual.TanhPriorResidualCfg"
+        )
+    else:
+        config["reward"]["batting"]["func"] = (
+            "unilab.tasks.manipulation.g1_cricket.swing_reward.ForwardSwingReward"
+        )
+    config["training"]["log_dir"] = str(DIRECTORY.relative_to(ROOT) / "right")
+    runner.validate_config(config, reference)
     config[section][key] = value
-    with pytest.raises(ValueError, match="swing config differs"):
-        validate_config(config, reference)
+    with pytest.raises(ValueError, match="config differs"):
+        runner.validate_config(config, reference)
 
 
-def test_pretraining_contract():
+def test_pretraining_contract(variant):
+    runner, _ = variant
+    PARENT, DIRECTORY = runner.PARENT, runner.DIRECTORY
     contract = json.loads((DIRECTORY / "preflight.json").read_text())
     check_hashes({**contract["input_sha256"], **contract["source_sha256"]})
-    validate_config(
+    runner.validate_config(
         contract["config"], json.loads((PARENT / "right/run_config.json").read_text())["config"]
     )
     assert contract["policy_promoted"] is False
 
 
-def test_complete_learning_result():
+def test_complete_learning_result(variant):
+    runner, same_reward = variant
+    PARENT, DIRECTORY = runner.PARENT, runner.DIRECTORY
     result = json.loads((DIRECTORY / "trained_evaluation.json").read_text())
     preflight = json.loads((DIRECTORY / "preflight.json").read_text())
     parent = json.loads((PARENT / "trained_evaluation.json").read_text())
@@ -62,15 +80,15 @@ def test_complete_learning_result():
     assert summary["configured_seed"] == summary["effective_seed"] == 1
     assert summary["completed_iterations"] == 2079
     assert summary["global_num_envs"] == 4 and summary["samples_per_iteration"] == 96
-    assert summary["last_checkpoint"] == "g1_cricket_results/swing_v1/right/model_2079.pt"
+    assert summary["last_checkpoint"] == str(DIRECTORY.relative_to(ROOT) / "right/model_2079.pt")
     check_hashes(result["input_sha256"])
-    assert result["input_sha256"]["g1_cricket_results/swing_v1/preflight.json"] == sha256(
+    assert result["input_sha256"][str(DIRECTORY.relative_to(ROOT) / "preflight.json")] == sha256(
         DIRECTORY / "preflight.json"
     )
     for index, (report, dt) in enumerate(zip(result["reports"], (0.00025, 0.000125), strict=True)):
         validate_pool(report["rows"])
         before = copy.deepcopy(report)
-        validate_baseline(report, parent["reports"][index], same_reward=False)
+        validate_baseline(report, parent["reports"][index], same_reward=same_reward)
         assert report == before
         assert report["training"]["transitions"] == 199680
         assert report["evaluation"]["physics_dt_seconds"] == dt
