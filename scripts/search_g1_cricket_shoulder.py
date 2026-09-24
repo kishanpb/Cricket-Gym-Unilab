@@ -174,6 +174,19 @@ def inputs():
     return record
 
 
+def optimizer_summary(rows, result):
+    best = min(rows, key=lambda row: row["search_score"]["cost"])
+    return dict(
+        nfev=result.nfev,
+        nit=result.nit,
+        message=result.message,
+        converged=bool(result.success),
+        best_index=best["index"],
+        parameters=best["parameters"],
+        cost=best["search_score"]["cost"],
+    )
+
+
 def run():
     if DIRECTORY.exists():
         raise FileExistsError("inspect retained shoulder search instead of restarting")
@@ -227,19 +240,7 @@ def run():
     if record != inputs():
         raise ValueError("shoulder search inputs changed")
     assert result.nfev == len(rows) <= PLAN["maximum_trials"]
-    best = min(rows, key=lambda row: row["search_score"]["cost"])
-    save(
-        "completed",
-        optimizer=dict(
-            nfev=result.nfev,
-            nit=result.nit,
-            message=result.message,
-            converged=bool(result.success),
-            best_index=best["index"],
-            parameters=result.x.tolist(),
-            cost=float(result.fun),
-        ),
-    )
+    save("completed", optimizer=optimizer_summary(rows, result))
 
 
 if __name__ == "__main__":

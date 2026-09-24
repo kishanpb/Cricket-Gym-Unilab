@@ -1,9 +1,16 @@
 from copy import deepcopy
+from types import SimpleNamespace
 
 import numpy as np
 from probe_g1_cricket_overarm import target_at
 from probe_g1_cricket_overarm_guard import owner_config
-from search_g1_cricket_shoulder import PLAN, initial_population, search_cost, shoulder_target
+from search_g1_cricket_shoulder import (
+    PLAN,
+    initial_population,
+    optimizer_summary,
+    search_cost,
+    shoulder_target,
+)
 from train_g1_cricket_delivery import make_env
 
 from unilab.tasks.manipulation.g1_cricket.overarm import absolute_targets, actions_for_targets
@@ -68,3 +75,12 @@ def test_score_never_overrides_full_gate_or_safety():
     assert score["cost"] < unsafe["cost"]
     assert score["furthest_sampled_ball_position"] is None
     assert outcome["release"]["velocity"] == [10, 0, 0]
+
+
+def test_tied_optimizer_minima_keep_index_and_parameters_from_same_row():
+    rows = [dict(index=i, parameters=[i], search_score=dict(cost=1.0)) for i in range(2)]
+    result = SimpleNamespace(nfev=2, nit=0, message="test", success=True, x=np.array([1]), fun=1.0)
+    summary = optimizer_summary(rows, result)
+    assert summary["best_index"] == 0
+    assert summary["parameters"] == rows[0]["parameters"]
+    assert summary["cost"] == rows[0]["search_score"]["cost"]

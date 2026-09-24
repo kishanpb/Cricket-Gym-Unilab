@@ -742,17 +742,51 @@ perform eight actual transitions per hand, update finite actors and preserve
 64 focused UniLab tests and 47 native Batch tests pass locally, with the existing
 RSL-RL observation warning; upstream CI and showcase readiness are not claimed.
 
-Next, optimize coordinated shoulder control with the full signed gate, then
-bootstrap and evaluate learned control with the corrected reward. The failed
-single-shoulder trajectories are development evidence, not successful bowling
-teachers. Both hands, full flight, paired timestep/executor checks and learned
-batting/bowling showcase videos remain unfinished.
+The coordinated shoulder search below retains the full signed gate. Neither
+these single-shoulder trajectories nor the optimized references qualify as
+successful bowling teachers. Both hands, full flight, paired timestep/executor
+checks and learned batting/bowling showcase videos remain unfinished.
 
 The completed batting evaluation/video remain frozen at source revision
 `7f936c78b9e0d882087be6deedadba4525bd7224`; their hashes do not imply that these
 new adapter changes have been evaluated across the same 576 trials.
 Reproduce that frozen experiment with that UniLab checkout and companion mjbatch
 `29ab5c5b1695ab7e0f4e63c59a4daa6be095237a`, not the new release-capable adapters.
+
+### Coordinated Shoulder Search
+
+The [predeclared search](docs/g1_cricket_shoulder_search_v1.md) optimizes two
+shoulder pitch/roll/yaw reference knots before the fixed 2.28 s release, with
+elbow, wrists, original motors, guarded prior, holder, pitch and full recovery
+unchanged. SciPy differential evolution completes its 32-trial budget; it does
+not converge or establish a global optimum. This is trajectory optimization
+on one left-hand development context, **not RL training**.
+
+[All 32 complete traces and outcomes](g1_cricket_results/shoulder_search_v1/evaluation.json)
+are retained: 23 have no physical safety failure, three have ball/hand contact,
+and six have other robot self/wicket contact. All complete four seconds, but
+**zero pass the full signed delivery gate**. Forward release speed spans
+2.338-2.926 m/s; first bounce x spans 0.939-1.141 m. Every trial fails speed,
+bounce-zone, bounce-count and target-corridor gates. The lowest search-cost row
+(26, zero-based) releases at [2.707,-1.112,-3.331] m/s and first bounces at
+x of 1.076 m: its smaller cost is not a meaningful cricket-performance step.
+
+Every simulation substep is independently replayed; native endpoint states and
+all named sensors match exactly. All first 98 control traces are identical.
+Peak simulated holder force spans 6.686-9.054 N, maximum pitch-contact force is
+1.419 kN, and maximum ball penetration is 2.489 mm. These uncalibrated simulated
+loads are not hardware safety certification. No velocity/state injection,
+gate relaxation, new policy checkpoint or video is used.
+
+Reproduction source is frozen at `36d2e70d`; the preflight pins 122 local files,
+104 learner-runtime files, native executor, resolved owner and SciPy 1.18.1.
+Input hashes were verified before and after the run. A subsequent report-only
+fix keeps the selected index and parameter vector from the same row when costs
+tie; the retained run's index/vector/cost already match exactly and its JSON
+is unchanged. Four search tests cover bounds, scheduling, gate-dominant scoring
+and tied selection. The failed negative-pitch control family is not a useful
+bowling teacher; alternative swing geometry and safe braking need testing before
+BC/PPO and both-hand showcase validation.
 
 ## Learned Arm Residual: First Interception Experiment
 
