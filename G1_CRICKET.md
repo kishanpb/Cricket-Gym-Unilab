@@ -336,17 +336,51 @@ contact-bearing pairs: 15 have penetration differences and three have different
 failure lists, with one overlap. Material calibration and numerical consistency
 are still not established, and there is no new showcase video or policy promotion.
 
-Next diagnostic: first-impact bat velocity/alignment, residual saturation and
-target-versus-actual arm motion over the preceding 100 ms, retaining every trial
-identity and marking misses unavailable. Replay only through the needed impact
-window; do not repeat the completed reward-timing audit or expand action bounds
-before determining whether the learned motion uses its available range.
-
 ```bash
 uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_impact_events_v1/mujoco \
   training.log_dir=g1_cricket_results/impact_events_v1/right
 uv run scripts/retain_g1_training_diagnostics.py g1_cricket_results/impact_events_v1/right
 uv run scripts/evaluate_g1_cricket_impact_events_learning.py
+```
+
+### First-Impact Headroom: The Learned Bat Is Receding
+
+The [predeclared diagnostic](docs/g1_cricket_impact_headroom_v1.md) retains
+[all 96 fine-resolution identities](g1_cricket_results/impact_events_v1/impact_headroom.json).
+All 40 contact-bearing prefixes reproduce their parent's first onset, first
+separation time/velocity and native/serial endpoints exactly. The remaining
+56 misses or guarded exits are explicitly unavailable, not zero-speed results.
+This is a prefix diagnostic; the full two-second evaluation above remains the
+source for safety and valid-shot outcomes.
+
+In **all 24 right-PPO trials**, the first loaded bat-contact point moves backward:
+vx is **-0.405 to -0.328 m/s** and velocity along the outward normal on the ball
+is **-0.423 to -0.320 m/s**. The normal's forward component is positive
+(0.756-0.856), so this is not merely a reversed normal convention. First-contact
+occupancy lasts 10.25-16.875 ms; loaded and unloaded samples remain separate.
+
+During each trial's preceding 100 ms, shoulder-yaw and elbow raw actions are
+clipped for **100%** of physics samples; the other five arm actions are never
+clipped. Shoulder-yaw raw values range from -1.316 to -1.089, elbow from 1.505
+to 1.666, yielding fixed residual offsets of -0.35 and +0.35 rad respectively.
+No arm actuator reaches its force limit in that pre-contact window. The largest
+force fraction across those arm joints/trials is **0.3373**, and per-joint
+tracking-error RMS is at most **0.1190 rad**. These statements exclude impact
+and do not contradict the full-episode maximum actuator fraction of 1.0.
+
+This supports a receding, partially saturated learned posture, not a successful
+swing or proof that stronger motors are required. It does not establish an
+achievable-speed ceiling or justify enlarging joint/residual limits. The next
+bounded candidate is a **reward-only forward-motion shaping experiment**:
+replace proximity-only approach shaping with a pre-contact term that favors
+forward blade motion near the approaching ball. Preserve the first-separation
+bonus, final-checkpoint evaluation, all collision/stability gates, both-hand
+pool, action limits, physics and training budget. Define and test the new term
+before a fresh run; its effectiveness is not yet established. No policy is
+promoted and no showcase video is claimed from this diagnostic.
+
+```bash
+uv run scripts/audit_g1_cricket_impact_headroom.py
 ```
 
 ## Historical Contact Resolution: Excessive Compliance
