@@ -1,0 +1,621 @@
+{
+  "sources": {
+    "docs/g1_cricket_pitch_contact_v2.md": "3d71c6f7d5f58558fe34f1698eea0488d4a06444f5af1ad2e94841e683350810",
+    "scripts/audit_g1_cricket_pitch_contact.py": "528964ceb03d8a12112229473690997a5c5391f2b9718c9b8bd93fa187dcb407",
+    "scripts/evaluate_g1_cricket_mjbatch.py": "de4b977debe13c710b9bb469bcaada7fafb76aa56087c42b57bc66fad2adf11e",
+    "scripts/evaluate_g1_cricket_residual.py": "d550bf3fedab5b24149da739342941fd8af612e9cab54efe3af6c5f13555a6d2",
+    "scripts/g1_cricket_delivery_trial.py": "37188c1bd05b949c0f7b7ef891b21b7aa36e5eaee5224a32ddfad890d1c327ba",
+    "scripts/retain_g1_training_diagnostics.py": "e873f9986daadeaf9af93ecf8d17840d1be74b409c3e55ee992d3be8105b47cf",
+    "scripts/train_g1_cricket_bc.py": "5837c2b56af0304c158484fe60c3e74ad592073e7c815ff0399dac773d5c7485",
+    "scripts/train_g1_cricket_delivery.py": "6c11b816f657edf1708f7cb0b96bd32a64ab1909c8fc1733739f82864a4bd7d3",
+    "src/unilab/assets/robots/g1/g1.xml": "bb6089243f8fe1c97a6410ccde8754eaa58e5d8e476aca69d790ce501cb4a48e",
+    "src/unilab/assets/robots/g1/scene_flat.xml": "13ce8b2c7706885fa4f041ea8ebb5c2875506512bec6cef02a0455eddb9e4de2",
+    "src/unilab/base/__init__.py": "565b292f668c0e1612df026ade170d9accb7cbff85a134a07c44795662d6e833",
+    "src/unilab/base/backend_constraints.py": "9e151629172c85931b0ce08247f8e71f3f90e6084f27011e96f6f10b8d71a583",
+    "src/unilab/base/backend_factory.py": "b205db1a331dfa31aa3c680603d723587619dbc41ebc0cfc121bb241b99c8ae8",
+    "src/unilab/base/backend_substeps.py": "1174442bdc5b7dd45da9f1750a909e31d0f2ed4a90aa9599e13d838b02eed19d",
+    "src/unilab/base/base.py": "3271d65bbf1dfbc036a74a1716e68c371f4872a07a6183ad7837a7b22f5603a7",
+    "src/unilab/base/config_adapter.py": "f4413d76698aaf482342a1702501da15be2da1b512c7b75751054e88110a0668",
+    "src/unilab/base/config_materialization.py": "242ce4132287df1afe141153870c8bbec3f07fc8c8787b115d139aa8deae2fd2",
+    "src/unilab/base/config_overrides.py": "5363d36fae11b2dddcc0764399eb46a16066778059585aa00d4418d229e2815e",
+    "src/unilab/base/cpu_runtime.py": "940f860a7b520a7a5d7629e86ec071975762691bd1aec683b782bf1bf73a6608",
+    "src/unilab/base/curriculum.py": "30234cc5fc2ae93cf344da2de4f6dff13a30deb384a047d9bc347ebe901e1c5a",
+    "src/unilab/base/entity.py": "a8252ffc81db7d6b8a53373e0ec37c579509d14e35976312a70a03e643a9fcec",
+    "src/unilab/base/env_factory.py": "b386d0c94c7f847ea100b0a3b573d627442e257bd4bf0a38674ee6a78b3f5b32",
+    "src/unilab/base/mujoco_substeps.py": "9e21f5aeb17699af50b1d790ea953d54d205728ac48f3d1800f4a82d54ce80d3",
+    "src/unilab/base/np_env.py": "ea92dd6d69b9b0047828d8091f7f2a1a1c1f71f7aa7d26809e4838d27a61f842",
+    "src/unilab/base/process_device.py": "a65289d7150b66ab519e93ab19350e3fac579c1c634e8d1a83ca78f6ca5c4e35",
+    "src/unilab/base/registry.py": "80e1a42876d02471ba46ded878eae2ddfde083829af69b697b13cdbdc9542011",
+    "src/unilab/base/reset_state.py": "f32614e1d642a486fc8219081490842353a66b2d3f16a331bcd4607e1fae81a3",
+    "src/unilab/base/run_control.py": "f1bcc834743422268f60d51d6ba7437de313be6da6abf0175543c3de31a7727a",
+    "src/unilab/base/scene.py": "052b6601f998f5384e8f7f9d7fe4f71492961acded74ec20dfc7d82960776f53",
+    "src/unilab/conf/ppo/config.yaml": "6f3c337455529fa61675e63ffb611fb85b513ace73a91076a26a4e4243b1805f",
+    "src/unilab/conf/ppo/task/g1_cricket_bowling_v1/mjbatch.yaml": "c3e0191b805af38c30e89a92fc9408a25f5e19e4e9273ac98e8c140814d82d35",
+    "src/unilab/conf/ppo/task/g1_cricket_bowling_v1/mujoco.yaml": "24d16af331071c7acc691a9f867f7329ff6f5fbf007bd4fd1714c9df3ec4154d",
+    "src/unilab/conf/ppo/task/g1_cricket_delivery_pitch_v2/mjbatch.yaml": "23820719c8a71000cc7bed3e99f07e8b868d0c5f15eb5fbf80c05e68e1160a05",
+    "src/unilab/conf/ppo/task/g1_cricket_delivery_pitch_v2/mujoco.yaml": "4314595bf6c558397be27c9abec50d0c2ec694ea2508e91ff5cdbad8e32c4bb1",
+    "src/unilab/conf/ppo/task/g1_cricket_delivery_v1/mjbatch.yaml": "4723e8bf800932ab6746a4e0f22caddfb72789f2070bcf59ec13e4b1233168ab",
+    "src/unilab/conf/ppo/task/g1_cricket_delivery_v1/mujoco.yaml": "3b426dae357223ba480bf59f6c2cf0752ab2e673eb4b40dbcd44b6cf03ce99cc",
+    "src/unilab/conf/ppo/task/g1_cricket_prior_v1/mujoco.yaml": "ccc36640e433739f6b8af0c26da18dca2baeb530b80fc9ef345b07abd3d92a80",
+    "src/unilab/envs/__init__.py": "4a5d7924f62db6584381a4070caeaad9c0d7bf15b9b6d9ee61225619ca2e65c0",
+    "src/unilab/envs/manager_based_rl_env.py": "79886d3264e448fd822b32d07063a43acab52fd8d09188513fc2ac070e9d8b31",
+    "src/unilab/envs/mdp/__init__.py": "473786efb0e81a3dfa4ff6521f104cb745ca726532f3cd9013279c7034f3f869",
+    "src/unilab/envs/mdp/actions/__init__.py": "e0e4f33ca093e2e49a33d74b0784d614f2f80f938119abcb911aa7c94789eb9c",
+    "src/unilab/envs/mdp/actions/actions.py": "0aeab2251946ae10db0b576a9ee49e207d7b070e0b1502064b767f644a06c325",
+    "src/unilab/envs/mdp/commands/__init__.py": "bf4c293bf8be49dac768674caa40038df7b6897efa5ee9041cb054e2c3874a18",
+    "src/unilab/envs/mdp/commands/pose_command.py": "6468af362e65cab03d00bbfaf906cf1ad8a0ce33ebc3502df6e4ed17be0ec9d2",
+    "src/unilab/envs/mdp/commands/velocity_command.py": "66f21d1d27b8eae7b2b0a0ff8bf500aa493ea3df2efd22bf3c6d629c060a6a00",
+    "src/unilab/envs/mdp/curriculums.py": "96041be78d0b508ee2044e8a275802443e046e952fb5632b18077b6f8ebe2694",
+    "src/unilab/envs/mdp/events.py": "69d6adf2ef47895d12f7b48db3e7fb2690e82276df898afb81b22ec93517faff",
+    "src/unilab/envs/mdp/observations.py": "d6fa5973abce2134e59f55a1c68601600e8958757d407ff243c784adea201b5a",
+    "src/unilab/envs/mdp/recorders.py": "2348b65a2110b339fa32cd95ed4ce3043bdc3a5792111f1bf00a567f9e1ff729",
+    "src/unilab/envs/mdp/rewards.py": "e3f58216271cc8df662d37c496555dc522b2e977699b4351a8df24348cb4ce42",
+    "src/unilab/envs/mdp/terminations.py": "b5fadc28318209f3aaadc24c55d6feddb560749a5c5abb7c61bbce79b11f7c9f",
+    "src/unilab/managers/__init__.py": "ce824ce5e467e2e4056c4c992f77a5c9ffdb0cf590f7b9016017f64a920fa12d",
+    "src/unilab/managers/_buffers/__init__.py": "ca80f84df91ca521d76d4abe9101ca181fca7d03459b25078c8fc3127a7cf5cf",
+    "src/unilab/managers/_buffers/circular_buffer.py": "2b366db4cef30555a983e972159617b5ec997a32cdc2c772fbc6c14a7d083773",
+    "src/unilab/managers/_buffers/delay_buffer.py": "7e919814f70c26611e48e3d522e97fe9d7b0019c83a1167d48d34da191396a7b",
+    "src/unilab/managers/_noise/__init__.py": "504be1a65e737fd31cdc0515f307eb1c807921007ec5ab649c110d1706980998",
+    "src/unilab/managers/_noise/noise_cfg.py": "a3cb4fd1b8104802bf14a1f37be2626949c4bcda76217d0d4a564d63537ab504",
+    "src/unilab/managers/_noise/noise_model.py": "36eedf82861d85bd27b13bbd44fd2c9c4b342f07a7dcceb0a23b9e35899bcf51",
+    "src/unilab/managers/_types.py": "0d1d18824f7899fd179caed15c673f96c4c3427362bf467bc908f0b81b8a3fc0",
+    "src/unilab/managers/action_manager.py": "b938e7eaa33fd90178a7a4a998411b08c4bf7f3acfc6e9e395b6b4e4c5cf9577",
+    "src/unilab/managers/command_manager.py": "cb9ee2499a293ddaf334ac13bc57c547fa260b82e1ba1e1537715536909c1274",
+    "src/unilab/managers/curriculum_manager.py": "27b1f787e3433d7aadd23e1005ef0a6bde0343422c1a70797f0eea960211593a",
+    "src/unilab/managers/event_manager.py": "87d954607a9174f6082202b57057b296d98c5fe2ae22d1bf2b4c575472ff8112",
+    "src/unilab/managers/manager_base.py": "48c33b1c08913ea859bd7085f735848cfeeb264fe0e52d1c008172f2d4055503",
+    "src/unilab/managers/metrics_manager.py": "b44eb63614724319152eb0cc49d9d7bf10735e41fff097b4b8637202e81d6369",
+    "src/unilab/managers/observation_manager.py": "368e86cfca65fabed86ab0e81d68b0638bade565fe23fe640bcc5194146af04c",
+    "src/unilab/managers/recorder_manager.py": "51aaeef4615cd220eabc65ce48c26164974227a3493fe04572e6f2e23c7fa091",
+    "src/unilab/managers/reward_manager.py": "04335d22131c96aeb36cc30869984adc012e92547971df42dee756df9c57bf93",
+    "src/unilab/managers/scene_entity_config.py": "fe469b20db7ac8ff0bc50cffd5da18be0922cfdfc224f0a76fe7ff757ba66309",
+    "src/unilab/managers/termination_manager.py": "2349bace33a8d2ee3e9b44bfa57dd251fadc9832023cb128e9e3e35ecdca7e0d",
+    "src/unilab/tasks/__init__.py": "9d45d06869d1f4e7d180029a814b2376820f14401a71fab4e6bbaa666caa2b34",
+    "src/unilab/tasks/manipulation/g1_cricket/__init__.py": "cbff37e287f5968fd7db02eed0f2697adaf66251fe8a915355e9008408da06e8",
+    "src/unilab/tasks/manipulation/g1_cricket/arm_geometry.py": "47aced740d3bbf992edfcc65ec5d37aa6c0e11c32f7cb3786349db8c07ed4352",
+    "src/unilab/tasks/manipulation/g1_cricket/bowling.py": "3c690fd588f29e4fae4ae2e419fba3096320bd7999df252e076f3ca1e0ba9299",
+    "src/unilab/tasks/manipulation/g1_cricket/compliance_v2.py": "e0c0def29df2caa4ef23cb46f318669b46b9942e82c939ea810dee46a0ae7005",
+    "src/unilab/tasks/manipulation/g1_cricket/delivery.py": "a1a82ea56f4bb0add72b4a3fe96a603e5378c749f7871cac246be4566f1e1a46",
+    "src/unilab/tasks/manipulation/g1_cricket/forward_exit_reward.py": "113a460361bb64db6be5b58974c42de96f978e0405df8dad4617e5d45ae66e6c",
+    "src/unilab/tasks/manipulation/g1_cricket/holder.py": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "b621885e9858c031685082855e668b8fb1ce31b9d3a7526e7331e7dbc0b59341",
+    "src/unilab/tasks/manipulation/g1_cricket/impedance.py": "7c51705a9ab41d93e587f65ec3faba11f990b5cf257068756cc6ecfed7b5486d",
+    "src/unilab/tasks/manipulation/g1_cricket/overarm.py": "06ac693650070e4434056da3f52f87dc64bd581453ba2efcff198d255fa44add",
+    "src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py": "304bffb9013bfec2d8ac57d805f2ce8156421b8024bda316f373f856fa61830f",
+    "src/unilab/tasks/manipulation/g1_cricket/prior.py": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739",
+    "src/unilab/tasks/manipulation/g1_cricket/residual.py": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/tasks/manipulation/g1_cricket/separation_reward.py": "e10c9a7918f67f8621d2e00af12729e31c389b1f8f7c288d90de77fcfff12994",
+    "src/unilab/tasks/manipulation/g1_cricket/substep_reward.py": "f2c2f7e35655cb4cda10f922660c004f297ee536abe9775d5e237b50206b4cb4",
+    "src/unilab/tasks/manipulation/g1_cricket/swing_reward.py": "08696424ea2556348e067c40e5c3bb9286b5caa9f89bd25add868ab87081a0a9",
+    "src/unilab/tasks/manipulation/g1_cricket/tanh_residual.py": "904a8dde165f872b200ef824466d38834e4b3d177882e7d01561995596466fa0",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb",
+    "src/unilab/training/__init__.py": "a704436eb16c3c2bc539f976e799383db74890d00b712f6778d145f3135381e5",
+    "src/unilab/training/common.py": "40682bad37937f05847738a1dcecdfcced54f4dddc9806203f15fe5a39046ba8",
+    "src/unilab/training/experiment.py": "60988c8e36f393047ce3bd6a213a0531a270564c287ee9fb1520508afd1d150d",
+    "src/unilab/training/onnx_export.py": "3fca73f8f7827f541065a57603af8f4d4bf2737b23d9e5816103da49cf0e11c9",
+    "src/unilab/training/run.py": "9a92003d02b5cfb2ab5aeba8847c3b348dd5b03582e6ca72189693894d4668a8",
+    "src/unilab/utils/nan_guard.py": "c651b4e73d89fb8ab3b30b233ab233f68ecfb6a94552cb00a48d85e114cddd4f",
+    "src/unilab/utils/rotation.py": "cf4e72dab0a09b2d9d09f2aeabcf0a93901ba2acb4f746eec31d99594b73f5d8",
+    "tests/scripts/test_g1_cricket_pitch_contact.py": "73c9c427ed70d65a28ab4159141c58ae0952ef922cfda60c912af7166968b253",
+    "scripts/probe_g1_cricket_overarm.py": "5671d62be8afcc51beface92386b5bbf7f5684a67f62d6afca3d6b25a4fd9971",
+    "tests/scripts/test_g1_cricket_overarm.py": "74d3e34f1fe2e74b432eaea4b37bb25b65b16e84c9b7e29829b3f621d4aa649a",
+    "docs/g1_cricket_overarm_v1.md": "1e2a8f5297fadaa671aab99117ba8102937ba571b1dc4aa65fe79127ad63f7c7",
+    "src/unilab/conf/ppo/task/g1_cricket_overarm_v1/mujoco.yaml": "99f199705ef97a4caa97edbf46fae5a5fdf9e955045d050ea81c5bc7e7b92ade",
+    "src/unilab/conf/ppo/task/g1_cricket_overarm_v1/mjbatch.yaml": "3155617d2567b5e00476c55cf489716b044e31e76a172b32cf8fc0d9fe44f050",
+    "scripts/audit_g1_cricket_overarm_failures.py": "d44a2c9bf0f98a4ad6ec2e03b018aa80147dd7a985e80ddfc585f98ba840e45a",
+    "tests/scripts/test_g1_cricket_overarm_failures.py": "638accd42302c5b3f3e1461104cf003540af6910d81de2553de01ffac8e808d1",
+    "scripts/probe_g1_cricket_overarm_guard.py": "98f8ad986aa5c62c983ce68b847fe25f7cc466a0a254e2a2755893f511621520",
+    "tests/scripts/test_g1_cricket_overarm_guard.py": "b4a8f52d56cfa6a18c9d1e4416360fc9a04d304e6b0fffc39687bbcf466e8aca",
+    "docs/g1_cricket_overarm_guard_v1.md": "22e2bf81064bf7b1384282ec9155dd5fe78fa0bf66534c4e993667077aa76ded",
+    "src/unilab/conf/ppo/task/g1_cricket_overarm_guard_v1/mujoco.yaml": "967be47cf79997bef477b4e1dddd24b1d7215fabbba8921099ddce8daea5fad6",
+    "src/unilab/conf/ppo/task/g1_cricket_overarm_guard_v1/mjbatch.yaml": "c51f7fabcb61fcfea15cc4e7e6ef8835c94c46a80e8a4ab9bafc04c509a6d424",
+    "scripts/probe_g1_cricket_overarm_release.py": "3b12c7a37dc3363930bcd7439dd371f034a2714118431d59752b7f827e0a1e7d",
+    "tests/scripts/test_g1_cricket_overarm_release.py": "4e57c1edcbc09a7d195a677a365dd8922fd2a4059d9183b63fec857b3160e48b",
+    "docs/g1_cricket_overarm_release_v1.md": "1080a7fe900f712e324c161263d2731f3d6dba16e26527903876ebb63c201f73",
+    "scripts/audit_g1_cricket_signed_release.py": "af7ab635d24db7c0a79e1395addd88908db94115888734079437df0087add09a",
+    "scripts/g1_cricket_signed_delivery.py": "8eb49b8b81691a4e3e918c408fecbb452e232de9b8eea03bc36870e2dcea5a2e",
+    "tests/scripts/test_g1_cricket_signed_delivery.py": "4e3545e4c334afe0a2e6031d45b0df487fada763b2b520284f605ced3abb5f2d",
+    "tests/scripts/test_g1_cricket_bowling_reward_v2.py": "522a30074e68878ef7816fbfa562bb34716e8a1560f79e90872054eca7ea6c89",
+    "docs/g1_cricket_signed_release_v1.md": "afe4ec42c0981e14bb39e0df2aefabbc108a5e24ff8e93878aabcac213309081",
+    "src/unilab/conf/ppo/task/g1_cricket_overarm_reward_v2/mujoco.yaml": "4ecc4e1bc900d2bc850f40508897d45e1caeed5a5f6e13b9cc4ae4e9db162b60",
+    "src/unilab/conf/ppo/task/g1_cricket_overarm_reward_v2/mjbatch.yaml": "4faf80ae7539bfa5e89588ad147d1c57fcf1a837caca3d08ab8fa9653268d19e",
+    "scripts/probe_g1_cricket_overarm_damping.py": "b7741acdf52b333df2eb8e0bf89b6dbda5ece5066c869403938fe6b8049d4fff",
+    "tests/scripts/test_g1_cricket_overarm_damping.py": "0c6f1b23a6afbceedfb62491314f5fc2d3fbfbb545303359b56b92f1d47f2ea7",
+    "docs/g1_cricket_overarm_damping_v1.md": "8c7dfec435def2286885874bb3c34c18d613f13c50cdb09ed75760bb1f46bb1b",
+    "scripts/probe_g1_cricket_shoulder_damping.py": "02ea977725e6554fa071762fc356a1a69f9ef655789bfb430416db514f4b8f76",
+    "scripts/probe_g1_cricket_positive_arc.py": "50782d3e66d97c242fa4ce77053f276d257f638257e68dc4b7dfc478e0b615f2",
+    "scripts/search_g1_cricket_shoulder.py": "43dfee6c24260f34817620ed3292ecc2016cfaced0aa6676534eedecbc4b2e0c",
+    "src/unilab/conf/ppo/task/g1_cricket_shoulder_damping_v1/mujoco.yaml": "e8a3526054b5e3928f14564afa15cd12bd0fde1c1d996b130579dbf73b752e85",
+    "src/unilab/conf/ppo/task/g1_cricket_shoulder_damping_v1/mjbatch.yaml": "e03df0be4df2d89fd2a1f17a1f1d785610d8886127313e0b1624d3c2feaa09f4"
+  },
+  "parent_sha256": "12b86456c291be1c0bbab145cd654419f50252562e4604ea9f377503c70cae9c",
+  "runtime_sources": {
+    "uni_rl": {
+      "__init__.py": "ff9374bd19a46ad22b22e37be99d822753eacd3a32ec9eade4ada6bd9b295056",
+      "algos/__init__.py": "89780c1e9ac9033135eafe1377636109d0b091dc95a1e3f9748aaeba5ee114ff",
+      "algos/appo/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "algos/appo/learner.py": "9b3f2672ee3b444851d14bc59147e45671669036b544990db8bae281b6f54856",
+      "algos/appo/runner.py": "9de975e2d357266630ebcaf31cee93eb705fed67ead82b32e8cf59e91123b9d4",
+      "algos/appo/runtime.py": "ff0bb44385eb9d9460e335e47cf0dcffa4e1203309ed87a7464a9bec6bbb6adb",
+      "algos/appo/staging.py": "bf1fc610fd5a6e03612a78758b777c59352588e237283bdb9ebfab2f40182f5e",
+      "algos/appo/worker.py": "43e8919a3f03020e6c4ebfd40f7774291cc183fbc0f18e1ad26dbe97de57723c",
+      "algos/common/__init__.py": "9fca95ddb563dec0b7886e90da965c9b20de9868e1777ed374f61f4b89aa3214",
+      "algos/common/actor_factory.py": "3530dd86296258210295dd4c5e3386ec4b827e2b64c27f56ad13748463bd4fe9",
+      "algos/common/collector_timing.py": "2d5bc1f99f100684230add917e492822d616cbe2a6883bbae5498bd2c989bcf0",
+      "algos/common/compile.py": "f2c64da5c8af372c3634b17ff72e3fc438c8d0e8d4e8cded8f126032e56cf079",
+      "algos/common/device.py": "a25622bca918da1e939af217f305013f0d1357a16ae296976331adabc2bec9a0",
+      "algos/common/networks.py": "e3336747627ce3937959706d26f7a26f5814c8b69c21fec39520b1fa910542c0",
+      "algos/common/normalization.py": "4e3cb53a01b9bf4ab4c4eff00951698721c06bd472fb5b52008fec686fa1563b",
+      "algos/common/stability.py": "ea05f36ed0ad141d9d83cd27fef711d3df643a458862de5b24af4e4a4d51650a",
+      "algos/fast_sac/__init__.py": "647cce9a4f0ccc72cd89f9a097f6e0a5e78c4b4cf34dca38893f6826b6f0866d",
+      "algos/fast_sac/double_buffer.py": "636d75e4eebba6ed08b2daa5b4da07d62357eb5db1c675d576bc7a9f99d16d76",
+      "algos/fast_sac/learner.py": "b6a259c1c4a37d205b31b7a5be27873cdef3226c2541c0c91f888e12f61231e3",
+      "algos/fast_sac/runner.py": "d74b2091517c958a2d6168ed0c5f6a7a177f07178fc5718c1d62cc179d5741eb",
+      "algos/fast_td3/__init__.py": "d31fa1e4a6c455ca1005ede871b78933545be37d26779f3110cd590b7d46d48f",
+      "algos/fast_td3/double_buffer.py": "ee3d85a9b759add5adb3c7561e4d8f966d50326905b5d0b01e651433336ddc2f",
+      "algos/fast_td3/learner.py": "9205de279b6aa14f9b76ad15c4db7a615bcba45cd484f8e107fd1366768aa078",
+      "algos/flash_sac/__init__.py": "b3581cf80990eac370a667176ff6880d58a5de3f1593dd9872126133cae30dd4",
+      "algos/flash_sac/double_buffer.py": "c7296be71cfd0d15c0db2116959e65243caece5a5a5cea30a78c6e1f53e713eb",
+      "algos/flash_sac/layers.py": "a3268f3ecd1c479dc7050beaa0178f59f29425b73301b2b927210ad610f2b186",
+      "algos/flash_sac/learner.py": "6ae7628d2d52866227516a440291961c44382ce35b4851a228a24f1f17e29396",
+      "algos/flash_sac/network.py": "89fa16c9fde7cefa9e7ed6d2d4b5c1762b0ce34f31d34afd0a92d0b7755cc428",
+      "algos/flash_sac/runner.py": "2e7296bffad141255ecb6b65999b793cc75475191b5f0da76df4d2b7a21a3201",
+      "algos/flash_sac/update.py": "86d4643206c4cf775cfc3a885e4afdbdf9839f331df6c42a55fb669f3444b060",
+      "algos/rsl_rl.py": "be912d59527eea5c1b21510f7ab811fea5cd92a345f22bd87a3a96852ea2a574",
+      "algos/rsl_rl_ppo.py": "c6b7ae91fa9d113f4ee60ca1c27a61c9cc5e81d4bea295a345bc4b0a854dae79",
+      "algos/rsl_rl_runtime.py": "b89df826b046ac28b77962828b074f48e0eb8ad8363328091b22e9f265fa05a5",
+      "algos/rsl_rl_training_state.py": "c5de9649d2a5717a9eabdd3617ac1f3b5b42fa777c94d0a181e908b661f9ecb4",
+      "env_contract.py": "3d4a77d70b8679a57eb9f481cffa51df4948ab329645fa66f129655621c563df",
+      "ipc/__init__.py": "4a39f2d4c042caad6c5ccceb469d8bfc4ad106dba7b94190f9162179ee9432b9",
+      "ipc/async_runner.py": "1442da0bbd9283dcb9229222cf14d668745ddadd2857f6f520db1c5aa90d7033",
+      "ipc/collector_error.py": "24d29b807415e9721264c62cac44cf2601c37d77288ba8cb8ef781b9a72539a4",
+      "ipc/dp_launcher.py": "982cc6cef1f0f36aa7372b8032efb5eb482fabb85cd0ec17c5ba41ca4a9bbcfd",
+      "ipc/dp_sync.py": "88a67dc03cd784ca51761ecba1cfc4962e21888ca3f4a51d7d96b7b14a7f06d1",
+      "ipc/inference_slot.py": "882880d50848d3999257a1348c4d3fbe5c696b432afc867829db5a82c5715dd1",
+      "ipc/memory_budget.py": "91888326ede6c5f25de391b96dee9372eb581a01a579537b19930621d5d07340",
+      "ipc/replay_buffer.py": "23887d418572aa6d23d1b77662727f9c9ddd219ff852664ad54d1ec891aad135",
+      "ipc/replay_pipelines/__init__.py": "3f7eff3a3fd2c95e11b6accc869c3bd12940d6cd20ebd7aafa5111ede5893de5",
+      "ipc/replay_pipelines/base.py": "57a82cac7b856e41b8839c66014f03f3e645be8a5893e5c9e4dde09fa2cbe1ad",
+      "ipc/replay_pipelines/gpu_resident.py": "5aed3948f562802f5701ff54e2d10047b1147388b6269938ffb3e9d40af2f0b8",
+      "ipc/replay_pipelines/native_h2d.py": "340b463c84a00b8febee4da1a36e060c6ea5da7854d28add9e4e705a615773f2",
+      "ipc/replay_pipelines/transfer/__init__.py": "035deab363351089f7619a089f0f59b8e72a0012201be6b61631932e6a84144f",
+      "ipc/replay_pipelines/transfer/base.py": "a7ac2d338fbed7cd548a86ce936a9a91e9c2ed518af60db5c14a6f397a8f3456",
+      "ipc/replay_pipelines/transfer/cuda_like.py": "bdeac7b9cf521aad785d49126f4f82b92469218739a82acbdc431251f2344b09",
+      "ipc/replay_pipelines/transfer/factory.py": "8254be4996b2776122460cfeb59f97fc2d6e878934ee21dfbb17e2a603fccea5",
+      "ipc/replay_pipelines/transfer/torch_copy.py": "49062370be2c62d93d02b628efe209ed41606761f0f0f39506d1713ada732c96",
+      "ipc/rollout_ring_buffer.py": "9b03c98e7d4a8e39362fcf8f0a13f9a4f007b5a23638d2e0e483aa8786963ed6",
+      "ipc/shared_buffer.py": "714ac8503f345efb5b57f80bd0282c5b441e33101660d30d7967ff088325a695",
+      "ipc/weight_sync.py": "c30e0e96acd3bcc2b5d7d30ace023db917935c65bea811bb9023a9aaaf625fc0",
+      "logging/__init__.py": "31f7ba9cf9bc404b25e185373f3bf6cfb6a204fdfb1f2b1c54d01834fba9ceb4",
+      "logging/common.py": "e0bd03397dc9ec542c768aab2f3609fdf13a2cfc4ee6e3d54d9cb6584fa9d404",
+      "logging/offpolicy.py": "35a13b0159b65ba0979253a5f8f0bcecfb8824dba666f92b9a7fe96470397827",
+      "logging/onpolicy.py": "36f5e795a730ea6adce94111c3323af5b03405dbce75b8245a845eb4abebfb2f",
+      "logging/trace_event.py": "488b893e5d7e64c82366e33d80e7a05d92bf69204f4c94d0d6cc2ae5ea4f38b1",
+      "offpolicy/__init__.py": "4288e7d622ca777dddc571c6ced0d80bbacc07165174cbad5e220c86fe494aa2",
+      "offpolicy/actor_adapter.py": "6a5e053468b0748236f8c7cfb7d37c4d3488b034fd232081ab063b8a8078af89",
+      "offpolicy/double_buffer_runner.py": "a3c07e32b52a6125719ba24a95bf1d50999637a453f260a0e8eb9515afe5f156",
+      "offpolicy/runner.py": "1ecb84443b93bd88fd15166bc37313dccaa5cfe14a16882be70f8568fbc77d1e",
+      "offpolicy/runtime.py": "c735fb17a82915666bc22912f6efe8d7ad26457e553104bf7ae5a81c6793fc30",
+      "offpolicy/thread_budget.py": "df4378dc6be255f5d3ef6c3ad8736f41179fd69a7b19f2f32480e5a19ad1aba5",
+      "offpolicy/worker.py": "9ad590997caf39eb9b616379e070207d6134f7716b5d2e14ceebecfc43990641",
+      "training_state.py": "d4ba47ca096f09a36f8870f209a598f15f3fa0654bc0c58b9bddaa3ba2ff2b75",
+      "utils/__init__.py": "79d3b14ea413e531128f799b71797cdfd8611955217225162380ef61c4ce9c7b",
+      "utils/device.py": "d8cc43041b281b8e2f26d0336a33394643a3f92ebc6a6fd8d2e6fca196c5cbc6",
+      "utils/final_observation.py": "f353199e3014fb3dde1966c37fb258f5c136f81299d6ddf8e9af95ff6e5e22ab",
+      "utils/nan_guard.py": "c651b4e73d89fb8ab3b30b233ab233f68ecfb6a94552cb00a48d85e114cddd4f",
+      "utils/observations.py": "e2f39366ed4a31ba175e8f0e671f9a0fd0dba85d88f1b13915058aa385c22d9a",
+      "utils/seed.py": "7fc22ea697fe7f32593406148c469f2268e148aaad1b72d9c9bde724cd2e189d",
+      "utils/tensor.py": "090df28fa1261ac0b693b8d2dae483c44ace6c1a184cdf90a5b54fcc5e1ec9cc"
+    },
+    "rsl_rl": {
+      "__init__.py": "9b4c420fef3ae39683544833b6d2efbb26aecfc0583ec59be7f4eeb748fecf66",
+      "algorithms/__init__.py": "e370271e689bada5cdf2b4623e0d16d75e8439864a2ae913b22215f7b2985843",
+      "algorithms/distillation.py": "c9a326d1c9d0f57a2c14fbea23b8b0f92d3b96bb7a38224e090e07f13e1fb7e0",
+      "algorithms/ppo.py": "a2d35e7ad7b884c80b7434e7d2ce785a6da1e18d93c96f1179fbd3a208669f8c",
+      "env/__init__.py": "33bfc9562580377c2ce6388c37b0df2b8e992c22ce46923443681cbbf1960d60",
+      "env/vec_env.py": "4a72df2fbf9b3e162e0e4b10e0b473511f02ad8c3ebaab0b7993ddfd63a9fa43",
+      "extensions/__init__.py": "595fd79b13fa6c64cce1f20adb7440660a4c5e5b78749db4794554a782a1ccfe",
+      "extensions/rnd.py": "e8f25627c04f4cf478cbbf1ec4c362276e80566a1222c75ba55f7b8e0f8471af",
+      "extensions/symmetry.py": "eb83c3f77e4cc3f3b3b18f7a592429761b7152c8ac1160c32e02562dc0987481",
+      "models/__init__.py": "6444fc1df8bc94d40ab1911f0e8e6b3f777459986e7f7944d25b7e5ca9b3e206",
+      "models/cnn_model.py": "818422d1d7a93cd8174a3c34fec8c425f2adf9d81c9623f2b335c2934a60276e",
+      "models/mlp_model.py": "6219ebb3ed4df036dae7ff1c30d0fbb169eaaa659e44a659dd757a292124476b",
+      "models/rnn_model.py": "80c1d6452ef021e4d7b174231ed7abac1ed0db8de9604561f8060148d4333ccc",
+      "modules/__init__.py": "56df7ca2ff95c53f17451fd98720c48871a1679e9d6e3ab0c0961e4339908054",
+      "modules/cnn.py": "4f5bab5f192c42180125f32a4af350108dd1c247e1e84c81f6cf4ea560037ccf",
+      "modules/distribution.py": "4631eae1939dcd6b065d79c3c0128a88ba2c6126d08f46944c8795682a208a1b",
+      "modules/mlp.py": "bad934b364b26cd47b6d1612e00ace107a425ae4d272c0cd0c82cbfc57bbcdbc",
+      "modules/normalization.py": "539e1193cebcc472585cd3df100946fb8d788c4aa0f9f5cbcb3387a64d312926",
+      "modules/rnn.py": "07f0eec06c7f2638edbdbc3ba25f56122a7941cb0543138f4a6b04675b2a97e6",
+      "runners/__init__.py": "26f4130a403414e13041b62a848d04da3fb0166757603950ea758b151d4b5aaa",
+      "runners/distillation_runner.py": "7445cbaf3e1fa241d742447ab17d941a659c92b6f8365ef22c5d818923d9e275",
+      "runners/on_policy_runner.py": "39358a0a60219fdb360df7acddf80f6a382837aa58e2ec0ccf875df4afee4825",
+      "storage/__init__.py": "7c9d96df3cad10aa27f34e77f7105a29f74e2d7dd10467b2919f99867a69298e",
+      "storage/rollout_storage.py": "ececf28e7412d24867066829cc443acae811f034f8e63975b90343947779918d",
+      "utils/__init__.py": "129856dea5f7ccff56aee74c8590b6cd2201183131bc836c666d7d1a4880e5c4",
+      "utils/logger.py": "d9822d8317724507a7c817e85399db0db9e56a4eae959435138e75cf92e44b8d",
+      "utils/neptune_utils.py": "a3446faf8d655b75feb215ff4df8598bc91ff5aab446a6349e9ced31bf3cc495",
+      "utils/utils.py": "4d094c17e54ab09a0d37b14711157f638f0bd929d0f1b49a3f89b4c8fc67caaa",
+      "utils/wandb_utils.py": "0fdc97e968bf9c47fed3c1beeacaab7d65769c5342b221f9a20ea2e64b2d407d"
+    }
+  },
+  "executor": {
+    "version": "0.1.0",
+    "python_sha256": "f6eb31442c65225519ab59edb2e7689e917318a03a4a2cf0a5c66c9f97b5bb7f",
+    "batch_wrapper_sha256": "eda0cfcb668bd052f49c0817537356cc5796a53bfa62c9870f4bb75566d005ac",
+    "native_extension_sha256": "0fd9fa1df88ed37367839465612263b31f9f9056d841e2317595725020dc881a"
+  },
+  "parent_attribution_sha256": "c45ee5f591358e251b961bc3ac97984e99e2439de546ea7c8ebf2f22cb397b95",
+  "versions": {
+    "mujoco": "3.11.0",
+    "mjbatch": "0.1.0",
+    "numpy": "2.4.4",
+    "onnxruntime": "1.24.4",
+    "torch": "2.8.0",
+    "rsl-rl-lib": "5.0.1",
+    "unilab-rl": "1.2.0",
+    "unisim-core": "1.2.0"
+  },
+  "config": {
+    "algo": {
+      "algo": "ppo",
+      "algo_log_name": "rsl_rl_ppo",
+      "seed": 1,
+      "num_envs": 4,
+      "num_steps_per_env": 24,
+      "max_iterations": 256,
+      "save_interval": 256,
+      "empirical_normalization": false,
+      "runner_class_name": "OnPolicyRunner",
+      "obs_groups": {
+        "default": [
+          "policy"
+        ]
+      },
+      "experiment_name": "test",
+      "run_name": "",
+      "resume": false,
+      "load_run": "-1",
+      "checkpoint": -1,
+      "resume_path": null,
+      "policy": {
+        "init_noise_std": 0.2,
+        "actor_hidden_dims": [
+          64,
+          64
+        ],
+        "critic_hidden_dims": [
+          64,
+          64
+        ],
+        "activation": "elu",
+        "class_name": "ActorCritic"
+      },
+      "algorithm": {
+        "class_name": "uni_rl.algos.rsl_rl_ppo:FinalObservationAwarePPO",
+        "value_loss_coef": 1.0,
+        "use_clipped_value_loss": true,
+        "clip_param": 0.2,
+        "entropy_coef": 0.0,
+        "num_learning_epochs": 5,
+        "num_mini_batches": 2,
+        "learning_rate": 0.0001,
+        "schedule": "adaptive",
+        "gamma": 0.99,
+        "lam": 0.95,
+        "desired_kl": 0.01,
+        "target_kl_stop": 0.02,
+        "max_grad_norm": 1.0,
+        "adaptive_kl_beta": 0.9,
+        "adaptive_lr_growth": 1.1,
+        "adaptive_lr_decay": 1.2,
+        "adaptive_lr_update_interval": 5,
+        "metrics_interval": 8,
+        "finite_check_interval": 8,
+        "enable_compile": false,
+        "warmup_strict_iters": 10,
+        "warmup_metrics_interval": 2,
+        "warmup_finite_check_interval": 2,
+        "disable_finite_checks": false
+      }
+    },
+    "training": {
+      "task_name": "G1CricketShoulderDamping",
+      "devices": null,
+      "dp_collector_cpu_ids": null,
+      "device": "cpu",
+      "logger": "tensorboard",
+      "wandb_project": "unilab",
+      "wandb_entity": null,
+      "wandb_group": null,
+      "wandb_job_type": null,
+      "wandb_name": null,
+      "wandb_tags": [],
+      "wandb_notes": null,
+      "wandb_mode": null,
+      "sim_backend": "mujoco",
+      "nan_guard": {
+        "enabled": true,
+        "buffer_size": 100,
+        "max_envs_to_dump": 5,
+        "output_dir": null
+      },
+      "play_only": false,
+      "no_play": true,
+      "sim2sim_strict": true,
+      "play_render_mode": "auto",
+      "play_env_num": 16,
+      "render_spacing": 1.0,
+      "play_steps": 200,
+      "cam_distance": 6.0,
+      "cam_elevation": -20.0,
+      "cam_azimuth": 90.0,
+      "cam_lookat": null,
+      "cam_tracking": false,
+      "cam_tracking_env_idx": 0,
+      "cam_tracking_extra_envs": 2,
+      "log_root": null,
+      "num_timesteps": null,
+      "log_dir": null
+    },
+    "interactive": {
+      "action_mode": "zero",
+      "policy_obs_mode": "auto",
+      "show_target_bodies": false,
+      "show_reward_debug": false,
+      "target_show_axes": false,
+      "target_body_names": "",
+      "target_max_bodies": 0,
+      "target_marker_radius": 0.02,
+      "target_axis_length": 0.08,
+      "target_marker_alpha": 0.75,
+      "reward_debug_show_velocity": false,
+      "reward_debug_lin_vel_scale": 0.08,
+      "reward_debug_ang_vel_scale": 0.05,
+      "reward_debug_show_connectors": false,
+      "reward_debug_show_global_anchor": false,
+      "camera_follow_body": true,
+      "camera_focus_body_name": "",
+      "camera_height_offset": 0.15,
+      "camera_distance": null,
+      "camera_elevation": null,
+      "camera_azimuth": null,
+      "use_env_visual_model": true,
+      "speed": 1.0,
+      "start_paused": false,
+      "keyboard": false,
+      "keyboard_step_lin": 0.1,
+      "keyboard_step_ang": 0.2
+    },
+    "viser": {
+      "port": 8080,
+      "env_idx": 0,
+      "display_mode": "all",
+      "max_envs": 16
+    },
+    "env": {
+      "post_step_forward_sensor": false,
+      "adaptive_chunk_size": false,
+      "chunk_size": null,
+      "locomotion_prior": true,
+      "handedness": "right",
+      "seed": 1,
+      "scene": {
+        "model_file": "src/unilab/assets/robots/g1/g1.xml",
+        "default_keyframe_name": "cricket_stand",
+        "entities": {
+          "robot": {
+            "root_body_name": "pelvis",
+            "joint_names": [
+              "left_hip_pitch_joint",
+              "left_hip_roll_joint",
+              "left_hip_yaw_joint",
+              "left_knee_joint",
+              "left_ankle_pitch_joint",
+              "left_ankle_roll_joint",
+              "right_hip_pitch_joint",
+              "right_hip_roll_joint",
+              "right_hip_yaw_joint",
+              "right_knee_joint",
+              "right_ankle_pitch_joint",
+              "right_ankle_roll_joint",
+              "waist_yaw_joint",
+              "waist_roll_joint",
+              "waist_pitch_joint",
+              "left_shoulder_pitch_joint",
+              "left_shoulder_roll_joint",
+              "left_shoulder_yaw_joint",
+              "left_elbow_joint",
+              "left_wrist_roll_joint",
+              "left_wrist_pitch_joint",
+              "left_wrist_yaw_joint",
+              "right_shoulder_pitch_joint",
+              "right_shoulder_roll_joint",
+              "right_shoulder_yaw_joint",
+              "right_elbow_joint",
+              "right_wrist_roll_joint",
+              "right_wrist_pitch_joint",
+              "right_wrist_yaw_joint"
+            ],
+            "actuator_names": [
+              "left_hip_pitch_joint",
+              "left_hip_roll_joint",
+              "left_hip_yaw_joint",
+              "left_knee_joint",
+              "left_ankle_pitch_joint",
+              "left_ankle_roll_joint",
+              "right_hip_pitch_joint",
+              "right_hip_roll_joint",
+              "right_hip_yaw_joint",
+              "right_knee_joint",
+              "right_ankle_pitch_joint",
+              "right_ankle_roll_joint",
+              "waist_yaw_joint",
+              "waist_roll_joint",
+              "waist_pitch_joint",
+              "left_shoulder_pitch_joint",
+              "left_shoulder_roll_joint",
+              "left_shoulder_yaw_joint",
+              "left_elbow_joint",
+              "left_wrist_roll_joint",
+              "left_wrist_pitch_joint",
+              "left_wrist_yaw_joint",
+              "right_shoulder_pitch_joint",
+              "right_shoulder_roll_joint",
+              "right_shoulder_yaw_joint",
+              "right_elbow_joint",
+              "right_wrist_roll_joint",
+              "right_wrist_pitch_joint",
+              "right_wrist_yaw_joint"
+            ],
+            "body_names": [
+              "pelvis",
+              "left_wrist_yaw_link",
+              "right_wrist_yaw_link"
+            ]
+          },
+          "ball": {
+            "root_body_name": "cricket_ball",
+            "body_names": [
+              "cricket_ball"
+            ]
+          }
+        }
+      },
+      "sim_dt": 6.25e-05,
+      "ctrl_dt": 0.02,
+      "max_episode_seconds": 4.0,
+      "auto_reset": true,
+      "observations": {
+        "policy": {
+          "history_length": 5,
+          "terms": {
+            "gyro": {
+              "func": "unilab.envs.mdp.builtin_sensor",
+              "params": {
+                "sensor_name": "pelvis_gyro"
+              },
+              "scale": 0.2
+            },
+            "gravity": {
+              "func": "unilab.tasks.manipulation.g1_cricket.task.BodyFrameGravity",
+              "params": {
+                "sensor_name": "pelvis_world_quat"
+              }
+            },
+            "command": {
+              "func": "unilab.tasks.manipulation.g1_cricket.bowling.runup_command"
+            },
+            "joint_pos": {
+              "func": "unilab.tasks.manipulation.g1_cricket.prior.joint_position_policy_order"
+            },
+            "joint_vel": {
+              "func": "unilab.tasks.manipulation.g1_cricket.prior.joint_velocity_policy_order",
+              "scale": 0.05
+            },
+            "last_action": {
+              "func": "unilab.tasks.manipulation.g1_cricket.residual.last_baseline_action"
+            }
+          }
+        },
+        "bowling": {
+          "history_length": 0,
+          "terms": {
+            "state": {
+              "func": "unilab.tasks.manipulation.g1_cricket.bowling.BowlingObservation"
+            }
+          }
+        }
+      },
+      "actions": {
+        "joint_pos": null,
+        "residual": {
+          "_target_": "unilab.tasks.manipulation.g1_cricket.impedance.ShoulderDampingActionCfg",
+          "entity_name": "robot",
+          "asset_directory": "~/Library/Caches/unitree_rl_lab/4960b84732b0c2ec593dccbfe963fda1bcd7b1e3",
+          "prior_target_limit_fraction": 0.9
+        }
+      },
+      "events": {
+        "reset_scene": {
+          "func": "unilab.envs.mdp.reset_scene_to_default",
+          "mode": "reset"
+        },
+        "reset_jitter": null,
+        "reset_bowler": {
+          "func": "unilab.tasks.manipulation.g1_cricket.bowling.ResetBowler",
+          "mode": "reset"
+        }
+      },
+      "terminations": {
+        "time_out": {
+          "func": "unilab.envs.mdp.time_out",
+          "time_out": true
+        },
+        "fallen": {
+          "func": "unilab.tasks.manipulation.g1_cricket.task.fallen"
+        },
+        "invalid_contact": {
+          "func": "unilab.tasks.manipulation.g1_cricket.prior.PriorContactGuard"
+        }
+      },
+      "policy_observation_group": "bowling",
+      "critic_observation_group": null,
+      "mujoco_observe_substeps": true,
+      "mujoco_substep_engine": "mjbatch"
+    },
+    "reward": {
+      "upright": {
+        "func": "unilab.tasks.manipulation.g1_cricket.task.upright",
+        "weight": 1.0
+      },
+      "bowling": {
+        "func": "unilab.tasks.manipulation.g1_cricket.bowling.bowling_reward",
+        "weight": 1.0
+      },
+      "failure": {
+        "func": "unilab.tasks.manipulation.g1_cricket.residual.failure_penalty",
+        "weight": -5.0
+      },
+      "action_rate": {
+        "func": "unilab.envs.mdp.action_rate_l2",
+        "weight": -0.01
+      }
+    }
+  },
+  "plan": {
+    "hand": "left",
+    "parents": [
+      [
+        -2.8,
+        1.4
+      ]
+    ],
+    "parent_selection": "near_straight_elbow_and_overhead_before_baseline_legal_stride_window",
+    "release_delays": [
+      4,
+      8,
+      12
+    ],
+    "drive_tick": 110,
+    "drive_pitches": [
+      0.3,
+      1.0
+    ],
+    "recovery_begin": 150,
+    "recovery_end": 190,
+    "seed": 6301,
+    "dt": 6.25e-05,
+    "engine": "mjbatch",
+    "rows": 6,
+    "new_training": false,
+    "policy_promoted": false
+  },
+  "parent_preflight_sha256": "47e0bb04d3ba81d2eb2fcd73124251d8087f66aa3fed37ef9be1041477fbbcab",
+  "parent_evaluation_sha256": "fc9a5a32a4ba8456c7e54c6592336523d4cd1ad5ee3f15cac4111ac6e5ee55bf",
+  "parent_release_evaluation_sha256": "d38e9c627cb41ffd99214210166addf3c9a4a7c260de34d400ecedd3d5972be2",
+  "changed_axis": "selected_shoulder_pitch_controller_kd_10_to_2",
+  "candidate_selection": "all_six_retained_overarm_release_schedules_in_original_order",
+  "checkpoint_scope": "distinct_action_config_strict_contract_no_old_checkpoint_reuse"
+}
