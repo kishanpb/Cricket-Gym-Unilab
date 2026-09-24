@@ -58,10 +58,11 @@ trains separate actors for 24,576 transitions each, but all 32 evaluated cases
 retain the ball: zero qualified deliveries. Full results and failed checkpoints
 are retained; this is not a learned-bowling showcase.
 
-The [overarm motion diagnostic and pitch-contact repair](G1_CRICKET.md#bounded-overarm-motion-diagnostic)
-retain the next 32 failed scripted attempts and an opt-in, finer-step ball/pitch
-model. Force/impulse accounting is checked against independent serial replay;
-these simulated loads are not physical calibration or successful learned bowling.
+The [absolute-arm reach study](G1_CRICKET.md#absolute-arm-reach-and-prior-target-guard)
+now achieves three left-hand scripted raise-and-recovery witnesses after bounding
+the locomotion prior's motor targets. All right-hand trials still fail physical
+checks. These are one-seed preload diagnostics, not learned releases or a bowling
+showcase; the full failures and contact-model limitations remain linked.
 
 ---
 

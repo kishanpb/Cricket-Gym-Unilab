@@ -96,6 +96,8 @@ uv run scripts/generate_support_matrix.py --write
 | PPO (torch) | `g1_cricket_delivery_v1` (g1 cricket delivery v1) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_impact_events_v1` (g1 cricket impact events v1) | Configured | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_impact_v1` (g1 cricket impact v1) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_overarm_guard_v1` (g1 cricket overarm guard v1) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_overarm_v1` (g1 cricket overarm v1) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_prior_v1` (g1 cricket prior v1) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_prior_v2` (g1 cricket prior v2) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_residual_v1` (g1 cricket residual v1) | Tested | - | - | - | - | - | - | - |

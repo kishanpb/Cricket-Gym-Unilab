@@ -593,6 +593,64 @@ tests (one existing RSL-RL warning) and 47 passing native Batch tests. Next,
 repair achieved overarm motion within the original motor limits before using
 any demonstration for imitation or PPO; do not turn these drops into a showcase.
 
+### Absolute Arm Reach And Prior Target Guard
+
+The [absolute-reference owner](docs/g1_cricket_overarm_v1.md) replaces only the
+selected seven arm targets with bounded absolute joint references; the other
+22 targets initially retain the frozen prior. Robot/holder dynamics, motor
+gains, physical limits, release semantics, contact model, reward and the full
+delivery gate are unchanged. Old checkpoints are not evidence for this changed
+action meaning. No robot or ball state is injected during control.
+
+[Eight full reach trials](g1_cricket_results/overarm_v1/evaluation.json) retain
+both hands, two shoulder pitches and two elbows at seed 6301 / .0625 ms. Seven
+achieve the sampled overhead criterion, but **none is a safe full-trial witness**.
+All exceed leg joint limits; three terminate early. The
+[exact failure replay](g1_cricket_results/overarm_v1/failure_attribution.json)
+reproduces every original outcome and trace, locating all first/worst limit
+violations in prior-controlled legs. Six first-event targets are themselves
+outside physical range. One later hip-roll target is -3.826 rad against a
+-.5236 rad lower limit. Contacts and overshoot also occur with in-range targets.
+
+The [guarded owner and fixed comparison](docs/g1_cricket_overarm_guard_v1.md)
+change only those 22 prior motor targets, clipping them to the central 90% of
+the original joint ranges. This is a command restriction, not stronger hardware
+or a state-safety guarantee. All eight original trajectories are rerun, with
+the same full gates and exact independent serial endpoint state/sensor replay.
+
+| Hand | Pitch / elbow target (rad) | Original max joint excess | Guarded max joint excess | Guarded reach witness |
+| --- | --- | ---: | ---: | --- |
+| Right | -2.45 / 1.10 | .166394 rad | .180996 rad | No |
+| Right | -2.45 / 1.40 | .009126 rad | 0 | No: foot contact |
+| Right | -2.80 / 1.10 | .118219 rad | .044304 rad | No |
+| Right | -2.80 / 1.40 | .107282 rad | .016818 rad | No |
+| Left | -2.45 / 1.10 | .022113 rad | 0 | Yes |
+| Left | -2.45 / 1.40 | .028856 rad | 0 | No: preload criterion |
+| Left | -2.80 / 1.10 | .011614 rad | 0 | Yes |
+| Left | -2.80 / 1.40 | .008278 rad | 0 | Yes |
+
+The [complete guarded report](g1_cricket_results/overarm_guard_v1/evaluation.json)
+therefore has **3/8 scripted preload witnesses, all left-handed**, not qualified
+deliveries. All four left cases complete four seconds without forbidden contact,
+joint exceedance or stability failure; three hold the required sampled overhead
+pose for 7, 32 and 31 consecutive control endpoints. Right cases still cross
+their feet, and three terminate early; the guard is not a universal improvement.
+No trial releases the ball, and all independent delivery gates correctly fail.
+These are development controls at one seed/timestep, not learned policies,
+held-out success rates or continuous-substep overhead-hold guarantees.
+
+Guard telemetry checks the actual applied targets against the bounded prior at
+every control interval; 108 source/configuration inputs, 104 learner-runtime
+files and the native executor are verified before/after. There are 50 focused
+passing UniLab tests (one existing RSL-RL warning) and 47 passing native Batch
+tests. Next, a separately bounded drive/release study can use the left preloads;
+right-hand gait/recovery remains unresolved. Both-hand learned bowling, paired
+resolution validation and showcase videos are still unfinished.
+
+Reproduce the original reach at `1784ee652712ab08f6ecaf95368bc00646d8d518`,
+and the attribution at `4cf98c6bec837883be526cba05bd7ca7f451dd83`; source-hash contracts are frozen
+per experiment, not claims that earlier matrices were rerun on newer adapters.
+
 The completed batting evaluation/video remain frozen at source revision
 `7f936c78b9e0d882087be6deedadba4525bd7224`; their hashes do not imply that these
 new adapter changes have been evaluated across the same 576 trials.

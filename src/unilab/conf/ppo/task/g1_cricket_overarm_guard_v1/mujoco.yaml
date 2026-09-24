@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_overarm_v1/mujoco
+  - _self_
+
+env:
+  actions:
+    residual:
+      prior_target_limit_fraction: 0.9
