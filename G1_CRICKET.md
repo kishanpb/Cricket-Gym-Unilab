@@ -286,12 +286,67 @@ capture adds memory/copy cost; this is not an equal-compute performance claim.
 Focused tests cover both G1 hands at 0.25/0.125 ms, exact policy observations,
 pending forces/torques, partial resets, final-substep exits and single payout.
 This clears the bounded fresh-PPO training preflight, **not a learned-shot gate**:
-all 96 frozen-policy trials still fail, physical calibration is unverified,
-and no new training or showcase video is claimed here. Next is the declared
-199,680-transition fresh right-hand PPO run and full two-resolution evaluation.
+all 96 frozen-policy trials still fail and physical calibration is unverified.
+The fresh training experiment below tests what this repair changes in learning;
+the preflight itself is not a showcase result.
 
 ```bash
 uv run scripts/evaluate_g1_cricket_impact_events.py
+```
+
+### Fresh Physics-Rate-Reward PPO: More Contacts, Still No Valid Strikes
+
+The predeclared right-hand CPU run completed **199,680 transitions**, seed 1,
+four environments and 2,080 updates, in **912.30 seconds**. It starts fresh,
+keeps the previous optimizer/network/budget, and evaluates only the final
+checkpoint, not a selected intermediate model. The config differs from impact-v1
+only by the substep observer, separation-reward acquisition and output directory.
+The [run summary](g1_cricket_results/impact_events_v1/right/run_summary.json),
+[native scalar history](g1_cricket_results/impact_events_v1/right/training_scalars.csv)
+and [diagnostics](g1_cricket_results/impact_events_v1/right/training_diagnostics.json)
+retain all iterations; all recorded scalar values and model tensors are finite.
+
+The [complete evaluation](g1_cricket_results/impact_events_v1/trained_evaluation.json)
+retains all 96 declared rows at each of 0.25 and 0.125 ms, with no change to
+the strict >1 m/s first-separation gate or the 6 mm penetration bound.
+
+| Hand / controller | Blade contacts at each timestep | Valid shots at each timestep | Outcome |
+| --- | ---: | ---: | --- |
+| Right / zero residual | 8/24 | 0/24 | Center-lane contacts only |
+| Right / final PPO | 24/24 | 0/24 | Every first exit still travels backward; 7/24 later hit the foot |
+| Left / zero residual | 8/24 | 0/24 | Center-lane contacts only |
+| Left / PPO transfer | 0/24 | 0/24 | All stop at 0.22 s on bat-to-left-hip guard contact |
+
+Right-hand contact coverage rises from the previous checkpoint's 16/24 to
+24/24, including every lane, but that is **not valid-shot improvement**.
+First-separation ball vx is -0.908 to -0.050 m/s at 0.25 ms and -0.917 to
+-0.039 m/s at 0.125 ms. Right PPO completes two seconds with no bat/body guard
+failure or joint-limit excess, but the outgoing-speed and ball/foot failures
+remain disqualifying. Left transfer is untrained and unsafe in this setup;
+its early guard termination must not be described as full-horizon stability.
+
+Every native/serial endpoint and named sensor matches exactly, including the
+early terminations. Both 48-row zero-residual physical baselines reproduce;
+fine-timestep returns also exactly match the repaired-reward preflight.
+Coarse baseline returns are excluded from the old-reward comparison, so the
+reward change cannot masquerade as learning progress. The largest right-PPO
+blade penetration is 5.056 mm (0.25 ms) / 5.014 mm (0.125 ms).
+**79/96** timestep pairs meet all declared numerical tolerances, or **23/40**
+contact-bearing pairs: 15 have penetration differences and three have different
+failure lists, with one overlap. Material calibration and numerical consistency
+are still not established, and there is no new showcase video or policy promotion.
+
+Next diagnostic: first-impact bat velocity/alignment, residual saturation and
+target-versus-actual arm motion over the preceding 100 ms, retaining every trial
+identity and marking misses unavailable. Replay only through the needed impact
+window; do not repeat the completed reward-timing audit or expand action bounds
+before determining whether the learned motion uses its available range.
+
+```bash
+uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_impact_events_v1/mujoco \
+  training.log_dir=g1_cricket_results/impact_events_v1/right
+uv run scripts/retain_g1_training_diagnostics.py g1_cricket_results/impact_events_v1/right
+uv run scripts/evaluate_g1_cricket_impact_events_learning.py
 ```
 
 ## Historical Contact Resolution: Excessive Compliance
