@@ -48,6 +48,10 @@ The [complete 16-episode contact study](docs/g1_cricket_bimanual_contact.md) has
 joint-stop or unintended-contact violations and keeps ball penetration below
 6 mm. Bat-path accuracy and one reference-control pitch-force resolution check
 still fail; no final G1 advertising reel or running-bowling result is claimed.
+The [whole-body running-delivery reference](docs/g1_cricket_running_reference.md)
+now follows the earlier approach/gather/overarm/recovery structure in both hands.
+Its offline targets are not learned motion: physical PD baselines fall before
+delivery, and shoulder follow-through still needs repair.
 
 Earlier one-arm contact experiments and failed bowling trials remain in the
 research log, including [force/touch diagnostic video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)

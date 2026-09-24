@@ -59,6 +59,31 @@ def render_poses(model, poses, hand, path, label):
                 writer.append_data(np.asarray(frame))
 
 
+def render_review(output):
+    sheet = Image.new("RGB", (1440, 4 * 161), "#eef1ef")
+    draw = ImageDraw.Draw(sheet)
+    for row, (kind, hand) in enumerate(
+        (kind, hand) for kind in ("offline_targets", "pd_diagnostic") for hand in ("right", "left")
+    ):
+        with imageio.get_reader(output / f"{hand}_{kind}.mp4") as reader:
+            count = reader.count_frames()
+            frames = (
+                [0, 30, 60, 83, 91, 135]
+                if kind == "offline_targets"
+                else np.linspace(0, count - 1, 6, dtype=int)
+            )
+            for column, frame in enumerate(frames):
+                tile = Image.fromarray(reader.get_data(int(frame))).resize((240, 135))
+                sheet.paste(tile, (column * 240, row * 161 + 26))
+                draw.text(
+                    (column * 240 + 4, row * 161 + 6),
+                    f"{hand} {kind} | {frame * 0.02:.2f}s",
+                    fill="#18251d",
+                    font=ImageFont.load_default(size=12),
+                )
+    sheet.save(output / "running_motion_review.png")
+
+
 def run(hand, output, render):
     with TemporaryDirectory(prefix="g1-running-") as temporary:
         scene = Path(temporary) / "scene.xml"
@@ -213,6 +238,8 @@ if __name__ == "__main__":
     (args.output / "evaluation.json").write_text(
         json.dumps(result, indent=2, allow_nan=False) + "\n"
     )
+    if args.render:
+        render_review(args.output)
     print(
         [{k: v for k, v in row.items() if k not in {"trace", "kinematic_errors"}} for row in rows]
     )

@@ -5,7 +5,8 @@ from pathlib import Path
 import mujoco
 import numpy as np
 import pytest
-from retarget_g1_cricket_running import velocity_reference
+from PIL import Image
+from retarget_g1_cricket_running import render_review, velocity_reference
 
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
 from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
@@ -18,6 +19,36 @@ from unilab.tasks.manipulation.g1_cricket.running import (
 )
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def test_review_includes_terminal_failure_frames(monkeypatch, tmp_path):
+    selected = {}
+
+    class Reader:
+        def __init__(self, path):
+            self.name = path.name
+            selected[self.name] = []
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            pass
+
+        def count_frames(self):
+            return 136 if "offline" in self.name else 32
+
+        def get_data(self, frame):
+            selected[self.name].append(frame)
+            return np.full((8, 8, 3), frame, dtype=np.uint8)
+
+    monkeypatch.setattr("retarget_g1_cricket_running.imageio.get_reader", Reader)
+    render_review(tmp_path)
+    for hand in ("right", "left"):
+        assert selected[f"{hand}_offline_targets.mp4"] == [0, 30, 60, 83, 91, 135]
+        assert selected[f"{hand}_pd_diagnostic.mp4"] == [0, 6, 12, 18, 24, 31]
+    with Image.open(tmp_path / "running_motion_review.png") as sheet:
+        assert sheet.size == (1440, 644)
 
 
 def test_targets_mirror_hands_and_keep_delivery_foot_behind_crease():

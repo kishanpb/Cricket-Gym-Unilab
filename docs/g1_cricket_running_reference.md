@@ -70,3 +70,32 @@ bound, not a claim about hardware-certified velocity limits. Original hard
 joint limits, inertias and force caps remain unchanged. Evaluate both hands
 once in `running_reference_v2`, retaining every failed frame and complete-or-
 fallen physical episode; do not train through geometric defects.
+
+## Second Reference Results
+
+The complete [second pair](../g1_cricket_results/running_reference_v2/evaluation.json)
+uses frozen source `ebdb057a`. Both 136-frame targets have zero unexpected
+penetrations deeper than the 1 mm audit threshold and a maximum joint-reference
+speed of 12 rad/s. Foot error stays below 1.83 mm and intended-release arm error
+is 4.61 mm. However, follow-through arm error reaches 122.23 mm as the IK solution
+reaches shoulder and waist bounds. One frame per hand (1.16 s) also reaches the
+optimizer iteration limit. This is not an accepted training reference.
+
+Both physical episodes still fall at 0.62 s, before the gather or release.
+They have no loaded unexpected contacts or joint-stop excursions, but do reach
+the motor-force cap during the episode. Final pelvis heights are 0.4723 / 0.4730 m
+and root errors are 0.3198 / 0.3198 m (right / left). The scene has no floating-base
+support or pose correction. Removing the reference intersections did not solve
+dynamic balance; the original pose-scripted human trajectory cannot simply be
+replayed by the robot's motors.
+
+The [fixed-frame review](../g1_cricket_results/running_reference_v2/running_motion_review.png)
+includes approach, gather, plant, intended release and recovery targets above
+both complete failed PD rollouts, including their terminal frames. The target
+videos are explicitly offline animation, not physical or learned bowling.
+Full pose arrays, source hashes and every error/physical trace remain available
+for both revisions. Superseded v1 videos/tracking exports were pruned; its
+fixed-frame review remains, and v2 retains all four videos and tracking exports.
+Next work must resolve the shoulder
+return path and dynamically feasible foot support before running-delivery RL
+or a bowling showcase can be accepted.
