@@ -45,7 +45,10 @@ bat-ball overlap. Subsequent command refinements still fail validation; the
 [wrist-pitch audit](G1_CRICKET.md#wrist-pitch-and-motor-saturation) explains an
 identical-motion torque plateau. The subsequent
 [elbow test](G1_CRICKET.md#elbow-motion-with-motor-telemetry) changes actual motion
-but does not produce a validated shot. No learned G1 showcase is claimed.
+but does not produce a validated shot. An
+[isolated contact-model study](G1_CRICKET.md#isolated-compliance-study) now exposes
+the overlap-versus-force tradeoff and required finer timesteps; the robot task
+is unchanged. No learned G1 showcase is claimed.
 
 ---
 

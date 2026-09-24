@@ -223,14 +223,9 @@ retaining 1,600 control-interval summaries. Maximum reconstruction error is
 verify, and 68 focused tests pass, including 11 new command/motor-trace tests.
 No policy, motor, reward, contact or prior change was made.
 
-Further small joint-target sweeps are not supported by these results. Before
-more training, a separate isolated compliance sensitivity study should test
-whether a shorter contact time constant improves numerical behavior, with
-force, impulse, momentum, duration, rebound and resolution checks. This changes
-the model, not the policy, and cannot be called learned improvement. MuJoCo's
-time constant affects stiffness and damping together; it is not a measured
-cricket restitution coefficient. [Solver parameters](https://mujoco.readthedocs.io/en/stable/modeling.html#solver-parameters).
-The current task remains unchanged, uncalibrated and without a new showcase.
+Further small joint-target sweeps are not supported by these results. The
+isolated model study below follows this control diagnosis; the current robot
+task remains unchanged, uncalibrated and without a new showcase.
 
 With the documented external prior and runtime installed, the focused verification is:
 
@@ -242,6 +237,54 @@ uv run --no-sync python -m pytest tests/envs/test_g1_cricket_mjbatch.py \
 The [evaluation runner](scripts/evaluate_g1_cricket_mjbatch.py) refuses to
 overwrite retained evidence. Its result is specific to the pinned runtime and
 executor build; the native binary digest is not a cross-platform identity claim.
+
+### Isolated Compliance Study
+
+The [frozen contract](docs/g1_cricket_compliance_v1.md) compares 4 ms and 2 ms
+contact time constants at damping ratio 1, using the current explicit bat-ball
+pair. A fixed blade and free sphere remove robot motion and gravity. Every
+combination of two speeds and four predeclared timesteps runs one full second:
+[all 16 rows](g1_cricket_results/compliance_v1/evaluation.json), 240,000 physics
+steps and 2,821 contacting-solve records are retained. This is an isolated
+MuJoCo model diagnostic, not native mjbatch execution or learned robot evidence.
+
+At the finest 0.03125 ms timestep:
+
+| Incident speed | Time constant | Penetration | Peak normal force | Contact / loaded duration | Rebound ratio |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 2.5 m/s | 4 ms | 3.560987 mm | 200.443 N | 15.750 / 7.750 ms | 0.132015 |
+| 2.5 m/s | 2 ms | 1.780290 mm | 402.069 N | 7.844 / 3.844 ms | 0.132179 |
+| 4.67 m/s | 4 ms | 6.642890 mm | 374.469 N | 15.750 / 7.750 ms | 0.131836 |
+| 4.67 m/s | 2 ms | 3.315848 mm | 751.048 N | 7.844 / 3.844 ms | 0.131792 |
+
+Shortening the time constant roughly halves overlap and contact duration but
+**doubles peak load without improving rebound**. The near-0.132 rebound ratio
+still corresponds to about 98.3% net kinetic-energy loss in this fixed fixture;
+neither setting is calibrated to cricket materials. Lower overlap alone is not
+a policy improvement or justification for relaxing robot gates.
+
+All 16 rows pass force-accounting and integrity checks. Maximum per-step
+impulse/momentum error is 6.42e-17 N s; maximum translational work/energy error
+is 1.78e-15 J. The report separates signed impulse from force-norm integral,
+geometric contact from loaded contact, and translational from rotational energy.
+Small numerical transverse/rotational drift is measured, not assumed zero.
+Tests independently reverse collision direction and reproduce the historical
+default-pair probe, which is not silently equated with this explicit pair.
+
+**8/12 adjacent-resolution comparisons pass.** The 4 ms control passes all six.
+At 2 ms, both 0.25-to-0.125 ms comparisons fail loaded-duration tolerance; both
+0.125-to-0.0625 ms comparisons fail penetration and exit-velocity tolerance.
+Only the finest 0.0625-to-0.03125 ms pair passes at both speeds. This is finite-grid
+consistency, not asymptotic convergence or material validation. All nine input
+hashes verify, all 16 rows reproduce exactly, and 82 focused tests pass.
+
+A separately versioned robot transfer study at those two finer timesteps is the
+next candidate test, pairing both 4 ms control and 2 ms candidate at the same
+timesteps, with frozen controls and all original shot, stability,
+contact and actuator gates. It must report the changed model and any increased
+fixture loads before new training. No task or checkpoint is changed by this
+isolated study; both-hand learned batting, bowling and showcase videos remain
+unfinished.
 
 ## Learned Arm Residual: First Interception Experiment
 

@@ -1,0 +1,60 @@
+{
+  "scope": "isolated_fixed_blade_model_sensitivity_not_robot_evaluation",
+  "plan": {
+    "time_constants_s": [
+      0.004,
+      0.002
+    ],
+    "incident_speeds_m_s": [
+      2.5,
+      4.67
+    ],
+    "timesteps_s": [
+      0.00025,
+      0.000125,
+      6.25e-05,
+      3.125e-05
+    ],
+    "duration_s": 1.0,
+    "expected_rows": 16,
+    "changed_axis": "positive_solref_time_constant_at_fixed_damping_ratio_one",
+    "transverse_speed_tolerance_m_s": 1e-06,
+    "angular_speed_tolerance_rad_s": 0.0001
+  },
+  "pair": {
+    "name": "cricket_blade_impact_v1",
+    "geom1": "ball_geom",
+    "geom2": "bat_blade",
+    "condim": "3",
+    "solref": "0.004 1",
+    "solimp": "0.9 0.95 0.001 0.5 2",
+    "friction": "0.6 0.6 0.01 0.001 0.001",
+    "margin": "0",
+    "gap": "0"
+  },
+  "absolute_tolerances": {
+    "maximum_penetration_m": 0.0001,
+    "peak_normal_force_n": 1.0,
+    "contact_seconds": 0.000125,
+    "loaded_seconds": 0.000125,
+    "first_exit_vx_m_s": 0.01,
+    "force_norm_integral_ns": 0.001,
+    "final_kinetic_energy_j": 0.005
+  },
+  "relative_tolerance": 0.05,
+  "mujoco_version": "3.11.0",
+  "numpy_version": "2.4.4",
+  "input_sha256": {
+    "scripts/probe_g1_cricket_compliance.py": "634d5c7d9953eb09c417c0231b6b27bade0321bef71fef3697ad7982fc0229c8",
+    "tests/scripts/test_g1_cricket_compliance.py": "7ab3feee709fe3f6aa4e035357214b2e9dfcaa18cb2ed027d78f18f95745a2f9",
+    "docs/g1_cricket_compliance_v1.md": "ee936efcf1eae59c07430e710075d219556ec47dec6987f127a4c23aa2e6604b",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "b621885e9858c031685082855e668b8fb1ce31b9d3a7526e7331e7dbc0b59341",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "scripts/probe_g1_cricket_impact.py": "2028ddf5b8a08a9255344cb0e0479349c94ec7abd891f0af5768ea062800713e",
+    "g1_cricket_results/residual_v3/isolated_impact.json": "37f98e7c5e51e75fb2c9d83e63c9a210c9b8177327304d8f13ed2e008143adc7",
+    "g1_cricket_results/elbow_v1/evaluation.json": "629b82fe3acb5a440457bb8d07c00587da8446fa9e22f472da56056b9d2b7012"
+  },
+  "robot_task_changed": false,
+  "physical_calibration_validated": false,
+  "policy_promoted": false
+}
