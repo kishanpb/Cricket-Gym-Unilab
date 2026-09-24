@@ -26,24 +26,28 @@ release parameters with a scripted run-up. Neither is learned whole-body locomot
 **Contact diagnostics:** [force and simulated-touch reporting](CRICKET_CONTACTS.md)
 now includes complete reference-control traces, terminal-reset handling and explicit
 sensor-timing limits. These are simulated contact loads, not hardware taxels. The
-next extension is learned cricket on the repository's Unitree G1 model; the current
-videos are not G1 demonstrations.
+original highlights above are not Unitree G1 demonstrations.
 
 **Unitree G1 research:** [setup, experiments and complete results](G1_CRICKET.md).
 The current [whole-body motion-tracking task](docs/g1_cricket_bimanual_tracking.md)
 uses two mechanical hand grips and independently trained right/left PPO actors
 controlling all 29 joints through native CPU mjbatch. It follows G1-scaled
 guard/backlift/downswing targets without a frozen walking policy or step-time
-pose overwrites. This remains a dry-swing development task: balance, actual
-ball hitting and running bowling are not yet showcase-qualified.
+pose overwrites. Ball-aware batting and running bowling are not yet
+showcase-qualified.
 The [balance-feedback study](docs/g1_cricket_balance_feedback.md) now completes
 both three-second reference-controlled swings without falls or unintended
 contacts. Complete controller and PPO diagnostic videos, including failures,
 retain substep force, grip, joint-limit and bat-path measurements; they are not
 advertising clips or evidence of learned ball hitting.
-The [latest two-hand PPO diagnostic](g1_cricket_results/bimanual_balanced_small_residual_v1/two_hand_ppo_diagnostic.mp4)
-completes both swings, but small joint-stop excursions and bat-path error still
-fail the physical/accuracy gates; the ball remains out of play.
+The [latest two-hand G1 video](g1_cricket_results/bimanual_soft_toss_v1/two_hand_ppo_soft_toss.mp4)
+now shows real simulated bat-ball contact and upright recovery in both stances,
+at 0.5x. These are frozen dry-swing PPO actors with bounded waist/ankle feedback,
+mechanical grips and no ball observation, not learned interception.
+The [complete 16-episode contact study](docs/g1_cricket_bimanual_contact.md) has no
+joint-stop or unintended-contact violations and keeps ball penetration below
+6 mm. Bat-path accuracy and one reference-control pitch-force resolution check
+still fail; no final G1 advertising reel or running-bowling result is claimed.
 
 Earlier one-arm contact experiments and failed bowling trials remain in the
 research log, including [force/touch diagnostic video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)

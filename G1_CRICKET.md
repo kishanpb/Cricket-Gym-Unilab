@@ -13,6 +13,15 @@ under development. Running bowling must similarly
 learn the approach, gather, legal plant, release and recovery rather than rely
 on the slow walking prior used in the historical experiments below.
 
+The [two-hand soft-toss video](g1_cricket_results/bimanual_soft_toss_v1/two_hand_ppo_soft_toss.mp4)
+now records actual simulated strikes and complete upright recovery with both
+frozen PPO actors. The [full contact study](docs/g1_cricket_bimanual_contact.md)
+retains both controls, both hands and both physics resolutions: all 16 episodes
+complete, all eight tosses contact, no joint-stop or unexpected-contact failures.
+This is not learned interception: the actors have no ball observation, and the
+reference controller also hits. Bat-path accuracy and one reference pitch-force
+agreement check remain failed. Running bowling and the final showcase are pending.
+
 ## Historical Single-Wrist Foundation
 
 This experimental task uses UniLab's floating-base, 29-DoF Unitree G1 model

@@ -1,0 +1,965 @@
+{
+  "scope": "complete_frozen_actor_development_pool_not_learned_interception",
+  "row_count": 16,
+  "rows": [
+    {
+      "resolution": "coarse",
+      "condition": "dry",
+      "hand": "right",
+      "controller": "reference_only",
+      "return": 17.48775404691696,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": false,
+        "outgoing_vx": false,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.137747547721336,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341732108161107,
+        "fixture_force_n": 72.00698924627018,
+        "fixture_torque_nm": 7.40398790908156,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 1.9441875000000015,
+          "peak_force_n": 882.3976236983606,
+          "normal_impulse_ns": 4.591079866435687,
+          "penetration_m": 0.001551565227492488
+        }
+      },
+      "first_force_free_blade_exit": null,
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "coarse",
+      "condition": "dry",
+      "hand": "right",
+      "controller": "ppo",
+      "return": 17.585320584475994,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": false,
+        "outgoing_vx": false,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.12729177352263274,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341732108161107,
+        "fixture_force_n": 71.46790466188097,
+        "fixture_torque_nm": 7.265421125093415,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 1.9441875000000015,
+          "peak_force_n": 882.3976236983606,
+          "normal_impulse_ns": 4.591079866435687,
+          "penetration_m": 0.001551565227492488
+        }
+      },
+      "first_force_free_blade_exit": null,
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "coarse",
+      "condition": "dry",
+      "hand": "left",
+      "controller": "reference_only",
+      "return": 17.487776897847652,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": false,
+        "outgoing_vx": false,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.1374527214954279,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357243444651377,
+        "fixture_force_n": 72.08666201310987,
+        "fixture_torque_nm": 7.392685591141338,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 1.9441875000000015,
+          "peak_force_n": 882.3976236983606,
+          "normal_impulse_ns": 4.591079866435687,
+          "penetration_m": 0.001551565227492488
+        }
+      },
+      "first_force_free_blade_exit": null,
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "coarse",
+      "condition": "dry",
+      "hand": "left",
+      "controller": "ppo",
+      "return": 17.446853697299957,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": false,
+        "outgoing_vx": false,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13389704248897596,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357243444651377,
+        "fixture_force_n": 69.85078571703289,
+        "fixture_torque_nm": 7.191696860209757,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 1.9441875000000015,
+          "peak_force_n": 882.3976236983606,
+          "normal_impulse_ns": 4.591079866435687,
+          "penetration_m": 0.001551565227492488
+        }
+      },
+      "first_force_free_blade_exit": null,
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "coarse",
+      "condition": "toss",
+      "hand": "right",
+      "controller": "reference_only",
+      "return": 17.499723501503468,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13834596092286086,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341732108161107,
+        "fixture_force_n": 194.30818921871835,
+        "fixture_torque_nm": 35.43917726689221,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/bat_blade": {
+          "duration_s": 0.027000000000000017,
+          "peak_force_n": 683.65481608896,
+          "normal_impulse_ns": 0.8367193269775617,
+          "penetration_m": 0.003165417632486331
+        },
+        "ball_geom/pitch": {
+          "duration_s": 0.5106250000000004,
+          "peak_force_n": 1396.3540901513697,
+          "normal_impulse_ns": 3.327158191883488,
+          "penetration_m": 0.002450929786962909
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4074367609024139,
+        "velocity_m_s": [
+          1.9029633593399125,
+          -0.4274335206178007,
+          -5.78434454981323
+        ]
+      },
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "coarse",
+      "condition": "toss",
+      "hand": "right",
+      "controller": "ppo",
+      "return": 17.571751534938812,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.1298638659282801,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341732108161107,
+        "fixture_force_n": 187.60244557976552,
+        "fixture_torque_nm": 34.99048468320692,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/bat_blade": {
+          "duration_s": 0.027625000000000018,
+          "peak_force_n": 620.989130961174,
+          "normal_impulse_ns": 0.7488475485546847,
+          "penetration_m": 0.0027522560124544487
+        },
+        "ball_geom/pitch": {
+          "duration_s": 0.4574375000000004,
+          "peak_force_n": 1436.2806473660191,
+          "normal_impulse_ns": 3.3421403098347224,
+          "penetration_m": 0.0025205121727891397
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4073742609024138,
+        "velocity_m_s": [
+          1.4409487527355647,
+          -0.23577316640459717,
+          -5.840940045856078
+        ]
+      },
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "coarse",
+      "condition": "toss",
+      "hand": "left",
+      "controller": "reference_only",
+      "return": 17.500238560140133,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13805237183115585,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357243444651377,
+        "fixture_force_n": 195.473099412659,
+        "fixture_torque_nm": 35.7333250252028,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/bat_blade": {
+          "duration_s": 0.02618750000000002,
+          "peak_force_n": 687.287358392858,
+          "normal_impulse_ns": 0.8367427539390372,
+          "penetration_m": 0.0032403521691792905
+        },
+        "ball_geom/pitch": {
+          "duration_s": 0.42156250000000034,
+          "peak_force_n": 1477.6371786091265,
+          "normal_impulse_ns": 3.3268638028976225,
+          "penetration_m": 0.002593107377980422
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4074367609024139,
+        "velocity_m_s": [
+          1.9136231282137368,
+          0.43061015034357875,
+          -5.78311194521847
+        ]
+      },
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "coarse",
+      "condition": "toss",
+      "hand": "left",
+      "controller": "ppo",
+      "return": 17.428327150642872,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13900709776346598,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357243444651377,
+        "fixture_force_n": 184.81573004501553,
+        "fixture_torque_nm": 33.56659613867204,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/bat_blade": {
+          "duration_s": 0.023062500000000017,
+          "peak_force_n": 670.1810080570788,
+          "normal_impulse_ns": 0.7815727184758698,
+          "penetration_m": 0.003139135538998028
+        },
+        "ball_geom/pitch": {
+          "duration_s": 0.5176875000000004,
+          "peak_force_n": 1376.7487869186011,
+          "normal_impulse_ns": 3.3134125142879634,
+          "penetration_m": 0.0024152650009218526
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4062492609024124,
+        "velocity_m_s": [
+          1.702929234614708,
+          0.5651181046007195,
+          -5.691755664183853
+        ]
+      },
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "fine",
+      "condition": "dry",
+      "hand": "right",
+      "controller": "reference_only",
+      "return": 17.487664349377155,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": false,
+        "outgoing_vx": false,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13778205794991416,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341753699477544,
+        "fixture_force_n": 72.02059358964841,
+        "fixture_torque_nm": 7.40401807059656,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 1.9502500000000016,
+          "peak_force_n": 874.7979790514038,
+          "normal_impulse_ns": 4.591079874165148,
+          "penetration_m": 0.001568748267625028
+        }
+      },
+      "first_force_free_blade_exit": null,
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "fine",
+      "condition": "dry",
+      "hand": "right",
+      "controller": "ppo",
+      "return": 17.58532013744116,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": false,
+        "outgoing_vx": false,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.12729725250665616,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341753377762463,
+        "fixture_force_n": 71.48089984654145,
+        "fixture_torque_nm": 7.265048015812687,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 1.9502500000000016,
+          "peak_force_n": 874.7979790514038,
+          "normal_impulse_ns": 4.591079874165148,
+          "penetration_m": 0.001568748267625028
+        }
+      },
+      "first_force_free_blade_exit": null,
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "fine",
+      "condition": "dry",
+      "hand": "left",
+      "controller": "reference_only",
+      "return": 17.487843699753284,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": false,
+        "outgoing_vx": false,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.1374473837188108,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357265775915294,
+        "fixture_force_n": 72.10038736783717,
+        "fixture_torque_nm": 7.392369866982052,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 1.9502500000000016,
+          "peak_force_n": 874.7979790514038,
+          "normal_impulse_ns": 4.591079874165148,
+          "penetration_m": 0.001568748267625028
+        }
+      },
+      "first_force_free_blade_exit": null,
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "fine",
+      "condition": "dry",
+      "hand": "left",
+      "controller": "ppo",
+      "return": 17.447038136422634,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": false,
+        "outgoing_vx": false,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13390951683138935,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357267135728153,
+        "fixture_force_n": 69.86415581647105,
+        "fixture_torque_nm": 7.190978339389131,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 1.9502500000000016,
+          "peak_force_n": 874.7979790514038,
+          "normal_impulse_ns": 4.591079874165148,
+          "penetration_m": 0.001568748267625028
+        }
+      },
+      "first_force_free_blade_exit": null,
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "fine",
+      "condition": "toss",
+      "hand": "right",
+      "controller": "reference_only",
+      "return": 17.49975272268057,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.1383773095782334,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341753699477544,
+        "fixture_force_n": 194.40260574128462,
+        "fixture_torque_nm": 35.441057445322535,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/bat_blade": {
+          "duration_s": 0.02603125000000002,
+          "peak_force_n": 683.4942514296343,
+          "normal_impulse_ns": 0.836878313239045,
+          "penetration_m": 0.0032597319604682276
+        },
+        "ball_geom/pitch": {
+          "duration_s": 0.45668750000000036,
+          "peak_force_n": 1423.3733747460813,
+          "normal_impulse_ns": 3.3268303953315175,
+          "penetration_m": 0.002550180869158411
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4073742609023876,
+        "velocity_m_s": [
+          1.9176364614431802,
+          -0.4293345256865469,
+          -5.783230079395337
+        ]
+      },
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "fine",
+      "condition": "toss",
+      "hand": "right",
+      "controller": "ppo",
+      "return": 17.571892157197,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.1298654584416896,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341753377762463,
+        "fixture_force_n": 187.8480262225912,
+        "fixture_torque_nm": 35.019071165351846,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/bat_blade": {
+          "duration_s": 0.02650000000000002,
+          "peak_force_n": 621.3606040558531,
+          "normal_impulse_ns": 0.748971404192653,
+          "penetration_m": 0.0028487246977673963
+        },
+        "ball_geom/pitch": {
+          "duration_s": 0.45109375000000035,
+          "peak_force_n": 1420.471525600548,
+          "normal_impulse_ns": 3.3417987194151713,
+          "penetration_m": 0.002543393330827169
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4073430109023877,
+        "velocity_m_s": [
+          1.4558953732607947,
+          -0.23694506954105973,
+          -5.840807759872247
+        ]
+      },
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "fine",
+      "condition": "toss",
+      "hand": "left",
+      "controller": "reference_only",
+      "return": 17.50029620528221,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13805747537346666,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357265775915294,
+        "fixture_force_n": 194.23899884462728,
+        "fixture_torque_nm": 35.448968779314015,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/bat_blade": {
+          "duration_s": 0.02643750000000002,
+          "peak_force_n": 681.7906651808369,
+          "normal_impulse_ns": 0.8368564901723095,
+          "penetration_m": 0.003224159864632377
+        },
+        "ball_geom/pitch": {
+          "duration_s": 0.4714375000000004,
+          "peak_force_n": 1405.7351850247778,
+          "normal_impulse_ns": 3.3270018876320337,
+          "penetration_m": 0.002518315814604641
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4074367609023875,
+        "velocity_m_s": [
+          1.9125637293462345,
+          0.43079590447525606,
+          -5.7840792222495345
+        ]
+      },
+      "unexpected_contacts": []
+    },
+    {
+      "resolution": "fine",
+      "condition": "toss",
+      "hand": "left",
+      "controller": "ppo",
+      "return": 17.428497157990932,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.1390205012179165,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357267135728153,
+        "fixture_force_n": 183.41606882309392,
+        "fixture_torque_nm": 33.25975691912351,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/bat_blade": {
+          "duration_s": 0.023343750000000017,
+          "peak_force_n": 664.8415985847109,
+          "normal_impulse_ns": 0.7816434637592486,
+          "penetration_m": 0.0031247926858296235
+        },
+        "ball_geom/pitch": {
+          "duration_s": 0.4772500000000004,
+          "peak_force_n": 1396.6938448116116,
+          "normal_impulse_ns": 3.3135423929272183,
+          "penetration_m": 0.002500696143012744
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4062805109023901,
+        "velocity_m_s": [
+          1.701661327820634,
+          0.5649413096220304,
+          -5.693042085222408
+        ]
+      },
+      "unexpected_contacts": []
+    }
+  ],
+  "resolution_comparisons": [
+    {
+      "hand": "right",
+      "controller": "reference_only",
+      "checks": {
+        "ball_geom/bat_blade:present_both": true,
+        "ball_geom/bat_blade:peak_force_n": true,
+        "ball_geom/bat_blade:penetration_m": true,
+        "ball_geom/pitch:present_both": true,
+        "ball_geom/pitch:peak_force_n": true,
+        "ball_geom/pitch:penetration_m": true,
+        "blade_exit_both": true,
+        "blade_exit_velocity": true
+      },
+      "all_pass": true
+    },
+    {
+      "hand": "right",
+      "controller": "ppo",
+      "checks": {
+        "ball_geom/bat_blade:present_both": true,
+        "ball_geom/bat_blade:peak_force_n": true,
+        "ball_geom/bat_blade:penetration_m": true,
+        "ball_geom/pitch:present_both": true,
+        "ball_geom/pitch:peak_force_n": true,
+        "ball_geom/pitch:penetration_m": true,
+        "blade_exit_both": true,
+        "blade_exit_velocity": true
+      },
+      "all_pass": true
+    },
+    {
+      "hand": "left",
+      "controller": "reference_only",
+      "checks": {
+        "ball_geom/bat_blade:present_both": true,
+        "ball_geom/bat_blade:peak_force_n": true,
+        "ball_geom/bat_blade:penetration_m": true,
+        "ball_geom/pitch:present_both": true,
+        "ball_geom/pitch:peak_force_n": false,
+        "ball_geom/pitch:penetration_m": true,
+        "blade_exit_both": true,
+        "blade_exit_velocity": true
+      },
+      "all_pass": false
+    },
+    {
+      "hand": "left",
+      "controller": "ppo",
+      "checks": {
+        "ball_geom/bat_blade:present_both": true,
+        "ball_geom/bat_blade:peak_force_n": true,
+        "ball_geom/bat_blade:penetration_m": true,
+        "ball_geom/pitch:present_both": true,
+        "ball_geom/pitch:peak_force_n": true,
+        "ball_geom/pitch:penetration_m": true,
+        "blade_exit_both": true,
+        "blade_exit_velocity": true
+      },
+      "all_pass": true
+    }
+  ],
+  "all_toss_checks_pass": false,
+  "all_resolution_comparisons_pass": false,
+  "input_sha256": {
+    "right_coarse_dry/evaluation.json": "b75dc480afede9b113b68f59846b4731ac55e2c1e00c521b72cb9f61e73933ce",
+    "left_coarse_dry/evaluation.json": "4b459433a2b5e82c33cdb88d79f7da62349838a9b761fbfa6df8de784baf9db0",
+    "right_coarse_toss/evaluation.json": "925f8e012804798602987ac046ef7818460134af0f4c16612d99fea64c6c1654",
+    "left_coarse_toss/evaluation.json": "b548e74130ddb94bdc6ff3914abc4bd064c6a1be627457bf1d12db6df1cfc362",
+    "right_fine_dry/evaluation.json": "a7cd4816ac96b635e1c032c534507e668bea36c3f0513b57c1b145b5fb0ce773",
+    "left_fine_dry/evaluation.json": "5f0d1c658b49c9c99ce168422f2ae9fb14d66c275f72bc85a53abe385bd3fd74",
+    "right_fine_toss/evaluation.json": "590d02eeda8bc6e2487b05dc21d64fae8d2c3b029c6745016c0b640758338df4",
+    "left_fine_toss/evaluation.json": "d18316eb5590e6e5f22a40f967790d0d54e0fd86c34d2f5ac0799ac665a29000"
+  },
+  "reporter_sha256": "750d26610d53b57ec8e32353eeb233461295922a477ccf62086ba013868ab1c5",
+  "media": {
+    "combined_frames": 350,
+    "fps": 25,
+    "physical_speed": 0.5,
+    "contact_sheet_times_s": [
+      0.02,
+      1.14,
+      1.4,
+      1.8,
+      3.0
+    ]
+  }
+}
