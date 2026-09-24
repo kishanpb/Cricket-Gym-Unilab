@@ -8,7 +8,7 @@ import numpy as np
 
 from unilab.managers.action_manager import ActionTerm, ActionTermCfg
 
-from .bimanual import build_bimanual_scene
+from .bimanual import build_bimanual_scene, support_feedforward
 from .prior import SDK_JOINTS
 from .task import G1CricketCfg
 
@@ -54,6 +54,46 @@ class CricketReferenceAction(ActionTerm):
         ids = slice(None) if env_ids is None else env_ids
         self._raw[ids] = 0
         self.target[ids] = self._entity.data.default_joint_pos[ids]
+
+
+@dataclass(kw_only=True)
+class SupportedCricketReferenceActionCfg(CricketReferenceActionCfg):
+    reference_file: str
+
+    def build(self, env):
+        return SupportedCricketReferenceAction(self, env)
+
+
+class SupportedCricketReferenceAction(CricketReferenceAction):
+    def __init__(self, cfg, env):
+        super().__init__(cfg, env)
+        model = env.get_playback_model()
+        joints = np.array([model.joint(name).id for name in SDK_JOINTS])
+        self.limits = model.jnt_range[joints].copy()
+        # Round inward before writing float32 controls at a hard joint limit.
+        self.control_limits = np.nextafter(
+            self.limits.astype(np.float32), self.limits[:, ::-1].astype(np.float32)
+        )
+        self.velocity_gain = -model.actuator_biasprm[:, 2] / model.actuator_gainprm[:, 0]
+        with np.load(cfg.reference_file) as saved:
+            poses = saved["qpos"]
+        motion = self.command.motion.get_motion_at_frame(np.arange(len(poses)))
+        np.testing.assert_allclose(
+            motion.joint_pos, poses[:, model.jnt_qposadr[joints]], atol=1e-6, rtol=0
+        )
+        computed = [support_feedforward(model, pose) for pose in poses]
+        if max(np.linalg.norm(residual) for _, residual in computed) > 1e-6:
+            raise ValueError("reference has no static nonnegative foot-support solution")
+        self.gravity_offset = (
+            np.asarray([torque for torque, _ in computed], dtype=np.float32)
+            / model.actuator_gainprm[:, 0]
+        )
+
+    def process_actions(self, actions):
+        super().process_actions(actions)
+        self.target += self.velocity_gain * self.command.joint_vel
+        self.target += self.gravity_offset[self.command.time_steps]
+        np.clip(self.target, self.control_limits[:, 0], self.control_limits[:, 1], out=self.target)
 
 
 def export_reference(model: mujoco.MjModel, qpos: np.ndarray, fps: int, destination: Path):

@@ -106,6 +106,7 @@ uv run scripts/generate_support_matrix.py --write
 | PPO (torch) | `g1_cricket_residual_v2` (g1 cricket residual v2) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_residual_v3` (g1 cricket residual v3) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_shoulder_damping_v1` (g1 cricket shoulder damping v1) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_supported_tracking` (g1 cricket supported tracking) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_swing_v1` (g1 cricket swing v1) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_tanh_v1` (g1 cricket tanh v1) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_motion_tracking_deploy` (g1 motion tracking deploy) | Tested | - | Tested | - | - | - | - | - |

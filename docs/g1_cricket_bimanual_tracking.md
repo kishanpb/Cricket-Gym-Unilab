@@ -100,6 +100,96 @@ are diagnostics, not replacements for the earlier showcase videos.
 
 ## Reproduction
 
+### Grounded Support Pilot
+
+The next reference puts the soles on the pitch, centers the reference COM over
+the foot soles, settles the initial IK pose before differentiating it, and
+checks blade clearance against both hands and shins. Joint targets retain a
+0.10 rad margin from original stops. The supported action adds reference
+velocity and static support feedforward through the original position motors;
+nonnegative sole loads balance the floating base offline, without applying
+external forces or writing robot state during rollout. This is a motor-control
+baseline, not learned grasping or a dynamically feasible motion certificate.
+
+The complete serial controller comparison retains position-only,
+position/velocity and supported control for static guard and swing, both hands.
+Supported guard completes three seconds; supported swing falls at 2.40 seconds
+on both sides. Its pelvis-height stop differs from the PPO task's termination
+rules, so these durations must not be compared directly with PPO survival.
+The guard has no unexpected contact or hard-limit excursion and uses at most
+43.3% of a motor's force limit. The swing reaches motor saturation and has
+0.00140 / 0.00130 rad hard-limit excursions (right / left), despite the larger
+reference margins. Keep those failures visible in the
+[grounded comparison](../g1_cricket_results/bimanual_grounded_control_v2/evaluation.json)
+and [original-reference comparison](../g1_cricket_results/bimanual_control_v1/evaluation.json).
+
+Predeclared pilot: fresh independent right/left PPO, seed 1, 16 native mjbatch
+environments, 512 updates and 196,608 transitions per hand, initial action noise
+0.2, strict learner finite checks. Use the grounded reference and supported
+action with unchanged tracking reward, original robot limits and physical
+termination gates. Keep both final checkpoints and complete deterministic
+reference-only/learned evaluations regardless of result. No checkpoint search
+or mid-budget changes. This is still dry-swing development, not ball hitting,
+held-out validation, running bowling or advertising footage.
+
+Evaluation now independently replays every held-control interval and requires
+exact native endpoint-state and sensor agreement. Per-interval peaks cover all
+physics substeps: original hard-joint-limit excess, applied motor-load fraction,
+grip separation, fixture force/torque and unexpected contact force/penetration.
+These are uncalibrated simulator measurements, not hardware safety limits or
+proof of realistic ball contact. Earlier endpoint-only reports are unchanged.
+
+The supported owner also needs SciPy at initialization. With the retained
+grounded references available, reproduce a fresh right-hand run with:
+
+```sh
+PYTHONPATH=src uv run --with scipy python src/unilab/scripts/train_rsl_rl.py \
+  task=g1_cricket_supported_tracking/mjbatch env.handedness=right \
+  algo.num_envs=16 algo.max_iterations=512 algo.save_interval=512 \
+  training.device=cpu training.no_play=true \
+  training.log_dir=g1_cricket_results/supported_reproduction_right
+```
+
+Use `env.handedness=left` and a distinct output directory for the other hand.
+Evaluate the final run directory with `scripts/evaluate_g1_cricket_tracking.py`
+and `--render`; it evaluates both reference-only and learned control.
+
+#### Completed Grounded Pilot
+
+Both independent runs completed 512 updates / 196,608 transitions, with final
+`model_511.pt` and all 49 scalar series finite. Neither final actor improves
+its own supported reference-only baseline; do not promote this pilot.
+
+| Hand / control | Duration | Return | Hard-limit excess | Unexpected loaded contact |
+| --- | --- | --- | --- | --- |
+| Right reference | 2.36 s | 12.5296 | 0.00143 rad | None |
+| Right PPO | 2.10 s | 10.5382 | 0.00369 rad | None |
+| Left reference | 2.36 s | 12.5246 | 0.00126 rad | None |
+| Left PPO | 2.00 s | 9.4203 | 0.01560 rad | Left elbow / right hand |
+
+All four terminate on anchor height and reach motor saturation. The left PPO
+collision peaks at 66.96 N and 2.17 mm penetration. Maximum substep grip gaps
+remain below 1.136 mm; grip attachment alone does not establish safe motion.
+Fixture force peaks for learned right/left control are 67.63 / 64.25 N, with
+torque peaks 6.82 / 9.21 Nm. These are simulator loads, not hardware readings.
+
+[Right complete evaluation](../g1_cricket_results/bimanual_grounded_v2/ppo_right/evaluation.json)
+and [left complete evaluation](../g1_cricket_results/bimanual_grounded_v2/ppo_left/evaluation.json)
+retain both controllers and every interval's substep measurements, with exact
+native/serial state and sensor agreement. The
+[right video](../g1_cricket_results/bimanual_grounded_v2/ppo_right/ppo_diagnostic.mp4),
+[left video](../g1_cricket_results/bimanual_grounded_v2/ppo_left/ppo_diagnostic.mp4)
+and [first/midpoint/final contact sheet](../g1_cricket_results/bimanual_grounded_v2/ppo_diagnostic_contact_sheet.png)
+show complete failed development episodes at 0.5x, not selected successful shots.
+Final checkpoints, configurations, complete scalar CSVs and traces are retained;
+redundant event logs, initial checkpoints and reference-only videos are removed.
+
+The standing-control defect is addressed, but moving support and arm clearance
+are not. Next work must establish physically stable full-swing tracking before
+another learned ball-hit claim; the running bowling sequence still needs
+whole-body retargeting, plant and physical release. Any continuation needs a
+separately declared budget and a reason to expect a different outcome.
+
 Generate references and a complete diagnostic in a new output directory:
 
 ```sh

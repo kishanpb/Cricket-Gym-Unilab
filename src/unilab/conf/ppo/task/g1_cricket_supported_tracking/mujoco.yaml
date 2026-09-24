@@ -1,0 +1,18 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_bimanual_tracking/mujoco
+  - _self_
+
+algo:
+  policy:
+    init_noise_std: 0.2
+env:
+  handedness: right
+  actions:
+    reference:
+      _target_: unilab.tasks.manipulation.g1_cricket.tracking.SupportedCricketReferenceActionCfg
+      reference_file: g1_cricket_results/bimanual_grounded_v2/${env.handedness}_reference.npz
+  commands:
+    motion:
+      params:
+        motion_file: g1_cricket_results/bimanual_grounded_v2/${env.handedness}_tracking.npz

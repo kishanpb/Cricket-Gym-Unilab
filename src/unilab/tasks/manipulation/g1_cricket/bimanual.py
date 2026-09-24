@@ -9,6 +9,30 @@ import numpy as np
 from .prior import SDK_DEFAULT, SDK_JOINTS, build_prior_scene
 
 
+def support_feedforward(model, pose):
+    """Static joint torque after resolving weight through nonnegative foot loads."""
+    from scipy.optimize import lsq_linear
+
+    data = mujoco.MjData(model)
+    data.qpos[:] = pose
+    mujoco.mj_forward(model, data)
+    normals = []
+    for side in ("left", "right"):
+        for i in range(1, 8):
+            geom = model.geom(f"{side}_foot{i}_collision")
+            axis = data.geom_xmat[geom.id].reshape(3, 3)[:, 2]
+            for sign in (-1, 1):
+                point = data.geom_xpos[geom.id] + sign * geom.size[1] * axis
+                jacobian = np.empty((3, model.nv))
+                mujoco.mj_jac(model, data, jacobian, None, point, int(geom.bodyid[0]))
+                normals.append(jacobian[2])
+    jacobian = np.asarray(normals)
+    solution = lsq_linear(jacobian[:, :6].T, data.qfrc_bias[:6], bounds=(0, np.inf), tol=1e-12)
+    torque = data.qfrc_bias - jacobian.T @ solution.x
+    joints = np.array([model.joint(name).id for name in SDK_JOINTS])
+    return torque[model.jnt_dofadr[joints]], torque[:6]
+
+
 def build_bimanual_scene(source: Path, destination: Path, hand: str) -> tuple[str, ...]:
     if hand not in {"right", "left"}:
         raise ValueError("hand must be right or left")
@@ -78,7 +102,9 @@ def batting_targets(times: np.ndarray, hand: str) -> tuple[np.ndarray, np.ndarra
     return grips, rotations
 
 
-def retarget_batting(model: mujoco.MjModel, times: np.ndarray, hand: str) -> dict:
+def retarget_batting(
+    model: mujoco.MjModel, times: np.ndarray, hand: str, *, grounded: bool = False
+) -> dict:
     """Offline IK only. The returned poses are targets, not physics evidence."""
     from scipy.optimize import least_squares
     from scipy.spatial.transform import Rotation
@@ -90,16 +116,42 @@ def retarget_batting(model: mujoco.MjModel, times: np.ndarray, hand: str) -> dic
     active = np.arange(29)
     lower, upper = model.jnt_range[joint_ids[active]].T
     lower = lower.copy()
-    lower[[3, 9]] = 0.15
+    lower[[3, 9]] = 0.25 if grounded else 0.15
     top_id = model.site("bat_fixture").id
     lower_id = model.site("bat_lower_grip").id
     palm_id = model.site(f"{hand}_palm").id
     bat_id = model.body("cricket_bat").id
+    lower_wrist = model.body(f"{hand}_wrist_yaw_link").id
+    lower_rotation = Rotation.from_euler(
+        "z", np.pi / 2 if hand == "right" else -np.pi / 2
+    ).as_matrix()
     grips, rotations = batting_targets(times, hand)
     mujoco.mj_forward(model, data)
+    if grounded:
+        sole_gap = min(
+            mujoco.mj_geomDistance(
+                model,
+                data,
+                model.geom(f"{side}_foot{i}_collision").id,
+                model.geom("pitch").id,
+                1,
+                None,
+            )
+            for side in ("left", "right")
+            for i in range(1, 8)
+        )
+        data.qpos[2] -= sole_gap
+        mujoco.mj_forward(model, data)
     feet = [model.body(f"{side}_ankle_roll_link").id for side in ("left", "right")]
     feet_pos = data.xpos[feet].copy()
     feet_rotation = data.xmat[feet].reshape(2, 3, 3).copy()
+    support_center = (
+        np.mean(
+            [data.geom(f"{side}_foot4_collision").xpos[:2] for side in ("left", "right")], axis=0
+        )
+        if grounded
+        else feet_pos[:, :2].mean(axis=0)
+    )
     root_xy = data.qpos[:2].copy()
     pelvis_id = model.body("pelvis").id
     pairs = [
@@ -117,7 +169,16 @@ def retarget_batting(model: mujoco.MjModel, times: np.ndarray, hand: str) -> dic
         for right in ("elbow_yaw", "wrist", "hand")
     ]
     previous = np.r_[SDK_DEFAULT, data.qpos[:3]]
+    if grounded:
+        pairs += [
+            (model.geom("bat_blade").id, model.geom(f"{side}_{part}_collision").id)
+            for side in ("left", "right")
+            for part in ("hand", "wrist", "elbow_yaw", "shin")
+        ]
     lower, upper = np.r_[lower, root_xy - 0.12, 0.68], np.r_[upper, root_xy + 0.12, 0.81]
+    margin = np.r_[np.full(29, 0.10), [0.01] * 3] if grounded else 0.01
+    if grounded:
+        previous = np.clip(previous, lower + margin, upper - margin)
     reference, errors = [], []
     for grip, rotation in zip(grips, rotations, strict=True):
 
@@ -142,7 +203,13 @@ def retarget_batting(model: mujoco.MjModel, times: np.ndarray, hand: str) -> dic
                     )
                     .as_rotvec()
                     .ravel(),
-                    15 * (data.subtree_com[pelvis_id, :2] - feet_pos[:, :2].mean(axis=0)),
+                    15 * (data.subtree_com[pelvis_id, :2] - support_center),
+                    0.5
+                    * Rotation.from_matrix(
+                        (rotation @ lower_rotation).T @ data.xmat[lower_wrist].reshape(3, 3)
+                    ).as_rotvec()
+                    if grounded
+                    else np.zeros(3),
                     np.array(
                         [
                             30
@@ -153,10 +220,20 @@ def retarget_batting(model: mujoco.MjModel, times: np.ndarray, hand: str) -> dic
                 )
             )
 
+        # Initial IK settling must not become a spurious reference velocity.
+        if grounded and not reference:
+            for _ in range(8):
+                initial = least_squares(
+                    residual, previous, bounds=(lower + margin, upper - margin), max_nfev=120
+                )
+                change = np.max(np.abs(initial.x - previous))
+                previous = initial.x.copy()
+                if change < 1e-5:
+                    break
         solved = least_squares(
             residual,
             previous,
-            bounds=(lower + 0.01, upper - 0.01),
+            bounds=(lower + margin, upper - margin),
             max_nfev=120,
             ftol=1e-7,
             xtol=1e-7,
@@ -171,7 +248,7 @@ def retarget_batting(model: mujoco.MjModel, times: np.ndarray, hand: str) -> dic
                     np.linalg.norm(data.xpos[feet] - feet_pos, axis=1).max()
                 ),
                 "center_of_mass_support_error_m": float(
-                    np.linalg.norm(data.subtree_com[pelvis_id, :2] - feet_pos[:, :2].mean(axis=0))
+                    np.linalg.norm(data.subtree_com[pelvis_id, :2] - support_center)
                 ),
                 "minimum_tracked_clearance_m": min(
                     float(mujoco.mj_geomDistance(model, data, a, b, 0.1, None)) for a, b in pairs

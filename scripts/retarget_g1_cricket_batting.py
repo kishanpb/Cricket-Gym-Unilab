@@ -34,7 +34,7 @@ def grip_force(data, eq_id):
     return float(np.linalg.norm(data.efc_force[rows]))
 
 
-def run(hand, output, render):
+def run(hand, output, render, grounded=False):
     with TemporaryDirectory(prefix="g1-bimanual-") as temporary:
         scene = Path(temporary) / "scene.xml"
         build_bimanual_scene(ROBOT, scene, hand)
@@ -44,7 +44,7 @@ def run(hand, output, render):
         model.vis.global_.offwidth = 960
         model.vis.global_.offheight = 540
         times = np.linspace(0, 3, 151)
-        reference = retarget_batting(model, times, hand)
+        reference = retarget_batting(model, times, hand, grounded=grounded)
         data = mujoco.MjData(model)
         data.qpos[:] = reference["qpos"][0]
         # Ball is out of play: first establish a two-hand swing, not a hit claim.
@@ -195,6 +195,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--grounded", action="store_true")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     hashes = source_hashes()
@@ -203,13 +204,14 @@ def main():
             {
                 "source_sha256": hashes,
                 "hands": ["right", "left"],
+                "grounded_reference": args.grounded,
                 "scope": "dry_swing_reference_PD_not_RL_or_batting_success",
             },
             indent=2,
         )
         + "\n"
     )
-    reports = [run(hand, args.output, args.render) for hand in ("right", "left")]
+    reports = [run(hand, args.output, args.render, args.grounded) for hand in ("right", "left")]
     if source_hashes() != hashes:
         raise RuntimeError("retargeting sources changed during execution")
     report = {

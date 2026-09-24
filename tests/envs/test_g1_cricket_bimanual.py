@@ -11,7 +11,11 @@ from hydra import compose, initialize_config_dir
 from unilab.base import registry
 from unilab.base.config_adapter import BackendAdapter
 from unilab.base.entity import Entity
-from unilab.tasks.manipulation.g1_cricket.bimanual import build_bimanual_scene, retarget_batting
+from unilab.tasks.manipulation.g1_cricket.bimanual import (
+    build_bimanual_scene,
+    retarget_batting,
+    support_feedforward,
+)
 from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
 from unilab.tasks.manipulation.g1_cricket.tracking import export_reference
 
@@ -81,14 +85,108 @@ def test_export_world_angular_velocity_for_rotated_root(scene, tmp_path):
     np.testing.assert_allclose(observed, np.tile([-1, 0, 0], (3, 1)), atol=1e-10)
 
 
+def test_grounded_reference_and_static_support(scene):
+    hand, _, model = scene
+    reference = retarget_batting(model, np.array([0.0, 0.02, 0.04, 1.8]), hand, grounded=True)
+    assert min(r["minimum_tracked_clearance_m"] for r in reference["errors"]) > 0.005
+    for pose in reference["qpos"]:
+        torque, residual = support_feedforward(model, pose)
+        np.testing.assert_allclose(residual, 0, atol=1e-6)
+        assert np.isfinite(torque).all()
+    data = mujoco.MjData(model)
+    data.qpos[:] = reference["qpos"][0]
+    mujoco.mj_forward(model, data)
+    gaps = [
+        mujoco.mj_geomDistance(
+            model, data, model.geom(f"{s}_foot4_collision").id, model.geom("pitch").id, 1, None
+        )
+        for s in ("left", "right")
+    ]
+    assert max(abs(g) for g in gaps) < 0.001
+
+
 @pytest.mark.parametrize("hand", ["right", "left"])
-@pytest.mark.parametrize("engine", ["mujoco", "mjbatch"])
-def test_whole_body_owner_has_no_mid_episode_pose_writes(hand, engine, monkeypatch, tmp_path):
+def test_supported_tracking_targets_use_same_reference_and_original_limits(hand):
     registry.ensure_registries()
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
         owner = compose(
             "config",
-            overrides=[f"task=g1_cricket_bimanual_tracking/{engine}", f"env.handedness={hand}"],
+            overrides=["task=g1_cricket_supported_tracking/mjbatch", f"env.handedness={hand}"],
+        )
+    override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
+    env = registry.make(
+        "G1CricketBimanualTracking", num_envs=2, sim_backend="mujoco", env_cfg_override=override
+    )
+    try:
+        env.reset(seed=1)
+        action = env.action_manager.get_term("reference")
+        command = env.command_manager.get_term("motion")
+        expected = (
+            command.joint_pos
+            + action.velocity_gain * command.joint_vel
+            + action.gravity_offset[command.time_steps]
+        )
+        action.process_actions(np.zeros((2, 29)))
+        np.testing.assert_allclose(
+            action.target, np.clip(expected, action.limits[:, 0], action.limits[:, 1]), atol=1e-6
+        )
+        action.process_actions(np.full((2, 29), 10.0))
+        assert (action.target >= action.limits[:, 0]).all()
+        assert (action.target <= action.limits[:, 1]).all()
+        assert not owner.algo.algorithm.disable_finite_checks
+    finally:
+        env.close()
+
+
+@pytest.mark.parametrize("engine", ["mujoco", "mjbatch"])
+@pytest.mark.parametrize("hand", ["right", "left"])
+def test_supported_tracking_substep_replay(engine, hand):
+    from evaluate_g1_cricket_tracking import TrackingReplay
+
+    registry.ensure_registries()
+    with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
+        owner = compose(
+            "config",
+            overrides=[f"task=g1_cricket_supported_tracking/{engine}", f"env.handedness={hand}"],
+        )
+    override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
+    override["auto_reset"] = False
+    env = registry.make(
+        "G1CricketBimanualTracking", num_envs=1, sim_backend="mujoco", env_cfg_override=override
+    )
+    try:
+        env.reset(seed=1)
+        replay = TrackingReplay(env)
+        for _ in range(3):
+            initial = env.get_physics_state_snapshot()[0].copy()
+            env.step(np.zeros((1, 29), dtype=np.float32))
+            result = replay.measure(env, initial)
+            assert result["substeps"] == 20
+            assert result["unexpected_contacts"] == []
+            assert all(np.isfinite(value) for value in result["peaks"].values())
+            assert result["peaks"]["motor_force_fraction"] <= 1
+        wrong = initial.copy()
+        wrong[1] += 0.01
+        with pytest.raises(AssertionError):
+            replay.measure(env, wrong)
+    finally:
+        env.close()
+
+
+@pytest.mark.parametrize("hand", ["right", "left"])
+@pytest.mark.parametrize("engine", ["mujoco", "mjbatch"])
+@pytest.mark.parametrize("supported", [False, True])
+def test_whole_body_owner_has_no_mid_episode_pose_writes(
+    hand, engine, supported, monkeypatch, tmp_path
+):
+    registry.ensure_registries()
+    with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
+        owner = compose(
+            "config",
+            overrides=[
+                f"task=g1_cricket_{'supported' if supported else 'bimanual'}_tracking/{engine}",
+                f"env.handedness={hand}",
+            ],
         )
     motion = np.load(ROOT / owner.env.commands.motion.params.motion_file)
     short_clip = tmp_path / "short_clip.npz"
@@ -97,6 +195,11 @@ def test_whole_body_owner_has_no_mid_episode_pose_writes(hand, engine, monkeypat
         **{name: value if name == "fps" else value[:5] for name, value in motion.items()},
     )
     owner.env.commands.motion.params.motion_file = str(short_clip)
+    if supported:
+        with np.load(ROOT / owner.env.actions.reference.reference_file) as full_reference:
+            short_reference = tmp_path / "short_reference.npz"
+            np.savez_compressed(short_reference, qpos=full_reference["qpos"][:5])
+        owner.env.actions.reference.reference_file = str(short_reference)
     override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
     override["auto_reset"] = False
     env = registry.make(
@@ -110,6 +213,13 @@ def test_whole_body_owner_has_no_mid_episode_pose_writes(hand, engine, monkeypat
         reference = env.command_manager.get_term("motion").joint_pos.copy()
         action = np.zeros((2, 29), dtype=np.float32)
         action[:, 0] = 0.5
+        expected = reference + 0.25 * action
+        if supported:
+            term = env.action_manager.get_term("reference")
+            command = env.command_manager.get_term("motion")
+            expected += term.velocity_gain * command.joint_vel
+            expected += term.gravity_offset[command.time_steps]
+            expected = np.clip(expected, term.control_limits[:, 0], term.control_limits[:, 1])
 
         def forbid(*args, **kwargs):
             pytest.fail("pose writes are permitted only at episode reset")
@@ -123,7 +233,7 @@ def test_whole_body_owner_has_no_mid_episode_pose_writes(hand, engine, monkeypat
             monkeypatch.setattr(Entity, name, forbid)
         state = env.step(action)
         target = env.action_manager.get_term("reference").target
-        np.testing.assert_allclose(target, reference + 0.25 * action)
+        np.testing.assert_allclose(target, expected, atol=1e-6)
         assert np.isfinite(state.obs["obs"]).all()
         while not env.state.truncated[0] and not env.state.terminated[0]:
             env.step(action)

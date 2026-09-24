@@ -36,6 +36,8 @@ controlling all 29 joints through native CPU mjbatch. It follows G1-scaled
 guard/backlift/downswing targets without a frozen walking policy or step-time
 pose overwrites. This remains a dry-swing development task: balance, actual
 ball hitting and running bowling are not yet showcase-qualified.
+The latest grounded-support pilot retains both failed full-episode videos and
+substep force, grip, joint-limit and collision audits in that report.
 
 Earlier one-arm contact experiments and failed bowling trials remain in the
 research log, including [force/touch diagnostic video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)
