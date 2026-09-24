@@ -13,7 +13,11 @@ from PIL import Image, ImageDraw, ImageFont
 
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
 from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
-from unilab.tasks.manipulation.g1_cricket.running import RELEASE_TIME, retarget_running_delivery
+from unilab.tasks.manipulation.g1_cricket.running import (
+    RELEASE_TIME,
+    BallisticRunupHeight,
+    retarget_running_delivery,
+)
 from unilab.tasks.manipulation.g1_cricket.tracking import (
     ankle_balance,
     export_reference,
@@ -84,7 +88,7 @@ def render_review(output):
     sheet.save(output / "running_motion_review.png")
 
 
-def run(hand, output, render):
+def run(hand, output, render, *, ballistic_parent=None, lane_offset=0.0):
     with TemporaryDirectory(prefix="g1-running-") as temporary:
         scene = Path(temporary) / "scene.xml"
         G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(ROBOT, scene)
@@ -92,7 +96,21 @@ def run(hand, output, render):
         model.opt.timestep = 0.0000625
         model.vis.global_.offwidth, model.vis.global_.offheight = 960, 540
         times = np.arange(136) * 0.02
-        reference = retarget_running_delivery(model, times, hand)
+        com_height = None
+        if ballistic_parent is not None:
+            with np.load(ballistic_parent / f"{hand}_reference.npz") as parent:
+                np.testing.assert_array_equal(parent["times"], times)
+                parent_poses = parent["qpos"]
+            data = mujoco.MjData(model)
+            heights = []
+            for pose in parent_poses:
+                data.qpos[:] = pose
+                mujoco.mj_forward(model, data)
+                heights.append(data.subtree_com[0, 2])
+            com_height = BallisticRunupHeight(times, heights, -model.opt.gravity[2])
+        reference = retarget_running_delivery(
+            model, times, hand, com_height=com_height, lane_offset=lane_offset
+        )
         poses = reference["qpos"]
         velocity = velocity_reference(model, poses, 0.02)
         np.savez_compressed(
@@ -218,12 +236,26 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path)
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--ballistic-parent", type=Path)
+    parser.add_argument("--lane-offset", type=float, default=0.0)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     inputs = [Path(__file__), ROBOT, ROBOT.parent / "scene_flat.xml"]
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
+    if args.ballistic_parent is not None:
+        inputs += [args.ballistic_parent / f"{hand}_reference.npz" for hand in ("right", "left")]
+    inputs = [path.resolve() for path in inputs]
     hashes = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
-    rows = [run(hand, args.output, args.render) for hand in ("right", "left")]
+    rows = [
+        run(
+            hand,
+            args.output,
+            args.render,
+            ballistic_parent=args.ballistic_parent,
+            lane_offset=args.lane_offset,
+        )
+        for hand in ("right", "left")
+    ]
     if any(
         hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != digest
         for name, digest in hashes.items()
@@ -233,6 +265,8 @@ if __name__ == "__main__":
         "scope": "offline_running_reference_and_PD_feasibility_not_learned_bowling",
         "mujoco_version": mujoco.__version__,
         "ik_direction": "forward",
+        "ballistic_runup_com": args.ballistic_parent is not None,
+        "outward_lane_offset_m": args.lane_offset,
         "input_sha256": hashes,
         "rows": rows,
     }

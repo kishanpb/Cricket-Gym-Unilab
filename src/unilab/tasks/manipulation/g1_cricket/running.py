@@ -13,14 +13,46 @@ RELEASE_TIME = 1.82
 END_TIME = 2.70
 
 
+class BallisticRunupHeight:
+    """Vertical COM target with matched landing/takeoff velocities, offline only."""
+
+    def __init__(self, times, heights, gravity):
+        self.parent = PchipInterpolator(times, heights)
+        self.height = float(heights[0])
+        self.gravity = gravity
+        self.takeoff_velocity = gravity * 0.08 / 2
+        self.stance = CubicHermiteSpline(
+            [0, 0.22],
+            [self.height, self.height],
+            [-self.takeoff_velocity, self.takeoff_velocity],
+        )
+        self.gather = CubicHermiteSpline(
+            [GATHER_TIME, 1.32],
+            [self.height, self.parent(1.32)],
+            [-self.takeoff_velocity, self.parent.derivative()(1.32)],
+        )
+
+    def __call__(self, time):
+        if time >= 1.32:
+            return float(self.parent(time))
+        if time >= GATHER_TIME:
+            return float(self.gather(time))
+        phase = time % 0.3
+        if phase <= 0.22:
+            return float(self.stance(phase))
+        flight = phase - 0.22
+        return self.height + self.takeoff_velocity * flight - self.gravity * flight**2 / 2
+
+
 class RunningDeliveryTargets:
     """G1-sized targets, not prescribed simulation poses or achieved dynamics."""
 
-    def __init__(self, hand):
+    def __init__(self, hand, lane_offset=0.0):
         if hand not in {"right", "left"}:
             raise ValueError("hand must be right or left")
         self.hand = hand
         self.side = 1 if hand == "right" else -1
+        self.lane = self.side * (0.5 + lane_offset)
         self.root_x = PchipInterpolator(
             [0, 0.3, 0.6, 0.9, 1.2, 1.42, 1.65, RELEASE_TIME, 2.1, 2.5, END_TIME],
             np.array([-3, -2.45, -1.9, -1.35, -0.8, -0.4, -0.14, 0, 0.27, 0.85, 1]) * 0.55 - 0.45,
@@ -45,7 +77,7 @@ class RunningDeliveryTargets:
 
     def root(self, time):
         bounce = 0.015 * np.sin(np.pi * time / 0.3) ** 2 if time < GATHER_TIME else 0
-        return np.array([self.root_x(time), self.side * 0.5, self.root_z(time) + bounce])
+        return np.array([self.root_x(time), self.lane, self.root_z(time) + bounce])
 
     def foot(self, side, time):
         front = side != self.hand
@@ -79,7 +111,7 @@ class RunningDeliveryTargets:
         return np.array(
             [
                 0.55 * (x + (next_x - x) * blend) - 0.45,
-                self.side * 0.5 + (0.12 if side == "left" else -0.12),
+                self.lane + (0.12 if side == "left" else -0.12),
                 0.035 + 0.11 * np.sin(np.pi * fraction) ** 2,
             ]
         )
@@ -112,9 +144,9 @@ class RunningDeliveryTargets:
         return upper, lower, np.column_stack((lower, y, np.cross(lower, y)))
 
 
-def retarget_running_delivery(model, times, hand):
+def retarget_running_delivery(model, times, hand, *, com_height=None, lane_offset=0.0):
     """Solve original G1 joints offline; do not use this loop as a physics rollout."""
-    target = RunningDeliveryTargets(hand)
+    target = RunningDeliveryTargets(hand, lane_offset)
     data = mujoco.MjData(model)
     mujoco.mj_resetDataKeyframe(model, data, 0)
     joints = np.array([model.joint(name).id for name in SDK_JOINTS])
@@ -122,6 +154,8 @@ def retarget_running_delivery(model, times, hand):
     lower, upper = model.jnt_range[joints].T.copy()
     lower[[3, 9]] = 0.12
     previous = np.clip(SDK_DEFAULT, lower + 0.03, upper - 0.03)
+    if com_height is not None:
+        previous = np.append(previous, target.root(0)[2])
     mujoco.mj_forward(model, data)
     arms = {}
     feet = [model.body(f"{side}_ankle_roll_link").id for side in ("left", "right")]
@@ -144,6 +178,7 @@ def retarget_running_delivery(model, times, hand):
     ]
     ball_joint = model.joint("ball_free")
     ball_qa = int(ball_joint.qposadr[0])
+    ball_body = model.body("cricket_ball").id
     wrist_id = model.body(f"{hand}_wrist_yaw_link").id
     holder_offset = np.array([0.15, 0.06 if hand == "left" else -0.06, 0])
     poses, errors = [], []
@@ -154,7 +189,9 @@ def retarget_running_delivery(model, times, hand):
         arm_targets = {side: target.arm(side, time) for side in arms}
 
         def residual(q):
-            data.qpos[addresses] = q
+            data.qpos[addresses] = q[:29]
+            if com_height is not None:
+                data.qpos[2] = q[-1]
             mujoco.mj_kinematics(model, data)
             result = [
                 50 * (data.xpos[feet] - foot_targets).ravel(),
@@ -183,11 +220,24 @@ def retarget_running_delivery(model, times, hand):
                     ]
                 )
             )
+            if com_height is not None:
+                # Include the held ball at the wrist, not its previous IK-frame pose.
+                held_z = (data.xpos[wrist_id] + data.xmat[wrist_id].reshape(3, 3) @ holder_offset)[
+                    2
+                ]
+                center_z = (
+                    np.dot(model.body_mass, data.xipos[:, 2])
+                    + model.body_mass[ball_body] * (held_z - data.xipos[ball_body, 2])
+                ) / model.body_mass.sum()
+                result.append(np.atleast_1d(1000 * (center_z - com_height(time))))
             return np.concatenate(result)
 
         lo, hi = lower + 0.03, upper - 0.03
+        if com_height is not None:
+            lo, hi = np.append(lo, 0.6), np.append(hi, 0.85)
         if frame:
-            step = 12 * (time - times[frame - 1])
+            speed = np.append(np.full(29, 12), 3) if com_height is not None else 12
+            step = speed * (time - times[frame - 1])
             lo, hi = np.maximum(lo, previous - step), np.minimum(hi, previous + step)
         solved = least_squares(
             residual,
@@ -229,6 +279,11 @@ def retarget_running_delivery(model, times, hand):
                 "foot_error_m": float(np.linalg.norm(data.xpos[feet] - foot_targets, axis=1).max()),
                 "minimum_tracked_clearance_m": min(
                     float(mujoco.mj_geomDistance(model, data, a, b, 0.1, None)) for a, b in pairs
+                ),
+                "com_height_error_m": (
+                    float(data.subtree_com[0, 2] - com_height(time))
+                    if com_height is not None
+                    else None
                 ),
                 "unexpected_penetrations": unexpected,
             }

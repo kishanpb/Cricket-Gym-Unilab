@@ -1,5 +1,34 @@
 # Whole-Body Running Delivery Reference
 
+## Ballistic COM Repair Comparison
+
+The lane-clearance diagnostic exposed upward COM acceleration during aerial
+run-up frames. The next fixed comparison changes vertical COM timing only,
+using the same outward y=+/-0.70 m lane, original foot placements, arm targets,
+joint/force limits and full 2.70 s delivery. Each 0.30 s run-up cycle has a
+0.22 s stance and 0.08 s ballistic flight, with matching +/-0.3924 m/s vertical
+COM velocities. Cubic stance and gather transitions preserve position/velocity
+continuity. Whole-system COM includes the held ball; bounded offline IK may
+adjust pelvis height and joints to achieve the COM and unchanged limb targets.
+This is not root support or pose control during physics.
+
+Evaluate both complete references and the unchanged PD baseline in
+`g1_cricket_results/running_ballistic_com_v1`. Retain every optimizer failure,
+intersection, tracking error and fallen rollout. Require COM flight residual
+inspection, arm error below 6 mm, foot error below 2 mm and no unexpected
+penetration above 1 mm before training. A feasible vertical reference alone
+does not establish horizontal flight consistency, dynamic balance or bowling.
+
+```sh
+PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
+  --python ../unilab_submission_checkout/.venv/bin/python \
+  python scripts/retarget_g1_cricket_running.py \
+  g1_cricket_results/running_ballistic_com_v1 --render --lane-offset 0.20 \
+  --ballistic-parent g1_cricket_results/running_front_raise_v1
+```
+
+## Retained Reference
+
 The requested G1 bowling video needs an approach, gather, planted overarm
 delivery and recovery. The historical G1 arm policy over a frozen 0.4 m/s
 walking prior does not satisfy that requirement. This separate first reference

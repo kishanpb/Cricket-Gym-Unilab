@@ -14,6 +14,7 @@ from unilab.tasks.manipulation.g1_cricket.running import (
     END_TIME,
     GATHER_TIME,
     RELEASE_TIME,
+    BallisticRunupHeight,
     RunningDeliveryTargets,
     retarget_running_delivery,
 )
@@ -125,3 +126,39 @@ def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, tmp_path)
         integrated = poses[i].copy()
         mujoco.mj_integratePos(model, integrated, velocity[i], 0.02)
         np.testing.assert_allclose(integrated, poses[i + 1], atol=1e-12)
+
+
+@pytest.mark.parametrize("hand", ["right", "left"])
+def test_com_retarget_accounts_for_held_ball_and_preserves_model(hand, tmp_path):
+    scene = tmp_path / "scene.xml"
+    G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(
+        ROOT / "src/unilab/assets/robots/g1/g1.xml", scene
+    )
+    model = mujoco.MjModel.from_xml_path(str(scene))
+    invariant = {
+        name: getattr(model, name).copy()
+        for name in ("body_pos", "body_mass", "body_inertia", "jnt_range", "actuator_forcerange")
+    }
+    times = np.arange(136) * 0.02
+    with np.load(
+        ROOT / f"g1_cricket_results/running_front_raise_v1/{hand}_reference.npz"
+    ) as parent:
+        poses = parent["qpos"]
+    data = mujoco.MjData(model)
+    heights = []
+    for pose in poses:
+        data.qpos[:] = pose
+        mujoco.mj_forward(model, data)
+        heights.append(data.subtree_com[0, 2])
+    height = BallisticRunupHeight(times, heights, -model.opt.gravity[2])
+    result = retarget_running_delivery(model, times[:3], hand, com_height=height, lane_offset=0.2)
+    for time, pose in zip(times, result["qpos"], strict=False):
+        data.qpos[:] = pose
+        mujoco.mj_forward(model, data)
+        assert data.subtree_com[0, 2] == pytest.approx(height(time), abs=1e-5)
+        assert pose[1] == pytest.approx(0.7 if hand == "right" else -0.7)
+        wrist = data.body(f"{hand}_wrist_yaw_link")
+        held = wrist.xpos + wrist.xmat.reshape(3, 3) @ [0.15, 0.06 if hand == "left" else -0.06, 0]
+        np.testing.assert_allclose(data.body("cricket_ball").xpos, held, atol=1e-12)
+    for name, value in invariant.items():
+        np.testing.assert_array_equal(getattr(model, name), value)

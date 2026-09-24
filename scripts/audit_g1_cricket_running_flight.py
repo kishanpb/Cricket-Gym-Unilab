@@ -35,14 +35,19 @@ def aerial_residual(times, com, airborne, mass, gravity):
     return rows
 
 
-def audit(directory):
+def audit(directory, *, flat_reference_layout=False):
     output = directory / "reference_flight_audit.json"
     if output.exists():
         raise FileExistsError(output)
     files = [Path(__file__), ROOT / "scripts/g1_cricket_delivery_trial.py"]
     files += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
     files += [ROOT / f"src/unilab/assets/robots/g1/{name}" for name in ("g1.xml", "scene_flat.xml")]
-    files += [directory / hand / "reference.npz" for hand in ("right", "left")]
+    references = {
+        hand: directory
+        / (f"{hand}_reference.npz" if flat_reference_layout else f"{hand}/reference.npz")
+        for hand in ("right", "left")
+    }
+    files += list(references.values())
     hashes = {
         str(p.resolve().relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
         for p in files
@@ -66,7 +71,7 @@ def audit(directory):
             for side in ("left", "right")
         ]
         com, airborne = [], []
-        with np.load(directory / hand / "reference.npz") as reference:
+        with np.load(references[hand]) as reference:
             times = reference["times"]
             for pose in reference["qpos"]:
                 data.qpos[:] = pose
@@ -114,4 +119,6 @@ def audit(directory):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory", type=Path)
-    audit(parser.parse_args().directory)
+    parser.add_argument("--flat-reference-layout", action="store_true")
+    args = parser.parse_args()
+    audit(args.directory, flat_reference_layout=args.flat_reference_layout)
