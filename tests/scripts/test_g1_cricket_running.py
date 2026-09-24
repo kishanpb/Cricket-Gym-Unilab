@@ -16,7 +16,6 @@ from unilab.tasks.manipulation.g1_cricket.running import (
     RELEASE_TIME,
     RunningDeliveryTargets,
     retarget_running_delivery,
-    stance_load_offset,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -92,8 +91,7 @@ def test_bowling_windup_stays_in_front_and_moves_forward_at_release():
 
 
 @pytest.mark.parametrize("hand", ["right", "left"])
-@pytest.mark.parametrize("reverse", [False, True])
-def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, reverse, tmp_path):
+def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, tmp_path):
     scene = tmp_path / "scene.xml"
     G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(
         ROOT / "src/unilab/assets/robots/g1/g1.xml", scene
@@ -103,12 +101,16 @@ def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, reverse, 
         name: getattr(model, name).copy()
         for name in ("body_pos", "body_mass", "body_inertia", "jnt_range", "actuator_forcerange")
     }
-    times = np.arange(4) * 0.02
-    reference = retarget_running_delivery(model, times, hand, reverse=reverse)
+    times = np.arange(136) * 0.02
+    reference = retarget_running_delivery(model, times, hand)
     np.testing.assert_array_equal(reference["times"], times)
     assert [error["time_s"] for error in reference["errors"]] == times.tolist()
     poses = reference["qpos"]
-    assert poses.shape == (4, model.nq)
+    assert poses.shape == (136, model.nq)
+    assert all(error["optimizer_success"] for error in reference["errors"])
+    assert not any(error["unexpected_penetrations"] for error in reference["errors"])
+    assert max(error["arm_segment_error_m"] for error in reference["errors"]) < 0.006
+    assert max(error["foot_error_m"] for error in reference["errors"]) < 0.002
     joints = np.array([model.joint(n).id for n in SDK_JOINTS])
     q = poses[:, model.jnt_qposadr[joints]]
     assert (q >= model.jnt_range[joints, 0]).all()
@@ -118,20 +120,8 @@ def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, reverse, 
     velocity = velocity_reference(model, poses, 0.02)
     assert np.isfinite(velocity).all()
     assert np.max(np.abs(velocity[:, model.jnt_dofadr[joints]])) <= 12 + 1e-8
-    assert (velocity[:, 0] > 0.9).all()
-    for i in range(3):
+    assert velocity[0, 0] > 0.9
+    for i in range(len(poses) - 1):
         integrated = poses[i].copy()
         mujoco.mj_integratePos(model, integrated, velocity[i], 0.02)
         np.testing.assert_allclose(integrated, poses[i + 1], atol=1e-12)
-    offset, supported = stance_load_offset(model, poses[0])
-    assert offset.shape == (29,)
-    assert np.isfinite(offset).all()
-    assert supported["ground_point_count"] > 0
-    assert supported["normal_load_sum_n"] > 0
-    airborne = poses[0].copy()
-    airborne[2] += 1.0
-    offset, unsupported = stance_load_offset(model, airborne)
-    np.testing.assert_array_equal(offset, np.zeros(29))
-    assert unsupported["ground_point_count"] == 0
-    assert unsupported["normal_load_sum_n"] == 0
-    assert unsupported["root_residual_force_n"][2] > 100

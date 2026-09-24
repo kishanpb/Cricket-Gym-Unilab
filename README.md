@@ -51,7 +51,9 @@ still fail; no final G1 advertising reel or running-bowling result is claimed.
 The [whole-body running-delivery reference](docs/g1_cricket_running_reference.md)
 now follows the earlier approach/gather/overarm/recovery structure in both hands.
 Its offline targets are not learned motion: physical PD baselines fall before
-delivery, and shoulder follow-through still needs repair.
+delivery. A G1-adapted front raise now keeps arm tracking within 5.25 mm with
+no audited intersections across both complete references; dynamic balance is
+still unfinished.
 
 Earlier one-arm contact experiments and failed bowling trials remain in the
 research log, including [force/touch diagnostic video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)

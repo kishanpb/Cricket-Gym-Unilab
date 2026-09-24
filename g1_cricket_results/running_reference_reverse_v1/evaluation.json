@@ -1,0 +1,3138 @@
+{
+  "scope": "offline_running_reference_and_PD_feasibility_not_learned_bowling",
+  "mujoco_version": "3.11.0",
+  "ik_direction": "reverse",
+  "input_sha256": {
+    "scripts/retarget_g1_cricket_running.py": "aa1f7f486ff40e992640082c95df49c347e79638e7277f9f52d6d99068fdd34d",
+    "src/unilab/assets/robots/g1/g1.xml": "bb6089243f8fe1c97a6410ccde8754eaa58e5d8e476aca69d790ce501cb4a48e",
+    "src/unilab/assets/robots/g1/scene_flat.xml": "13ce8b2c7706885fa4f041ea8ebb5c2875506512bec6cef02a0455eddb9e4de2",
+    "src/unilab/tasks/manipulation/g1_cricket/__init__.py": "043181eac62df43a6ee774e1bbd83d8b11344794db5c18fb88a726f7dcc0b86a",
+    "src/unilab/tasks/manipulation/g1_cricket/arm_geometry.py": "47aced740d3bbf992edfcc65ec5d37aa6c0e11c32f7cb3786349db8c07ed4352",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual.py": "57ad5803011b869536153465b7212b5a4a4d8fb7a91f54d8c8d38f1aa4a84282",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual_contact.py": "0ce4482b48cf7dedd86f3b644711a938150cf67085934647820c684ec5f3e9ba",
+    "src/unilab/tasks/manipulation/g1_cricket/bowling.py": "3c690fd588f29e4fae4ae2e419fba3096320bd7999df252e076f3ca1e0ba9299",
+    "src/unilab/tasks/manipulation/g1_cricket/compliance_v2.py": "e0c0def29df2caa4ef23cb46f318669b46b9942e82c939ea810dee46a0ae7005",
+    "src/unilab/tasks/manipulation/g1_cricket/delivery.py": "a1a82ea56f4bb0add72b4a3fe96a603e5378c749f7871cac246be4566f1e1a46",
+    "src/unilab/tasks/manipulation/g1_cricket/forward_exit_reward.py": "113a460361bb64db6be5b58974c42de96f978e0405df8dad4617e5d45ae66e6c",
+    "src/unilab/tasks/manipulation/g1_cricket/holder.py": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "c4cdf46ea64515324292cfe2947be8164c5de4925f67c6763e459fe2632a3a17",
+    "src/unilab/tasks/manipulation/g1_cricket/impedance.py": "7c51705a9ab41d93e587f65ec3faba11f990b5cf257068756cc6ecfed7b5486d",
+    "src/unilab/tasks/manipulation/g1_cricket/overarm.py": "06ac693650070e4434056da3f52f87dc64bd581453ba2efcff198d255fa44add",
+    "src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py": "304bffb9013bfec2d8ac57d805f2ce8156421b8024bda316f373f856fa61830f",
+    "src/unilab/tasks/manipulation/g1_cricket/prior.py": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739",
+    "src/unilab/tasks/manipulation/g1_cricket/residual.py": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c",
+    "src/unilab/tasks/manipulation/g1_cricket/running.py": "8fd6cc53b71e6beece741b19e6c0eade6bf903fb1890b031dd4381dcf46612ec",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/tasks/manipulation/g1_cricket/separation_reward.py": "e10c9a7918f67f8621d2e00af12729e31c389b1f8f7c288d90de77fcfff12994",
+    "src/unilab/tasks/manipulation/g1_cricket/substep_reward.py": "f2c2f7e35655cb4cda10f922660c004f297ee536abe9775d5e237b50206b4cb4",
+    "src/unilab/tasks/manipulation/g1_cricket/swing_reward.py": "08696424ea2556348e067c40e5c3bb9286b5caa9f89bd25add868ab87081a0a9",
+    "src/unilab/tasks/manipulation/g1_cricket/tanh_residual.py": "904a8dde165f872b200ef824466d38834e4b3d177882e7d01561995596466fa0",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb",
+    "src/unilab/tasks/manipulation/g1_cricket/tracking.py": "8299edf82737817cf037b8bde9f5aeb1a7d4a2508d78e4a67f0b7a27235723d0"
+  },
+  "rows": [
+    {
+      "hand": "right",
+      "kinematic_errors": [
+        {
+          "time_s": 0.0,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10496106305935977,
+          "foot_error_m": 4.331778737208935e-06,
+          "minimum_tracked_clearance_m": 0.01095357130057567,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.02,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09957433315259105,
+          "foot_error_m": 0.0003762896551847268,
+          "minimum_tracked_clearance_m": 0.011322211478896699,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.04,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09102503782294277,
+          "foot_error_m": 0.000724338756468133,
+          "minimum_tracked_clearance_m": 0.011327621421639067,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.06,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08079856797510203,
+          "foot_error_m": 0.0008046303570199363,
+          "minimum_tracked_clearance_m": 0.011543758559314637,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.08,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07078424047546049,
+          "foot_error_m": 0.0006224040167470704,
+          "minimum_tracked_clearance_m": 0.01192625446175316,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.1,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.06213103116257763,
+          "foot_error_m": 0.00019143671863161373,
+          "minimum_tracked_clearance_m": 0.01830330386788792,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.12,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.055881112985946974,
+          "foot_error_m": 1.4592427236741495e-06,
+          "minimum_tracked_clearance_m": 0.02402368289333265,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.14,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.05261983828928127,
+          "foot_error_m": 2.102016253674103e-06,
+          "minimum_tracked_clearance_m": 0.027046206550776247,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.16,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.05261817036687367,
+          "foot_error_m": 2.7278437277653255e-06,
+          "minimum_tracked_clearance_m": 0.027045560657285306,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.18,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.05587599521977487,
+          "foot_error_m": 3.2602495004489606e-06,
+          "minimum_tracked_clearance_m": 0.02402184232992241,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.2,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.06212123972033267,
+          "foot_error_m": 3.611553322783598e-06,
+          "minimum_tracked_clearance_m": 0.018303296567812516,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.22,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07076648267005643,
+          "foot_error_m": 3.6326165103871306e-06,
+          "minimum_tracked_clearance_m": 0.011927059956397229,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.24,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08076981376030742,
+          "foot_error_m": 4.401397575361691e-06,
+          "minimum_tracked_clearance_m": 0.011545231395586109,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.26,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09095816057889844,
+          "foot_error_m": 5.714711585914725e-06,
+          "minimum_tracked_clearance_m": 0.011348440852533836,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.28,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09948862199416496,
+          "foot_error_m": 5.5596227373468395e-06,
+          "minimum_tracked_clearance_m": 0.01132553137613318,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.3,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10484457009168212,
+          "foot_error_m": 4.331779244949976e-06,
+          "minimum_tracked_clearance_m": 0.010941107769936398,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.32,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10404573832368286,
+          "foot_error_m": 0.0003762896445993599,
+          "minimum_tracked_clearance_m": 0.010918619315791633,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.34,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09907511407633728,
+          "foot_error_m": 0.000724338759569585,
+          "minimum_tracked_clearance_m": 0.01096507504597144,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.36,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09102612013436635,
+          "foot_error_m": 0.0008046304424298214,
+          "minimum_tracked_clearance_m": 0.0115598494076678,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.38,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08216711072265764,
+          "foot_error_m": 0.000622862218860689,
+          "minimum_tracked_clearance_m": 0.011443052168773893,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "left_hand_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.03328271233162061
+            }
+          ]
+        },
+        {
+          "time_s": 0.4,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0742709711566028,
+          "foot_error_m": 0.00019183127991455112,
+          "minimum_tracked_clearance_m": 0.01163248000184558,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "left_wrist_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.00254070513144615
+            },
+            {
+              "pair": [
+                "left_hand_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.07626052067036139
+            }
+          ]
+        },
+        {
+          "time_s": 0.42,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.06823032234580828,
+          "foot_error_m": 1.4889682339085054e-06,
+          "minimum_tracked_clearance_m": 0.011780380978511001,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "left_wrist_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.003930268182323643
+            },
+            {
+              "pair": [
+                "left_hand_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.0871670472080203
+            }
+          ]
+        },
+        {
+          "time_s": 0.44,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0649544815931451,
+          "foot_error_m": 9.16871252360024e-06,
+          "minimum_tracked_clearance_m": 0.011852335990468477,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "left_wrist_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.0035646466266166243
+            },
+            {
+              "pair": [
+                "left_hand_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.08827485521036069
+            }
+          ]
+        },
+        {
+          "time_s": 0.46,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.06493644411081947,
+          "foot_error_m": 2.751745817592311e-06,
+          "minimum_tracked_clearance_m": 0.01184972066804521,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "left_wrist_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.0035171369830483967
+            },
+            {
+              "pair": [
+                "left_hand_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.08816189680132333
+            }
+          ]
+        },
+        {
+          "time_s": 0.48,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.06816293435612503,
+          "foot_error_m": 3.3321791546561283e-06,
+          "minimum_tracked_clearance_m": 0.01177242741078316,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "left_wrist_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.003792114009226799
+            },
+            {
+              "pair": [
+                "left_hand_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.08708734809428793
+            }
+          ]
+        },
+        {
+          "time_s": 0.5,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07411973038282933,
+          "foot_error_m": 4.143314178241447e-06,
+          "minimum_tracked_clearance_m": 0.011617296590175935,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "left_wrist_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.0019993951127760534
+            },
+            {
+              "pair": [
+                "left_hand_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.07386790579626015
+            }
+          ]
+        },
+        {
+          "time_s": 0.52,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08189721013527992,
+          "foot_error_m": 7.806249683247252e-06,
+          "minimum_tracked_clearance_m": 0.01140828268867583,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "left_hand_collision",
+                "pelvis_collision"
+              ],
+              "penetration_m": 0.021260541171985572
+            }
+          ]
+        },
+        {
+          "time_s": 0.54,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09083581603150871,
+          "foot_error_m": 4.401398337973579e-06,
+          "minimum_tracked_clearance_m": 0.011553326285091009,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "bowler_wicket_2",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.01068876854137301
+            }
+          ]
+        },
+        {
+          "time_s": 0.56,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0987819228863046,
+          "foot_error_m": 5.714711843395294e-06,
+          "minimum_tracked_clearance_m": 0.010926965253788334,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "bowler_wicket_2",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.03432603024948606
+            },
+            {
+              "pair": [
+                "ball_geom",
+                "bowler_wicket_1"
+              ],
+              "penetration_m": 0.005317465186005971
+            }
+          ]
+        },
+        {
+          "time_s": 0.58,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10378350333962887,
+          "foot_error_m": 5.559623004827111e-06,
+          "minimum_tracked_clearance_m": 0.010879971126338817,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "bowler_wicket_2",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.0462202949018988
+            },
+            {
+              "pair": [
+                "ball_geom",
+                "bowler_wicket_1"
+              ],
+              "penetration_m": 0.01434253108581977
+            }
+          ]
+        },
+        {
+          "time_s": 0.6,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10453772038519417,
+          "foot_error_m": 4.331779109110048e-06,
+          "minimum_tracked_clearance_m": 0.010944948427976109,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.62,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09923451704806495,
+          "foot_error_m": 0.0003762896332104733,
+          "minimum_tracked_clearance_m": 0.011313187704537042,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.64,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09075498653105485,
+          "foot_error_m": 0.0007243387507627542,
+          "minimum_tracked_clearance_m": 0.011321053254605362,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.66,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08057934864227169,
+          "foot_error_m": 0.0008046303920287198,
+          "minimum_tracked_clearance_m": 0.011540928147003193,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.68,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07059857586600352,
+          "foot_error_m": 0.0006224040107913898,
+          "minimum_tracked_clearance_m": 0.011925444891248499,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.7000000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.061965973206045924,
+          "foot_error_m": 0.00019143672284645672,
+          "minimum_tracked_clearance_m": 0.018294512664896068,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.72,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.05572625736790954,
+          "foot_error_m": 1.4592412686685224e-06,
+          "minimum_tracked_clearance_m": 0.024016786756747288,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.74,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.052466406472209993,
+          "foot_error_m": 2.102016262472456e-06,
+          "minimum_tracked_clearance_m": 0.027040244378384704,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.76,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.052457738921004596,
+          "foot_error_m": 2.7278522262588015e-06,
+          "minimum_tracked_clearance_m": 0.027039330723216376,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.78,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.055698911469533464,
+          "foot_error_m": 3.2602493177952638e-06,
+          "minimum_tracked_clearance_m": 0.02401399285276898,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.8,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.061914678030881964,
+          "foot_error_m": 3.6115531824181133e-06,
+          "minimum_tracked_clearance_m": 0.018292292949982608,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.8200000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07051180857377981,
+          "foot_error_m": 3.6326165467660636e-06,
+          "minimum_tracked_clearance_m": 0.01192594858143528,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.84,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08043953705794184,
+          "foot_error_m": 4.401397973671882e-06,
+          "minimum_tracked_clearance_m": 0.011541002163740877,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.86,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09050567905985567,
+          "foot_error_m": 5.714711173827967e-06,
+          "minimum_tracked_clearance_m": 0.011341509151727325,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "ball_geom",
+                "bowler_wicket_2"
+              ],
+              "penetration_m": 0.04292511128461053
+            }
+          ]
+        },
+        {
+          "time_s": 0.88,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09885791042057833,
+          "foot_error_m": 5.559622816859541e-06,
+          "minimum_tracked_clearance_m": 0.011308357711029143,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "bowler_wicket_2",
+                "right_wrist_collision"
+              ],
+              "penetration_m": 0.012057685866103965
+            },
+            {
+              "pair": [
+                "bowler_wicket_2",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.013449885493986551
+            }
+          ]
+        },
+        {
+          "time_s": 0.9,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10398176599416496,
+          "foot_error_m": 4.331399659302029e-06,
+          "minimum_tracked_clearance_m": 0.010921006778052605,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.92,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10311543001641696,
+          "foot_error_m": 0.0003763586966109562,
+          "minimum_tracked_clearance_m": 0.010791108005512029,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.9400000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09774471386647689,
+          "foot_error_m": 0.0007246350315196598,
+          "minimum_tracked_clearance_m": 0.010804659732650462,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.96,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08996955114717389,
+          "foot_error_m": 0.0008053267588480139,
+          "minimum_tracked_clearance_m": 0.01114849742725324,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.98,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08040191701491556,
+          "foot_error_m": 0.0006236702261335826,
+          "minimum_tracked_clearance_m": 0.011281094263221075,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.0,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07447787433963671,
+          "foot_error_m": 0.00019355764737748318,
+          "minimum_tracked_clearance_m": 0.011995967620674897,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.02,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08258453418125931,
+          "foot_error_m": 2.975679787449083e-06,
+          "minimum_tracked_clearance_m": 0.011989050956869973,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.04,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09916914985177722,
+          "foot_error_m": 2.4237580401219213e-06,
+          "minimum_tracked_clearance_m": 0.011998141410571248,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.06,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.11006487288417383,
+          "foot_error_m": 2.7259732965972594e-06,
+          "minimum_tracked_clearance_m": 0.011375595395974353,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.08,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10877117396663179,
+          "foot_error_m": 3.258482262948309e-06,
+          "minimum_tracked_clearance_m": 0.010547874986568229,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.1,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09558555569896915,
+          "foot_error_m": 3.610024899632253e-06,
+          "minimum_tracked_clearance_m": 0.011337664567358074,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.12,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07322744001511015,
+          "foot_error_m": 3.6318681575692755e-06,
+          "minimum_tracked_clearance_m": 0.03315383201222921,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.1400000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.04913339889433498,
+          "foot_error_m": 6.302170545500777e-06,
+          "minimum_tracked_clearance_m": 0.06531146009404087,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.16,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.029554707585731275,
+          "foot_error_m": 7.144063610900056e-06,
+          "minimum_tracked_clearance_m": 0.09043061515525813,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.18,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.01750405517134128,
+          "foot_error_m": 5.437903968357045e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.2,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.016498009425587976,
+          "foot_error_m": 0.0005878119513891182,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.22,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.016466690729140535,
+          "foot_error_m": 0.0011330346833108706,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.24,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.01637373211095197,
+          "foot_error_m": 0.0012297174226265884,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.26,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.016216479907658895,
+          "foot_error_m": 0.0009312361404736714,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.28,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.015992307543821995,
+          "foot_error_m": 0.00028881226784315244,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.3,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.01569851419773614,
+          "foot_error_m": 3.350693830601649e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.32,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.015332367154339107,
+          "foot_error_m": 3.590380612900072e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.34,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.014891101526518577,
+          "foot_error_m": 5.393045563667484e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.36,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.014371935786840158,
+          "foot_error_m": 5.347296559354657e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.3800000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.013772099987422593,
+          "foot_error_m": 3.7742132641019777e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.4000000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.01308887478744606,
+          "foot_error_m": 1.6747483127298378e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.42,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.01231958902898025,
+          "foot_error_m": 4.191008060798189e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.44,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.01146073676493398,
+          "foot_error_m": 8.475817188637962e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.46,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.010508673718131079,
+          "foot_error_m": 7.475170836473351e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.48,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.009460808149973545,
+          "foot_error_m": 0.0004398117751160226,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.5,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.00831476169065115,
+          "foot_error_m": 0.0006548949691651854,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.52,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.007068542543124424,
+          "foot_error_m": 0.00012036541677958516,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.54,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.00572186456306717,
+          "foot_error_m": 3.344004004135211e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.56,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.004299266406579861,
+          "foot_error_m": 5.0980838564345e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.58,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.002965104364204617,
+          "foot_error_m": 6.777823265002821e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.6,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0009151111999747007,
+          "foot_error_m": 7.692503419218582e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.62,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0022659182752679395,
+          "foot_error_m": 5.7570927518075315e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.6400000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0028777297862644362,
+          "foot_error_m": 4.0268377031637053e-07,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.6600000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.001600835923359091,
+          "foot_error_m": 4.866714613356867e-07,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.68,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0005250344543099369,
+          "foot_error_m": 1.0636344696377188e-05,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.7,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0005230074870195755,
+          "foot_error_m": 0.00014046125085607052,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.72,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0005224652367814356,
+          "foot_error_m": 0.00026539245283273294,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.74,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0005164115815251883,
+          "foot_error_m": 0.000372569335398631,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.76,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0015516284466525396,
+          "foot_error_m": 0.00044561832512966327,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.78,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0014541886176900262,
+          "foot_error_m": 0.0004717238623310084,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.8,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0003369590148243735,
+          "foot_error_m": 0.0004447882211272131,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.82,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0010982463550600115,
+          "foot_error_m": 0.00036689597593486407,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.84,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.00287208586408733,
+          "foot_error_m": 0.0001808593917098798,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.86,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0017123902000194492,
+          "foot_error_m": 1.8949055418524628e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.8800000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0003383096246156927,
+          "foot_error_m": 1.8178013010416566e-06,
+          "minimum_tracked_clearance_m": 0.09392938719513866,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.9000000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.00033261877995510383,
+          "foot_error_m": 1.7172165412602005e-06,
+          "minimum_tracked_clearance_m": 0.08992880582668483,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.92,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.00031653956233828505,
+          "foot_error_m": 1.941749862572852e-06,
+          "minimum_tracked_clearance_m": 0.08669271059783534,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.94,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0002564297123927266,
+          "foot_error_m": 2.4282988682508884e-06,
+          "minimum_tracked_clearance_m": 0.08415077304128149,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.96,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.000175592312273331,
+          "foot_error_m": 2.8699858553015222e-06,
+          "minimum_tracked_clearance_m": 0.08234337098477693,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.98,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.00010118442351065391,
+          "foot_error_m": 3.2190137518662335e-06,
+          "minimum_tracked_clearance_m": 0.08114991451243861,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.0,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.8807011439585934e-05,
+          "foot_error_m": 3.3963001868919236e-06,
+          "minimum_tracked_clearance_m": 0.08050129112958826,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.02,
+          "optimizer_success": true,
+          "arm_segment_error_m": 3.022578418470891e-05,
+          "foot_error_m": 3.272828639448841e-06,
+          "minimum_tracked_clearance_m": 0.080434448674786,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.04,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.090557455415972e-05,
+          "foot_error_m": 2.69053075874919e-06,
+          "minimum_tracked_clearance_m": 0.08106871381587968,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.06,
+          "optimizer_success": true,
+          "arm_segment_error_m": 5.437315811309287e-05,
+          "foot_error_m": 2.4193071720741133e-06,
+          "minimum_tracked_clearance_m": 0.08140459969098443,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.08,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.25409495914143e-05,
+          "foot_error_m": 2.074769803691647e-06,
+          "minimum_tracked_clearance_m": 0.08095951691301842,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.1,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.691807293739428e-05,
+          "foot_error_m": 1.7335220680911427e-06,
+          "minimum_tracked_clearance_m": 0.08059277441898247,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.12,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.924358315379243e-05,
+          "foot_error_m": 1.4070032132082133e-06,
+          "minimum_tracked_clearance_m": 0.08033457355188081,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.14,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.099028853496148e-05,
+          "foot_error_m": 1.0600649209164679e-06,
+          "minimum_tracked_clearance_m": 0.08022179628992193,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.16,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.23035826011473e-05,
+          "foot_error_m": 7.740438431714343e-07,
+          "minimum_tracked_clearance_m": 0.0801992861896191,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.18,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.289627863924673e-05,
+          "foot_error_m": 6.605888834040703e-07,
+          "minimum_tracked_clearance_m": 0.08019003492206353,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.2,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.281507761065789e-05,
+          "foot_error_m": 5.554072523170003e-07,
+          "minimum_tracked_clearance_m": 0.08019053242724178,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.22,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.210430791345992e-05,
+          "foot_error_m": 5.854034702854727e-07,
+          "minimum_tracked_clearance_m": 0.08019755709996468,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.24,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.080751294402076e-05,
+          "foot_error_m": 9.398329993547227e-07,
+          "minimum_tracked_clearance_m": 0.08020786009237932,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.2600000000000002,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.897771219621238e-05,
+          "foot_error_m": 1.3120534322065394e-06,
+          "minimum_tracked_clearance_m": 0.08021871542820802,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.2800000000000002,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.666432438236934e-05,
+          "foot_error_m": 1.688724201081625e-06,
+          "minimum_tracked_clearance_m": 0.0802265953099868,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.3000000000000003,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.392440923640424e-05,
+          "foot_error_m": 2.0637939218798202e-06,
+          "minimum_tracked_clearance_m": 0.08022803932025363,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.32,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.082074429008072e-05,
+          "foot_error_m": 2.430054583806058e-06,
+          "minimum_tracked_clearance_m": 0.08021951888095735,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.34,
+          "optimizer_success": true,
+          "arm_segment_error_m": 5.742197378060268e-05,
+          "foot_error_m": 2.774305013456901e-06,
+          "minimum_tracked_clearance_m": 0.08019759876465127,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.36,
+          "optimizer_success": true,
+          "arm_segment_error_m": 5.380237526305484e-05,
+          "foot_error_m": 3.070877551259314e-06,
+          "minimum_tracked_clearance_m": 0.08015917948543216,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.38,
+          "optimizer_success": true,
+          "arm_segment_error_m": 5.0041303754852174e-05,
+          "foot_error_m": 3.2715353898380174e-06,
+          "minimum_tracked_clearance_m": 0.08010182017322393,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.4,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.622621419193767e-05,
+          "foot_error_m": 3.2918463840108065e-06,
+          "minimum_tracked_clearance_m": 0.08002425944941799,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.42,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.232622892611384e-05,
+          "foot_error_m": 4.17834193805458e-06,
+          "minimum_tracked_clearance_m": 0.07993864948309776,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.44,
+          "optimizer_success": true,
+          "arm_segment_error_m": 3.828581990056996e-05,
+          "foot_error_m": 5.640359120087711e-06,
+          "minimum_tracked_clearance_m": 0.07985710476428498,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.46,
+          "optimizer_success": true,
+          "arm_segment_error_m": 3.416248602066505e-05,
+          "foot_error_m": 4.7468095970832566e-06,
+          "minimum_tracked_clearance_m": 0.07977948468586224,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.48,
+          "optimizer_success": true,
+          "arm_segment_error_m": 3.0015329207377572e-05,
+          "foot_error_m": 0.0005304373797801011,
+          "minimum_tracked_clearance_m": 0.07970573578102846,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.5,
+          "optimizer_success": true,
+          "arm_segment_error_m": 2.5904496008243506e-05,
+          "foot_error_m": 0.0012611689284017483,
+          "minimum_tracked_clearance_m": 0.07963590246941185,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.52,
+          "optimizer_success": true,
+          "arm_segment_error_m": 2.1890519262728043e-05,
+          "foot_error_m": 0.001698362877933786,
+          "minimum_tracked_clearance_m": 0.07957013316063061,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.54,
+          "optimizer_success": true,
+          "arm_segment_error_m": 1.8033760908576373e-05,
+          "foot_error_m": 0.0018213903545140843,
+          "minimum_tracked_clearance_m": 0.07950870150148856,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.56,
+          "optimizer_success": true,
+          "arm_segment_error_m": 1.4389922537946972e-05,
+          "foot_error_m": 0.0016182831657290742,
+          "minimum_tracked_clearance_m": 0.07945186036976287,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.58,
+          "optimizer_success": true,
+          "arm_segment_error_m": 1.10238598327091e-05,
+          "foot_error_m": 0.0011108970410652374,
+          "minimum_tracked_clearance_m": 0.07940032073701278,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.6,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.994008702415072e-06,
+          "foot_error_m": 0.00035107504679980417,
+          "minimum_tracked_clearance_m": 0.0793547368788172,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.62,
+          "optimizer_success": true,
+          "arm_segment_error_m": 5.359735869095351e-06,
+          "foot_error_m": 4.057619171886891e-06,
+          "minimum_tracked_clearance_m": 0.07931580491077864,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.64,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.254075146867017e-06,
+          "foot_error_m": 4.312939598607383e-06,
+          "minimum_tracked_clearance_m": 0.07928421735121433,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.66,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.137300792963444e-06,
+          "foot_error_m": 3.615382527447225e-06,
+          "minimum_tracked_clearance_m": 0.07925546077319415,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.68,
+          "optimizer_success": true,
+          "arm_segment_error_m": 9.43181933967456e-06,
+          "foot_error_m": 1.597000659687191e-06,
+          "minimum_tracked_clearance_m": 0.07923472300837966,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.7,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.00012525833284817003,
+          "foot_error_m": 2.5770361830725686e-05,
+          "minimum_tracked_clearance_m": 0.07919926737029861,
+          "unexpected_penetrations": []
+        }
+      ],
+      "reference_forward_travel_m": 2.2,
+      "reference_peak_joint_speed_rad_s": {
+        "left_hip_pitch_joint": 8.26783362741727,
+        "left_hip_roll_joint": 0.02430652005829504,
+        "left_hip_yaw_joint": 0.027658452495234687,
+        "left_knee_joint": 10.940464490651081,
+        "left_ankle_pitch_joint": 9.031808879882803,
+        "left_ankle_roll_joint": 0.010085189698034406,
+        "right_hip_pitch_joint": 3.9763791325562763,
+        "right_hip_roll_joint": 0.016308651438481446,
+        "right_hip_yaw_joint": 0.01310473488648552,
+        "right_knee_joint": 7.676266155655376,
+        "right_ankle_pitch_joint": 4.530222223152724,
+        "right_ankle_roll_joint": 0.009831373812155979,
+        "waist_yaw_joint": 12.00000000000001,
+        "waist_roll_joint": 2.3932076868784415,
+        "waist_pitch_joint": 4.9424425687416536,
+        "left_shoulder_pitch_joint": 11.999999999998867,
+        "left_shoulder_roll_joint": 9.402926831871572,
+        "left_shoulder_yaw_joint": 12.00000000000001,
+        "left_elbow_joint": 3.7898906231555727,
+        "left_wrist_roll_joint": 8.879040766394551,
+        "left_wrist_pitch_joint": 12.000000000000009,
+        "left_wrist_yaw_joint": 10.481187470091708,
+        "right_shoulder_pitch_joint": 11.999999999999988,
+        "right_shoulder_roll_joint": 10.470755562352817,
+        "right_shoulder_yaw_joint": 12.000000000000009,
+        "right_elbow_joint": 9.875830648067089,
+        "right_wrist_roll_joint": 7.42080544435833,
+        "right_wrist_pitch_joint": 6.093020957330997,
+        "right_wrist_yaw_joint": 2.6636091825474177
+      },
+      "completed_physical_motion": false,
+      "release": null,
+      "trace": [
+        {
+          "time_s": 0.020000000000000014,
+          "pelvis_position_m": [
+            -2.0832440205029203,
+            0.4955182044156033,
+            0.7278029452819947
+          ],
+          "minimum_substep_height_m": 0.7278029452819947,
+          "holder_peak_force_n": 51.33848636816831,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.006309987542360932
+        },
+        {
+          "time_s": 0.04000000000000003,
+          "pelvis_position_m": [
+            -2.079615241687083,
+            0.4915158416452797,
+            0.7192224957650927
+          ],
+          "minimum_substep_height_m": 0.7192224957650927,
+          "holder_peak_force_n": 11.860199896741236,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.025411185017415763
+        },
+        {
+          "time_s": 0.060000000000000046,
+          "pelvis_position_m": [
+            -2.078544229521222,
+            0.4937229758587617,
+            0.7069446226682495
+          ],
+          "minimum_substep_height_m": 0.7069446226682495,
+          "holder_peak_force_n": 17.942644954134618,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.04859242131154436
+        },
+        {
+          "time_s": 0.07999999999999811,
+          "pelvis_position_m": [
+            -2.0734101921442463,
+            0.49487979621863104,
+            0.6935315238712116
+          ],
+          "minimum_substep_height_m": 0.6935315238712116,
+          "holder_peak_force_n": 8.565963074561134,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.07037971295810166
+        },
+        {
+          "time_s": 0.09999999999999591,
+          "pelvis_position_m": [
+            -2.0733074183702205,
+            0.4956933860350197,
+            0.6780523747005415
+          ],
+          "minimum_substep_height_m": 0.6780523747005415,
+          "holder_peak_force_n": 10.374098996205102,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.09751583374253703
+        },
+        {
+          "time_s": 0.11999999999999371,
+          "pelvis_position_m": [
+            -2.071372224314546,
+            0.5037045938024832,
+            0.664207627076936
+          ],
+          "minimum_substep_height_m": 0.664207627076936,
+          "holder_peak_force_n": 14.181180488340502,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.12183743882941238
+        },
+        {
+          "time_s": 0.13999999999999152,
+          "pelvis_position_m": [
+            -2.060807888372908,
+            0.5096745767205656,
+            0.654494089798615
+          ],
+          "minimum_substep_height_m": 0.654494089798615,
+          "holder_peak_force_n": 13.233906093799197,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.13657996699095776
+        },
+        {
+          "time_s": 0.15999999999998932,
+          "pelvis_position_m": [
+            -2.0522564643523675,
+            0.5062442027472861,
+            0.6436034032017617
+          ],
+          "minimum_substep_height_m": 0.6436034032017617,
+          "holder_peak_force_n": 14.862306517627362,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.1522816224159822
+        },
+        {
+          "time_s": 0.17999999999998711,
+          "pelvis_position_m": [
+            -2.048573763751238,
+            0.5073464511863639,
+            0.632937061180253
+          ],
+          "minimum_substep_height_m": 0.632937061180253,
+          "holder_peak_force_n": 12.91582567212235,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.17091599268745988
+        },
+        {
+          "time_s": 0.1999999999999849,
+          "pelvis_position_m": [
+            -2.038500282638242,
+            0.5080125340874384,
+            0.63019201321828
+          ],
+          "minimum_substep_height_m": 0.6301344897108794,
+          "holder_peak_force_n": 12.858458495780317,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.179010756123636
+        },
+        {
+          "time_s": 0.2199999999999827,
+          "pelvis_position_m": [
+            -2.0306930882007577,
+            0.49968972693491764,
+            0.6279443530609026
+          ],
+          "minimum_substep_height_m": 0.6279443530609026,
+          "holder_peak_force_n": 17.186959996223994,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.18825311461326777
+        },
+        {
+          "time_s": 0.2399999999999805,
+          "pelvis_position_m": [
+            -2.030885745908287,
+            0.48714047772573693,
+            0.6200723266148459
+          ],
+          "minimum_substep_height_m": 0.6200723266148459,
+          "holder_peak_force_n": 11.446944435426005,
+          "joint_limit_excess_rad": 0.023337348741104713,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.20809894551578548
+        },
+        {
+          "time_s": 0.25999999999998274,
+          "pelvis_position_m": [
+            -2.0372104116259107,
+            0.4750363082289472,
+            0.6054473106757823
+          ],
+          "minimum_substep_height_m": 0.6054473106757823,
+          "holder_peak_force_n": 11.969676633874107,
+          "joint_limit_excess_rad": 0.02881194719548197,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.23772272863331995
+        },
+        {
+          "time_s": 0.2799999999999894,
+          "pelvis_position_m": [
+            -2.0466202971985044,
+            0.4647798314680465,
+            0.5844049612620638
+          ],
+          "minimum_substep_height_m": 0.5844049612620638,
+          "holder_peak_force_n": 14.313250661486457,
+          "joint_limit_excess_rad": 0.026473302960150158,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.2739477527398291
+        },
+        {
+          "time_s": 0.2999999999999961,
+          "pelvis_position_m": [
+            -2.051770151859682,
+            0.4630335166183238,
+            0.5591660539936719
+          ],
+          "minimum_substep_height_m": 0.5591660539936719,
+          "holder_peak_force_n": 19.588606803226835,
+          "joint_limit_excess_rad": 0.022690587049895572,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.30855156478042123
+        },
+        {
+          "time_s": 0.3200000000000028,
+          "pelvis_position_m": [
+            -2.052419304961378,
+            0.4680651879552932,
+            0.5293159847066853
+          ],
+          "minimum_substep_height_m": 0.5293159847066853,
+          "holder_peak_force_n": 9.015147952103943,
+          "joint_limit_excess_rad": 0.003010989436663669,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.34238409587180285
+        },
+        {
+          "time_s": 0.34000000000000946,
+          "pelvis_position_m": [
+            -2.0528032271188175,
+            0.47255595203883827,
+            0.49564968558944617
+          ],
+          "minimum_substep_height_m": 0.49564968558944617,
+          "holder_peak_force_n": 5.242083216246734,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.3797939831658511
+        },
+        {
+          "time_s": 0.36000000000001614,
+          "pelvis_position_m": [
+            -2.0545237732802226,
+            0.4751485974247337,
+            0.4624783433655522
+          ],
+          "minimum_substep_height_m": 0.4624783433655522,
+          "holder_peak_force_n": 4243.254790684096,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.4192927692403477
+        }
+      ]
+    },
+    {
+      "hand": "left",
+      "kinematic_errors": [
+        {
+          "time_s": 0.0,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10496082052562174,
+          "foot_error_m": 4.331778796278057e-06,
+          "minimum_tracked_clearance_m": 0.010953108506250475,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.02,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09957360658270967,
+          "foot_error_m": 0.0003762896533133356,
+          "minimum_tracked_clearance_m": 0.011322124435309416,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.04,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09102458914189362,
+          "foot_error_m": 0.0007243387517111514,
+          "minimum_tracked_clearance_m": 0.011327507932781589,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.06,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08079832260856501,
+          "foot_error_m": 0.0008046303617053827,
+          "minimum_tracked_clearance_m": 0.011543367305746371,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.08,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07078407493270913,
+          "foot_error_m": 0.0006224039835263278,
+          "minimum_tracked_clearance_m": 0.011925748381362261,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.1,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.06213103131439569,
+          "foot_error_m": 0.00019143672633172777,
+          "minimum_tracked_clearance_m": 0.01829352706503004,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.12,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.055881114791178785,
+          "foot_error_m": 1.459242557253561e-06,
+          "minimum_tracked_clearance_m": 0.0240138715955851,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.14,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.05261983738574054,
+          "foot_error_m": 2.102016215696261e-06,
+          "minimum_tracked_clearance_m": 0.02703638603877595,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.16,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.05261817129224009,
+          "foot_error_m": 2.727843692149332e-06,
+          "minimum_tracked_clearance_m": 0.02703573634156503,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.18,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.055875995367183295,
+          "foot_error_m": 3.2602496311707892e-06,
+          "minimum_tracked_clearance_m": 0.024012034658148967,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.2,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.062121238870603085,
+          "foot_error_m": 3.6115533023731672e-06,
+          "minimum_tracked_clearance_m": 0.01829353149506391,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.22,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07076631186137339,
+          "foot_error_m": 3.6326163022933997e-06,
+          "minimum_tracked_clearance_m": 0.011926555613039513,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.24,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0807695743831548,
+          "foot_error_m": 4.401398356635425e-06,
+          "minimum_tracked_clearance_m": 0.011544840183446564,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.26,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0909573598713876,
+          "foot_error_m": 5.7147116346454715e-06,
+          "minimum_tracked_clearance_m": 0.011348413527441426,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.28,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0994879810409717,
+          "foot_error_m": 5.559622761579903e-06,
+          "minimum_tracked_clearance_m": 0.011325646328826822,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.3,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10484448311398838,
+          "foot_error_m": 4.331778811222523e-06,
+          "minimum_tracked_clearance_m": 0.010940741514330637,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.32,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10404631814836258,
+          "foot_error_m": 0.0003762896566792188,
+          "minimum_tracked_clearance_m": 0.010918226821185706,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.34,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09907606573206941,
+          "foot_error_m": 0.0007243387402561157,
+          "minimum_tracked_clearance_m": 0.010964828935789539,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.36,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09102548345965379,
+          "foot_error_m": 0.0008046304179785604,
+          "minimum_tracked_clearance_m": 0.01156024134938699,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.38,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08216969496741709,
+          "foot_error_m": 0.0006227626269664128,
+          "minimum_tracked_clearance_m": 0.011445209930094846,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.0326841231185445
+            }
+          ]
+        },
+        {
+          "time_s": 0.4,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07427327314364533,
+          "foot_error_m": 0.0001915599108350434,
+          "minimum_tracked_clearance_m": 0.011633717340098215,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_wrist_collision"
+              ],
+              "penetration_m": 0.002460637338075139
+            },
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.07509449393865283
+            }
+          ]
+        },
+        {
+          "time_s": 0.42,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.06825703391924402,
+          "foot_error_m": 3.7148566806293436e-06,
+          "minimum_tracked_clearance_m": 0.011777795285756676,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_wrist_collision"
+              ],
+              "penetration_m": 0.004148056517671861
+            },
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.08774174517582621
+            }
+          ]
+        },
+        {
+          "time_s": 0.44,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.06495986690846668,
+          "foot_error_m": 9.745128168268527e-06,
+          "minimum_tracked_clearance_m": 0.011852999332894743,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_wrist_collision"
+              ],
+              "penetration_m": 0.003536726954491462
+            },
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.08833169849319084
+            }
+          ]
+        },
+        {
+          "time_s": 0.46,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.06493585610936062,
+          "foot_error_m": 2.7515130786215524e-06,
+          "minimum_tracked_clearance_m": 0.011849480179578292,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_wrist_collision"
+              ],
+              "penetration_m": 0.00352435072769422
+            },
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.08818337461641945
+            }
+          ]
+        },
+        {
+          "time_s": 0.48,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0681417731221712,
+          "foot_error_m": 3.3409696533266547e-06,
+          "minimum_tracked_clearance_m": 0.011770548390672403,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_wrist_collision"
+              ],
+              "penetration_m": 0.0038308742316587596
+            },
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.08704888777151731
+            }
+          ]
+        },
+        {
+          "time_s": 0.5,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07412030768203329,
+          "foot_error_m": 4.143194733982952e-06,
+          "minimum_tracked_clearance_m": 0.011617207966249682,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_wrist_collision"
+              ],
+              "penetration_m": 0.0020066069138865716
+            },
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.07386814768112962
+            }
+          ]
+        },
+        {
+          "time_s": 0.52,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08189778793310144,
+          "foot_error_m": 7.80742371930734e-06,
+          "minimum_tracked_clearance_m": 0.011408164464166426,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "pelvis_collision",
+                "right_hand_collision"
+              ],
+              "penetration_m": 0.021264929480522873
+            }
+          ]
+        },
+        {
+          "time_s": 0.54,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0908367579583123,
+          "foot_error_m": 4.401398455267823e-06,
+          "minimum_tracked_clearance_m": 0.011553012499790016,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "bowler_wicket_0",
+                "left_hand_collision"
+              ],
+              "penetration_m": 0.010693574479760541
+            }
+          ]
+        },
+        {
+          "time_s": 0.56,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09878266949186677,
+          "foot_error_m": 5.714711102505392e-06,
+          "minimum_tracked_clearance_m": 0.010926677655471062,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "bowler_wicket_0",
+                "left_hand_collision"
+              ],
+              "penetration_m": 0.03433185078611712
+            },
+            {
+              "pair": [
+                "ball_geom",
+                "bowler_wicket_1"
+              ],
+              "penetration_m": 0.005332866220737326
+            }
+          ]
+        },
+        {
+          "time_s": 0.58,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10378401689268202,
+          "foot_error_m": 5.55962284584659e-06,
+          "minimum_tracked_clearance_m": 0.010879556470921148,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "bowler_wicket_0",
+                "left_hand_collision"
+              ],
+              "penetration_m": 0.04621606978787924
+            },
+            {
+              "pair": [
+                "bowler_wicket_0",
+                "left_hand_collision"
+              ],
+              "penetration_m": 0.04621606978787924
+            },
+            {
+              "pair": [
+                "ball_geom",
+                "bowler_wicket_1"
+              ],
+              "penetration_m": 0.014348897904580018
+            }
+          ]
+        },
+        {
+          "time_s": 0.6,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.1045377712648424,
+          "foot_error_m": 4.331778603958692e-06,
+          "minimum_tracked_clearance_m": 0.010944680892313874,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.62,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09923420671523123,
+          "foot_error_m": 0.00037628965855602376,
+          "minimum_tracked_clearance_m": 0.011313160853414578,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.64,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09075452815940831,
+          "foot_error_m": 0.0007243387372310461,
+          "minimum_tracked_clearance_m": 0.01132056652843541,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.66,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08057910287562853,
+          "foot_error_m": 0.0008046303485980067,
+          "minimum_tracked_clearance_m": 0.011540534149275666,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.68,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07059841093734395,
+          "foot_error_m": 0.0006224040126663219,
+          "minimum_tracked_clearance_m": 0.011924937500952332,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.7000000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.061965974042190376,
+          "foot_error_m": 0.00019143672451613937,
+          "minimum_tracked_clearance_m": 0.01828473039140255,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.72,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.05572625713933675,
+          "foot_error_m": 1.4592414239840913e-06,
+          "minimum_tracked_clearance_m": 0.024006977092791038,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.74,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.052466404776745176,
+          "foot_error_m": 2.1020162362263136e-06,
+          "minimum_tracked_clearance_m": 0.027030422863870168,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.76,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.05245773916024275,
+          "foot_error_m": 2.727852223670925e-06,
+          "minimum_tracked_clearance_m": 0.027029505723391523,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.78,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.055698911515898626,
+          "foot_error_m": 3.2602493183739317e-06,
+          "minimum_tracked_clearance_m": 0.024004183288162756,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.8,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.061914676589872965,
+          "foot_error_m": 3.611553010098925e-06,
+          "minimum_tracked_clearance_m": 0.018282526587843684,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.8200000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07051164360115732,
+          "foot_error_m": 3.632616694964548e-06,
+          "minimum_tracked_clearance_m": 0.01192544153321462,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.84,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08043928252072549,
+          "foot_error_m": 4.401397899469223e-06,
+          "minimum_tracked_clearance_m": 0.011540611320162236,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.86,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0905049042745347,
+          "foot_error_m": 5.714711764973112e-06,
+          "minimum_tracked_clearance_m": 0.011341754360264467,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "ball_geom",
+                "bowler_wicket_0"
+              ],
+              "penetration_m": 0.04288930048912144
+            }
+          ]
+        },
+        {
+          "time_s": 0.88,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09885627035972164,
+          "foot_error_m": 5.5596230441706655e-06,
+          "minimum_tracked_clearance_m": 0.011308506942572155,
+          "unexpected_penetrations": [
+            {
+              "pair": [
+                "bowler_wicket_0",
+                "left_wrist_collision"
+              ],
+              "penetration_m": 0.012000184347380403
+            },
+            {
+              "pair": [
+                "bowler_wicket_0",
+                "left_hand_collision"
+              ],
+              "penetration_m": 0.013477182298439892
+            }
+          ]
+        },
+        {
+          "time_s": 0.9,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10398166157815834,
+          "foot_error_m": 4.331399492789714e-06,
+          "minimum_tracked_clearance_m": 0.010920627660162635,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.92,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10311583413189855,
+          "foot_error_m": 0.00037635867562495516,
+          "minimum_tracked_clearance_m": 0.010790656633850398,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.9400000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09774646463380357,
+          "foot_error_m": 0.0007246350435535993,
+          "minimum_tracked_clearance_m": 0.010804422807175362,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.96,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08996979017649143,
+          "foot_error_m": 0.0008053267362833445,
+          "minimum_tracked_clearance_m": 0.011147677725388105,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 0.98,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08038607353477038,
+          "foot_error_m": 0.0006237777296406996,
+          "minimum_tracked_clearance_m": 0.011277710962883852,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.0,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07438055267357602,
+          "foot_error_m": 0.00019377828249902466,
+          "minimum_tracked_clearance_m": 0.011997078564361358,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.02,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.08258452252121931,
+          "foot_error_m": 2.9748319519571843e-06,
+          "minimum_tracked_clearance_m": 0.011989364820584186,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.04,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09916915077793864,
+          "foot_error_m": 2.4239749499234354e-06,
+          "minimum_tracked_clearance_m": 0.011998139631455088,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.06,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.11006491696495538,
+          "foot_error_m": 2.725973165508949e-06,
+          "minimum_tracked_clearance_m": 0.011375258059968751,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.08,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.10877115619434531,
+          "foot_error_m": 3.258482409437671e-06,
+          "minimum_tracked_clearance_m": 0.010547286052262267,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.1,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.09558554875434538,
+          "foot_error_m": 3.6100248608910733e-06,
+          "minimum_tracked_clearance_m": 0.011337070299841129,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.12,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.07322743899031954,
+          "foot_error_m": 3.631868232776749e-06,
+          "minimum_tracked_clearance_m": 0.03314396889685378,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.1400000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.04913339840331437,
+          "foot_error_m": 6.302169702948605e-06,
+          "minimum_tracked_clearance_m": 0.0653015338117767,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.16,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.029554707406506817,
+          "foot_error_m": 7.144063640790489e-06,
+          "minimum_tracked_clearance_m": 0.09042065883208206,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.18,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.017504054911272365,
+          "foot_error_m": 5.43790316802492e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.2,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.016498008823089584,
+          "foot_error_m": 0.0005878119370711056,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.22,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.016466691286709606,
+          "foot_error_m": 0.0011330346644023025,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.24,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.016373731405179035,
+          "foot_error_m": 0.0012297173933036268,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.26,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.01621648068306344,
+          "foot_error_m": 0.0009312361085014959,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.28,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.015992306672040064,
+          "foot_error_m": 0.00028881227784155776,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.3,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.01569851393642002,
+          "foot_error_m": 3.3506939546113666e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.32,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.015332367002533341,
+          "foot_error_m": 3.5903807180566395e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.34,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.014891101575386976,
+          "foot_error_m": 5.39304539754275e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.36,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0143719357246077,
+          "foot_error_m": 5.347296409819127e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.3800000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.013772099900427428,
+          "foot_error_m": 3.774213546976356e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.4000000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.01308887502044671,
+          "foot_error_m": 1.674748352671615e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.42,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.012319589755489491,
+          "foot_error_m": 4.1910085310706865e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.44,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.011460736876346057,
+          "foot_error_m": 8.475817167485948e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.46,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.010508673436989467,
+          "foot_error_m": 7.4751708333456974e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.48,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.009460808410411288,
+          "foot_error_m": 0.0004398117645680546,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.5,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.008314761455733042,
+          "foot_error_m": 0.0006548949738596623,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.52,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0070685425312087095,
+          "foot_error_m": 0.00012036541733034958,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.54,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.005721864598320019,
+          "foot_error_m": 3.3440039229391543e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.56,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.004299266185021148,
+          "foot_error_m": 5.098083779460151e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.58,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0029651042330793224,
+          "foot_error_m": 6.777823124717399e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.6,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0009151112017664659,
+          "foot_error_m": 7.692503562764936e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.62,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0022659183353272677,
+          "foot_error_m": 5.757091416886209e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.6400000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0028777295887130374,
+          "foot_error_m": 4.026837874928339e-07,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.6600000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0016008361510974239,
+          "foot_error_m": 4.8667150867965e-07,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.68,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0005250344309957213,
+          "foot_error_m": 1.0636344667111296e-05,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.7,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0005230074856823166,
+          "foot_error_m": 0.0001404612424601257,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.72,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0005224652361817945,
+          "foot_error_m": 0.00026539247298947624,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.74,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0005164115805199992,
+          "foot_error_m": 0.00037256932502282344,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.76,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0015516284223209538,
+          "foot_error_m": 0.0004456183254395539,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.78,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0014541885093954901,
+          "foot_error_m": 0.0004717238545234094,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.8,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0003369590160959256,
+          "foot_error_m": 0.0004447882208797103,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.82,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0010982461537908143,
+          "foot_error_m": 0.00036689598156023566,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.84,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0028720858141685103,
+          "foot_error_m": 0.00018085939487521004,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.86,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0017123901878002051,
+          "foot_error_m": 1.8949051509824008e-06,
+          "minimum_tracked_clearance_m": 0.1,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.8800000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0003383096234764385,
+          "foot_error_m": 1.8178011070093354e-06,
+          "minimum_tracked_clearance_m": 0.09392007043882156,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.9000000000000001,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0003326187804538492,
+          "foot_error_m": 1.7172163456417496e-06,
+          "minimum_tracked_clearance_m": 0.08991934745420788,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.92,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0003165395430409035,
+          "foot_error_m": 1.9417498238832347e-06,
+          "minimum_tracked_clearance_m": 0.08668311693332603,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.94,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.00025642971299726054,
+          "foot_error_m": 2.4282990069978994e-06,
+          "minimum_tracked_clearance_m": 0.08414106134641436,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.96,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.00017559232180953488,
+          "foot_error_m": 2.8699856837217495e-06,
+          "minimum_tracked_clearance_m": 0.08233355497114334,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 1.98,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.0001011844233319639,
+          "foot_error_m": 3.219013703187442e-06,
+          "minimum_tracked_clearance_m": 0.0811400148353342,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.0,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.8807014266915315e-05,
+          "foot_error_m": 3.3963002361024258e-06,
+          "minimum_tracked_clearance_m": 0.0804913358401706,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.02,
+          "optimizer_success": true,
+          "arm_segment_error_m": 3.0225781949002805e-05,
+          "foot_error_m": 3.2728283158769456e-06,
+          "minimum_tracked_clearance_m": 0.08042447394306784,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.04,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.0905575528212465e-05,
+          "foot_error_m": 2.6905305049158353e-06,
+          "minimum_tracked_clearance_m": 0.08105876355765654,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.06,
+          "optimizer_success": true,
+          "arm_segment_error_m": 5.437315827996387e-05,
+          "foot_error_m": 2.419307101937498e-06,
+          "minimum_tracked_clearance_m": 0.08139466614657356,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.08,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.254094670983869e-05,
+          "foot_error_m": 2.074769781738907e-06,
+          "minimum_tracked_clearance_m": 0.08094958521060625,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.1,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.691807213872517e-05,
+          "foot_error_m": 1.7335220520467418e-06,
+          "minimum_tracked_clearance_m": 0.08058284520020303,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.12,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.924358042427224e-05,
+          "foot_error_m": 1.4070032411699322e-06,
+          "minimum_tracked_clearance_m": 0.08032464301155443,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.14,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.099028941708232e-05,
+          "foot_error_m": 1.0600649674550285e-06,
+          "minimum_tracked_clearance_m": 0.08021186456017851,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.16,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.230358789202341e-05,
+          "foot_error_m": 7.740437640306901e-07,
+          "minimum_tracked_clearance_m": 0.08018935370978822,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.18,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.289628128121554e-05,
+          "foot_error_m": 6.605888926752499e-07,
+          "minimum_tracked_clearance_m": 0.08018010179026736,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.2,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.281507934596732e-05,
+          "foot_error_m": 5.554072481142045e-07,
+          "minimum_tracked_clearance_m": 0.08018059938725625,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.22,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.210430759294078e-05,
+          "foot_error_m": 5.854034877131747e-07,
+          "minimum_tracked_clearance_m": 0.08018762445074573,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.24,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.080751610995343e-05,
+          "foot_error_m": 9.398330045426718e-07,
+          "minimum_tracked_clearance_m": 0.08019792856345256,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.2600000000000002,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.897771716962257e-05,
+          "foot_error_m": 1.3120534173778358e-06,
+          "minimum_tracked_clearance_m": 0.08020878487298777,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.2800000000000002,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.666432450144686e-05,
+          "foot_error_m": 1.6887240830831755e-06,
+          "minimum_tracked_clearance_m": 0.0802166651677706,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.3000000000000003,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.392440681910173e-05,
+          "foot_error_m": 2.063793951678902e-06,
+          "minimum_tracked_clearance_m": 0.08021810947651076,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.32,
+          "optimizer_success": true,
+          "arm_segment_error_m": 6.082074177323435e-05,
+          "foot_error_m": 2.4300546337601035e-06,
+          "minimum_tracked_clearance_m": 0.0802095890410299,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.34,
+          "optimizer_success": true,
+          "arm_segment_error_m": 5.742197061272866e-05,
+          "foot_error_m": 2.7743049733808667e-06,
+          "minimum_tracked_clearance_m": 0.08018766819515746,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.36,
+          "optimizer_success": true,
+          "arm_segment_error_m": 5.380237083183286e-05,
+          "foot_error_m": 3.070877372491821e-06,
+          "minimum_tracked_clearance_m": 0.08014924737324883,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.38,
+          "optimizer_success": true,
+          "arm_segment_error_m": 5.004130082696221e-05,
+          "foot_error_m": 3.2715352419979473e-06,
+          "minimum_tracked_clearance_m": 0.08009188568264672,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.4,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.6226213913753506e-05,
+          "foot_error_m": 3.291846656581484e-06,
+          "minimum_tracked_clearance_m": 0.08001432162580394,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.42,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.232622847485546e-05,
+          "foot_error_m": 4.178341808445806e-06,
+          "minimum_tracked_clearance_m": 0.07992870777600622,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.44,
+          "optimizer_success": true,
+          "arm_segment_error_m": 3.8285821726100227e-05,
+          "foot_error_m": 5.640359049643228e-06,
+          "minimum_tracked_clearance_m": 0.07984715945832999,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.46,
+          "optimizer_success": true,
+          "arm_segment_error_m": 3.4162487604710734e-05,
+          "foot_error_m": 4.746809582083836e-06,
+          "minimum_tracked_clearance_m": 0.07976953585390717,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.48,
+          "optimizer_success": true,
+          "arm_segment_error_m": 3.0015329694556808e-05,
+          "foot_error_m": 0.0005304373490862244,
+          "minimum_tracked_clearance_m": 0.07969578353519513,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.5,
+          "optimizer_success": true,
+          "arm_segment_error_m": 2.590449580037166e-05,
+          "foot_error_m": 0.0012611688941677475,
+          "minimum_tracked_clearance_m": 0.0796259470529001,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.52,
+          "optimizer_success": true,
+          "arm_segment_error_m": 2.1890519305874373e-05,
+          "foot_error_m": 0.00169836288181202,
+          "minimum_tracked_clearance_m": 0.07956017476710395,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.54,
+          "optimizer_success": true,
+          "arm_segment_error_m": 1.8033760680378443e-05,
+          "foot_error_m": 0.001821390372260426,
+          "minimum_tracked_clearance_m": 0.07949874034803867,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.56,
+          "optimizer_success": true,
+          "arm_segment_error_m": 1.438992053993987e-05,
+          "foot_error_m": 0.0016182831923237711,
+          "minimum_tracked_clearance_m": 0.07944189658692621,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.58,
+          "optimizer_success": true,
+          "arm_segment_error_m": 1.102385847718096e-05,
+          "foot_error_m": 0.0011108970465709442,
+          "minimum_tracked_clearance_m": 0.0793903546515543,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.6,
+          "optimizer_success": true,
+          "arm_segment_error_m": 7.994007631401177e-06,
+          "foot_error_m": 0.000351075052294788,
+          "minimum_tracked_clearance_m": 0.0793447687541218,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.62,
+          "optimizer_success": true,
+          "arm_segment_error_m": 5.359735198843362e-06,
+          "foot_error_m": 4.057619169062222e-06,
+          "minimum_tracked_clearance_m": 0.07930583506553945,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.64,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.254074803956813e-06,
+          "foot_error_m": 4.312939906979447e-06,
+          "minimum_tracked_clearance_m": 0.07927424613075648,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.66,
+          "optimizer_success": true,
+          "arm_segment_error_m": 4.1373008050420785e-06,
+          "foot_error_m": 3.6153820152536116e-06,
+          "minimum_tracked_clearance_m": 0.07925017244145116,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.68,
+          "optimizer_success": true,
+          "arm_segment_error_m": 9.431820037092816e-06,
+          "foot_error_m": 1.597000643602407e-06,
+          "minimum_tracked_clearance_m": 0.07923176144572328,
+          "unexpected_penetrations": []
+        },
+        {
+          "time_s": 2.7,
+          "optimizer_success": true,
+          "arm_segment_error_m": 0.00012525832732630227,
+          "foot_error_m": 2.5770361536417326e-05,
+          "minimum_tracked_clearance_m": 0.07919926737590854,
+          "unexpected_penetrations": []
+        }
+      ],
+      "reference_forward_travel_m": 2.2,
+      "reference_peak_joint_speed_rad_s": {
+        "left_hip_pitch_joint": 3.976379141806674,
+        "left_hip_roll_joint": 0.016308773227961162,
+        "left_hip_yaw_joint": 0.013104732123950887,
+        "left_knee_joint": 7.676266155379113,
+        "left_ankle_pitch_joint": 4.530222223032992,
+        "left_ankle_roll_joint": 0.009831409251559647,
+        "right_hip_pitch_joint": 8.2678336220584,
+        "right_hip_roll_joint": 0.024306497280403683,
+        "right_hip_yaw_joint": 0.027658437402054335,
+        "right_knee_joint": 10.940464490738243,
+        "right_ankle_pitch_joint": 9.031808879950459,
+        "right_ankle_roll_joint": 0.010085184504410403,
+        "waist_yaw_joint": 12.000000000000009,
+        "waist_roll_joint": 2.393207780578441,
+        "waist_pitch_joint": 4.942515130187984,
+        "left_shoulder_pitch_joint": 11.999999999999988,
+        "left_shoulder_roll_joint": 10.470755584656033,
+        "left_shoulder_yaw_joint": 12.000000000000009,
+        "left_elbow_joint": 9.876222026271556,
+        "left_wrist_roll_joint": 7.420806856898854,
+        "left_wrist_pitch_joint": 6.093563462018482,
+        "left_wrist_yaw_joint": 2.6639533833209867,
+        "right_shoulder_pitch_joint": 11.999999999998971,
+        "right_shoulder_roll_joint": 9.402926808297785,
+        "right_shoulder_yaw_joint": 12.00000000000001,
+        "right_elbow_joint": 3.79086890780424,
+        "right_wrist_roll_joint": 8.87726062668028,
+        "right_wrist_pitch_joint": 12.000000000000007,
+        "right_wrist_yaw_joint": 10.480122896515619
+      },
+      "completed_physical_motion": false,
+      "release": null,
+      "trace": [
+        {
+          "time_s": 0.020000000000000014,
+          "pelvis_position_m": [
+            -2.083248259416118,
+            -0.49551369512349297,
+            0.7278010103554136
+          ],
+          "minimum_substep_height_m": 0.7278010103554136,
+          "holder_peak_force_n": 51.3588887624529,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.006316354250869074
+        },
+        {
+          "time_s": 0.04000000000000003,
+          "pelvis_position_m": [
+            -2.0796338911910266,
+            -0.49149256482037895,
+            0.7192150402537835
+          ],
+          "minimum_substep_height_m": 0.7192150402537835,
+          "holder_peak_force_n": 11.857088268789921,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.025437492120873633
+        },
+        {
+          "time_s": 0.060000000000000046,
+          "pelvis_position_m": [
+            -2.0785916529427073,
+            -0.4936746779863348,
+            0.7069328642734517
+          ],
+          "minimum_substep_height_m": 0.7069328642734517,
+          "holder_peak_force_n": 17.955042914584777,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.04864361978507566
+        },
+        {
+          "time_s": 0.07999999999999811,
+          "pelvis_position_m": [
+            -2.0734994081350573,
+            -0.4948132531327584,
+            0.6935115970323955
+          ],
+          "minimum_substep_height_m": 0.6935115970323955,
+          "holder_peak_force_n": 8.544462923280403,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.07046581298273322
+        },
+        {
+          "time_s": 0.09999999999999591,
+          "pelvis_position_m": [
+            -2.073443454701133,
+            -0.49561000079521234,
+            0.6780173476275204
+          ],
+          "minimum_substep_height_m": 0.6780173476275204,
+          "holder_peak_force_n": 10.362170489114517,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.0976456945276846
+        },
+        {
+          "time_s": 0.11999999999999371,
+          "pelvis_position_m": [
+            -2.0715588542119905,
+            -0.503602340556741,
+            0.66416070520159
+          ],
+          "minimum_substep_height_m": 0.66416070520159,
+          "holder_peak_force_n": 14.186926387977305,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.12200646561854392
+        },
+        {
+          "time_s": 0.13999999999999152,
+          "pelvis_position_m": [
+            -2.061061794269666,
+            -0.5095592645882456,
+            0.654441188476865
+          ],
+          "minimum_substep_height_m": 0.654441188476865,
+          "holder_peak_force_n": 13.227602020106213,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.13679648774979042
+        },
+        {
+          "time_s": 0.15999999999998932,
+          "pelvis_position_m": [
+            -2.052575586721733,
+            -0.5061378877672156,
+            0.6435436925524448
+          ],
+          "minimum_substep_height_m": 0.6435436925524448,
+          "holder_peak_force_n": 14.85654983727302,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.15255513416494584
+        },
+        {
+          "time_s": 0.17999999999998711,
+          "pelvis_position_m": [
+            -2.048945816508124,
+            -0.5072480884445597,
+            0.6328689480355074
+          ],
+          "minimum_substep_height_m": 0.6328689480355074,
+          "holder_peak_force_n": 12.896140445349545,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.17123914113430208
+        },
+        {
+          "time_s": 0.1999999999999849,
+          "pelvis_position_m": [
+            -2.038937836168779,
+            -0.5079011067382198,
+            0.6301203056285888
+          ],
+          "minimum_substep_height_m": 0.6300631611488028,
+          "holder_peak_force_n": 12.97197900988551,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.17939303965420395
+        },
+        {
+          "time_s": 0.2199999999999827,
+          "pelvis_position_m": [
+            -2.0311998484423803,
+            -0.4995975740399236,
+            0.6278326395538967
+          ],
+          "minimum_substep_height_m": 0.6278326395538967,
+          "holder_peak_force_n": 17.171934389646285,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.18872946676888466
+        },
+        {
+          "time_s": 0.2399999999999805,
+          "pelvis_position_m": [
+            -2.031421155109326,
+            -0.48706112417387226,
+            0.6198971256904134
+          ],
+          "minimum_substep_height_m": 0.6198971256904134,
+          "holder_peak_force_n": 11.427315387172738,
+          "joint_limit_excess_rad": 0.021719377334317502,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.20864563184685045
+        },
+        {
+          "time_s": 0.25999999999998274,
+          "pelvis_position_m": [
+            -2.0377094423371793,
+            -0.4748397323687629,
+            0.605265254435242
+          ],
+          "minimum_substep_height_m": 0.605265254435242,
+          "holder_peak_force_n": 11.924760685588074,
+          "joint_limit_excess_rad": 0.027389563418486307,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.23825926289888036
+        },
+        {
+          "time_s": 0.2799999999999894,
+          "pelvis_position_m": [
+            -2.0471313229810812,
+            -0.46441982401905346,
+            0.5841770789188757
+          ],
+          "minimum_substep_height_m": 0.5841770789188757,
+          "holder_peak_force_n": 14.204724830956616,
+          "joint_limit_excess_rad": 0.02712729418776938,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.27454294377362465
+        },
+        {
+          "time_s": 0.2999999999999961,
+          "pelvis_position_m": [
+            -2.05229515756306,
+            -0.46250802992735435,
+            0.5588769341280376
+          ],
+          "minimum_substep_height_m": 0.5588769341280376,
+          "holder_peak_force_n": 19.58969492017756,
+          "joint_limit_excess_rad": 0.02381330084189215,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.30920757398701054
+        },
+        {
+          "time_s": 0.3200000000000028,
+          "pelvis_position_m": [
+            -2.05295547297634,
+            -0.46744780020528076,
+            0.5289296775157133
+          ],
+          "minimum_substep_height_m": 0.5289296775157133,
+          "holder_peak_force_n": 9.052338179358033,
+          "joint_limit_excess_rad": 0.0034771283156039834,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.34310006737364396
+        },
+        {
+          "time_s": 0.34000000000000946,
+          "pelvis_position_m": [
+            -2.0533464097042007,
+            -0.47194042713778506,
+            0.4951236307961997
+          ],
+          "minimum_substep_height_m": 0.4951236307961997,
+          "holder_peak_force_n": 5.528078770103163,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.3805897365891402
+        },
+        {
+          "time_s": 0.36000000000001614,
+          "pelvis_position_m": [
+            -2.054943692615254,
+            -0.47459632485015724,
+            0.46177292608684267
+          ],
+          "minimum_substep_height_m": 0.46177292608684267,
+          "holder_peak_force_n": 4254.456170078616,
+          "joint_limit_excess_rad": 0.0,
+          "motor_force_fraction": 1.0,
+          "unexpected_contacts": [],
+          "root_tracking_error_m": 0.4201026824431855
+        }
+      ]
+    }
+  ]
+}

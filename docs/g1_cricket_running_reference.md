@@ -7,6 +7,12 @@ retargets the earlier Gym-Cricket `DeliveryStrideMotion` choreography to the
 original G1 links and joints; it does not copy its pose-overwrite runtime or
 assign a release velocity.
 
+Current reference: [front-raise targets and complete baseline](../g1_cricket_results/running_front_raise_v1/evaluation.json),
+with [fixed-frame review](../g1_cricket_results/running_front_raise_v1/running_motion_review.png).
+Both hands now solve the full motion with maximum arm error 5.25 mm and no
+audited intersections. Physical balance remains failed; there is no learned
+running-delivery demonstration yet. Earlier comparisons below are historical.
+
 Fixed initial design: both hands, 2.70 s at 50 reference frames/s, 0.55 horizontal
 stride scale, 2.20 m total forward travel, y=+/-0.5 m approach, gather 1.20 s,
 back landing 1.42 s, front landing 1.65 s and intended release 1.82 s. The
@@ -40,13 +46,13 @@ overarm release, stability, ball flight and contact-resolution checks. Do not
 replace those gates with planned ankle positions, intended release time or
 offline inverse-kinematics success.
 
-Reproduce the initial bounded pair with:
+Reproduce the current bounded pair into a new output directory with:
 
 ```sh
 PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
   --python ../unilab_submission_checkout/.venv/bin/python \
   python scripts/retarget_g1_cricket_running.py \
-  g1_cricket_results/running_reference_v1 --render
+  g1_cricket_results/running_front_raise_reproduction --render
 ```
 
 Original batting highlights and the current two-hand soft-toss diagnostic remain
@@ -95,10 +101,10 @@ both complete failed PD rollouts, including their terminal frames. The target
 videos are explicitly offline animation, not physical or learned bowling.
 Full pose arrays, source hashes and every error/physical trace remain available
 for both revisions. Superseded v1 videos/tracking exports were pruned; its
-fixed-frame review remains, and v2 retains all four videos and tracking exports.
-Next work must resolve the shoulder
-return path and dynamically feasible foot support before running-delivery RL
-or a bowling showcase can be accepted.
+fixed-frame review remains. v2 videos/tracking exports were subsequently pruned
+when the front-raise reference replaced it. At this stage, the shoulder
+return path and dynamically feasible foot support still needed repair before
+running-delivery RL or a bowling showcase could be accepted.
 
 ## Reverse Continuation Comparison
 
@@ -109,8 +115,10 @@ instead of approach. Outputs are restored to increasing physical time before
 velocity construction or simulation. The same 12 rad/s continuity bound applies
 in either solve direction. This tests whether the forward warm start trapped
 the shoulder in a poor solution branch; it cannot itself establish balance.
-Run both full hands once with `--reverse-ik --render` into
-`g1_cricket_results/running_reference_reverse_v1`, and retain all errors/falls.
+The frozen `c0ac67f1` runner used `--reverse-ik --render` into
+`g1_cricket_results/running_reference_reverse_v1`, retaining all errors/falls.
+This rejected option has been removed from the current runner; use the frozen
+commit for historical reproduction.
 
 Backward continuation (source `c0ac67f1`) fails: maximum arm error is 110.06 mm,
 13 frames per hand have unexpected penetration, and both physical episodes fall
@@ -152,6 +160,22 @@ but is an approximate static load allocation, not full inverse dynamics or
 predicted contact evidence. It excludes ball-holder load transfer, lateral
 friction and acceleration. Frames without near-ground feet get zero load offset;
 nonzero root residuals remain recorded rather than claiming a support solution.
-Test the unchanged front-raise motion for both hands with `--stance-feedforward
---render` in `g1_cricket_results/running_stance_feedforward_v1`; compare the full
-episodes, including any falls or unintended contacts, to the no-offset pair.
+The frozen `a929ddaa` runner tested the unchanged front-raise motion for both
+hands with `--stance-feedforward --render` in
+`g1_cricket_results/running_stance_feedforward_v1`.
+
+Both physical episodes last 0.82 s rather than 0.62 s, but fail with foot/foot
+and arm/wicket contacts and joint-limit excess of 0.01044 / 0.01115 rad. The
+static solver also emitted an invalid-multiply warning, despite finite returned
+values. This comparison is rejected, not a balance improvement or a certified
+support solution. Its approximate load allocation and CLI option were removed
+from the current runner; the frozen source, complete results and failure review
+remain available. No further training or rollout uses that compensation.
+
+Current media/tracking exports belong to `running_front_raise_v1`. Rejected
+comparisons retain complete evaluation/pose arrays and fixed-frame reviews,
+with duplicate videos/tracking exports pruned. The feedforward comparison uses
+bit-identical reference poses, so its duplicate reference/exports were also
+removed; its physical poses and complete estimated-load traces remain. Next:
+use the repaired reference in a whole-body dynamic-balance curriculum, while
+keeping actual stride, foot legality, elbow, release and recovery gates intact.
