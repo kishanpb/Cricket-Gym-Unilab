@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_delivery_pitch_v2/mujoco
+  - _self_
+
+env:
+  actions:
+    residual:
+      _target_: unilab.tasks.manipulation.g1_cricket.overarm.OverarmActionCfg
