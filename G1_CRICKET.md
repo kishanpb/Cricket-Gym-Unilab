@@ -535,6 +535,24 @@ initialization before more PPO; scripted demonstrations must remain labeled as
 such, and every learned candidate must pass the same complete delivery gate.
 No new showcase video or policy promotion follows from this failed pilot.
 
+### Bounded Overarm Motion Diagnostic
+
+The [fixed 32-attempt motor search](docs/g1_cricket_delivery_motion_v1.md)
+tested both hands with a smooth wind-up, two elbow offsets, two forward shoulder
+targets and four release delays. The [complete outcomes](g1_cricket_results/delivery_motion_v1/evaluation.json)
+contain 32 releases but zero full-gate passes: neither arm crosses shoulder
+height, maximum forward release speed is only .281851 m/s, and pitch penetration
+ranges from 34.183 to 48.405 mm. The unchanged gate rejects all attempts.
+Independent replay matches all interval states and sensors. These are failed
+scripted motor trials, not learned policies or usable imitation teachers.
+
+A fixed first-candidate command/pose trace shows the right shoulder at -1.441 rad
+just before the drive despite a -1.719 rad motor target; the moving prior also
+changes the arm reference underneath the residual. An opposite-hand/hip contact
+appears during the drive. The family is closed without extra budget or relaxed
+criteria. Ball-pitch contact response and overarm control authority need separate
+repairs before another learning claim. The original model/results stay frozen.
+
 The completed batting evaluation/video remain frozen at source revision
 `7f936c78b9e0d882087be6deedadba4525bd7224`; their hashes do not imply that these
 new adapter changes have been evaluated across the same 576 trials.

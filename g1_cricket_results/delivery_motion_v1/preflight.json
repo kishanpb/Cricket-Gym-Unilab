@@ -1,0 +1,42 @@
+{
+  "plan": {
+    "hands": [
+      "right",
+      "left"
+    ],
+    "seed": 6301,
+    "dt": 0.00025,
+    "engine": "mjbatch",
+    "settle_tick": 10,
+    "raised_tick": 45,
+    "swing_tick": 55,
+    "recovery_tick": 65,
+    "recovery_end_tick": 95,
+    "windup_pitch_offset": -2.45,
+    "outward_roll_offset": 0.15,
+    "elbow_offsets": [
+      0.35,
+      0.6
+    ],
+    "swing_pitch_offsets": [
+      1.0,
+      2.3
+    ],
+    "release_delays": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "rows": 32,
+    "new_training": false,
+    "policy_promoted": false
+  },
+  "input_sha256": {
+    "scripts/probe_g1_cricket_delivery_motion.py": "a44f85a6c5af324ef2815fd5328c674b7009cfb61fae1100fbf91c80020de0f9",
+    "tests/scripts/test_g1_cricket_delivery_motion.py": "34fbec763c3b79616cfe8cf9f196dd9eb7f3f6f270dd92f99fcdaa1d4e41a456",
+    "docs/g1_cricket_delivery_motion_v1.md": "0cacba4675168bf32cd76b89542fdc9f689520005bbda49cf51bbcd4f8d53f28",
+    "g1_cricket_results/delivery_v1/preflight.json": "5459a2907c073b563fb79a5cb45c97ace343b97c4c5404062c19e01566a8b73f",
+    "g1_cricket_results/delivery_v1/evaluation.json": "242cfd1002e61b9ebb8ae44064ad07b6a182f124ab6ccf6992d2c6f228041cba"
+  }
+}

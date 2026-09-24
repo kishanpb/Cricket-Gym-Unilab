@@ -1,0 +1,3258 @@
+{
+  "plan": {
+    "hands": [
+      "right",
+      "left"
+    ],
+    "seed": 6301,
+    "dt": 0.00025,
+    "engine": "mjbatch",
+    "settle_tick": 10,
+    "raised_tick": 45,
+    "swing_tick": 55,
+    "recovery_tick": 65,
+    "recovery_end_tick": 95,
+    "windup_pitch_offset": -2.45,
+    "outward_roll_offset": 0.15,
+    "elbow_offsets": [
+      0.35,
+      0.6
+    ],
+    "swing_pitch_offsets": [
+      1.0,
+      2.3
+    ],
+    "release_delays": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "rows": 32,
+    "new_training": false,
+    "policy_promoted": false
+  },
+  "scope": "scripted_motor_search_not_learned_or_qualified",
+  "preflight_sha256": "9d0ded171a9a4e89034de604af85a674e0707d6bdfb8405d9b4a10e66aafc6f3",
+  "rows": [
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.35_p1.0_d2",
+        "elbow": 0.35,
+        "pitch": 1.0,
+        "delay": 2
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.139999508857727,
+          "position": [
+            -0.17854996025562286,
+            0.1801379770040512,
+            1.1458905935287476
+          ],
+          "velocity": [
+            0.26793378591537476,
+            -0.5778883099555969,
+            -2.1621527671813965
+          ],
+          "shoulder_z": 1.0756531973882346,
+          "upper_z": -0.128524051651401,
+          "elbow_angle_rad": 2.8058130650308337,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6467499856948845,
+            "bounds": [
+              [
+                -0.8509516278214803,
+                0.5596406664394611,
+                -7.986000767141576e-05
+              ],
+              [
+                -0.6462283344361318,
+                0.6347887993129075,
+                0.04084904496619548
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9212497186660765,
+            "bounds": [
+              [
+                -0.8112088922230339,
+                0.3130034286867479,
+                -4.5138202576527724e-05
+              ],
+              [
+                -0.6052949675203704,
+                0.38616411146930885,
+                0.024824512314075148
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.4439992227554335,
+          "position": [
+            -0.09709805357456203,
+            0.0044599134549498515,
+            0.03492315550707818
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10186
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 84.87085912922126
+        },
+        "maximum_ball_penetration_m": 0.03678770660943227,
+        "minimum_pelvis_height_m": 0.7669169079556255,
+        "minimum_pelvis_up": 0.9916419726108084,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.610197647366148,
+        "holder_impulse_world_ns": [
+          0.041797621512655404,
+          -0.09015057242414959,
+          1.4073145329295946
+        ],
+        "steps": 200,
+        "episode_return": 6.089232189580798,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.35_p1.0_d3",
+        "elbow": 0.35,
+        "pitch": 1.0,
+        "delay": 3
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1599994897842407,
+          "position": [
+            -0.17471881210803986,
+            0.16642199456691742,
+            1.0889077186584473
+          ],
+          "velocity": [
+            0.056514471769332886,
+            -0.7889242172241211,
+            -3.509064197540283
+          ],
+          "shoulder_z": 1.075761835908621,
+          "upper_z": -0.24637804427563564,
+          "elbow_angle_rad": 2.790319440121326,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6467499856948845,
+            "bounds": [
+              [
+                -0.8509516278214803,
+                0.5596406664394611,
+                -7.986000767141576e-05
+              ],
+              [
+                -0.6462283344361318,
+                0.6347887993129075,
+                0.04084904496619548
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9212497186660765,
+            "bounds": [
+              [
+                -0.8112088922230339,
+                0.3130034286867479,
+                -4.5138202576527724e-05
+              ],
+              [
+                -0.6052949675203704,
+                0.38616411146930885,
+                0.024824512314075148
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3877492799758937,
+          "position": [
+            -0.1618477132841943,
+            -0.013255484115332384,
+            0.035016637256278974
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10281
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 94.50313962009051
+        },
+        "maximum_ball_penetration_m": 0.04090596831036916,
+        "minimum_pelvis_height_m": 0.7675414713466586,
+        "minimum_pelvis_up": 0.9916756158180235,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.669171922897288,
+        "holder_impulse_world_ns": [
+          0.008816208533746619,
+          -0.12307217312569912,
+          1.2278035606649067
+        ],
+        "steps": 200,
+        "episode_return": 5.880803508684039,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.35_p1.0_d4",
+        "elbow": 0.35,
+        "pitch": 1.0,
+        "delay": 4
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1799994707107544,
+          "position": [
+            -0.17849312722682953,
+            0.14929816126823425,
+            1.0102797746658325
+          ],
+          "velocity": [
+            -0.4698830842971802,
+            -0.9259081482887268,
+            -4.240997791290283
+          ],
+          "shoulder_z": 1.074706874835659,
+          "upper_z": -0.3896468268180973,
+          "elbow_angle_rad": 2.7854480024861545,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6467499856948845,
+            "bounds": [
+              [
+                -0.8509516278214803,
+                0.5596406664394611,
+                -7.986000767141576e-05
+              ],
+              [
+                -0.6462283344361318,
+                0.6347887993129075,
+                0.04084904496619548
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9212497186660765,
+            "bounds": [
+              [
+                -0.8112088922230339,
+                0.3130034286867479,
+                -4.5138202576527724e-05
+              ],
+              [
+                -0.6052949675203704,
+                0.38616411146930885,
+                0.024824512314075148
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3687492990493804,
+          "position": [
+            -0.26718352064490225,
+            -0.025467012226581615,
+            0.03481177930517195
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10296
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 100.28657926015295
+        },
+        "maximum_ball_penetration_m": 0.04350059157785222,
+        "minimum_pelvis_height_m": 0.7675061543101035,
+        "minimum_pelvis_up": 0.9917589589930456,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.669171922897288,
+        "holder_impulse_world_ns": [
+          -0.07330180833280964,
+          -0.14444166560428617,
+          1.1442291030346623
+        ],
+        "steps": 200,
+        "episode_return": 5.851590145379305,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.35_p1.0_d5",
+        "elbow": 0.35,
+        "pitch": 1.0,
+        "delay": 5
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.199999451637268,
+          "position": [
+            -0.19422578811645508,
+            0.12969504296779633,
+            0.9230316877365112
+          ],
+          "velocity": [
+            -1.100927472114563,
+            -1.0158913135528564,
+            -4.438086986541748
+          ],
+          "shoulder_z": 1.0713178392023828,
+          "upper_z": -0.5323780358959468,
+          "elbow_angle_rad": 2.7874687247785537,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6467499856948845,
+            "bounds": [
+              [
+                -0.8509516278214803,
+                0.5596406664394611,
+                -7.986000767141576e-05
+              ],
+              [
+                -0.6462283344361318,
+                0.6347887993129075,
+                0.04084904496619548
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9212497186660765,
+            "bounds": [
+              [
+                -0.8112088922230339,
+                0.3130034286867479,
+                -4.5138202576527724e-05
+              ],
+              [
+                -0.6052949675203704,
+                0.38616411146930885,
+                0.024824512314075148
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3684992990493803,
+          "position": [
+            -0.3797320862412451,
+            -0.04148263338208209,
+            0.03574345447521208
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10290
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 98.28743213688553
+        },
+        "maximum_ball_penetration_m": 0.04281891890338105,
+        "minimum_pelvis_height_m": 0.7675856274635787,
+        "minimum_pelvis_up": 0.9918699499205897,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.669171922897288,
+        "holder_impulse_world_ns": [
+          -0.17174473459101502,
+          -0.15847903216081954,
+          1.1440904154404075
+        ],
+        "steps": 200,
+        "episode_return": 5.857477338984609,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.35_p2.3_d2",
+        "elbow": 0.35,
+        "pitch": 2.3,
+        "delay": 2
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.139999508857727,
+          "position": [
+            -0.17854996025562286,
+            0.1801379770040512,
+            1.1458905935287476
+          ],
+          "velocity": [
+            0.26793378591537476,
+            -0.5778883099555969,
+            -2.1621527671813965
+          ],
+          "shoulder_z": 1.0756531973882346,
+          "upper_z": -0.128524051651401,
+          "elbow_angle_rad": 2.8058130650308337,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6467499856948845,
+            "bounds": [
+              [
+                -0.8509516278214803,
+                0.5596406664394611,
+                -7.986000767141576e-05
+              ],
+              [
+                -0.6462283344361318,
+                0.6347887993129075,
+                0.04084904496619548
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9212497186660765,
+            "bounds": [
+              [
+                -0.8112088922230339,
+                0.3130034286867479,
+                -4.5138202576527724e-05
+              ],
+              [
+                -0.6052949675203704,
+                0.38616411146930885,
+                0.024824512314075148
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.4439992227554335,
+          "position": [
+            -0.09709805357456203,
+            0.0044599134549498515,
+            0.03492315550707818
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10186
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 84.87085912922126
+        },
+        "maximum_ball_penetration_m": 0.03678770660943227,
+        "minimum_pelvis_height_m": 0.7635064309337108,
+        "minimum_pelvis_up": 0.9886971931300061,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.610197647366148,
+        "holder_impulse_world_ns": [
+          0.041797621512655404,
+          -0.09015057242414959,
+          1.4073145329295946
+        ],
+        "steps": 200,
+        "episode_return": 5.965601282194257,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.35_p2.3_d3",
+        "elbow": 0.35,
+        "pitch": 2.3,
+        "delay": 3
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1599994897842407,
+          "position": [
+            -0.17473503947257996,
+            0.16642145812511444,
+            1.0888757705688477
+          ],
+          "velocity": [
+            0.04943927749991417,
+            -0.7901855111122131,
+            -3.5289816856384277
+          ],
+          "shoulder_z": 1.0757703689379217,
+          "upper_z": -0.24676814751869694,
+          "elbow_angle_rad": 2.789866958656141,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6467499856948845,
+            "bounds": [
+              [
+                -0.8509516278214803,
+                0.5596406664394611,
+                -7.986000767141576e-05
+              ],
+              [
+                -0.6462283344361318,
+                0.6347887993129075,
+                0.04084904496619548
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9212497186660765,
+            "bounds": [
+              [
+                -0.8112088922230339,
+                0.3130034286867479,
+                -4.5138202576527724e-05
+              ],
+              [
+                -0.6052949675203704,
+                0.38616411146930885,
+                0.024824512314075148
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3869992799758935,
+          "position": [
+            -0.16351236855611218,
+            -0.012950647737830882,
+            0.034768970405616675
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10279
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 94.80703653605333
+        },
+        "maximum_ball_penetration_m": 0.04117750422467803,
+        "minimum_pelvis_height_m": 0.7642599769610439,
+        "minimum_pelvis_up": 0.9885824424455535,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.91115684669855,
+        "holder_impulse_world_ns": [
+          0.007712478371995935,
+          -0.12326893414168628,
+          1.2246964231555966
+        ],
+        "steps": 200,
+        "episode_return": 5.752623358741403,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.35_p2.3_d4",
+        "elbow": 0.35,
+        "pitch": 2.3,
+        "delay": 4
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1799994707107544,
+          "position": [
+            -0.17969492077827454,
+            0.14881178736686707,
+            1.0049233436584473
+          ],
+          "velocity": [
+            -0.6234033703804016,
+            -0.9768432378768921,
+            -4.832170009613037
+          ],
+          "shoulder_z": 1.0752532319519437,
+          "upper_z": -0.406509571130064,
+          "elbow_angle_rad": 2.7757982711586555,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6467499856948845,
+            "bounds": [
+              [
+                -0.8509516278214803,
+                0.5596406664394611,
+                -7.986000767141576e-05
+              ],
+              [
+                -0.6462283344361318,
+                0.6347887993129075,
+                0.04084904496619548
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9212497186660765,
+            "bounds": [
+              [
+                -0.8112088922230339,
+                0.3130034286867479,
+                -4.5138202576527724e-05
+              ],
+              [
+                -0.6052949675203704,
+                0.38616411146930885,
+                0.024824512314075148
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3509993181228674,
+          "position": [
+            -0.2862969161868103,
+            -0.018228417113423327,
+            0.03498553965959534
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10310
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 106.95939160427301
+        },
+        "maximum_ball_penetration_m": 0.04628773329874611,
+        "minimum_pelvis_height_m": 0.7652117041667179,
+        "minimum_pelvis_up": 0.9886367111829595,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 10.86733085866997,
+        "holder_impulse_world_ns": [
+          -0.09725097262722207,
+          -0.1523875357058641,
+          1.0520062515627475
+        ],
+        "steps": 200,
+        "episode_return": 5.72548670694232,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.35_p2.3_d5",
+        "elbow": 0.35,
+        "pitch": 2.3,
+        "delay": 5
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.199999451637268,
+          "position": [
+            -0.2023705542087555,
+            0.127935528755188,
+            0.9009304642677307
+          ],
+          "velocity": [
+            -1.6685563325881958,
+            -1.0846832990646362,
+            -5.424464702606201
+          ],
+          "shoulder_z": 1.0728580143642945,
+          "upper_z": -0.57999329812834,
+          "elbow_angle_rad": 2.771467637071886,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6467499856948845,
+            "bounds": [
+              [
+                -0.8509516278214803,
+                0.5596406664394611,
+                -7.986000767141576e-05
+              ],
+              [
+                -0.6462283344361318,
+                0.6347887993129075,
+                0.04084904496619548
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9212497186660765,
+            "bounds": [
+              [
+                -0.8112088922230339,
+                0.3130034286867479,
+                -4.5138202576527724e-05
+              ],
+              [
+                -0.6052949675203704,
+                0.38616411146930885,
+                0.024824512314075148
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3414993181228643,
+          "position": [
+            -0.4384712335467339,
+            -0.025547166109085084,
+            0.03498613148082735
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10265
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 112.17953832916729
+        },
+        "maximum_ball_penetration_m": 0.04840521715007388,
+        "minimum_pelvis_height_m": 0.7658105502697127,
+        "minimum_pelvis_up": 0.9888240801802047,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 10.86733085866997,
+        "holder_impulse_world_ns": [
+          -0.2602948335175759,
+          -0.16921058361725852,
+          0.9902154780038569
+        ],
+        "steps": 200,
+        "episode_return": 5.736602753400803,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.6_p1.0_d2",
+        "elbow": 0.6,
+        "pitch": 1.0,
+        "delay": 2
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.139999508857727,
+          "position": [
+            -0.17600327730178833,
+            0.15405456721782684,
+            1.0954155921936035
+          ],
+          "velocity": [
+            0.06401844322681427,
+            -0.605048418045044,
+            -2.1819937229156494
+          ],
+          "shoulder_z": 1.0755222549747319,
+          "upper_z": -0.12618163487479098,
+          "elbow_angle_rad": 2.965728059653881,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6452499856948847,
+            "bounds": [
+              [
+                -0.8515222643178074,
+                0.5596253423145169,
+                -2.612225474515721e-06
+              ],
+              [
+                -0.6467469874411481,
+                0.6347108870602428,
+                0.04059176038772882
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9192497377395609,
+            "bounds": [
+              [
+                -0.8130861626093984,
+                0.3139257558176673,
+                -0.00011780859393740583
+              ],
+              [
+                -0.6071647351187439,
+                0.3871451475701369,
+                0.024187405707022727
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.4327492418289227,
+          "position": [
+            -0.15726189890876446,
+            -0.023073333173990202,
+            0.03590705284341798
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 1,
+        "ball_contact_counts": {
+          "pitch": 10269
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 81.44681775946826
+        },
+        "maximum_ball_penetration_m": 0.03544471082737447,
+        "minimum_pelvis_height_m": 0.763771271462183,
+        "minimum_pelvis_up": 0.9914108185050975,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.337728496461992,
+        "holder_impulse_world_ns": [
+          0.00998685295437454,
+          -0.09438754649956856,
+          1.4042193400972485
+        ],
+        "steps": 200,
+        "episode_return": 5.858312163501978,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.6_p1.0_d3",
+        "elbow": 0.6,
+        "pitch": 1.0,
+        "delay": 3
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1599994897842407,
+          "position": [
+            -0.1776169091463089,
+            0.13976901769638062,
+            1.038533329963684
+          ],
+          "velocity": [
+            -0.2793002724647522,
+            -0.8191515207290649,
+            -3.476085662841797
+          ],
+          "shoulder_z": 1.0755439126328052,
+          "upper_z": -0.24394099022435978,
+          "elbow_angle_rad": 2.9502706672767918,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6452499856948847,
+            "bounds": [
+              [
+                -0.8515222643178074,
+                0.5596253423145169,
+                -2.612225474515721e-06
+              ],
+              [
+                -0.6467469874411481,
+                0.6347108870602428,
+                0.04059176038772882
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9192497377395609,
+            "bounds": [
+              [
+                -0.8130861626093984,
+                0.3139257558176673,
+                -0.00011780859393740583
+              ],
+              [
+                -0.6071647351187439,
+                0.3871451475701369,
+                0.024187405707022727
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3802492799758912,
+          "position": [
+            -0.23913271547853945,
+            -0.04064909863471985,
+            0.03471368917640686
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10317
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 92.93075778109437
+        },
+        "maximum_ball_penetration_m": 0.040385653222948605,
+        "minimum_pelvis_height_m": 0.764899373183661,
+        "minimum_pelvis_up": 0.9914499674719927,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.534181380342227,
+        "holder_impulse_world_ns": [
+          -0.04357086748701443,
+          -0.1277876307386986,
+          1.2329481918903276
+        ],
+        "steps": 200,
+        "episode_return": 5.817050114274025,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.6_p1.0_d4",
+        "elbow": 0.6,
+        "pitch": 1.0,
+        "delay": 4
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1799994707107544,
+          "position": [
+            -0.18878565728664398,
+            0.1222166121006012,
+            0.9613327383995056
+          ],
+          "velocity": [
+            -0.859052836894989,
+            -0.9359405040740967,
+            -4.128565311431885
+          ],
+          "shoulder_z": 1.0743384581043323,
+          "upper_z": -0.3864321886094211,
+          "elbow_angle_rad": 2.945271650108877,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6452499856948847,
+            "bounds": [
+              [
+                -0.8515222643178074,
+                0.5596253423145169,
+                -2.612225474515721e-06
+              ],
+              [
+                -0.6467469874411481,
+                0.6347108870602428,
+                0.04059176038772882
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9192497377395609,
+            "bounds": [
+              [
+                -0.8130861626093984,
+                0.3139257558176673,
+                -0.00011780859393740583
+              ],
+              [
+                -0.6071647351187439,
+                0.3871451475701369,
+                0.024187405707022727
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3639992990493788,
+          "position": [
+            -0.3468514418601991,
+            -0.04999643737077708,
+            0.03538746376894947
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10334
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 96.97555349908436
+        },
+        "maximum_ball_penetration_m": 0.04196835191138219,
+        "minimum_pelvis_height_m": 0.76485007698654,
+        "minimum_pelvis_up": 0.9915717251235059,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.534181380342227,
+        "holder_impulse_world_ns": [
+          -0.1340122658412175,
+          -0.14600670993412532,
+          1.161768593006455
+        ],
+        "steps": 200,
+        "episode_return": 5.8246475495398045,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.6_p1.0_d5",
+        "elbow": 0.6,
+        "pitch": 1.0,
+        "delay": 5
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.199999451637268,
+          "position": [
+            -0.21211060881614685,
+            0.10270778834819794,
+            0.8771974444389343
+          ],
+          "velocity": [
+            -1.467254877090454,
+            -0.9980188012123108,
+            -4.245431423187256
+          ],
+          "shoulder_z": 1.0706572665459175,
+          "upper_z": -0.5282875615690361,
+          "elbow_angle_rad": 2.945961794158066,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6452499856948847,
+            "bounds": [
+              [
+                -0.8515222643178074,
+                0.5596253423145169,
+                -2.612225474515721e-06
+              ],
+              [
+                -0.6467469874411481,
+                0.6347108870602428,
+                0.04059176038772882
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9192497377395609,
+            "bounds": [
+              [
+                -0.8130861626093984,
+                0.3139257558176673,
+                -0.00011780859393740583
+              ],
+              [
+                -0.6071647351187439,
+                0.3871451475701369,
+                0.024187405707022727
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3662492990493795,
+          "position": [
+            -0.45604171305894836,
+            -0.06321283690631388,
+            0.03562103823232647
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10286
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 95.38430568293298
+        },
+        "maximum_ball_penetration_m": 0.04140402921500054,
+        "minimum_pelvis_height_m": 0.7646092376448551,
+        "minimum_pelvis_up": 0.9916051285687036,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.534181380342227,
+        "holder_impulse_world_ns": [
+          -0.2288917889321423,
+          -0.15569092837198872,
+          1.1741446918342364
+        ],
+        "steps": 200,
+        "episode_return": 5.8298342283815145,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.6_p2.3_d2",
+        "elbow": 0.6,
+        "pitch": 2.3,
+        "delay": 2
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.139999508857727,
+          "position": [
+            -0.17600327730178833,
+            0.15405456721782684,
+            1.0954155921936035
+          ],
+          "velocity": [
+            0.06401844322681427,
+            -0.605048418045044,
+            -2.1819937229156494
+          ],
+          "shoulder_z": 1.0755222549747319,
+          "upper_z": -0.12618163487479098,
+          "elbow_angle_rad": 2.965728059653881,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6452499856948847,
+            "bounds": [
+              [
+                -0.8515222643178074,
+                0.5596253423145169,
+                -2.612225474515721e-06
+              ],
+              [
+                -0.6467469874411481,
+                0.6347108870602428,
+                0.04059176038772882
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9192497377395609,
+            "bounds": [
+              [
+                -0.8130861626093984,
+                0.3139257558176673,
+                -0.00011780859393740583
+              ],
+              [
+                -0.6071647351187439,
+                0.3871451475701369,
+                0.024187405707022727
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.4327492418289227,
+          "position": [
+            -0.15726189890876446,
+            -0.023073333173990202,
+            0.03590705284341798
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 1,
+        "ball_contact_counts": {
+          "pitch": 10269
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 81.44681775946826
+        },
+        "maximum_ball_penetration_m": 0.03544471082737447,
+        "minimum_pelvis_height_m": 0.7590360979072357,
+        "minimum_pelvis_up": 0.9891760113110473,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.337728496461992,
+        "holder_impulse_world_ns": [
+          0.00998685295437454,
+          -0.09438754649956856,
+          1.4042193400972485
+        ],
+        "steps": 200,
+        "episode_return": 5.76311444118619,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.6_p2.3_d3",
+        "elbow": 0.6,
+        "pitch": 2.3,
+        "delay": 3
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1599994897842407,
+          "position": [
+            -0.17763040959835052,
+            0.13976559042930603,
+            1.0385005474090576
+          ],
+          "velocity": [
+            -0.2856481969356537,
+            -0.821723997592926,
+            -3.496058702468872
+          ],
+          "shoulder_z": 1.0755530228692256,
+          "upper_z": -0.24438670167522336,
+          "elbow_angle_rad": 2.9497568677149832,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6452499856948847,
+            "bounds": [
+              [
+                -0.8515222643178074,
+                0.5596253423145169,
+                -2.612225474515721e-06
+              ],
+              [
+                -0.6467469874411481,
+                0.6347108870602428,
+                0.04059176038772882
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9192497377395609,
+            "bounds": [
+              [
+                -0.8130861626093984,
+                0.3139257558176673,
+                -0.00011780859393740583
+              ],
+              [
+                -0.6071647351187439,
+                0.3871451475701369,
+                0.024187405707022727
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3792492990493839,
+          "position": [
+            -0.24025884830206648,
+            -0.04039740647375575,
+            0.03593477551509827
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10335
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 90.85548772246456
+        },
+        "maximum_ball_penetration_m": 0.03957331525626584,
+        "minimum_pelvis_height_m": 0.7599660058855737,
+        "minimum_pelvis_up": 0.9891888938823071,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.792491029752556,
+        "holder_impulse_world_ns": [
+          -0.04456114181568049,
+          -0.1281889402988807,
+          1.2298324175355184
+        ],
+        "steps": 200,
+        "episode_return": 5.719019690528512,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.6_p2.3_d4",
+        "elbow": 0.6,
+        "pitch": 2.3,
+        "delay": 4
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1799994707107544,
+          "position": [
+            -0.19037944078445435,
+            0.12159883975982666,
+            0.9560964107513428
+          ],
+          "velocity": [
+            -1.064590334892273,
+            -0.9982526898384094,
+            -4.702541828155518
+          ],
+          "shoulder_z": 1.0749053747078166,
+          "upper_z": -0.4041218645960338,
+          "elbow_angle_rad": 2.934806271670745,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6452499856948847,
+            "bounds": [
+              [
+                -0.8515222643178074,
+                0.5596253423145169,
+                -2.612225474515721e-06
+              ],
+              [
+                -0.6467469874411481,
+                0.6347108870602428,
+                0.04059176038772882
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9192497377395609,
+            "bounds": [
+              [
+                -0.8130861626093984,
+                0.3139257558176673,
+                -0.00011780859393740583
+              ],
+              [
+                -0.6071647351187439,
+                0.3871451475701369,
+                0.024187405707022727
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.346749318122866,
+          "position": [
+            -0.36789979448914517,
+            -0.044859790459275274,
+            0.03535685744573589
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10344
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 103.61433304700977
+        },
+        "maximum_ball_penetration_m": 0.04482050737401509,
+        "minimum_pelvis_height_m": 0.7611371537527876,
+        "minimum_pelvis_up": 0.9890984284571483,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 10.71232708469788,
+        "holder_impulse_world_ns": [
+          -0.16607612124866458,
+          -0.15572741654289937,
+          1.072228238852913
+        ],
+        "steps": 200,
+        "episode_return": 5.7211022693663836,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "candidate": {
+        "id": "e0.6_p2.3_d5",
+        "elbow": 0.6,
+        "pitch": 2.3,
+        "delay": 5
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "robot_self_or_wicket_contact",
+          "stale_front_foot_landing",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.199999451637268,
+          "position": [
+            -0.22219690680503845,
+            0.1006057932972908,
+            0.8559262752532959
+          ],
+          "velocity": [
+            -2.127403497695923,
+            -1.0770667791366577,
+            -5.169931411743164
+          ],
+          "shoulder_z": 1.072227724806434,
+          "upper_z": -0.577669202998769,
+          "elbow_angle_rad": 2.928842750578745,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6452499856948847,
+            "bounds": [
+              [
+                -0.8515222643178074,
+                0.5596253423145169,
+                -2.612225474515721e-06
+              ],
+              [
+                -0.6467469874411481,
+                0.6347108870602428,
+                0.04059176038772882
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9192497377395609,
+            "bounds": [
+              [
+                -0.8130861626093984,
+                0.3139257558176673,
+                -0.00011780859393740583
+              ],
+              [
+                -0.6071647351187439,
+                0.3871451475701369,
+                0.024187405707022727
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3399993181228638,
+          "position": [
+            -0.5200333595275879,
+            -0.050183553248643875,
+            0.03582627698779106
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10250
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 105.69795378143989
+        },
+        "maximum_ball_penetration_m": 0.045923462410031965,
+        "minimum_pelvis_height_m": 0.7618048168899383,
+        "minimum_pelvis_up": 0.9892440528431751,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 10.71232708469788,
+        "holder_impulse_world_ns": [
+          -0.3318749793956618,
+          -0.16802242064677095,
+          1.0299226468243434
+        ],
+        "steps": 200,
+        "episode_return": 5.731960467994213,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.35_p1.0_d2",
+        "elbow": 0.35,
+        "pitch": 1.0,
+        "delay": 2
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.139999508857727,
+          "position": [
+            -0.13479109108448029,
+            -0.39228200912475586,
+            1.096764326095581
+          ],
+          "velocity": [
+            0.28185024857521057,
+            0.04168451204895973,
+            -1.973148226737976
+          ],
+          "shoulder_z": 1.0944484492133697,
+          "upper_z": -0.2274196646930153,
+          "elbow_angle_rad": 2.8669395168737797,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0072496423721338,
+            "bounds": [
+              [
+                -0.8008224732854792,
+                -0.6826051157076525,
+                -2.6950529539128236e-05
+              ],
+              [
+                -0.5952255947195981,
+                -0.6080263709689914,
+                0.028178566344323912
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8580452621276551,
+                -0.44215004488890175,
+                -4.966262162680018e-05
+              ],
+              [
+                -0.6524548961525929,
+                -0.36876547724274567,
+                0.034686999672200514
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.445499222755434,
+          "position": [
+            -0.048685840144753426,
+            -0.3795473918113855,
+            0.03580825625469208
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 1,
+        "ball_contact_counts": {
+          "pitch": 10218
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 80.12285650710731
+        },
+        "maximum_ball_penetration_m": 0.03493041143113434,
+        "minimum_pelvis_height_m": 0.774768435829436,
+        "minimum_pelvis_up": 0.9980588798930085,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.272243793765929,
+        "holder_impulse_world_ns": [
+          0.043968623458047244,
+          0.0065027896860569406,
+          1.4367992245117243
+        ],
+        "steps": 200,
+        "episode_return": 6.185626283288002,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.35_p1.0_d3",
+        "elbow": 0.35,
+        "pitch": 1.0,
+        "delay": 3
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1599994897842407,
+          "position": [
+            -0.1318536400794983,
+            -0.38787195086479187,
+            1.043915867805481
+          ],
+          "velocity": [
+            -0.04625450819730759,
+            0.40079572796821594,
+            -3.2810709476470947
+          ],
+          "shoulder_z": 1.0969431586523148,
+          "upper_z": -0.3415596244500305,
+          "elbow_angle_rad": 2.8480164417037965,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0072496423721338,
+            "bounds": [
+              [
+                -0.8008224732854792,
+                -0.6826051157076525,
+                -2.6950529539128236e-05
+              ],
+              [
+                -0.5952255947195981,
+                -0.6080263709689914,
+                0.028178566344323912
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8580452621276551,
+                -0.44215004488890175,
+                -4.966262162680018e-05
+              ],
+              [
+                -0.6524548961525929,
+                -0.36876547724274567,
+                0.034686999672200514
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3889992799758941,
+          "position": [
+            -0.1424459634348748,
+            -0.2960898799598224,
+            0.03504682473224639
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10363
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 90.96184005089229
+        },
+        "maximum_ball_penetration_m": 0.039375232860510666,
+        "minimum_pelvis_height_m": 0.7746746157261528,
+        "minimum_pelvis_up": 0.9979909576887687,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.737010776530632,
+        "holder_impulse_world_ns": [
+          -0.007215718515329765,
+          0.06252413894543722,
+          1.2633704717291765
+        ],
+        "steps": 200,
+        "episode_return": 5.959934253245592,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.35_p1.0_d4",
+        "elbow": 0.35,
+        "pitch": 1.0,
+        "delay": 4
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1799994707107544,
+          "position": [
+            -0.13884606957435608,
+            -0.37588202953338623,
+            0.968108594417572
+          ],
+          "velocity": [
+            -0.6932975649833679,
+            0.7784571051597595,
+            -4.144127368927002
+          ],
+          "shoulder_z": 1.0986779370904984,
+          "upper_z": -0.48422997343062185,
+          "elbow_angle_rad": 2.8387925496165756,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0072496423721338,
+            "bounds": [
+              [
+                -0.8008224732854792,
+                -0.6826051157076525,
+                -2.6950529539128236e-05
+              ],
+              [
+                -0.5952255947195981,
+                -0.6080263709689914,
+                0.028178566344323912
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8580452621276551,
+                -0.44215004488890175,
+                -4.966262162680018e-05
+              ],
+              [
+                -0.6524548961525929,
+                -0.36876547724274567,
+                0.034686999672200514
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.364749299049379,
+          "position": [
+            -0.26693276251852516,
+            -0.23206201915442934,
+            0.034834334385013536
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10342
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 98.10047611996194
+        },
+        "maximum_ball_penetration_m": 0.04253215454240956,
+        "minimum_pelvis_height_m": 0.7747191655802398,
+        "minimum_pelvis_up": 0.9979614417823144,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 10.291774418214256,
+        "holder_impulse_world_ns": [
+          -0.10815443921220856,
+          0.12143931602131174,
+          1.1593408362826942
+        ],
+        "steps": 200,
+        "episode_return": 5.963510498404503,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.35_p1.0_d5",
+        "elbow": 0.35,
+        "pitch": 1.0,
+        "delay": 5
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.199999451637268,
+          "position": [
+            -0.1608322560787201,
+            -0.3567952811717987,
+            0.8825013041496277
+          ],
+          "velocity": [
+            -1.5098416805267334,
+            1.113502860069275,
+            -4.323990821838379
+          ],
+          "shoulder_z": 1.0990034163754967,
+          "upper_z": -0.6271994497857255,
+          "elbow_angle_rad": 2.8395213678270963,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0072496423721338,
+            "bounds": [
+              [
+                -0.8008224732854792,
+                -0.6826051157076525,
+                -2.6950529539128236e-05
+              ],
+              [
+                -0.5952255947195981,
+                -0.6080263709689914,
+                0.028178566344323912
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8580452621276551,
+                -0.44215004488890175,
+                -4.966262162680018e-05
+              ],
+              [
+                -0.6524548961525929,
+                -0.36876547724274567,
+                0.034686999672200514
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3649992990493791,
+          "position": [
+            -0.40995619893074076,
+            -0.1730673378705978,
+            0.03530194870128629
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10270
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 97.66864064893858
+        },
+        "maximum_ball_penetration_m": 0.042092300271284036,
+        "minimum_pelvis_height_m": 0.7748589901268622,
+        "minimum_pelvis_up": 0.9979654653872292,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 10.291774418214256,
+        "holder_impulse_world_ns": [
+          -0.23553532644417013,
+          0.17370645753131653,
+          1.1618893684142628
+        ],
+        "steps": 200,
+        "episode_return": 5.965665806084871,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.35_p2.3_d2",
+        "elbow": 0.35,
+        "pitch": 2.3,
+        "delay": 2
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_contact:left_foot4_collision",
+          "ball_contact:left_foot5_collision",
+          "ball_contact:left_foot6_collision",
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.139999508857727,
+          "position": [
+            -0.13479109108448029,
+            -0.39228200912475586,
+            1.096764326095581
+          ],
+          "velocity": [
+            0.28185024857521057,
+            0.04168451204895973,
+            -1.973148226737976
+          ],
+          "shoulder_z": 1.0944484492133697,
+          "upper_z": -0.2274196646930153,
+          "elbow_angle_rad": 2.8669395168737797,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0072496423721338,
+            "bounds": [
+              [
+                -0.8008224732854792,
+                -0.6826051157076525,
+                -2.6950529539128236e-05
+              ],
+              [
+                -0.5952255947195981,
+                -0.6080263709689914,
+                0.028178566344323912
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8580452621276551,
+                -0.44215004488890175,
+                -4.966262162680018e-05
+              ],
+              [
+                -0.6524548961525929,
+                -0.36876547724274567,
+                0.034686999672200514
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.445499222755434,
+          "position": [
+            -0.048685840144753426,
+            -0.3795473918113855,
+            0.03580825625469208
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 3,
+        "ball_contact_counts": {
+          "pitch": 9956,
+          "left_foot5_collision": 217,
+          "left_foot4_collision": 153,
+          "left_foot6_collision": 174
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 80.12285650710731,
+          "left_foot5_collision": 32.28646681292716,
+          "left_foot4_collision": 0.0,
+          "left_foot6_collision": 2.9425957455108884
+        },
+        "maximum_ball_penetration_m": 0.03493041143113434,
+        "minimum_pelvis_height_m": 0.773923868046538,
+        "minimum_pelvis_up": 0.9976377017198672,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.272243793765929,
+        "holder_impulse_world_ns": [
+          0.043968623458047244,
+          0.0065027896860569406,
+          1.4367992245117243
+        ],
+        "steps": 200,
+        "episode_return": 6.1650872733443975,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.35_p2.3_d3",
+        "elbow": 0.35,
+        "pitch": 2.3,
+        "delay": 3
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1599994897842407,
+          "position": [
+            -0.13185372948646545,
+            -0.38787198066711426,
+            1.043915867805481
+          ],
+          "velocity": [
+            -0.046448394656181335,
+            0.4007333219051361,
+            -3.2811038494110107
+          ],
+          "shoulder_z": 1.0969432223204876,
+          "upper_z": -0.3415622727841156,
+          "elbow_angle_rad": 2.848012400872883,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0072496423721338,
+            "bounds": [
+              [
+                -0.8008224732854792,
+                -0.6826051157076525,
+                -2.6950529539128236e-05
+              ],
+              [
+                -0.5952255947195981,
+                -0.6080263709689914,
+                0.028178566344323912
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8580452621276551,
+                -0.44215004488890175,
+                -4.966262162680018e-05
+              ],
+              [
+                -0.6524548961525929,
+                -0.36876547724274567,
+                0.034686999672200514
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3889992799758941,
+          "position": [
+            -0.14249041514098637,
+            -0.2961039122641085,
+            0.035039256849708475
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10363
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 90.96780166473434
+        },
+        "maximum_ball_penetration_m": 0.03938104998304807,
+        "minimum_pelvis_height_m": 0.7737112465573407,
+        "minimum_pelvis_up": 0.9975767314653188,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.765578862221842,
+        "holder_impulse_world_ns": [
+          -0.007245965099003894,
+          0.06251440513645114,
+          1.2633653510677298
+        ],
+        "steps": 200,
+        "episode_return": 5.938351705670357,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.35_p2.3_d4",
+        "elbow": 0.35,
+        "pitch": 2.3,
+        "delay": 4
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1799994707107544,
+          "position": [
+            -0.13965080678462982,
+            -0.37550070881843567,
+            0.9657931923866272
+          ],
+          "velocity": [
+            -0.8157407641410828,
+            0.838408887386322,
+            -4.473769664764404
+          ],
+          "shoulder_z": 1.0988128987867667,
+          "upper_z": -0.49216983751411214,
+          "elbow_angle_rad": 2.8325692161681952,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0072496423721338,
+            "bounds": [
+              [
+                -0.8008224732854792,
+                -0.6826051157076525,
+                -2.6950529539128236e-05
+              ],
+              [
+                -0.5952255947195981,
+                -0.6080263709689914,
+                0.028178566344323912
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8580452621276551,
+                -0.44215004488890175,
+                -4.966262162680018e-05
+              ],
+              [
+                -0.6524548961525929,
+                -0.36876547724274567,
+                0.034686999672200514
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3544993181228686,
+          "position": [
+            -0.2819975886046896,
+            -0.22919829657673885,
+            0.0355480023152731
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10354
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 100.30819516622216
+        },
+        "maximum_ball_penetration_m": 0.04361858136117894,
+        "minimum_pelvis_height_m": 0.7738342896711651,
+        "minimum_pelvis_up": 0.9975271405029871,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 11.233779151247253,
+        "holder_impulse_world_ns": [
+          -0.12725557185698388,
+          0.13079178969740515,
+          1.1079167061880968
+        ],
+        "steps": 200,
+        "episode_return": 5.942618452012539,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.35_p2.3_d5",
+        "elbow": 0.35,
+        "pitch": 2.3,
+        "delay": 5
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.199999451637268,
+          "position": [
+            -0.16772538423538208,
+            -0.3539566397666931,
+            0.8688350319862366
+          ],
+          "velocity": [
+            -2.0202462673187256,
+            1.2866545915603638,
+            -5.025169849395752
+          ],
+          "shoulder_z": 1.099609615871883,
+          "upper_z": -0.6565971052935861,
+          "elbow_angle_rad": 2.826361451837831,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0072496423721338,
+            "bounds": [
+              [
+                -0.8008224732854792,
+                -0.6826051157076525,
+                -2.6950529539128236e-05
+              ],
+              [
+                -0.5952255947195981,
+                -0.6080263709689914,
+                0.028178566344323912
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8580452621276551,
+                -0.44215004488890175,
+                -4.966262162680018e-05
+              ],
+              [
+                -0.6524548961525929,
+                -0.36876547724274567,
+                0.034686999672200514
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3452493181228655,
+          "position": [
+            -0.4611661176085469,
+            -0.16707007405161833,
+            0.03526750281099318
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10238
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 106.13365169136591
+        },
+        "maximum_ball_penetration_m": 0.04566527452319419,
+        "minimum_pelvis_height_m": 0.7737925346763063,
+        "minimum_pelvis_up": 0.9975183972050323,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 11.695991242084444,
+        "holder_impulse_world_ns": [
+          -0.31515841489248375,
+          0.20071811598442016,
+          1.0525054845905528
+        ],
+        "steps": 200,
+        "episode_return": 5.944370968267322,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.6_p1.0_d2",
+        "elbow": 0.6,
+        "pitch": 1.0,
+        "delay": 2
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.139999508857727,
+          "position": [
+            -0.1317465752363205,
+            -0.37267401814460754,
+            1.052533507347107
+          ],
+          "velocity": [
+            0.1571691483259201,
+            0.06365601718425751,
+            -1.9325207471847534
+          ],
+          "shoulder_z": 1.0949353858461375,
+          "upper_z": -0.22386903238528053,
+          "elbow_angle_rad": 3.0180980754113675,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0042496423721328,
+            "bounds": [
+              [
+                -0.8016855878460069,
+                -0.6821207636057316,
+                -3.52949041635851e-05
+              ],
+              [
+                -0.5960840299287068,
+                -0.607725023917927,
+                0.02891332467633927
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8578673172829733,
+                -0.44283927302057585,
+                -3.913837192830432e-05
+              ],
+              [
+                -0.6522805404709496,
+                -0.3695353947211523,
+                0.03481599811499454
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.4389992418289248,
+          "position": [
+            -0.08475297068059445,
+            -0.3536407980769869,
+            0.03583143792041749
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 1,
+        "ball_contact_counts": {
+          "pitch": 10244
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 78.4594846137289
+        },
+        "maximum_ball_penetration_m": 0.034183333049278966,
+        "minimum_pelvis_height_m": 0.777317421169895,
+        "minimum_pelvis_up": 0.9979274360771273,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.265713182837347,
+        "holder_impulse_world_ns": [
+          0.024518326435237835,
+          0.009930327746435682,
+          1.4431371743998802
+        ],
+        "steps": 200,
+        "episode_return": 6.038284342736006,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.6_p1.0_d3",
+        "elbow": 0.6,
+        "pitch": 1.0,
+        "delay": 3
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1599994897842407,
+          "position": [
+            -0.13243815302848816,
+            -0.3676997721195221,
+            1.0009522438049316
+          ],
+          "velocity": [
+            -0.28107383847236633,
+            0.43380802869796753,
+            -3.1899051666259766
+          ],
+          "shoulder_z": 1.0974597103316899,
+          "upper_z": -0.33702052877911093,
+          "elbow_angle_rad": 2.9992453246493116,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0042496423721328,
+            "bounds": [
+              [
+                -0.8016855878460069,
+                -0.6821207636057316,
+                -3.52949041635851e-05
+              ],
+              [
+                -0.5960840299287068,
+                -0.607725023917927,
+                0.02891332467633927
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8578673172829733,
+                -0.44283927302057585,
+                -3.913837192830432e-05
+              ],
+              [
+                -0.6522805404709496,
+                -0.3695353947211523,
+                0.03481599811499454
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3847492799758927,
+          "position": [
+            -0.19560951133817409,
+            -0.27020129965245776,
+            0.035981470536804186
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10428
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 86.80309733315318
+        },
+        "maximum_ball_penetration_m": 0.03777464871924728,
+        "minimum_pelvis_height_m": 0.7771330958675727,
+        "minimum_pelvis_up": 0.9978628123492032,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.695043040163489,
+        "holder_impulse_world_ns": [
+          -0.04384758087924679,
+          0.06767404360712265,
+          1.2775924020596807
+        ],
+        "steps": 200,
+        "episode_return": 5.942872855812311,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.6_p1.0_d4",
+        "elbow": 0.6,
+        "pitch": 1.0,
+        "delay": 4
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1799994707107544,
+          "position": [
+            -0.14511728286743164,
+            -0.3550276458263397,
+            0.9274751543998718
+          ],
+          "velocity": [
+            -1.0123738050460815,
+            0.8112658262252808,
+            -4.000617980957031
+          ],
+          "shoulder_z": 1.0991653115623445,
+          "upper_z": -0.4794929538032825,
+          "elbow_angle_rad": 2.989109516504814,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0042496423721328,
+            "bounds": [
+              [
+                -0.8016855878460069,
+                -0.6821207636057316,
+                -3.52949041635851e-05
+              ],
+              [
+                -0.5960840299287068,
+                -0.607725023917927,
+                0.02891332467633927
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8578673172829733,
+                -0.44283927302057585,
+                -3.913837192830432e-05
+              ],
+              [
+                -0.6522805404709496,
+                -0.3695353947211523,
+                0.03481599811499454
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3622492990493782,
+          "position": [
+            -0.3296224374473094,
+            -0.20717447939515118,
+            0.03521921274809836
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10355
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 95.13587411129595
+        },
+        "maximum_ball_penetration_m": 0.04107382833036779,
+        "minimum_pelvis_height_m": 0.7769625456944177,
+        "minimum_pelvis_up": 0.9978355578824193,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 10.150530729410821,
+        "holder_impulse_world_ns": [
+          -0.15793037981881644,
+          0.12655745559922024,
+          1.1817283819460114
+        ],
+        "steps": 200,
+        "episode_return": 5.945499336346984,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.6_p1.0_d5",
+        "elbow": 0.6,
+        "pitch": 1.0,
+        "delay": 5
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.199999451637268,
+          "position": [
+            -0.17378312349319458,
+            -0.3354204595088959,
+            0.8455585837364197
+          ],
+          "velocity": [
+            -1.8486233949661255,
+            1.1312066316604614,
+            -4.100216865539551
+          ],
+          "shoulder_z": 1.099384750436732,
+          "upper_z": -0.6227760435615797,
+          "elbow_angle_rad": 2.9887267987928787,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0042496423721328,
+            "bounds": [
+              [
+                -0.8016855878460069,
+                -0.6821207636057316,
+                -3.52949041635851e-05
+              ],
+              [
+                -0.5960840299287068,
+                -0.607725023917927,
+                0.02891332467633927
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8578673172829733,
+                -0.44283927302057585,
+                -3.913837192830432e-05
+              ],
+              [
+                -0.6522805404709496,
+                -0.3695353947211523,
+                0.03481599811499454
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3649992990493791,
+          "position": [
+            -0.4788059455156328,
+            -0.1487713462114335,
+            0.03528190038099287
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10257
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 94.30268195267811
+        },
+        "maximum_ball_penetration_m": 0.040541849129309006,
+        "minimum_pelvis_height_m": 0.777380198843316,
+        "minimum_pelvis_up": 0.9978421449642011,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 10.150530729410821,
+        "holder_impulse_world_ns": [
+          -0.2883853121470778,
+          0.1764682201164103,
+          1.1967981368571166
+        ],
+        "steps": 200,
+        "episode_return": 5.94653981924057,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.6_p2.3_d2",
+        "elbow": 0.6,
+        "pitch": 2.3,
+        "delay": 2
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.139999508857727,
+          "position": [
+            -0.1317465752363205,
+            -0.37267401814460754,
+            1.052533507347107
+          ],
+          "velocity": [
+            0.1571691483259201,
+            0.06365601718425751,
+            -1.9325207471847534
+          ],
+          "shoulder_z": 1.0949353858461375,
+          "upper_z": -0.22386903238528053,
+          "elbow_angle_rad": 3.0180980754113675,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0042496423721328,
+            "bounds": [
+              [
+                -0.8016855878460069,
+                -0.6821207636057316,
+                -3.52949041635851e-05
+              ],
+              [
+                -0.5960840299287068,
+                -0.607725023917927,
+                0.02891332467633927
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8578673172829733,
+                -0.44283927302057585,
+                -3.913837192830432e-05
+              ],
+              [
+                -0.6522805404709496,
+                -0.3695353947211523,
+                0.03481599811499454
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.4389992418289248,
+          "position": [
+            -0.08475297068059445,
+            -0.3536407980769869,
+            0.03583143792041749
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 1,
+        "ball_contact_counts": {
+          "pitch": 10244
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 78.4594846137289
+        },
+        "maximum_ball_penetration_m": 0.034183333049278966,
+        "minimum_pelvis_height_m": 0.7733572986538101,
+        "minimum_pelvis_up": 0.9974984797525895,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.265713182837347,
+        "holder_impulse_world_ns": [
+          0.024518326435237835,
+          0.009930327746435682,
+          1.4431371743998802
+        ],
+        "steps": 200,
+        "episode_return": 6.0134726874530315,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.6_p2.3_d3",
+        "elbow": 0.6,
+        "pitch": 2.3,
+        "delay": 3
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1599994897842407,
+          "position": [
+            -0.13243815302848816,
+            -0.3676997721195221,
+            1.0009522438049316
+          ],
+          "velocity": [
+            -0.28107383847236633,
+            0.43380802869796753,
+            -3.1899051666259766
+          ],
+          "shoulder_z": 1.0974597103316899,
+          "upper_z": -0.33702052877911093,
+          "elbow_angle_rad": 2.9992453246493116,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0042496423721328,
+            "bounds": [
+              [
+                -0.8016855878460069,
+                -0.6821207636057316,
+                -3.52949041635851e-05
+              ],
+              [
+                -0.5960840299287068,
+                -0.607725023917927,
+                0.02891332467633927
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8578673172829733,
+                -0.44283927302057585,
+                -3.913837192830432e-05
+              ],
+              [
+                -0.6522805404709496,
+                -0.3695353947211523,
+                0.03481599811499454
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3847492799758927,
+          "position": [
+            -0.19560951133817409,
+            -0.27020129965245776,
+            0.035981470536804186
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10428
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 86.80309733315318
+        },
+        "maximum_ball_penetration_m": 0.03777464871924728,
+        "minimum_pelvis_height_m": 0.7732613854217065,
+        "minimum_pelvis_up": 0.9974428046982452,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 9.695043040163489,
+        "holder_impulse_world_ns": [
+          -0.04384758087924679,
+          0.06767404360712265,
+          1.2775924020596807
+        ],
+        "steps": 200,
+        "episode_return": 5.918517984449863,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.6_p2.3_d4",
+        "elbow": 0.6,
+        "pitch": 2.3,
+        "delay": 4
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.1799994707107544,
+          "position": [
+            -0.1458798050880432,
+            -0.3546658456325531,
+            0.9255586266517639
+          ],
+          "velocity": [
+            -1.1379284858703613,
+            0.8677430748939514,
+            -4.286654472351074
+          ],
+          "shoulder_z": 1.0992646558201462,
+          "upper_z": -0.48655311920214345,
+          "elbow_angle_rad": 2.983337573391707,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0042496423721328,
+            "bounds": [
+              [
+                -0.8016855878460069,
+                -0.6821207636057316,
+                -3.52949041635851e-05
+              ],
+              [
+                -0.5960840299287068,
+                -0.607725023917927,
+                0.02891332467633927
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8578673172829733,
+                -0.44283927302057585,
+                -3.913837192830432e-05
+              ],
+              [
+                -0.6522805404709496,
+                -0.3695353947211523,
+                0.03481599811499454
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3532493181228682,
+          "position": [
+            -0.3430259438753127,
+            -0.2043292732685811,
+            0.035457050846137844
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10357
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 97.61266195230886
+        },
+        "maximum_ball_penetration_m": 0.042287503831406226,
+        "minimum_pelvis_height_m": 0.7732129728163833,
+        "minimum_pelvis_up": 0.9974037971595803,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 11.116658364432446,
+        "holder_impulse_world_ns": [
+          -0.17751691361417574,
+          0.1353679109903194,
+          1.1371066893861907
+        ],
+        "steps": 200,
+        "episode_return": 5.920302625745535,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "candidate": {
+        "id": "e0.6_p2.3_d5",
+        "elbow": 0.6,
+        "pitch": 2.3,
+        "delay": 5
+      },
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_penetration_above_6_mm",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 1.199999451637268,
+          "position": [
+            -0.18110769987106323,
+            -0.33260369300842285,
+            0.8333601951599121
+          ],
+          "velocity": [
+            -2.3932366371154785,
+            1.305006504058838,
+            -4.733836650848389
+          ],
+          "shoulder_z": 1.099943984617015,
+          "upper_z": -0.6511163133723716,
+          "elbow_angle_rad": 2.9756928812343895,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 1.0042496423721328,
+            "bounds": [
+              [
+                -0.8016855878460069,
+                -0.6821207636057316,
+                -3.52949041635851e-05
+              ],
+              [
+                -0.5960840299287068,
+                -0.607725023917927,
+                0.02891332467633927
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6562499856948835,
+            "bounds": [
+              [
+                -0.8578673172829733,
+                -0.44283927302057585,
+                -3.913837192830432e-05
+              ],
+              [
+                -0.6522805404709496,
+                -0.3695353947211523,
+                0.03481599811499454
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3462493181228659,
+          "position": [
+            -0.5311185747385015,
+            -0.14174650013446802,
+            0.03594396427679059
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 2,
+        "ball_contact_counts": {
+          "pitch": 10230
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 99.95885057805712
+        },
+        "maximum_ball_penetration_m": 0.04321607430874724,
+        "minimum_pelvis_height_m": 0.7732788715995121,
+        "minimum_pelvis_up": 0.997398656391281,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 1.0,
+        "peak_holder_force_n": 11.568074442352174,
+        "holder_impulse_world_ns": [
+          -0.37334496671407297,
+          0.20358100204640642,
+          1.0979535006932217
+        ],
+        "steps": 200,
+        "episode_return": 5.921025201678276,
+        "exact_endpoint_replay": true
+      }
+    }
+  ],
+  "full_gate_passes": 0,
+  "qualification": "requires_additional_seeds_and_paired_timestep_executor_checks",
+  "policy_promoted": false
+}
