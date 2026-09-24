@@ -278,12 +278,59 @@ Only the finest 0.0625-to-0.03125 ms pair passes at both speeds. This is finite-
 consistency, not asymptotic convergence or material validation. All nine input
 hashes verify, all 16 rows reproduce exactly, and 82 focused tests pass.
 
-A separately versioned robot transfer study at those two finer timesteps is the
-next candidate test, pairing both 4 ms control and 2 ms candidate at the same
-timesteps, with frozen controls and all original shot, stability,
-contact and actuator gates. It must report the changed model and any increased
-fixture loads before new training. No task or checkpoint is changed by this
-isolated study; both-hand learned batting, bowling and showcase videos remain
+The separately versioned robot transfer below tests those two finer timesteps.
+The isolated study does not change any historical task or checkpoint.
+
+### Contact Model Transfer to G1
+
+The [frozen transfer contract](docs/g1_cricket_model_transfer_v1.md) and
+[complete report](g1_cricket_results/model_transfer_v1/evaluation.json) retain all
+32 combinations of contact model (4/2 ms), timestep (0.0625/0.03125 ms), executor
+(MuJoCo/native mjbatch), hand and controller (zero/scripted). The sole physical
+change is the explicit bat-ball pair's time constant. The new
+`task=g1_cricket_compliance_v2/mujoco` owner, or its `/mjbatch` sibling, selects
+the opt-in 2 ms model; previous owners and learned checkpoints remain unchanged.
+Neither model is calibrated to real cricket materials.
+
+**No resolution-qualified scripted strike passes.** Right-hand script results
+are identical in both executors:
+
+| Contact model | Timestep | Exit velocity | Maximum penetration | Full episode gate |
+| --- | --- | ---: | ---: | --- |
+| 4 ms | 0.0625 ms | 1.066060 m/s | 6.613843 mm | Penetration failure |
+| 4 ms | 0.03125 ms | 1.064265 m/s | 6.578690 mm | Penetration failure |
+| 2 ms | 0.0625 ms | 1.000953 m/s | 3.287109 mm | Pass at this timestep only |
+| 2 ms | 0.03125 ms | 0.996949 m/s | 3.252920 mm | Speed failure |
+
+The unchanged strict requirement is exit velocity **above 1 m/s**. Although
+numerical differences fit the declared metric tolerances, the candidate's gate
+disagreement rejects the witness. At the finest timestep its blade peak load
+increases from 269.054 to 536.053 N; wrist-fixture force rises from 97.345 to
+190.750 N and torque from 28.454 to 52.885 N m. These simulated rigid-fixture
+loads are not hardware safety validation or proof of a feasible grasp.
+
+All 16 zero-residual trials fail speed. All eight left-hand scripted transfers
+terminate at 0.18 seconds with guarded contact and no blade contact; they use
+the same command vector, not a trained or anatomically mirrored left controller.
+The other 24 trials complete two seconds. Only 2/32 individual rows pass, both
+the same right-hand candidate case at the coarser timestep; **0/8 comparison
+groups qualify**. Seven groups preserve timestep gates, while the eighth is
+the candidate's speed-threshold disagreement. All fixture-load resolution
+checks pass and all 16 executor pairs match exactly, including impact evidence;
+endpoint state and sensor errors are zero.
+
+The retained report verifies 97 input hashes and records all 16 matched-timestep
+model contrasts. Validation: 146 focused tests pass, including missing/duplicate
+context rejection and synthetic impact/fixture discrepancies. This is a bounded
+model-transfer diagnostic, not new training, material calibration, or promotion.
+
+Next is a separately frozen imitation-initialization plus bounded PPO experiment
+on the opt-in model, rather than another small scripted-command grid. Its teacher
+must remain explicitly labeled a near miss, retain all failed demonstrations,
+and initialize only the actor, not restore an old physical model's optimizer or
+critic. Closed-loop BC and final PPO must pass the unchanged shot, contact,
+actuator, stability and fine-timestep checks; imitation loss cannot qualify a
+video. Both-hand learned batting, learned bowling and new showcase videos remain
 unfinished.
 
 ## Learned Arm Residual: First Interception Experiment

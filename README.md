@@ -47,8 +47,11 @@ identical-motion torque plateau. The subsequent
 [elbow test](G1_CRICKET.md#elbow-motion-with-motor-telemetry) changes actual motion
 but does not produce a validated shot. An
 [isolated contact-model study](G1_CRICKET.md#isolated-compliance-study) now exposes
-the overlap-versus-force tradeoff and required finer timesteps; the robot task
-is unchanged. No learned G1 showcase is claimed.
+the overlap-versus-force tradeoff and required finer timesteps. The subsequent
+[32-case robot transfer](G1_CRICKET.md#contact-model-transfer-to-g1) retains exact
+MuJoCo/native-mjbatch parity, but its narrow speed pass fails at the finer timestep.
+The 2 ms contact model is opt-in; historical tasks and checkpoints are unchanged.
+No learned G1 showcase is claimed.
 
 ---
 
