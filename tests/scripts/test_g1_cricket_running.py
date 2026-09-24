@@ -74,6 +74,7 @@ def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, tmp_path)
         np.testing.assert_array_equal(getattr(model, name), values)
     velocity = velocity_reference(model, poses, 0.02)
     assert np.isfinite(velocity).all()
+    assert np.max(np.abs(velocity[:, model.jnt_dofadr[joints]])) <= 12 + 1e-8
     assert (velocity[:, 0] > 0.9).all()
     for i in range(3):
         integrated = poses[i].copy()

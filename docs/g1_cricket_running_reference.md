@@ -51,3 +51,22 @@ PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
 
 Original batting highlights and the current two-hand soft-toss diagnostic remain
 unchanged. This is the missing bowling path, not a replacement for batting.
+
+## First Reference And Repair
+
+The initial pair (`running_reference_v1`, frozen source `13d46a5c`) solves all
+136 IK frames per hand, with foot error below 1.83 mm, but contains 16 frames
+per hand with hand/hip penetration. Arm-segment error reaches 0.16021 m and a
+shoulder-yaw branch switch demands 75.02 rad/s. Both physical PD baselines fall
+at 0.62 s, before release, with hand/hip and inter-foot contacts. No teacher,
+running policy or showcase is accepted from that pair.
+
+The bounded second revision keeps the same spatial/phase targets and physical
+controller. It uses shoulder-roll/elbow/wrist-roll origins for anatomical limb
+directions, leaving distal wrist orientation as a softer target. It adds the
+observed hand/hip clearance pairs, allows torso yaw redistribution, and limits
+adjacent joint-reference changes to 12 rad/s. This is a reference smoothness
+bound, not a claim about hardware-certified velocity limits. Original hard
+joint limits, inertias and force caps remain unchanged. Evaluate both hands
+once in `running_reference_v2`, retaining every failed frame and complete-or-
+fallen physical episode; do not train through geometric defects.

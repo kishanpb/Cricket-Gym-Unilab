@@ -128,7 +128,7 @@ def retarget_running_delivery(model, times, hand):
     for side in ("left", "right"):
         ids = [
             model.body(f"{side}_{part}_link").id
-            for part in ("shoulder_pitch", "elbow", "wrist_yaw")
+            for part in ("shoulder_roll", "elbow", "wrist_roll")
         ]
         positions = data.xpos[ids]
         arms[side] = ids, np.linalg.norm(np.diff(positions, axis=0), axis=1)
@@ -137,12 +137,17 @@ def retarget_running_delivery(model, times, hand):
         for side in ("left", "right")
         for part in ("elbow_yaw", "wrist", "hand")
     ]
+    pairs += [
+        (model.geom(f"{side}_{part}_collision").id, model.geom(f"{side}_hip_collision").id)
+        for side in ("left", "right")
+        for part in ("wrist", "hand")
+    ]
     ball_joint = model.joint("ball_free")
     ball_qa = int(ball_joint.qposadr[0])
     wrist_id = model.body(f"{hand}_wrist_yaw_link").id
     holder_offset = np.array([0.15, 0.06 if hand == "left" else -0.06, 0])
     poses, errors = [], []
-    for time in times:
+    for frame, time in enumerate(times):
         data.qpos[:3] = target.root(float(time))
         data.qpos[3:7] = [1, 0, 0, 0]
         foot_targets = np.array([target.foot(side, time) for side in ("left", "right")])
@@ -154,8 +159,8 @@ def retarget_running_delivery(model, times, hand):
             result = [
                 50 * (data.xpos[feet] - foot_targets).ravel(),
                 3 * Rotation.from_matrix(data.xmat[feet].reshape(2, 3, 3)).as_rotvec().ravel(),
-                0.025 * (q - previous),
-                2 * (q[12:15] - [0, 0, target.lean(time)]),
+                0.1 * (q - previous),
+                np.array([0.1, 2, 2]) * (q[12:15] - [0, 0, target.lean(time)]),
             ]
             for side, (ids, lengths) in arms.items():
                 up, down, rotation = arm_targets[side]
@@ -164,26 +169,30 @@ def retarget_running_delivery(model, times, hand):
                     [
                         25 * (elbow - shoulder - lengths[0] * up),
                         25 * (wrist - elbow - lengths[1] * down),
-                        0.5
+                        0.15
                         * Rotation.from_matrix(
-                            rotation.T @ data.xmat[ids[2]].reshape(3, 3)
+                            rotation.T @ data.body(f"{side}_wrist_yaw_link").xmat.reshape(3, 3)
                         ).as_rotvec(),
                     ]
                 )
             result.append(
                 np.array(
                     [
-                        40 * max(0.012 - mujoco.mj_geomDistance(model, data, a, b, 0.1, None), 0)
+                        100 * max(0.012 - mujoco.mj_geomDistance(model, data, a, b, 0.1, None), 0)
                         for a, b in pairs
                     ]
                 )
             )
             return np.concatenate(result)
 
+        lo, hi = lower + 0.03, upper - 0.03
+        if frame:
+            step = 12 * (time - times[frame - 1])
+            lo, hi = np.maximum(lo, previous - step), np.minimum(hi, previous + step)
         solved = least_squares(
             residual,
             previous,
-            bounds=(lower + 0.03, upper - 0.03),
+            bounds=(lo, hi),
             max_nfev=120,
             ftol=1e-7,
             xtol=1e-7,

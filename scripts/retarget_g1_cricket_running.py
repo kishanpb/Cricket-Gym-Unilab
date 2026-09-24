@@ -178,6 +178,10 @@ def run(hand, output, render):
             "hand": hand,
             "kinematic_errors": reference["errors"],
             "reference_forward_travel_m": float(poses[-1, 0] - poses[0, 0]),
+            "reference_peak_joint_speed_rad_s": {
+                name: float(np.abs(velocity[:, dof]).max())
+                for name, dof in zip(SDK_JOINTS, va, strict=True)
+            },
             "completed_physical_motion": len(trace) == 135
             and trace[-1]["minimum_substep_height_m"] >= 0.48,
             "release": release,
