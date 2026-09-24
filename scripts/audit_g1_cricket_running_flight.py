@@ -35,6 +35,21 @@ def aerial_residual(times, com, airborne, mass, gravity):
     return rows
 
 
+def aerial_momentum_residual(times, momentum, airborne):
+    dt = np.diff(times)
+    np.testing.assert_allclose(dt, dt[0], rtol=0, atol=1e-12)
+    return [
+        {
+            "time_s": float(times[i]),
+            "required_external_torque_nm": (
+                (momentum[i + 1] - momentum[i - 1]) / (2 * dt[0])
+            ).tolist(),
+        }
+        for i in range(2, len(times) - 2)
+        if times[i + 2] <= GATHER_TIME and np.all(airborne[i - 1 : i + 2])
+    ]
+
+
 def audit(directory, *, flat_reference_layout=False):
     output = directory / "reference_flight_audit.json"
     if output.exists():
@@ -70,12 +85,19 @@ def audit(directory, *, flat_reference_layout=False):
             )
             for side in ("left", "right")
         ]
-        com, airborne = [], []
+        com, airborne, momentum = [], [], []
         with np.load(references[hand]) as reference:
             times = reference["times"]
-            for pose in reference["qpos"]:
+            poses = reference["qpos"]
+            for i, pose in enumerate(poses):
                 data.qpos[:] = pose
+                before, after = max(0, i - 1), min(len(poses) - 1, i + 1)
+                mujoco.mj_differentiatePos(
+                    model, data.qvel, times[after] - times[before], poses[before], poses[after]
+                )
                 mujoco.mj_forward(model, data)
+                mujoco.mj_subtreeVel(model, data)
+                momentum.append(data.subtree_angmom[0].copy())
                 com.append(data.subtree_com[0].copy())
                 clearance = [
                     capsule_bounds(
@@ -103,12 +125,16 @@ def audit(directory, *, flat_reference_layout=False):
                     model.body_mass.sum(),
                     model.opt.gravity,
                 ),
+                "angular_momentum_samples": aerial_momentum_residual(
+                    times, np.asarray(momentum), np.asarray(airborne)
+                ),
             }
         )
     assert all(hashlib.sha256((ROOT / p).read_bytes()).hexdigest() == h for p, h in hashes.items())
     result = {
         "scope": "offline_runup_reference_consistency_not_measured_contact_forces",
         "interpretation": "Central COM differences over three aerial samples. A ballistic segment requires zero nongravity force; unsampled contact is not certified absent. This does not qualify a physical rollout.",
+        "momentum_interpretation": "World-frame angular momentum about the whole-system COM from mj_subtreeVel and centered pose velocities. Torque estimates use three aerial momentum frames spanning five poses; the outer velocity samples can include stance/flight boundaries. These coarse offline estimates require temporal refinement, are not measured/applied torque and cannot qualify a rollout.",
         "input_sha256": hashes,
         "rows": rows,
     }

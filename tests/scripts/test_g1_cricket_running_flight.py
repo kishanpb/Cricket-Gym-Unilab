@@ -2,7 +2,7 @@
 
 import numpy as np
 import pytest
-from audit_g1_cricket_running_flight import aerial_residual
+from audit_g1_cricket_running_flight import aerial_momentum_residual, aerial_residual
 
 from unilab.tasks.manipulation.g1_cricket.running import BallisticRunupCOM
 
@@ -58,3 +58,26 @@ def test_upward_acceleration_requires_support_and_contact_stencils_are_excluded(
     assert len(rows) == 1 and rows[0]["time_s"] == pytest.approx(0.06)
     assert rows[0]["required_nongravity_force_n"][2] == pytest.approx(33.5 * 13.81)
     assert aerial_residual(times + 1.2, com, airborne, 33.5, np.zeros(3)) == []
+
+
+def test_angular_momentum_conservation_and_external_torque():
+    times = np.arange(15) * 0.02
+    airborne = np.ones(len(times), dtype=bool)
+    constant = np.broadcast_to([1, 2, 3], (len(times), 3)).copy()
+    rows = aerial_momentum_residual(times, constant, airborne)
+    assert len(rows) == 11
+    np.testing.assert_array_equal(
+        [row["required_external_torque_nm"] for row in rows], np.zeros((11, 3))
+    )
+    torque = np.array([2, -90, 4])
+    momentum = constant + times[:, None] * torque
+    rows = aerial_momentum_residual(times, momentum, airborne)
+    np.testing.assert_allclose(
+        [row["required_external_torque_nm"] for row in rows], np.broadcast_to(torque, (11, 3))
+    )
+    airborne[4] = False
+    assert all(
+        row["time_s"] not in times[3:6]
+        for row in aerial_momentum_residual(times, momentum, airborne)
+    )
+    assert aerial_momentum_residual(times + 1.2, momentum, np.ones(15, bool)) == []
