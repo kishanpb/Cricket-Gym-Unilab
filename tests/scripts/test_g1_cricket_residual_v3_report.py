@@ -8,6 +8,7 @@ from pathlib import Path
 import imageio.v2 as imageio
 import numpy as np
 from PIL import Image
+from scripts.g1_cricket_historical_sources import legacy_source_digest
 
 ROOT = Path(__file__).resolve().parents[2]
 DIRECTORY = ROOT / "g1_cricket_results/residual_v3"
@@ -44,7 +45,7 @@ def test_v3_complete_pool_and_unchanged_baseline():
     assert report["training"]["transitions"] == 199680
     assert report["training"]["seed"] == 1
     for name, expected in report["source_sha256"].items():
-        assert digest(ROOT / name) == expected
+        assert legacy_source_digest(ROOT, name) == expected
     assert digest(ROOT / report["checkpoint"]["path"]) == report["checkpoint"]["sha256"]
     for name in ("run_config", "run_summary"):
         assert digest(DIRECTORY / "right" / f"{name}.json") == report[f"{name}_sha256"]

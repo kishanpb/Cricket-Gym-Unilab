@@ -5,6 +5,8 @@ import itertools
 import json
 from pathlib import Path
 
+from scripts.g1_cricket_historical_sources import legacy_source_digest
+
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -54,7 +56,7 @@ def test_complete_interval_replay_matches_parent_and_keeps_all_failures():
                 assert row["first_guarded_contact"]["seconds"] <= row["seconds"]
     for name, digest in report["source_sha256"].items():
         assert not Path(name).is_absolute()
-        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest
+        assert legacy_source_digest(ROOT, name) == digest
     assert report["contract"]["endpoint_comparison"].startswith("exact")
     assert "no learned cricket" in report["scope"]
     assert "not continuous collision detection" in report["contract"]["contact_scope"]

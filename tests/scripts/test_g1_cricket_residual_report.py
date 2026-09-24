@@ -6,6 +6,8 @@ import itertools
 import json
 from pathlib import Path
 
+from scripts.g1_cricket_historical_sources import legacy_source_digest
+
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -49,7 +51,7 @@ def test_residual_report_retains_full_pool_and_failed_shot_gate():
     assert report["evaluation"]["left_hand"] == "untrained_transfer"
     assert digest(ROOT / report["checkpoint"]["path"]) == report["checkpoint"]["sha256"]
     for name, value in report["source_sha256"].items():
-        assert digest(ROOT / name) == value
+        assert legacy_source_digest(ROOT, name) == value
     for name in ("run_config", "run_summary"):
         assert digest(directory / "right" / f"{name}.json") == report[f"{name}_sha256"]
     summary = json.loads((directory / "right/run_summary.json").read_text())

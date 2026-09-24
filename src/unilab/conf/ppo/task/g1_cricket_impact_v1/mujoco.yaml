@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_residual_v3/mujoco
+  - _self_
+
+training:
+  task_name: G1CricketImpact
+env:
+  sim_dt: 0.0005

@@ -8,6 +8,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 from PIL import Image
+from scripts.g1_cricket_historical_sources import legacy_source_digest
 
 from unilab.tasks.manipulation.g1_cricket.prior import ASSET_HASHES, REVISION
 
@@ -43,7 +44,7 @@ def test_prior_complete_pool_and_provenance(version):
     assert {(r["hand"], r["controller"], r["seed"]) for r in rows} == expected
     for name, digest in report["source_sha256"].items():
         assert not Path(name).is_absolute()
-        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest
+        assert legacy_source_digest(ROOT, name) == digest
     for name, key in (
         ("g1.xml", "robot_xml_sha256"),
         ("scene_flat.xml", "robot_scene_flat_sha256"),

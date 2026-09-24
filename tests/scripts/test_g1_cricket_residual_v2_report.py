@@ -5,6 +5,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from scripts.g1_cricket_historical_sources import legacy_source_digest
+
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -38,7 +40,7 @@ def test_v2_report_preserves_comparator_and_every_failed_trial():
     assert report["training"]["seed"] == 1
     assert report["evaluation"] == parent["evaluation"]
     for name, expected in report["source_sha256"].items():
-        assert digest(ROOT / name) == expected
+        assert legacy_source_digest(ROOT, name) == expected
     assert digest(ROOT / report["checkpoint"]["path"]) == report["checkpoint"]["sha256"]
     assert report["checkpoint"]["sha256"] != parent["checkpoint"]["sha256"]
     for name in ("run_config", "run_summary"):

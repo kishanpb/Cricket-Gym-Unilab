@@ -7,9 +7,10 @@ fixture, not a dexterous grasp. A 0.156 kg, 36 mm-radius free ball, pitch,
 creases, wickets and visual practice-net background are added at construction.
 The source robot XML and existing demonstrations are unchanged.
 
-**Development limitation:** the current bat/ball contact model permits up to
-about 28 mm penetration in the retained trials. Even apparent rebounds must not
-be presented as physically validated cricket; see the contact-resolution audit below.
+**Development limitation:** historical checkpoints use a bat/ball model that
+permits about 28 mm penetration. The opt-in impact-v1 correction reduces this to
+5.65 mm in frozen-policy trials, but still fails the complete timestep comparison
+and produces no valid shots. Neither model is calibrated to physical cricket impacts.
 
 ![Untrained G1 with the rigid wrist fixture in the practice scene](g1_cricket_results/initial_stance.png)
 
@@ -128,7 +129,41 @@ uv run python scripts/render_g1_cricket_residual.py \
   --run-dir g1_cricket_results/residual_v3/right
 ```
 
-## Contact Resolution: Physical Model Correction Required
+## Impact v1: Compliance Corrected, Learning Still Incomplete
+
+The [versioned contact contract](docs/g1_cricket_impact_v1.md) adds
+`task=g1_cricket_impact_v1/mujoco`: an explicit ball/blade pair with a 4 ms
+time constant, 0.5 ms physics and unchanged 20 ms control. Geometry, inertia,
+friction, impedance, other contacts, reward and shot gates remain unchanged.
+The original task remains the default; all 96 historical v3 rows replay exactly.
+
+The [complete frozen-transfer report](g1_cricket_results/impact_v1/frozen_transfer.json)
+contains 96 trials each at 0.5 and 0.25 ms, with the same final v3 PPO checkpoint
+and zero-residual baseline, both hands, three lanes and eight development seeds.
+All 192 episodes complete two seconds without stability, guarded-contact,
+joint-limit or actuator-limit failures, and native state/sensors match independent
+serial replay exactly. Maximum penetration is **5.647 mm** at 0.5 ms and
+**5.619 mm** at 0.25 ms, below the declared 6 mm development bound.
+
+This passes the bounded training preflight, **not** the numerical convergence
+or shot gates. Only **66/96 timestep pairs** meet every tolerance: 56 have no
+blade contact, leaving **10/40 contact-bearing pairs**. Penetration differs beyond
+tolerance in 29 pairs, peak force in six and separation velocity in three, with
+overlap. All controllers still produce **zero valid shots**; right PPO contacts
+16/24 balls but sends none forward at first separation under either resolution.
+The old policy was trained against the softer model and has not been retrained.
+
+No new showcase, policy promotion or physical-force validation is claimed.
+Next: extend resolution checks before interpreting loads or retraining against
+this correction. Historical report source hashes are checked against their
+recorded revision for the explicitly migrated factory/evaluator files; other
+source and checkpoint hashes remain exact current-file checks.
+
+```sh
+uv run python scripts/evaluate_g1_cricket_impact.py
+```
+
+## Historical Contact Resolution: Excessive Compliance
 
 The [predeclared audit](docs/g1_cricket_contact_resolution.md) retains
 [all 288 native closed-loop trials](g1_cricket_results/residual_v3/contact_resolution.json):

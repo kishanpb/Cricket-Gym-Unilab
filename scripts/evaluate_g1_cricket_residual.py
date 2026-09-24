@@ -123,12 +123,14 @@ def load_policy(owner, env, checkpoint):
     return wrapped, runner.get_inference_policy(device="cpu")
 
 
-def evaluate(run_dir):
+def evaluate(run_dir, evaluation_overrides=None):
     saved = json.loads((run_dir / "run_config.json").read_text())
     summary = json.loads((run_dir / "run_summary.json").read_text())
     owner = OmegaConf.create(saved["config"])
+    if evaluation_overrides:
+        owner = OmegaConf.merge(owner, evaluation_overrides)
     checkpoint = ROOT / summary["last_checkpoint"]
-    rows = []
+    rows, contact_models = [], []
     for hand in ("right", "left"):
         override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
         override.update(handedness=hand, auto_reset=False)
@@ -137,6 +139,27 @@ def evaluate(run_dir):
             wrapped, policy = load_policy(owner, env, checkpoint)
             replay = CricketReplay(env)
             model = replay.model
+            contact_models.append(
+                {
+                    "hand": hand,
+                    "pairs": [
+                        {
+                            "name": model.pair(i).name,
+                            "geoms": [
+                                model.geom(int(model.pair_geom1[i])).name,
+                                model.geom(int(model.pair_geom2[i])).name,
+                            ],
+                            "solref": model.pair_solref[i].tolist(),
+                            "solimp": model.pair_solimp[i].tolist(),
+                            "friction": model.pair_friction[i].tolist(),
+                            "dim": int(model.pair_dim[i]),
+                            "margin": float(model.pair_margin[i]),
+                            "gap": float(model.pair_gap[i]),
+                        }
+                        for i in range(model.npair)
+                    ],
+                }
+            )
             joints = model.actuator_trnid[:, 0]
             joint_indices = 1 + model.jnt_qposadr[joints]
             limits = model.jnt_range[joints]
@@ -150,7 +173,7 @@ def evaluate(run_dir):
                         counts = np.zeros(len(replay.names), dtype=int)
                         peaks = np.zeros(len(replay.names))
                         min_height, min_up = 1.0, 1.0
-                        excess = fraction = episode_return = 0.0
+                        excess = fraction = episode_return = penetration = 0.0
                         fixture_peak = np.zeros(2)
                         first_contact = separation_velocity = None
                         blade_seen = previous_blade = False
@@ -215,6 +238,8 @@ def evaluate(run_dir):
                                     )
                                 for contact in step_contacts:
                                     name = contact["geom"]
+                                    if name == "bat_blade":
+                                        penetration = max(penetration, -contact["distance_m"])
                                     ball_peaks[name] = max(
                                         ball_peaks.get(name, 0.0), contact["force_norm_n"]
                                     )
@@ -255,6 +280,11 @@ def evaluate(run_dir):
                                 "return": episode_return,
                                 "first_ball_contact": first_contact,
                                 "blade_contact_seen": blade_seen,
+                                **(
+                                    {"maximum_blade_penetration_m": penetration}
+                                    if evaluation_overrides
+                                    else {}
+                                ),
                                 "first_separation_ball_vx_m_s": separation_velocity,
                                 "blade_events": events,
                                 "ball_contact_physics_step_counts": ball_counts,
@@ -294,6 +324,7 @@ def evaluate(run_dir):
     return {
         "scope": "staged_soft_toss_residual_interception_not_full_cricket_or_bowling",
         "rows": rows,
+        "contact_models": contact_models,
         "checkpoint": {"path": str(checkpoint.relative_to(ROOT)), "sha256": sha256(checkpoint)},
         "training": {
             "transitions": summary["run_env_steps"],
@@ -304,17 +335,18 @@ def evaluate(run_dir):
         },
         "run_config_sha256": sha256(run_dir / "run_config.json"),
         "run_summary_sha256": sha256(run_dir / "run_summary.json"),
+        "evaluation_overrides": evaluation_overrides or {},
         "external_asset_sha256": ASSET_HASHES,
         "evaluation": {
             "seeds": list(SEEDS),
             "offsets_m": list(TOSS_OFFSETS),
             "left_hand": "untrained_transfer",
             "expected_rows": 96,
-            "physics_dt_seconds": 0.002,
+            "physics_dt_seconds": float(owner.env.sim_dt),
             "control_dt_seconds": 0.02,
             "horizon_seconds": 2.0,
             "strict_outgoing_vx_threshold_m_s": 1.0,
-            "contact_scope": "Every 2 ms solve, independently replayed from public native state with executed targets; exact float32 endpoint state and named-sensor equality required",
+            "contact_scope": "Every physics solve at the declared timestep, independently replayed from public native state with executed targets; exact float32 endpoint state and named-sensor equality required",
             "tactile_scope": "Simulated per-geometry occupancy counts and peak contact-force norms, not hardware tactile pressure; fixture wrench includes inertial and gravity loads",
             "force_units": "contact/fixture force N, fixture torque N m; actuator force fraction is dimensionless",
             "gate": "Blade-first, no pre-hit ground or any ball/body/handle/wicket contact, vx > 1 immediately after first separation, full 2 s stability/guard/joint/actuator checks",
