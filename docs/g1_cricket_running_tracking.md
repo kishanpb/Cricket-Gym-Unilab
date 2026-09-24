@@ -125,3 +125,36 @@ PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
 Use `ppo_left` and the `left` output directory for the other hand. The separate
 output includes translated reference/tracking arrays and hashes of both their
 original sources and the derived inputs. Parent evaluations remain immutable.
+
+### Lane Results And Dynamic Reference Defect
+
+The fixed pair (source `019ec088`) is retained in
+[`running_lane_clearance_v1`](../g1_cricket_results/running_lane_clearance_v1).
+Right/left PPO now reach 0.66 / 0.72 s, versus 0.52 / 0.58 s in the original
+lane. Both stop on tracked-body deviation before release. Right has no forbidden
+contact; left still records substep self/wicket contact. Both have zero hard
+joint-limit excursion and reach the original motor-force cap. Reference-only
+controls still stop at 0.56 s with self/wicket contact and joint-limit excursions.
+All four fail full delivery qualification. All 129 video frames decode nonblank,
+and every physical endpoint/sensor matches independent native substep replay.
+
+An offline [centre-of-mass audit](../g1_cricket_results/running_lane_clearance_v1/reference_flight_audit.json)
+then exposed why geometric retargeting alone is insufficient. At 0.26, 0.56,
+0.86 and 1.16 s, three consecutive reference frames have both complete foot
+collision shapes above 2 mm, with no sampled world contact. Their total-system
+COM accelerates **upward** at 1.94-4.38 m/s2. For the 33.497 kg robot/ball system,
+the discrete trajectory would require an extra upward force of 393.6-475.5 N,
+rather than gravity-only flight. Horizontal residuals are also retained.
+
+These are inferred reference-consistency residuals, not measured contact forces,
+not applied support, and not certification that unsampled contact is absent.
+The checker uses all system mass, original gravity, central position differences
+and only complete aerial three-frame stencils before gather. Tests verify zero
+residual for analytic ballistic motion and exclude stencils with grounded frames.
+Reproduce with `scripts/audit_g1_cricket_running_flight.py` and the lane directory.
+
+Next: repair the run-up's vertical phase so its airborne COM follows gravity,
+with continuous stance/flight transitions; check the horizontal residual too.
+Revalidate both full G1 references for geometry and dynamics, then rerun native
+controllers before additional training. Do not add a root force, weaken contact
+or foot-legality checks, or treat this lane comparison as a qualified teacher.

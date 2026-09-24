@@ -1,0 +1,164 @@
+{
+  "scope": "offline_runup_reference_consistency_not_measured_contact_forces",
+  "interpretation": "Central COM differences over three aerial samples. A ballistic segment requires zero nongravity force; unsampled contact is not certified absent. This does not qualify a physical rollout.",
+  "input_sha256": {
+    "scripts/audit_g1_cricket_running_flight.py": "8bc469b2e8a0944b782c8423239191fcde4f364ca35a453d82ac2399b80afa17",
+    "scripts/g1_cricket_delivery_trial.py": "ec3c9b467226ec5c850978bc335d1ee9fb5e66372983bca86b2f295d66326b5d",
+    "src/unilab/tasks/manipulation/g1_cricket/__init__.py": "043181eac62df43a6ee774e1bbd83d8b11344794db5c18fb88a726f7dcc0b86a",
+    "src/unilab/tasks/manipulation/g1_cricket/arm_geometry.py": "47aced740d3bbf992edfcc65ec5d37aa6c0e11c32f7cb3786349db8c07ed4352",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual.py": "57ad5803011b869536153465b7212b5a4a4d8fb7a91f54d8c8d38f1aa4a84282",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual_contact.py": "0ce4482b48cf7dedd86f3b644711a938150cf67085934647820c684ec5f3e9ba",
+    "src/unilab/tasks/manipulation/g1_cricket/bowling.py": "3c690fd588f29e4fae4ae2e419fba3096320bd7999df252e076f3ca1e0ba9299",
+    "src/unilab/tasks/manipulation/g1_cricket/compliance_v2.py": "e0c0def29df2caa4ef23cb46f318669b46b9942e82c939ea810dee46a0ae7005",
+    "src/unilab/tasks/manipulation/g1_cricket/delivery.py": "a1a82ea56f4bb0add72b4a3fe96a603e5378c749f7871cac246be4566f1e1a46",
+    "src/unilab/tasks/manipulation/g1_cricket/forward_exit_reward.py": "113a460361bb64db6be5b58974c42de96f978e0405df8dad4617e5d45ae66e6c",
+    "src/unilab/tasks/manipulation/g1_cricket/holder.py": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "c4cdf46ea64515324292cfe2947be8164c5de4925f67c6763e459fe2632a3a17",
+    "src/unilab/tasks/manipulation/g1_cricket/impedance.py": "7c51705a9ab41d93e587f65ec3faba11f990b5cf257068756cc6ecfed7b5486d",
+    "src/unilab/tasks/manipulation/g1_cricket/overarm.py": "06ac693650070e4434056da3f52f87dc64bd581453ba2efcff198d255fa44add",
+    "src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py": "304bffb9013bfec2d8ac57d805f2ce8156421b8024bda316f373f856fa61830f",
+    "src/unilab/tasks/manipulation/g1_cricket/prior.py": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739",
+    "src/unilab/tasks/manipulation/g1_cricket/residual.py": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c",
+    "src/unilab/tasks/manipulation/g1_cricket/running.py": "18090ff292cf14f79e876cecfc541f7c60597cbcfb8baa102ac90df795d3d978",
+    "src/unilab/tasks/manipulation/g1_cricket/running_task.py": "cea5ad13d85526afe4a74d1589561ca27ca7f5711106d475e71a6bae375fdcab",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/tasks/manipulation/g1_cricket/separation_reward.py": "e10c9a7918f67f8621d2e00af12729e31c389b1f8f7c288d90de77fcfff12994",
+    "src/unilab/tasks/manipulation/g1_cricket/substep_reward.py": "f2c2f7e35655cb4cda10f922660c004f297ee536abe9775d5e237b50206b4cb4",
+    "src/unilab/tasks/manipulation/g1_cricket/swing_reward.py": "08696424ea2556348e067c40e5c3bb9286b5caa9f89bd25add868ab87081a0a9",
+    "src/unilab/tasks/manipulation/g1_cricket/tanh_residual.py": "904a8dde165f872b200ef824466d38834e4b3d177882e7d01561995596466fa0",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb",
+    "src/unilab/tasks/manipulation/g1_cricket/tracking.py": "8299edf82737817cf037b8bde9f5aeb1a7d4a2508d78e4a67f0b7a27235723d0",
+    "src/unilab/assets/robots/g1/g1.xml": "bb6089243f8fe1c97a6410ccde8754eaa58e5d8e476aca69d790ce501cb4a48e",
+    "src/unilab/assets/robots/g1/scene_flat.xml": "13ce8b2c7706885fa4f041ea8ebb5c2875506512bec6cef02a0455eddb9e4de2",
+    "g1_cricket_results/running_lane_clearance_v1/right/reference.npz": "a06ab7e11a321d0899b789b4b9d815939318c6b767ba9a3999e3bc4ac007abc3",
+    "g1_cricket_results/running_lane_clearance_v1/left/reference.npz": "1045259a6b0f000bb87d2fcab0d52885180447c94f097bce1af4d9ce3800ae89"
+  },
+  "rows": [
+    {
+      "hand": "right",
+      "total_mass_kg": 33.497142,
+      "gravity_m_s2": [
+        0.0,
+        0.0,
+        -9.81
+      ],
+      "samples": [
+        {
+          "time_s": 0.26,
+          "com_acceleration_m_s2": [
+            2.227338642765142,
+            -0.006027810819930757,
+            4.384388172457287
+          ],
+          "required_nongravity_force_n": [
+            74.60947879879123,
+            -0.20191443498435696,
+            475.4714362159222
+          ]
+        },
+        {
+          "time_s": 0.56,
+          "com_acceleration_m_s2": [
+            2.1324996406896224,
+            0.007050842646683098,
+            4.323759732303422
+          ],
+          "required_nongravity_force_n": [
+            71.43264327912925,
+            0.2361830773555995,
+            473.44055674684967
+          ]
+        },
+        {
+          "time_s": 0.86,
+          "com_acceleration_m_s2": [
+            2.25252861870473,
+            -0.005726858691990078,
+            4.379717758928869
+          ],
+          "required_nongravity_force_n": [
+            75.45327099981618,
+            -0.19183339881952588,
+            475.31499071076206
+          ]
+        },
+        {
+          "time_s": 1.16,
+          "com_acceleration_m_s2": [
+            0.5895454486934404,
+            0.06284599012224001,
+            1.940477540190999
+          ],
+          "required_nongravity_force_n": [
+            19.748087610337887,
+            2.105161055255271,
+            393.60741473158856
+          ]
+        }
+      ]
+    },
+    {
+      "hand": "left",
+      "total_mass_kg": 33.497142000000004,
+      "gravity_m_s2": [
+        0.0,
+        0.0,
+        -9.81
+      ],
+      "samples": [
+        {
+          "time_s": 0.26,
+          "com_acceleration_m_s2": [
+            2.227184405558802,
+            0.006028427133042413,
+            4.384388229767555
+          ],
+          "required_nongravity_force_n": [
+            74.60431229318878,
+            0.20193507971217464,
+            475.4714381356524
+          ]
+        },
+        {
+          "time_s": 0.56,
+          "com_acceleration_m_s2": [
+            2.1326644765179426,
+            -0.007050329707269931,
+            4.323759671806537
+          ],
+          "required_nongravity_force_n": [
+            71.4381648082772,
+            -0.23616589535123933,
+            473.440554720377
+          ]
+        },
+        {
+          "time_s": 0.86,
+          "com_acceleration_m_s2": [
+            2.2523841816035617,
+            0.005778194184513641,
+            4.37971207255472
+          ],
+          "required_nongravity_force_n": [
+            75.4484327697283,
+            0.19355299110222765,
+            475.3148002334798
+          ]
+        },
+        {
+          "time_s": 1.16,
+          "com_acceleration_m_s2": [
+            0.5901063349522673,
+            -0.06284109009879746,
+            1.9404835185352076
+          ],
+          "required_nongravity_force_n": [
+            19.766875696995662,
+            -2.1049969184742126,
+            393.60761498903355
+          ]
+        }
+      ]
+    }
+  ]
+}

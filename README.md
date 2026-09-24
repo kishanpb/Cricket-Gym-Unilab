@@ -56,9 +56,11 @@ no audited intersections across both complete references; dynamic balance is
 still unfinished.
 The [native whole-body running PPO pilot](docs/g1_cricket_running_tracking.md)
 now trains all 29 joints with simulated holder-load/contact observations.
-Both final policies stop on unintended contact before release (right 0.52 s,
-left 0.58 s); complete diagnostic videos and both reference controls are retained.
-These are failed development episodes, not the requested bowling showcase.
+Moving the reference lane outward lets frozen right/left policies reach 0.66 /
+0.72 s, but both still stop before release; complete diagnostic videos and both
+reference controls are retained. A COM audit also exposes upward acceleration
+during aerial reference frames. That run-up dynamics defect remains to be fixed;
+these are failed development episodes, not the requested bowling showcase.
 
 Earlier one-arm contact experiments and failed bowling trials remain in the
 research log, including [force/touch diagnostic video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)
