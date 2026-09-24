@@ -46,7 +46,14 @@ def feasibility_checks(row):
 
 
 def audit(
-    hand, reference_path, motion, controller, balance_gain=0.0, clip_motor_target=True, states=None
+    hand,
+    reference_path,
+    motion,
+    controller,
+    balance_gain=0.0,
+    clip_motor_target=True,
+    states=None,
+    waist_compensation=0.0,
 ):
     with TemporaryDirectory(prefix="g1-tracking-control-") as directory:
         scene = Path(directory) / "scene.xml"
@@ -91,6 +98,9 @@ def audit(
                 correction = ankle_balance(pose[3:7], data.qpos[3:7], data.qvel[3:6], balance_gain)
                 target[[4, 10]] += correction[1]
                 target[[5, 11]] += correction[0]
+                tilt = np.empty(3)
+                mujoco.mju_subQuat(tilt, data.qpos[3:7], pose[3:7])
+                target[[13, 14, 12]] -= waist_compensation * tilt
                 if clip_motor_target:
                     target = np.clip(target, limits[:, 0], limits[:, 1])
             data.ctrl[:] = target
@@ -164,6 +174,7 @@ def audit(
             "controller": controller,
             "balance_gain": balance_gain,
             "clip_motor_target": clip_motor_target,
+            "waist_compensation": waist_compensation,
             "maximum_static_base_force_residual_n": max(
                 np.linalg.norm(row[1][:3]) for row in feedforward
             )
@@ -186,6 +197,7 @@ def main():
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--balance-sweep", action="store_true")
     mode.add_argument("--feedforward-sweep", action="store_true")
+    mode.add_argument("--waist-sweep", action="store_true")
     parser.add_argument(
         "--reference-dir", type=Path, default=ROOT / "g1_cricket_results/bimanual_v1"
     )
@@ -204,13 +216,23 @@ def main():
             for hand, reference in references.items()
             for gain in (-2.0, -1.0, 0.0, 0.5, 1.0, 2.0, 4.0)
         ]
-    elif args.feedforward_sweep:
+    elif args.feedforward_sweep or args.waist_sweep:
         rows = []
         for hand, reference in references.items():
-            for clipped in (True, False):
+            cases = (
+                [(True, gain) for gain in (0.0, 0.5, 1.0, 1.5)]
+                if args.waist_sweep
+                else [(True, 0.0), (False, 0.0)]
+            )
+            for clipped, waist in cases:
                 states = []
-                row = audit(hand, reference, True, "supported_pd", 4.0, clipped, states)
-                row["trajectory_file"] = f"{hand}_{'clipped' if clipped else 'unclipped'}.npz"
+                row = audit(hand, reference, True, "supported_pd", 4.0, clipped, states, waist)
+                suffix = (
+                    f"waist_{waist:g}"
+                    if args.waist_sweep
+                    else ("clipped" if clipped else "unclipped")
+                )
+                row["trajectory_file"] = f"{hand}_{suffix}.npz"
                 np.savez_compressed(
                     args.output / row["trajectory_file"],
                     qpos=np.array([s[0] for s in states]),
@@ -230,13 +252,14 @@ def main():
         for p in sources
     ):
         raise RuntimeError("control-audit sources changed")
-    if args.balance_sweep or args.feedforward_sweep:
+    if args.balance_sweep or args.feedforward_sweep or args.waist_sweep:
         for row in rows:
             row["feasibility_checks"] = feasibility_checks(row)
     report = {
         "scope": "serial_physics_feasibility_not_RL_or_full_cricket_qualification",
         "balance_sweep": args.balance_sweep,
         "feedforward_sweep": args.feedforward_sweep,
+        "waist_sweep": args.waist_sweep,
         "physics_dt_s": 0.001,
         "control_dt_s": 0.02,
         "stop_rule": "pelvis below 0.5 m or 3 seconds; any solver warning/nonfinite aborts",
@@ -254,6 +277,7 @@ def main():
             r["controller"],
             r["balance_gain"],
             r["clip_motor_target"],
+            r["waist_compensation"],
             r["trace"][-1]["time_s"],
             r["trace"][-1]["pelvis_height_m"],
             sorted({c for t in r["trace"] for c in t["unexpected_contacts"]}),

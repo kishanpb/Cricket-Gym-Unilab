@@ -71,3 +71,25 @@ videos. They are not learned policies, ball-hit evidence or advertising footage.
 The [contact sheet](../g1_cricket_results/bimanual_feedforward_encoding_v1/control_contact_sheet.png)
 shows reset, the fixed 1.14 s backlift and 1.80 s drive frames, and the final
 frame of each hand.
+
+## Waist Compensation Comparison
+
+At the common 1.70 s bat-error peak, pelvis pitch differs from the reference
+by about 0.173 rad and waist pitch differs by about 0.097 rad. Translation
+error is only about 0.014 m. Test counter-rotation of the waist against measured
+pelvis tilt, without changing the ankle gain, references or physical gates.
+
+Fixed follow-up: ankle gain 4, clipped motor encoding, waist compensation
+gains `0, 0.5, 1, 1.5`, both hands: exactly eight deterministic cases. Subtract
+gain times reference-frame pelvis rotation error from waist roll/pitch/yaw
+targets; original target bounds and force limits remain. Gain zero must exactly
+reproduce the prior clipped pair. Keep all trajectories and the same nine
+feasibility gates. This is not a learned policy or a change to robot geometry.
+Run the audit with `--waist-sweep` in a new output directory.
+
+All eight cases are retained in
+[the waist report](../g1_cricket_results/bimanual_waist_compensation_v1/evaluation.json).
+Zero gain exactly reproduces both clipped baselines. Gain 0.5 adds a root
+tracking failure; gains 1 and 1.5 introduce ground/self contact and other
+physical failures. None clears all gates. Reject waist compensation and
+retain the original waist targets; no runtime waist-feedback variant is added.
