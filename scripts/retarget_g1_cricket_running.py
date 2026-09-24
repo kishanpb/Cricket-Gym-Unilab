@@ -13,7 +13,11 @@ from PIL import Image, ImageDraw, ImageFont
 
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
 from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
-from unilab.tasks.manipulation.g1_cricket.running import RELEASE_TIME, retarget_running_delivery
+from unilab.tasks.manipulation.g1_cricket.running import (
+    RELEASE_TIME,
+    retarget_running_delivery,
+    stance_load_offset,
+)
 from unilab.tasks.manipulation.g1_cricket.tracking import (
     ankle_balance,
     export_reference,
@@ -84,7 +88,7 @@ def render_review(output):
     sheet.save(output / "running_motion_review.png")
 
 
-def run(hand, output, render, reverse_ik=False):
+def run(hand, output, render, reverse_ik=False, stance_feedforward=False):
     with TemporaryDirectory(prefix="g1-running-") as temporary:
         scene = Path(temporary) / "scene.xml"
         G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(ROBOT, scene)
@@ -95,6 +99,7 @@ def run(hand, output, render, reverse_ik=False):
         reference = retarget_running_delivery(model, times, hand, reverse=reverse_ik)
         poses = reference["qpos"]
         velocity = velocity_reference(model, poses, 0.02)
+        support = [stance_load_offset(model, pose) for pose in poses] if stance_feedforward else []
         np.savez_compressed(
             output / f"{hand}_reference.npz", times=times, qpos=poses, qvel=velocity
         )
@@ -119,6 +124,8 @@ def run(hand, output, render, reverse_ik=False):
                 + kv_over_kp * velocity[tick, va]
                 + data.qfrc_bias[va] / model.actuator_gainprm[:, 0]
             )
+            if stance_feedforward:
+                control += support[tick][0] / model.actuator_gainprm[:, 0]
             correction = ankle_balance(target[3:7], data.qpos[3:7], data.qvel[3:6], 4)
             correction += root_position_balance(
                 target[3:7], data.qpos[:3] - target[:3], data.qvel[:3] - velocity[tick, :3], 4
@@ -201,6 +208,7 @@ def run(hand, output, render, reverse_ik=False):
             )
         return {
             "hand": hand,
+            "stance_load_estimates": [diagnostic for _, diagnostic in support],
             "kinematic_errors": reference["errors"],
             "reference_forward_travel_m": float(poses[-1, 0] - poses[0, 0]),
             "reference_peak_joint_speed_rad_s": {
@@ -219,12 +227,16 @@ if __name__ == "__main__":
     parser.add_argument("output", type=Path)
     parser.add_argument("--render", action="store_true")
     parser.add_argument("--reverse-ik", action="store_true")
+    parser.add_argument("--stance-feedforward", action="store_true")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     inputs = [Path(__file__), ROBOT, ROBOT.parent / "scene_flat.xml"]
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
     hashes = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
-    rows = [run(hand, args.output, args.render, args.reverse_ik) for hand in ("right", "left")]
+    rows = [
+        run(hand, args.output, args.render, args.reverse_ik, args.stance_feedforward)
+        for hand in ("right", "left")
+    ]
     if any(
         hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != digest
         for name, digest in hashes.items()
@@ -234,6 +246,7 @@ if __name__ == "__main__":
         "scope": "offline_running_reference_and_PD_feasibility_not_learned_bowling",
         "mujoco_version": mujoco.__version__,
         "ik_direction": "reverse" if args.reverse_ik else "forward",
+        "stance_feedforward": args.stance_feedforward,
         "input_sha256": hashes,
         "rows": rows,
     }
@@ -243,5 +256,12 @@ if __name__ == "__main__":
     if args.render:
         render_review(args.output)
     print(
-        [{k: v for k, v in row.items() if k not in {"trace", "kinematic_errors"}} for row in rows]
+        [
+            {
+                k: v
+                for k, v in row.items()
+                if k not in {"trace", "kinematic_errors", "stance_load_estimates"}
+            }
+            for row in rows
+        ]
     )

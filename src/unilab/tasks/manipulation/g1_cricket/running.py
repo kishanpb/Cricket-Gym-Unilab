@@ -3,7 +3,7 @@
 import mujoco
 import numpy as np
 from scipy.interpolate import CubicHermiteSpline, PchipInterpolator
-from scipy.optimize import least_squares
+from scipy.optimize import least_squares, lsq_linear
 from scipy.spatial.transform import Rotation
 
 from .prior import SDK_DEFAULT, SDK_JOINTS
@@ -11,6 +11,40 @@ from .prior import SDK_DEFAULT, SDK_JOINTS
 GATHER_TIME = 1.20
 RELEASE_TIME = 1.82
 END_TIME = 2.70
+
+
+def stance_load_offset(model, pose):
+    """Estimate joint weight-bearing torque from reference feet near the ground."""
+    data = mujoco.MjData(model)
+    data.qpos[:] = pose
+    mujoco.mj_forward(model, data)
+    normals = []
+    for side in ("left", "right"):
+        for index in range(1, 8):
+            geom = model.geom(f"{side}_foot{index}_collision")
+            axis = data.geom_xmat[geom.id].reshape(3, 3)[:, 2]
+            for sign in (-1, 1):
+                point = data.geom_xpos[geom.id] + sign * geom.size[1] * axis
+                point[2] -= geom.size[0]
+                if point[2] > 0.002:
+                    continue
+                jacobian = np.empty((3, model.nv))
+                mujoco.mj_jac(model, data, jacobian, None, point, int(geom.bodyid[0]))
+                normals.append(jacobian[2])
+    offset = np.zeros(model.nv)
+    loads = np.zeros(len(normals))
+    if normals:
+        jacobian = np.asarray(normals)
+        solution = lsq_linear(jacobian[:, :6].T, data.qfrc_bias[:6], bounds=(0, np.inf), tol=1e-12)
+        loads = solution.x
+        offset = -jacobian.T @ loads
+    joints = np.array([model.joint(name).id for name in SDK_JOINTS])
+    return offset[model.jnt_dofadr[joints]], {
+        "ground_point_count": len(normals),
+        "normal_load_sum_n": float(loads.sum()),
+        "root_residual_force_n": (data.qfrc_bias + offset)[:3].tolist(),
+        "root_residual_torque_nm": (data.qfrc_bias + offset)[3:6].tolist(),
+    }
 
 
 class RunningDeliveryTargets:

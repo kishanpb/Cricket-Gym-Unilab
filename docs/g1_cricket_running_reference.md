@@ -129,3 +129,29 @@ settings, physical PD control and failure checks stay fixed. Test both hands
 in `g1_cricket_results/running_front_raise_v1`; reject intersections and excessive
 tracking error before using it for whole-body learning. This adaptation is not
 an exact copy of human shoulder circumduction.
+
+The complete front-raise pair (source `68a0c4c3`) converges at all 136 frames per
+hand, has no unexpected penetration above 1 mm, and reduces maximum arm error
+from 122.23 to 5.25 mm. The physical runs still fall at 0.62 s; the arm-path
+repair is not a balance result.
+
+## Stance-Load Motor Compensation
+
+A separate fixed comparison adds a joint-torque feedforward term for estimated
+weight-bearing at the reference feet. At every reference pose, use only foot
+capsule endpoints whose bottom is within 2 mm of the pitch; solve nonnegative
+normal loads against the floating-base gravity wrench, and map those loads
+back to joint torque. Add only `-J.T @ normal_load / kp` to motor setpoints,
+alongside the unchanged joint bias compensation and PD controller. No estimated
+load is applied directly to the feet, root or environment. Existing motor-force
+caps and joint-target limits still apply.
+
+This uses the force/Jacobian mapping in the
+[MuJoCo equations of motion](https://mujoco.readthedocs.io/en/stable/computation/index.html#general-framework),
+but is an approximate static load allocation, not full inverse dynamics or
+predicted contact evidence. It excludes ball-holder load transfer, lateral
+friction and acceleration. Frames without near-ground feet get zero load offset;
+nonzero root residuals remain recorded rather than claiming a support solution.
+Test the unchanged front-raise motion for both hands with `--stance-feedforward
+--render` in `g1_cricket_results/running_stance_feedforward_v1`; compare the full
+episodes, including any falls or unintended contacts, to the no-offset pair.

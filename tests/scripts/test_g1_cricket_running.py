@@ -16,6 +16,7 @@ from unilab.tasks.manipulation.g1_cricket.running import (
     RELEASE_TIME,
     RunningDeliveryTargets,
     retarget_running_delivery,
+    stance_load_offset,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -122,3 +123,15 @@ def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, reverse, 
         integrated = poses[i].copy()
         mujoco.mj_integratePos(model, integrated, velocity[i], 0.02)
         np.testing.assert_allclose(integrated, poses[i + 1], atol=1e-12)
+    offset, supported = stance_load_offset(model, poses[0])
+    assert offset.shape == (29,)
+    assert np.isfinite(offset).all()
+    assert supported["ground_point_count"] > 0
+    assert supported["normal_load_sum_n"] > 0
+    airborne = poses[0].copy()
+    airborne[2] += 1.0
+    offset, unsupported = stance_load_offset(model, airborne)
+    np.testing.assert_array_equal(offset, np.zeros(29))
+    assert unsupported["ground_point_count"] == 0
+    assert unsupported["normal_load_sum_n"] == 0
+    assert unsupported["root_residual_force_n"][2] > 100
