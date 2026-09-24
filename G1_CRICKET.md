@@ -212,10 +212,58 @@ among contact-bearing pairs; the 12 mismatches are penetration-only. These
 checks do not validate physical material parameters or justify policy promotion.
 No new showcase video is produced from this failed checkpoint.
 
-Next: run the [impact-to-reward timing audit](docs/g1_cricket_impact_reward_audit.md)
-on this fixed policy before another training change. It will distinguish short
-contacts missed by control-rate reward sampling from strikes that genuinely
-fail to produce forward ball motion. The audit is designed, not yet executed.
+### Impact-to-Reward Audit: Missed Events And Weak Strikes
+
+The [predeclared timing audit](docs/g1_cricket_impact_reward_audit.md) is now
+executed. Its [complete evidence](g1_cricket_results/impact_v1/impact_reward_audit.json)
+exactly reproduces every field of all 96 authoritative 0.125 ms evaluation
+rows, including native returns, contact events and shot failures. The checkpoint,
+physics, reward and 20 ms policy cadence are unchanged. Every trial retains all
+100 actual reward samples and every blade-contact interval, with signed world
+impulse, contact-point motion, force, penetration and both solve/integration times.
+Reward state is inspected around its single native invocation, not recomputed
+by calling the term twice.
+
+| Hand / controller | Lane (m) | Trials | Contact trials | Paid separation events | Unobserved first contacts |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Right / zero residual | -0.12 | 8 | 0 | 0 | 0 |
+| Right / zero residual | -0.10 | 8 | 0 | 0 | 0 |
+| Right / zero residual | 0 | 8 | 8 | 8 | 0 |
+| Right / PPO | -0.12 | 8 | 0 | 0 | 0 |
+| Right / PPO | -0.10 | 8 | 8 | 0 | 8 |
+| Right / PPO | 0 | 8 | 8 | 8 | 0 |
+| Left / zero residual | -0.12 | 8 | 0 | 0 | 0 |
+| Left / zero residual | -0.10 | 8 | 0 | 0 | 0 |
+| Left / zero residual | 0 | 8 | 8 | 8 | 0 |
+| Left / PPO transfer | -0.12 | 8 | 0 | 0 | 0 |
+| Left / PPO transfer | -0.10 | 8 | 0 | 0 | 0 |
+| Left / PPO transfer | 0 | 8 | 8 | 7 | 1 |
+
+**9/40 contact-bearing trials receive no separation event.** The eight missed
+right-PPO contacts last only 2.5-3.875 ms; left transfer also misses seed 4305
+on the center lane. All first contact intervals contain positive normal load,
+so these are not merely zero-force geometric occupancy. There are 240 loaded contact
+intervals in total and 156 are unsampled, but that includes later recontacts:
+it must not be reported as 156 lost one-shot rewards. For the 31 paid trials,
+sampled versus first physical separation velocity differs by at most
+7.02e-9 m/s. Cached weighted reward rates, timestep scaling, approach shaping
+and actual separation bonuses reconcile with every returned native reward.
+
+Sampling is **not** the sole explanation for failed batting. The right-PPO bat
+contact point moves backward at every first contact (-0.230 to -0.156 m/s along
+the shot axis). In the missed off-center lane the ball still exits backward
+at -2.185 to -2.008 m/s. Left transfer has only 0.073-0.092 m/s forward bat
+point speed and 0.027-0.057 m/s ball exit speed. No trial clears the unchanged
+1 m/s shot gate, and the force/impulse data remain uncalibrated simulator values.
+
+Next single-axis change: capture the first separation at physics-substep rate,
+while preserving the scalar reward formula, control cadence, contact model,
+action bounds and evaluation pool. UniLab's current control callback does not
+refresh intermediate sensors; this needs an explicit opt-in backend observation
+capability, not reward-side access to private engine state. Verify native state
+parity, between-sample contacts, final-substep delivery, reset boundaries and
+single payout before retraining. This adapter is not implemented yet; better
+event capture alone is not a successful-shot or showcase claim.
 
 ## Historical Contact Resolution: Excessive Compliance
 
