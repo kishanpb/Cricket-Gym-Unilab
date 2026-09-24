@@ -643,13 +643,67 @@ Guard telemetry checks the actual applied targets against the bounded prior at
 every control interval; 108 source/configuration inputs, 104 learner-runtime
 files and the native executor are verified before/after. There are 50 focused
 passing UniLab tests (one existing RSL-RL warning) and 47 passing native Batch
-tests. Next, a separately bounded drive/release study can use the left preloads;
+tests. The bounded drive/release study below uses one left preload;
 right-hand gait/recovery remains unresolved. Both-hand learned bowling, paired
 resolution validation and showcase videos are still unfinished.
 
 Reproduce the original reach at `1784ee652712ab08f6ecaf95368bc00646d8d518`,
 and the attribution at `4cf98c6bec837883be526cba05bd7ca7f451dd83`; source-hash contracts are frozen
 per experiment, not claims that earlier matrices were rerun on newer adapters.
+
+### Fixed Overarm Drive And Release
+
+The [six-case drive/release study](docs/g1_cricket_overarm_release_v1.md) starts
+from the retained left -2.80 / 1.40 rad preload. This parent was chosen before
+running the study for its near-straight elbow and early overhead readiness.
+A read-only baseline replay identified a usable footfall window; each new
+drive must independently pass the same stride checks. At 2.2 seconds only the
+shoulder target steps to +0.3 or +1 rad, with three fixed release times. Original
+motor authority, prior guard, dynamics, pitch and complete four-second gate stay
+unchanged. There is no state/velocity injection and no new learned checkpoint.
+
+| Shoulder drive target | Release time | Ball velocity x/y/z (m/s) | First bounce x (m) | Current overarm/stride proxy |
+| ---: | ---: | --- | ---: | --- |
+| +0.3 rad | 2.28 s | 2.804 / -1.560 / -2.340 | 1.205 | Pass |
+| +0.3 rad | 2.36 s | 2.021 / 0.329 / -4.761 | 0.830 | Pass |
+| +0.3 rad | 2.44 s | -0.800 / 2.193 / -4.231 | 0.357 | Fails overarm |
+| +1.0 rad | 2.28 s | 3.128 / -1.810 / -2.801 | 1.237 | Pass |
+| +1.0 rad | 2.36 s | 1.518 / 0.600 / -5.983 | 0.676 | Fails overarm height |
+| +1.0 rad | 2.44 s | -2.311 / 2.669 / -3.973 | 0.087 | Fails overarm |
+
+The [complete results and traces](g1_cricket_results/overarm_release_v1/evaluation.json)
+retain **all six failures, zero qualified deliveries**. All release and complete
+200 control steps, with no forbidden contacts, joint-limit excess, balance or
+actuator-limit violations. Ball penetration stays below 2.846 mm. However, every
+forward release speed is below the strict >6 m/s requirement, every first bounce
+is before the x>4 m zone, all have repeated bounces, and none reaches the target.
+Later release redirects motion downward rather than solving the speed deficit.
+For the +1 rad / 2.28 s release, sampled shoulder torque reaches its original
+25 N m cap in the first three drive intervals; shoulder speed reaches 11.72
+rad/s at release, but forward ball speed remains 3.128 m/s. Commanded speed or
+motor saturation alone is therefore not evidence of useful bowling velocity.
+
+Peak simulated holder force is 9.74-11.60 N; pitch-contact peaks are 1.14-1.62 kN.
+These are uncalibrated simulator loads at one timestep, not measured cricket-ball
+material response, tactile hardware or hardware-safe loads. Independent serial
+replay inspects every substep and matches native endpoint state and all named
+sensors exactly. A second six-row replay verifies that corrected diagnostic
+contact/phase labels leave all physical outcomes and full traces exactly unchanged.
+Legal ball/pitch contact is not classified as forbidden by the delivery gate.
+
+The current unsigned elbow-angle proxy folds near straight; actual elbow joint
+traces are retained, but proxy passes are not certified bowling legality. Signed
+extension checking is needed before a learner can exploit multiple elbow angles.
+The fixed four-second horizon also limits late-release flight time; these results
+do not prove an absolute G1 speed limit. No timestep-converged successful motion,
+training teacher, held-out success rate or advertising-ready video is claimed.
+The updated focused suite passes 55 UniLab tests (one existing RSL-RL observation
+warning) and 47 native Batch tests; these are local checks, not upstream CI.
+
+The next experiment needs a materially different, physically bounded wind-up or
+coordinated arm trajectory, not more late-release timing trials on this failed
+shoulder-only drive. Keep the original hardware limits, full gates and all failures;
+repair the signed extension audit before training a variable-elbow controller.
 
 The completed batting evaluation/video remain frozen at source revision
 `7f936c78b9e0d882087be6deedadba4525bd7224`; their hashes do not imply that these

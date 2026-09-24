@@ -64,6 +64,11 @@ the locomotion prior's motor targets. All right-hand trials still fail physical
 checks. These are one-seed preload diagnostics, not learned releases or a bowling
 showcase; the full failures and contact-model limitations remain linked.
 
+The subsequent [fixed drive/release study](G1_CRICKET.md#fixed-overarm-drive-and-release)
+completes six left-hand scripted releases with stable recovery, but **zero
+qualified deliveries**: maximum forward release speed is 3.13 m/s and every
+first bounce falls short. This is development evidence, not a learned video.
+
 ---
 
 <h3 align="center">
