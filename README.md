@@ -58,6 +58,11 @@ trains separate actors for 24,576 transitions each, but all 32 evaluated cases
 retain the ball: zero qualified deliveries. Full results and failed checkpoints
 are retained; this is not a learned-bowling showcase.
 
+The [overarm motion diagnostic and pitch-contact repair](G1_CRICKET.md#bounded-overarm-motion-diagnostic)
+retain the next 32 failed scripted attempts and an opt-in, finer-step ball/pitch
+model. Force/impulse accounting is checked against independent serial replay;
+these simulated loads are not physical calibration or successful learned bowling.
+
 ---
 
 <h3 align="center">

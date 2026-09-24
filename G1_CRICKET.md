@@ -553,6 +553,46 @@ appears during the drive. The family is closed without extra budget or relaxed
 criteria. Ball-pitch contact response and overarm control authority need separate
 repairs before another learning claim. The original model/results stay frozen.
 
+### Opt-In Pitch Contact Repair
+
+The [versioned model and fixed audit](docs/g1_cricket_pitch_contact_v2.md) add
+one ball/pitch contact pair, leaving the robot, holder, other contact materials,
+motor limits, rewards and delivery gates unchanged. The new
+`g1_cricket_delivery_pitch_v2/{mujoco,mjbatch}` owners require a physics step
+of at most .0625 ms. This is an engineering contact model, not measured material
+calibration; historical trials remain reproducible at their frozen revisions.
+
+The [complete report](g1_cricket_results/pitch_contact_v2/evaluation.json) retains
+24 isolated .6-second impacts: original/revised model, three initial velocities,
+and four timesteps. All native substep states and named sensors match independent
+serial MuJoCo exactly. Maximum world-impulse/momentum accounting residual is
+5.29e-13 N s. Original pitch penetration reaches 60.526 mm in this impact matrix.
+
+| Revised impact initial velocity (m/s) | Depth at .0625/.03125 ms | Peak-force difference |
+| --- | --- | ---: |
+| (0, 0, 0) | 1.816 / 1.896 mm | 2.22% |
+| (8, 0, -4) | 2.462 / 2.436 mm | 3.30% |
+| (12, 0, -8) | 3.561 / 3.650 mm | 0.47% |
+
+Those three fine-step pairs pass the predeclared penetration, rebound-energy,
+force, impulse and exit-velocity checks. Coarser .125/.0625 ms oblique-force
+comparisons fail at 6.31% and 6.17%; they remain in the report, and the 5%
+tolerance was not relaxed. Simulated peak forces are not hardware safety limits.
+
+Eight complete four-second hold/drop trials cover both hands, both fine
+timesteps and both executors. All four executor pairs match exactly, with zero
+endpoint replay error and 1.287-1.307 mm maximum ball penetration. **All eight
+fail the delivery gate**: these are low drops, not overarm releases. Left-hand
+trials also hit the foot and linkage after bouncing; bounce counts (22 versus
+19) and those later contact forces vary with timestep, so whole-trajectory
+contact convergence is not established. No trained policy is evaluated here.
+
+The audit rechecks 95 local source/configuration inputs and the installed
+learner runtime sources after execution. There are 38 focused passing UniLab
+tests (one existing RSL-RL warning) and 47 passing native Batch tests. Next,
+repair achieved overarm motion within the original motor limits before using
+any demonstration for imitation or PPO; do not turn these drops into a showcase.
+
 The completed batting evaluation/video remain frozen at source revision
 `7f936c78b9e0d882087be6deedadba4525bd7224`; their hashes do not imply that these
 new adapter changes have been evaluated across the same 576 trials.

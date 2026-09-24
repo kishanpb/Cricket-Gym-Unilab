@@ -1,0 +1,1506 @@
+{
+  "preflight_sha256": "941fa98943ecd5d04a7e6e6f0067991e18b164978539e79f579b95c78cd85ed7",
+  "isolated_drops": [
+    {
+      "dt": 0.00025,
+      "initial_velocity": [
+        0,
+        0,
+        0
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 78.95875885293277,
+      "maximum_penetration_m": 0.03426099467233215,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        0.0,
+        0.0,
+        -4.779922500000089
+      ],
+      "first_out_velocity": null,
+      "impulse_world_ns": [
+        -3.3126279497252946e-18,
+        2.7054747331334274e-18,
+        0.9278056999126515
+      ],
+      "maximum_momentum_residual_ns": 7.294165271787278e-14,
+      "first_rebound_energy_ratio": null
+    },
+    {
+      "dt": 0.000125,
+      "initial_velocity": [
+        0,
+        0,
+        0
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 77.7141627941493,
+      "maximum_penetration_m": 0.03400318470700288,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        0.0,
+        0.0,
+        -4.778696250000446
+      ],
+      "first_out_velocity": null,
+      "impulse_world_ns": [
+        -8.961581476896173e-19,
+        -5.537237335317964e-19,
+        0.9279851047475964
+      ],
+      "maximum_momentum_residual_ns": 1.3244960683778118e-13,
+      "first_rebound_energy_ratio": null
+    },
+    {
+      "dt": 6.25e-05,
+      "initial_velocity": [
+        0,
+        0,
+        0
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 77.40295985056352,
+      "maximum_penetration_m": 0.034095552220143766,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        0.0,
+        0.0,
+        -4.778696250000625
+      ],
+      "first_out_velocity": null,
+      "impulse_world_ns": [
+        -1.2173421992667297e-19,
+        1.0260889360402879e-19,
+        0.927988374932624
+      ],
+      "maximum_momentum_residual_ns": 8.526512829121202e-14,
+      "first_rebound_energy_ratio": null
+    },
+    {
+      "dt": 3.125e-05,
+      "initial_velocity": [
+        0,
+        0,
+        0
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 77.58306361120542,
+      "maximum_penetration_m": 0.03425207318521613,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        0.0,
+        0.0,
+        -4.779002812499586
+      ],
+      "first_out_velocity": null,
+      "impulse_world_ns": [
+        3.850869276234016e-19,
+        -2.1250362580715877e-19,
+        0.9279467879143403
+      ],
+      "maximum_momentum_residual_ns": 1.7665868767835491e-13,
+      "first_rebound_energy_ratio": null
+    },
+    {
+      "dt": 0.00025,
+      "initial_velocity": [
+        8,
+        0,
+        -4
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 106.7125876404421,
+      "maximum_penetration_m": 0.042672412842619106,
+      "contact_onsets": 2,
+      "first_in_velocity": [
+        8.0,
+        -7.329200562072048e-49,
+        -6.2317750000003755
+      ],
+      "first_out_velocity": [
+        3.9237269585251218,
+        4.098540207531554e-17,
+        0.9814969284342083
+      ],
+      "impulse_world_ns": [
+        -0.5545504934306461,
+        3.885780586188065e-19,
+        1.5456195899929361
+      ],
+      "maximum_momentum_residual_ns": 1.1723955140041653e-13,
+      "first_rebound_energy_ratio": 0.1590797524146962
+    },
+    {
+      "dt": 0.000125,
+      "initial_velocity": [
+        8,
+        0,
+        -4
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 107.27256444279952,
+      "maximum_penetration_m": 0.04305157320316202,
+      "contact_onsets": 2,
+      "first_in_velocity": [
+        8.0,
+        4.161289056328158e-49,
+        -6.2317750000003755
+      ],
+      "first_out_velocity": [
+        3.8993752782484226,
+        1.947715903095047e-17,
+        0.9882476869281348
+      ],
+      "impulse_world_ns": [
+        -0.5582075962311911,
+        2.7200464103316493e-19,
+        1.545909581045776
+      ],
+      "maximum_momentum_residual_ns": 1.1612932837579137e-13,
+      "first_rebound_energy_ratio": 0.15735652218776708
+    },
+    {
+      "dt": 6.25e-05,
+      "initial_velocity": [
+        8,
+        0,
+        -4
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 107.77199528577127,
+      "maximum_penetration_m": 0.04350800708258495,
+      "contact_onsets": 2,
+      "first_in_velocity": [
+        8.0,
+        -1.329529112199651e-50,
+        -6.232388125000376
+      ],
+      "first_out_velocity": [
+        3.86498501852966,
+        -9.478879774796377e-18,
+        0.9964053175500751
+      ],
+      "impulse_world_ns": [
+        -0.5630584337539652,
+        -1.457167719820506e-19,
+        1.5461803116883381
+      ],
+      "maximum_momentum_residual_ns": 8.970602038971265e-14,
+      "first_rebound_energy_ratio": 0.15490587739236356
+    },
+    {
+      "dt": 3.125e-05,
+      "initial_velocity": [
+        8,
+        0,
+        -4
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 107.47697324621987,
+      "maximum_penetration_m": 0.04347187216890099,
+      "contact_onsets": 2,
+      "first_in_velocity": [
+        8.0,
+        -4.013259010846041e-49,
+        -6.232081562497142
+      ],
+      "first_out_velocity": [
+        3.868837865435595,
+        2.762106160074584e-18,
+        0.9952982419469201
+      ],
+      "impulse_world_ns": [
+        -0.5624722054905434,
+        9.957312752106924e-20,
+        1.5461620741831503
+      ],
+      "maximum_momentum_residual_ns": 4.947153797729698e-13,
+      "first_rebound_energy_ratio": 0.15517993907838729
+    },
+    {
+      "dt": 0.00025,
+      "initial_velocity": [
+        12,
+        0,
+        -8
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 162.0389211089074,
+      "maximum_penetration_m": 0.059848766515895435,
+      "contact_onsets": 2,
+      "first_in_velocity": [
+        12.0,
+        -8.124605059931218e-49,
+        -9.319445000000222
+      ],
+      "first_out_velocity": [
+        4.673862149882719,
+        3.01291029401569e-19,
+        1.758681315401198
+      ],
+      "impulse_world_ns": [
+        -1.0483491265666918,
+        2.76406501853455e-19,
+        2.1965421705355213
+      ],
+      "maximum_momentum_residual_ns": 8.260059303211165e-14,
+      "first_rebound_energy_ratio": 0.10802566757994718
+    },
+    {
+      "dt": 0.000125,
+      "initial_velocity": [
+        12,
+        0,
+        -8
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 161.82123277250497,
+      "maximum_penetration_m": 0.060444677863009576,
+      "contact_onsets": 2,
+      "first_in_velocity": [
+        12.0,
+        0.0,
+        -9.319445000000222
+      ],
+      "first_out_velocity": [
+        4.63264939707657,
+        -2.9869587924494894e-18,
+        1.7803680070765482
+      ],
+      "impulse_world_ns": [
+        -1.0613143678214525,
+        7.086236979148003e-19,
+        2.1991543326857923
+      ],
+      "maximum_momentum_residual_ns": 9.14823772291129e-14,
+      "first_rebound_energy_ratio": 0.10669669224009842
+    },
+    {
+      "dt": 6.25e-05,
+      "initial_velocity": [
+        12,
+        0,
+        -8
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 160.64384604808353,
+      "maximum_penetration_m": 0.060377978440020824,
+      "contact_onsets": 2,
+      "first_in_velocity": [
+        12.0,
+        8.862063247885755e-48,
+        -9.318831874998311
+      ],
+      "first_out_velocity": [
+        4.6432162869164575,
+        6.023013062688865e-18,
+        1.7771723939609585
+      ],
+      "impulse_world_ns": [
+        -1.058965141204644,
+        -4.498246393425106e-19,
+        2.1989439642636235
+      ],
+      "maximum_momentum_residual_ns": 3.594902153736257e-13,
+      "first_rebound_energy_ratio": 0.10707733500417821
+    },
+    {
+      "dt": 3.125e-05,
+      "initial_velocity": [
+        12,
+        0,
+        -8
+      ],
+      "revised": false,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 160.67732111107034,
+      "maximum_penetration_m": 0.060525656827413045,
+      "contact_onsets": 2,
+      "first_in_velocity": [
+        12.0,
+        7.429611277963598e-51,
+        -9.318831875002132
+      ],
+      "first_out_velocity": [
+        4.633064622957387,
+        -3.1073299541217468e-18,
+        1.7828583424692712
+      ],
+      "impulse_world_ns": [
+        -1.0623375796184862,
+        1.0115267456110817e-19,
+        2.1997432849890326
+      ],
+      "maximum_momentum_residual_ns": 5.138112157965224e-13,
+      "first_rebound_energy_ratio": 0.10675708143384605
+    },
+    {
+      "dt": 0.00025,
+      "initial_velocity": [
+        0,
+        0,
+        0
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 1266.6487455471536,
+      "maximum_penetration_m": 0.0019829822279872275,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        0.0,
+        0.0,
+        -4.779922500000089
+      ],
+      "first_out_velocity": [
+        2.5572484638760286e-17,
+        -2.5572484638760286e-17,
+        2.3354427900961756
+      ],
+      "impulse_world_ns": [
+        0.0,
+        0.0,
+        1.1126751152550174
+      ],
+      "maximum_momentum_residual_ns": 7.038813976123492e-14,
+      "first_rebound_energy_ratio": 0.2387243699893162
+    },
+    {
+      "dt": 0.000125,
+      "initial_velocity": [
+        0,
+        0,
+        0
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 1049.4233556099746,
+      "maximum_penetration_m": 0.0017703296581834185,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        0.0,
+        0.0,
+        -4.778696250000446
+      ],
+      "first_out_velocity": [
+        5.536942773590012e-19,
+        -5.536942773590012e-19,
+        2.0504735506116276
+      ],
+      "impulse_world_ns": [
+        0.0,
+        0.0,
+        1.0682199138954838
+      ],
+      "maximum_momentum_residual_ns": 1.341149413747189e-13,
+      "first_rebound_energy_ratio": 0.18411513507427546
+    },
+    {
+      "dt": 6.25e-05,
+      "initial_velocity": [
+        0,
+        0,
+        0
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 1033.0671424130835,
+      "maximum_penetration_m": 0.0018159510179028351,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        0.0,
+        0.0,
+        -4.778696250000625
+      ],
+      "first_out_velocity": [
+        -3.8330376660509946e-13,
+        3.70459474471036e-19,
+        2.072203359561509
+      ],
+      "impulse_world_ns": [
+        -5.979435280245581e-14,
+        -2.4868995751603506e-18,
+        1.071705411591693
+      ],
+      "maximum_momentum_residual_ns": 1.1435297153639112e-13,
+      "first_rebound_energy_ratio": 0.18803811744571058
+    },
+    {
+      "dt": 3.125e-05,
+      "initial_velocity": [
+        0,
+        0,
+        0
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 1056.4780072713747,
+      "maximum_penetration_m": 0.001895687728471894,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        0.0,
+        0.0,
+        -4.779002812499586
+      ],
+      "first_out_velocity": [
+        -5.0521359579462474e-17,
+        2.1484757396958474e-17,
+        2.1518948600652434
+      ],
+      "impulse_world_ns": [
+        -7.46069872548105e-18,
+        3.730349362740526e-18,
+        1.084137285670113
+      ],
+      "maximum_momentum_residual_ns": 1.7665868767835491e-13,
+      "first_rebound_energy_ratio": 0.20275310986186457
+    },
+    {
+      "dt": 0.00025,
+      "initial_velocity": [
+        8,
+        0,
+        -4
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 1340.3780581487495,
+      "maximum_penetration_m": 0.0020145348366426355,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        8.0,
+        -7.329200562072048e-49,
+        -6.2317750000003755
+      ],
+      "first_out_velocity": [
+        6.036514315431606,
+        1.710971333650524e-17,
+        2.4237878198044838
+      ],
+      "impulse_world_ns": [
+        -0.30630376679266963,
+        6.217248937900877e-18,
+        1.3533285198895582
+      ],
+      "maximum_momentum_residual_ns": 1.1168843627729075e-13,
+      "first_rebound_energy_ratio": 0.4114770689946008
+    },
+    {
+      "dt": 0.000125,
+      "initial_velocity": [
+        8,
+        0,
+        -4
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 1337.262203020738,
+      "maximum_penetration_m": 0.0022133272548204574,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        8.0,
+        4.161289056328158e-49,
+        -6.2317750000003755
+      ],
+      "first_out_velocity": [
+        6.0628984871506635,
+        -6.844583744909207e-18,
+        2.5937854884573857
+      ],
+      "impulse_world_ns": [
+        -0.30218783600449617,
+        -3.4194869158454823e-18,
+        1.3796568611994109
+      ],
+      "maximum_momentum_residual_ns": 1.2811973704174306e-13,
+      "first_rebound_energy_ratio": 0.4228759947084781
+    },
+    {
+      "dt": 6.25e-05,
+      "initial_velocity": [
+        8,
+        0,
+        -4
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 1427.3806948800368,
+      "maximum_penetration_m": 0.002461778549293289,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        8.0,
+        -1.329529112199651e-50,
+        -6.232388125000376
+      ],
+      "first_out_velocity": [
+        6.097286064737974,
+        -2.758174988663868e-17,
+        2.8602484401490518
+      ],
+      "impulse_world_ns": [
+        -0.2968233739008762,
+        -1.5543122344752194e-18,
+        1.4213207291633105
+      ],
+      "maximum_momentum_residual_ns": 9.50350909079134e-14,
+      "first_rebound_energy_ratio": 0.4410418568221141
+    },
+    {
+      "dt": 3.125e-05,
+      "initial_velocity": [
+        8,
+        0,
+        -4
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 1381.813039806935,
+      "maximum_penetration_m": 0.002435526277074697,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        8.0,
+        -4.013259010846041e-49,
+        -6.232081562497142
+      ],
+      "first_out_velocity": [
+        6.094150296047217,
+        5.4708412684360327e-17,
+        2.8109596236983103
+      ],
+      "impulse_world_ns": [
+        -0.2973125538166343,
+        8.17956813392584e-18,
+        1.4136316737964905
+      ],
+      "maximum_momentum_residual_ns": 4.889422200449189e-13,
+      "first_rebound_energy_ratio": 0.43796839378376273
+    },
+    {
+      "dt": 0.00025,
+      "initial_velocity": [
+        12,
+        0,
+        -8
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 2158.8995470256186,
+      "maximum_penetration_m": 0.003186455391898227,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        12.0,
+        -8.124605059931218e-49,
+        -9.319445000000222
+      ],
+      "first_out_velocity": [
+        9.022779803766607,
+        2.0723570409962002e-16,
+        3.8617164831727426
+      ],
+      "impulse_world_ns": [
+        -0.4644463506124092,
+        2.9842794901924206e-17,
+        2.0589393213749827
+      ],
+      "maximum_momentum_residual_ns": 8.615330671091215e-14,
+      "first_rebound_energy_ratio": 0.4172516876169514
+    },
+    {
+      "dt": 0.000125,
+      "initial_velocity": [
+        12,
+        0,
+        -8
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 2189.1527794159374,
+      "maximum_penetration_m": 0.003612704439544749,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        12.0,
+        0.0,
+        -9.319445000000222
+      ],
+      "first_out_velocity": [
+        9.086881438614482,
+        5.334620903793967e-17,
+        4.251054321651134
+      ],
+      "impulse_world_ns": [
+        -0.45444649557614075,
+        0.0,
+        2.1198673191776116
+      ],
+      "maximum_momentum_residual_ns": 6.394884621840902e-14,
+      "first_rebound_energy_ratio": 0.43596266482431145
+    },
+    {
+      "dt": 6.25e-05,
+      "initial_velocity": [
+        12,
+        0,
+        -8
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 2061.9529232080204,
+      "maximum_penetration_m": 0.0035613932024784606,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        12.0,
+        8.862063247885755e-48,
+        -9.318831874998311
+      ],
+      "first_out_velocity": [
+        9.081469660470344,
+        4.4061059762337917e-17,
+        4.132841470352728
+      ],
+      "impulse_world_ns": [
+        -0.4552907329666269,
+        4.352074256530613e-18,
+        2.1013304668747623
+      ],
+      "maximum_momentum_residual_ns": 3.232969447708456e-13,
+      "first_rebound_energy_ratio": 0.4312649418996401
+    },
+    {
+      "dt": 3.125e-05,
+      "initial_velocity": [
+        12,
+        0,
+        -8
+      ],
+      "revised": true,
+      "exact_native_state_sensors": true,
+      "peak_force_n": 2071.7128911430505,
+      "maximum_penetration_m": 0.0036504251564478743,
+      "contact_onsets": 1,
+      "first_in_velocity": [
+        12.0,
+        7.429611277963598e-51,
+        -9.318831875002132
+      ],
+      "first_out_velocity": [
+        9.094256147777628,
+        3.95767808361085e-17,
+        4.213990331139053
+      ],
+      "impulse_world_ns": [
+        -0.4532960409466894,
+        6.2366778408318164e-18,
+        2.114037512908024
+      ],
+      "maximum_momentum_residual_ns": 5.289102489314246e-13,
+      "first_rebound_energy_ratio": 0.43520592745741804
+    }
+  ],
+  "robot_rows": [
+    {
+      "hand": "right",
+      "dt": 6.25e-05,
+      "engine": "mujoco",
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 0.9999996423721313,
+          "position": [
+            -0.6839509010314941,
+            0.14235898852348328,
+            0.590691328048706
+          ],
+          "velocity": [
+            0.4470381438732147,
+            -0.10723600536584854,
+            -0.15500332415103912
+          ],
+          "shoulder_z": 1.066942543031773,
+          "upper_z": -0.9419635035386813,
+          "elbow_angle_rad": 2.7426609462371183,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6538124856948776,
+            "bounds": [
+              [
+                -0.830877352248328,
+                0.5606111082319608,
+                -1.7615742008893036e-05
+              ],
+              [
+                -0.6257322955950956,
+                0.63381754870104,
+                0.0387113102295142
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9581246995925803,
+            "bounds": [
+              [
+                -0.764447691103768,
+                0.3072241130375943,
+                -1.0282621582940847e-05
+              ],
+              [
+                -0.5589393276255435,
+                0.3808612521063494,
+                0.03292409603842142
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3208743371963512,
+          "position": [
+            -0.5405076415203511,
+            0.10794963053334511,
+            0.03583376551527977
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 10,
+        "ball_contact_counts": {
+          "pitch": 34268
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 744.5399261788197
+        },
+        "maximum_ball_penetration_m": 0.001307162740334336,
+        "minimum_pelvis_height_m": 0.7791805301567882,
+        "minimum_pelvis_up": 0.9992911118117328,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 0.34095655381679535,
+        "peak_holder_force_n": 4.199860064273491,
+        "holder_impulse_world_ns": [
+          0.06973794756958784,
+          -0.016728816196638158,
+          1.506179485701189
+        ],
+        "steps": 200,
+        "episode_return": 5.91088318452239,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "dt": 6.25e-05,
+      "engine": "mjbatch",
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 0.9999996423721313,
+          "position": [
+            -0.6839509010314941,
+            0.14235898852348328,
+            0.590691328048706
+          ],
+          "velocity": [
+            0.4470381438732147,
+            -0.10723600536584854,
+            -0.15500332415103912
+          ],
+          "shoulder_z": 1.066942543031773,
+          "upper_z": -0.9419635035386813,
+          "elbow_angle_rad": 2.7426609462371183,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6538124856948776,
+            "bounds": [
+              [
+                -0.830877352248328,
+                0.5606111082319608,
+                -1.7615742008893036e-05
+              ],
+              [
+                -0.6257322955950956,
+                0.63381754870104,
+                0.0387113102295142
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9581246995925803,
+            "bounds": [
+              [
+                -0.764447691103768,
+                0.3072241130375943,
+                -1.0282621582940847e-05
+              ],
+              [
+                -0.5589393276255435,
+                0.3808612521063494,
+                0.03292409603842142
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3208743371963512,
+          "position": [
+            -0.5405076415203511,
+            0.10794963053334511,
+            0.03583376551527977
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 10,
+        "ball_contact_counts": {
+          "pitch": 34268
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 744.5399261788197
+        },
+        "maximum_ball_penetration_m": 0.001307162740334336,
+        "minimum_pelvis_height_m": 0.7791805301567882,
+        "minimum_pelvis_up": 0.9992911118117328,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 0.34095655381679535,
+        "peak_holder_force_n": 4.199860064273491,
+        "holder_impulse_world_ns": [
+          0.06973794756958784,
+          -0.016728816196638158,
+          1.506179485701189
+        ],
+        "steps": 200,
+        "episode_return": 5.91088318452239,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "dt": 3.125e-05,
+      "engine": "mujoco",
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 0.9999996423721313,
+          "position": [
+            -0.6840278506278992,
+            0.1423025131225586,
+            0.5906857252120972
+          ],
+          "velocity": [
+            0.4472300112247467,
+            -0.10710232704877853,
+            -0.15471309423446655
+          ],
+          "shoulder_z": 1.0669396151029025,
+          "upper_z": -0.9419648538843353,
+          "elbow_angle_rad": 2.7426714925317035,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6537812356949021,
+            "bounds": [
+              [
+                -0.8309457903772264,
+                0.5605814508268547,
+                -7.757963674965944e-06
+              ],
+              [
+                -0.6258005148148216,
+                0.6337900727355631,
+                0.03871600524100051
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9580934495926124,
+            "bounds": [
+              [
+                -0.7645426684283871,
+                0.30715527027709955,
+                -3.964421801313893e-06
+              ],
+              [
+                -0.5590346442291856,
+                0.3807958606970457,
+                0.0329277274608248
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.320874337196348,
+          "position": [
+            -0.540523388076573,
+            0.10793606823589641,
+            0.035970484454736704
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 10,
+        "ball_contact_counts": {
+          "pitch": 68957
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 718.3566695190276
+        },
+        "maximum_ball_penetration_m": 0.0012874051409070136,
+        "minimum_pelvis_height_m": 0.7791758287679351,
+        "minimum_pelvis_up": 0.9992916100722994,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 0.34091104567050934,
+        "peak_holder_force_n": 4.198163685477542,
+        "holder_impulse_world_ns": [
+          0.06976787941345002,
+          -0.01670796659626037,
+          1.5062247618009936
+        ],
+        "steps": 200,
+        "episode_return": 5.910800352692604,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "right",
+      "dt": 3.125e-05,
+      "engine": "mjbatch",
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "first_bounce_outside_delivery_zone",
+          "invalid_delivery_stride_order",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 0.9999996423721313,
+          "position": [
+            -0.6840278506278992,
+            0.1423025131225586,
+            0.5906857252120972
+          ],
+          "velocity": [
+            0.4472300112247467,
+            -0.10710232704877853,
+            -0.15471309423446655
+          ],
+          "shoulder_z": 1.0669396151029025,
+          "upper_z": -0.9419648538843353,
+          "elbow_angle_rad": 2.7426714925317035,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.6537812356949021,
+            "bounds": [
+              [
+                -0.8309457903772264,
+                0.5605814508268547,
+                -7.757963674965944e-06
+              ],
+              [
+                -0.6258005148148216,
+                0.6337900727355631,
+                0.03871600524100051
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.9580934495926124,
+            "bounds": [
+              [
+                -0.7645426684283871,
+                0.30715527027709955,
+                -3.964421801313893e-06
+              ],
+              [
+                -0.5590346442291856,
+                0.3807958606970457,
+                0.0329277274608248
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.320874337196348,
+          "position": [
+            -0.540523388076573,
+            0.10793606823589641,
+            0.035970484454736704
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 10,
+        "ball_contact_counts": {
+          "pitch": 68957
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 718.3566695190276
+        },
+        "maximum_ball_penetration_m": 0.0012874051409070136,
+        "minimum_pelvis_height_m": 0.7791758287679351,
+        "minimum_pelvis_up": 0.9992916100722994,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 0.34091104567050934,
+        "peak_holder_force_n": 4.198163685477542,
+        "holder_impulse_world_ns": [
+          0.06976787941345002,
+          -0.01670796659626037,
+          1.5062247618009936
+        ],
+        "steps": 200,
+        "episode_return": 5.910800352692604,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "dt": 6.25e-05,
+      "engine": "mujoco",
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_contact:left_foot6_collision",
+          "ball_contact:left_foot7_collision",
+          "ball_contact:left_linkage_brace_collision",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 0.9999996423721313,
+          "position": [
+            -0.6389970183372498,
+            -0.21520832180976868,
+            0.6092835664749146
+          ],
+          "velocity": [
+            0.414345383644104,
+            -0.21855506300926208,
+            0.0848604068160057
+          ],
+          "shoulder_z": 1.0754011833251838,
+          "upper_z": -0.9390174354303303,
+          "elbow_angle_rad": 2.7340844242070035,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.956749699592581,
+            "bounds": [
+              [
+                -0.7626447519483723,
+                -0.6951568233322309,
+                -1.0205190391648737e-05
+              ],
+              [
+                -0.5571545762746186,
+                -0.6219258228543764,
+                0.03375301894375926
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6475624856948811,
+            "bounds": [
+              [
+                -0.8382368693165518,
+                -0.44043875038804425,
+                -3.8918481540346425e-06
+              ],
+              [
+                -0.632968607377201,
+                -0.3675101706556657,
+                0.037702022375246634
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3506243181228768,
+          "position": [
+            -0.4937174113839824,
+            -0.29183928197249664,
+            0.03591991200413697
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 22,
+        "ball_contact_counts": {
+          "pitch": 33551,
+          "left_foot6_collision": 478,
+          "left_linkage_brace_collision": 217,
+          "left_foot7_collision": 718
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 735.902322691694,
+          "left_foot6_collision": 2.7730220485933734,
+          "left_linkage_brace_collision": 8.448708968089019,
+          "left_foot7_collision": 2.5692470407108177
+        },
+        "maximum_ball_penetration_m": 0.0012929228440632587,
+        "minimum_pelvis_height_m": 0.7791327361418284,
+        "minimum_pelvis_up": 0.9991948370678666,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 0.39751875400543213,
+        "peak_holder_force_n": 3.4708482910366847,
+        "holder_impulse_world_ns": [
+          0.06463789159057454,
+          -0.034094589702863144,
+          1.543598226427615
+        ],
+        "steps": 200,
+        "episode_return": 5.9104829505085945,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "dt": 6.25e-05,
+      "engine": "mjbatch",
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_contact:left_foot6_collision",
+          "ball_contact:left_foot7_collision",
+          "ball_contact:left_linkage_brace_collision",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 0.9999996423721313,
+          "position": [
+            -0.6389970183372498,
+            -0.21520832180976868,
+            0.6092835664749146
+          ],
+          "velocity": [
+            0.414345383644104,
+            -0.21855506300926208,
+            0.0848604068160057
+          ],
+          "shoulder_z": 1.0754011833251838,
+          "upper_z": -0.9390174354303303,
+          "elbow_angle_rad": 2.7340844242070035,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.956749699592581,
+            "bounds": [
+              [
+                -0.7626447519483723,
+                -0.6951568233322309,
+                -1.0205190391648737e-05
+              ],
+              [
+                -0.5571545762746186,
+                -0.6219258228543764,
+                0.03375301894375926
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6475624856948811,
+            "bounds": [
+              [
+                -0.8382368693165518,
+                -0.44043875038804425,
+                -3.8918481540346425e-06
+              ],
+              [
+                -0.632968607377201,
+                -0.3675101706556657,
+                0.037702022375246634
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.3506243181228768,
+          "position": [
+            -0.4937174113839824,
+            -0.29183928197249664,
+            0.03591991200413697
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 22,
+        "ball_contact_counts": {
+          "pitch": 33551,
+          "left_foot6_collision": 478,
+          "left_linkage_brace_collision": 217,
+          "left_foot7_collision": 718
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 735.902322691694,
+          "left_foot6_collision": 2.7730220485933734,
+          "left_linkage_brace_collision": 8.448708968089019,
+          "left_foot7_collision": 2.5692470407108177
+        },
+        "maximum_ball_penetration_m": 0.0012929228440632587,
+        "minimum_pelvis_height_m": 0.7791327361418284,
+        "minimum_pelvis_up": 0.9991948370678666,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 0.39751875400543213,
+        "peak_holder_force_n": 3.4708482910366847,
+        "holder_impulse_world_ns": [
+          0.06463789159057454,
+          -0.034094589702863144,
+          1.543598226427615
+        ],
+        "steps": 200,
+        "episode_return": 5.9104829505085945,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "dt": 3.125e-05,
+      "engine": "mujoco",
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_contact:left_foot6_collision",
+          "ball_contact:left_foot7_collision",
+          "ball_contact:left_linkage_brace_collision",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 0.9999996423721313,
+          "position": [
+            -0.6390186548233032,
+            -0.2152288556098938,
+            0.6092948913574219
+          ],
+          "velocity": [
+            0.41442635655403137,
+            -0.21855613589286804,
+            0.08488412201404572
+          ],
+          "shoulder_z": 1.0754058552751151,
+          "upper_z": -0.9390179441382626,
+          "elbow_angle_rad": 2.7340736070703735,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.9567496995926108,
+            "bounds": [
+              [
+                -0.7627253887844897,
+                -0.695193286935642,
+                -6.429673573861254e-06
+              ],
+              [
+                -0.5572356410436882,
+                -0.6219611351520581,
+                0.03376010022375908
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6475624856948945,
+            "bounds": [
+              [
+                -0.8381968293470119,
+                -0.44043845291385164,
+                -8.492581359503641e-06
+              ],
+              [
+                -0.6329304107938583,
+                -0.3675124852062832,
+                0.03772128392663075
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.350624318122839,
+          "position": [
+            -0.4937107991985912,
+            -0.29186021460220535,
+            0.035993282257985974
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 19,
+        "ball_contact_counts": {
+          "pitch": 66921,
+          "left_foot6_collision": 936,
+          "left_linkage_brace_collision": 393,
+          "left_foot7_collision": 1401
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 724.4226304474115,
+          "left_foot6_collision": 2.7720762747843817,
+          "left_linkage_brace_collision": 7.9919386564523895,
+          "left_foot7_collision": 3.313085963777879
+        },
+        "maximum_ball_penetration_m": 0.0012988259596680082,
+        "minimum_pelvis_height_m": 0.779129928379759,
+        "minimum_pelvis_up": 0.9991950385049089,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 0.3975370526313782,
+        "peak_holder_force_n": 3.4702659993292544,
+        "holder_impulse_world_ns": [
+          0.06465050426404303,
+          -0.034094754236319115,
+          1.543601919508578
+        ],
+        "steps": 200,
+        "episode_return": 5.9104461297392845,
+        "exact_endpoint_replay": true
+      }
+    },
+    {
+      "hand": "left",
+      "dt": 3.125e-05,
+      "engine": "mjbatch",
+      "outcome": {
+        "passed": false,
+        "failures": [
+          "ball_contact:left_foot6_collision",
+          "ball_contact:left_foot7_collision",
+          "ball_contact:left_linkage_brace_collision",
+          "first_bounce_outside_delivery_zone",
+          "no_upward_shoulder_level_crossing",
+          "not_exactly_one_bounce_before_target",
+          "release_forward_speed_not_above_6_m_s",
+          "release_not_overarm",
+          "target_corridor_missed"
+        ],
+        "release": {
+          "time": 0.9999996423721313,
+          "position": [
+            -0.6390186548233032,
+            -0.2152288556098938,
+            0.6092948913574219
+          ],
+          "velocity": [
+            0.41442635655403137,
+            -0.21855613589286804,
+            0.08488412201404572
+          ],
+          "shoulder_z": 1.0754058552751151,
+          "upper_z": -0.9390179441382626,
+          "elbow_angle_rad": 2.7340736070703735,
+          "maximum_elbow_extension_rad": 0.0,
+          "horizontal_time": null,
+          "front_landing": {
+            "time": 0.9567496995926108,
+            "bounds": [
+              [
+                -0.7627253887844897,
+                -0.695193286935642,
+                -6.429673573861254e-06
+              ],
+              [
+                -0.5572356410436882,
+                -0.6219611351520581,
+                0.03376010022375908
+              ]
+            ]
+          },
+          "back_landing": {
+            "time": 0.6475624856948945,
+            "bounds": [
+              [
+                -0.8381968293470119,
+                -0.44043845291385164,
+                -8.492581359503641e-06
+              ],
+              [
+                -0.6329304107938583,
+                -0.3675124852062832,
+                0.03772128392663075
+              ]
+            ]
+          }
+        },
+        "first_bounce": {
+          "time": 1.350624318122839,
+          "position": [
+            -0.4937107991985912,
+            -0.29186021460220535,
+            0.035993282257985974
+          ]
+        },
+        "target_crossing": null,
+        "bounces_before_target": 19,
+        "ball_contact_counts": {
+          "pitch": 66921,
+          "left_foot6_collision": 936,
+          "left_linkage_brace_collision": 393,
+          "left_foot7_collision": 1401
+        },
+        "ball_contact_peak_force_n": {
+          "pitch": 724.4226304474115,
+          "left_foot6_collision": 2.7720762747843817,
+          "left_linkage_brace_collision": 7.9919386564523895,
+          "left_foot7_collision": 3.313085963777879
+        },
+        "maximum_ball_penetration_m": 0.0012988259596680082,
+        "minimum_pelvis_height_m": 0.779129928379759,
+        "minimum_pelvis_up": 0.9991950385049089,
+        "maximum_joint_limit_excess_rad": 0.0,
+        "maximum_actuator_limit_fraction": 0.3975370526313782,
+        "peak_holder_force_n": 3.4702659993292544,
+        "holder_impulse_world_ns": [
+          0.06465050426404303,
+          -0.034094754236319115,
+          1.543601919508578
+        ],
+        "steps": 200,
+        "episode_return": 5.9104461297392845,
+        "exact_endpoint_replay": true
+      }
+    }
+  ],
+  "physical_calibration_validated": false,
+  "new_training": false,
+  "policy_promoted": false
+}

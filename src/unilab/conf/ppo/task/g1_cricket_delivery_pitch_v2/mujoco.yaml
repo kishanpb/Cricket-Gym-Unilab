@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_delivery_v1/mujoco
+  - _self_
+
+training:
+  task_name: G1CricketDeliveryPitchV2
+env:
+  sim_dt: 0.0000625
