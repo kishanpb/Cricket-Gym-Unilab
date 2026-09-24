@@ -1,5 +1,6 @@
 """Aerial reference diagnostics distinguish ballistic motion from required support."""
 
+import mujoco
 import numpy as np
 import pytest
 from audit_g1_cricket_running_flight import aerial_momentum_residual, aerial_residual
@@ -81,3 +82,16 @@ def test_angular_momentum_conservation_and_external_torque():
         for row in aerial_momentum_residual(times, momentum, airborne)
     )
     assert aerial_momentum_residual(times + 1.2, momentum, np.ones(15, bool)) == []
+
+
+def test_native_whole_system_momentum_is_about_com_in_world_axes():
+    model = mujoco.MjModel.from_xml_string(
+        '<mujoco><worldbody><body><freejoint/><geom type="sphere" size="0.1" mass="2"/>'
+        "</body></worldbody></mujoco>"
+    )
+    data = mujoco.MjData(model)
+    data.qpos[:3] = [10, 20, 30]
+    data.qvel[:] = [1, 3, 6, 0, 2, 0]
+    mujoco.mj_forward(model, data)
+    mujoco.mj_subtreeVel(model, data)
+    np.testing.assert_allclose(data.subtree_angmom[0], [0, 0.4 * 2 * 0.1**2 * 2, 0], atol=1e-12)

@@ -2,6 +2,35 @@
 
 ## Ballistic COM Repair Comparison
 
+Latest complete pair: [exact-COM results](../g1_cricket_results/running_ballistic_com_v3/evaluation.json),
+[flight/momentum audit](../g1_cricket_results/running_ballistic_com_v3/reference_flight_audit.json),
+and [fixed-frame review](../g1_cricket_results/running_ballistic_com_v3/running_motion_review.png).
+Source `f8c5af17` enforces COM to machine precision and reduces all sampled aerial
+force components below 1.2e-10 N. This is a reference-consistency repair, not an
+achieved physical flight. Both 136-frame references have no audited intersections
+and arm error below 5.49 mm, but foot error reaches 2.043 mm and six IK frames
+per hand hit 120 evaluations. Both unchanged physical PD episodes fall at 0.68 s,
+before release, with joint excursions and unintended contact. No new PPO was trained.
+
+The momentum extension (`ed001fe9`) uses
+[MuJoCo angular momentum about subtree COM](https://github.com/google-deepmind/mujoco/blob/main/include/mujoco/mjdata.h)
+for the entire robot and ball. Coarse airborne pitch-torque residuals reach
+93.30 Nm; these are inferred from centered pose velocities and momentum
+differences, not actual/applied loads. Their five-pose velocity windows can
+include stance/flight boundaries, so temporal refinement is required. Next:
+check angular-momentum consistency at finer time spacing and repair whole-body
+orientation/counter-motion before more PPO; do not add root torque, weaken the
+physical gate or treat exact COM alone as a valid running teacher.
+
+All 1,016 generated video frames across the three candidates decoded nonblank
+and each fixed-frame review was inspected. Historical v1/v2 duplicate videos
+and tracking exports were pruned after verification; their complete reports,
+pose arrays, flight audits and reviews remain. v3 retains both target videos
+and both complete failed PD videos. Existing learned batting highlights are unchanged.
+All 36 focused running/reference/flight/lane/delivery tests pass, including native
+COM-frame angular-momentum semantics, analytic ballistic/torque cases, original
+robot invariants and exact motor-only replay boundaries. Ruff checks pass.
+
 Full-COM weighted IK (`dc1ad3e7`, `running_ballistic_com_v2`) brings each aerial
 force component below 0.09 N, with no unexpected intersections, arm error below
 5.49 mm and foot error 2.043 mm. Five/right and four/left IK frames still hit the
