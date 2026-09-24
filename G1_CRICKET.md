@@ -7,6 +7,10 @@ fixture, not a dexterous grasp. A 0.156 kg, 36 mm-radius free ball, pitch,
 creases, wickets and visual practice-net background are added at construction.
 The source robot XML and existing demonstrations are unchanged.
 
+**Development limitation:** the current bat/ball contact model permits up to
+about 28 mm penetration in the retained trials. Even apparent rebounds must not
+be presented as physically validated cricket; see the contact-resolution audit below.
+
 ![Untrained G1 with the rigid wrist fixture in the practice scene](g1_cricket_results/initial_stance.png)
 
 The current geometry is a **practice drill**, not a regulation-match pitch:
@@ -122,6 +126,49 @@ uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_residual_v3/mujoco 
 uv run python scripts/evaluate_g1_cricket_residual_v3.py
 uv run python scripts/render_g1_cricket_residual.py \
   --run-dir g1_cricket_results/residual_v3/right
+```
+
+## Contact Resolution: Physical Model Correction Required
+
+The [predeclared audit](docs/g1_cricket_contact_resolution.md) retains
+[all 288 native closed-loop trials](g1_cricket_results/residual_v3/contact_resolution.json):
+the frozen v3 policy and zero residual, both hands, all three lanes and eight
+development seeds, at 2, 1 and 0.5 ms physics with 20 ms control unchanged.
+Every native endpoint and named sensor matches independent serial replay exactly;
+all original 2 ms contact/return/duration fields reproduce the retained report.
+
+Between 1 and 0.5 ms, **85/96 rows** meet the declared numerical tolerances,
+including 56 non-contact rows. Only **29/40 contact-bearing rows** pass:
+nine differ in penetration and three in force-norm integral/separation velocity,
+with one overlapping failure. This is not a claim of impact convergence.
+At 0.5 ms, right PPO still contacts for 126-163 ms, penetrates up to 26.93 mm,
+and exits at 0.425-0.702 m/s; the left frozen baseline reaches 27.71 mm penetration.
+Smaller timesteps do not repair the soft physical model.
+
+The report adds signed world impulse on the ball as well as the integral of
+force norm (distinct quantities). A free-body test checks impulse against
+momentum change for both geom orderings and two directions. These values are
+uncalibrated simulation evidence, not hardware tactile measurements.
+
+An [isolated fixed-blade probe](g1_cricket_results/residual_v3/isolated_impact.json)
+removes robot motion and gravity: a 0.156 kg, 36 mm sphere hits at 2.5 m/s.
+At the finest 0.0625 ms step, the current 20 ms contact time constant permits
+18.35 mm penetration and approximately 80 ms contact. A 4 ms time-constant
+candidate reduces those to 3.64 mm and 16 ms, respectively. All 12 rows across
+six timesteps and both settings are retained; extra fine steps were added after
+the first four exposed peak-force sensitivity. The candidate is **not applied
+to the native task**, is not fitted to cricket materials, and is not a learned
+policy improvement. Its coarse 2 ms apparent penetration of just 1 mm is a
+resolution artifact, not a better result.
+
+Next: introduce a versioned, explicit bat/ball contact response, verify both-hand
+native stability and penetration at adequate resolution, then retrain and repeat
+the unchanged full shot gates. Do not train further against the current excessive
+compliance or advertise the old numeric baseline passes as realistic impacts.
+
+```sh
+uv run python scripts/audit_g1_cricket_contact_resolution.py
+uv run python scripts/probe_g1_cricket_impact.py
 ```
 
 ## External Locomotion Prior: Native Transfer

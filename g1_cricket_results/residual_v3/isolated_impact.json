@@ -1,0 +1,178 @@
+{
+  "scope": "isolated_fixed_blade_normal_impact_not_robot_policy_evidence",
+  "setup": "0.156 kg, 36 mm sphere at -2.5 m/s against fixed blade; no gravity or tangential motion; one second",
+  "changed_axis": "contact time constant only; six-step numerical sensitivity per value; two finest steps added after initial four-step peak sensitivity",
+  "candidate_status": "uncalibrated_design_probe_not_applied_to_native_environment",
+  "mujoco_version": "3.11.0",
+  "source_sha256": "2028ddf5b8a08a9255344cb0e0479349c94ec7abd891f0af5768ea062800713e",
+  "rows": [
+    {
+      "sim_dt": 0.002,
+      "solref_time_constant_s": 0.02,
+      "damping_ratio": 1,
+      "first_contact_s": 0.018000000000000002,
+      "first_separation": {
+        "seconds": 0.096,
+        "vx_m_s": 0.2948191069589667
+      },
+      "maximum_penetration_m": 0.01574041087292488,
+      "peak_normal_force_n": 39.39000000000002,
+      "normal_impulse_ns": 0.4359917806855988,
+      "xml_sha256": "e1948834bf50d5dc61aa7c8bf6e3050020e736df88c38df4ca7bd999231fbf89"
+    },
+    {
+      "sim_dt": 0.001,
+      "solref_time_constant_s": 0.02,
+      "damping_ratio": 1,
+      "first_contact_s": 0.017,
+      "first_separation": {
+        "seconds": 0.096,
+        "vx_m_s": 0.3235806574787962
+      },
+      "maximum_penetration_m": 0.017441107075323765,
+      "peak_normal_force_n": 39.38999999999994,
+      "normal_impulse_ns": 0.44047858256669215,
+      "xml_sha256": "6c1fe70e8fe00275c0a300ced793b322fff9a25f918dd15c6e5928ea185158c6"
+    },
+    {
+      "sim_dt": 0.0005,
+      "solref_time_constant_s": 0.02,
+      "damping_ratio": 1,
+      "first_contact_s": 0.0165,
+      "first_separation": {
+        "seconds": 0.0955,
+        "vx_m_s": 0.33781279955765503
+      },
+      "maximum_penetration_m": 0.018286836734308844,
+      "peak_normal_force_n": 39.38999999999994,
+      "normal_impulse_ns": 0.44269879673099427,
+      "xml_sha256": "3536a97a316b083c70d893ef9b058d932c852dbc482ea539536d63d4e27062e9"
+    },
+    {
+      "sim_dt": 0.00025,
+      "solref_time_constant_s": 0.02,
+      "damping_ratio": 1,
+      "first_contact_s": 0.016,
+      "first_separation": {
+        "seconds": 0.09575,
+        "vx_m_s": 0.33668652707157215
+      },
+      "maximum_penetration_m": 0.01826587368376051,
+      "peak_normal_force_n": 38.441683558212596,
+      "normal_impulse_ns": 0.4425230982231651,
+      "xml_sha256": "b75bf54d12d77a90dd1b3c5cb0036e88958769bc3b92920435ea7a5f060208c0"
+    },
+    {
+      "sim_dt": 0.000125,
+      "solref_time_constant_s": 0.02,
+      "damping_ratio": 1,
+      "first_contact_s": 0.01575,
+      "first_separation": {
+        "seconds": 0.095625,
+        "vx_m_s": 0.33608633326496096
+      },
+      "maximum_penetration_m": 0.01825242313048727,
+      "peak_normal_force_n": 37.97802408009374,
+      "normal_impulse_ns": 0.44242946798933386,
+      "xml_sha256": "53ab7aec0f633c77d9de36cb14139e91ed9d8240bfb1cd087c2d678b56f356cf"
+    },
+    {
+      "sim_dt": 6.25e-05,
+      "solref_time_constant_s": 0.02,
+      "damping_ratio": 1,
+      "first_contact_s": 0.0156875,
+      "first_separation": {
+        "seconds": 0.095625,
+        "vx_m_s": 0.33779209915195474
+      },
+      "maximum_penetration_m": 0.018354700806696565,
+      "peak_normal_force_n": 38.03940624791945,
+      "normal_impulse_ns": 0.4426955674677052,
+      "xml_sha256": "8493f9ceda5273b3f04f97576162f3cc5443f068060c55cb17c98e7c7baa9b2e"
+    },
+    {
+      "sim_dt": 0.002,
+      "solref_time_constant_s": 0.004,
+      "damping_ratio": 1,
+      "first_contact_s": 0.018000000000000002,
+      "first_separation": {
+        "seconds": 0.026000000000000002,
+        "vx_m_s": 0.12500000000000505
+      },
+      "maximum_penetration_m": 0.0010000000000000217,
+      "peak_normal_force_n": 204.7500000000004,
+      "normal_impulse_ns": 0.4095000000000008,
+      "xml_sha256": "673247fe45845283165e1e7e8441bd8f43d5f273f09ce67c3d8c5b02a7ce648e"
+    },
+    {
+      "sim_dt": 0.001,
+      "solref_time_constant_s": 0.004,
+      "damping_ratio": 1,
+      "first_contact_s": 0.017,
+      "first_separation": {
+        "seconds": 0.031,
+        "vx_m_s": 0.26101559400558766
+      },
+      "maximum_penetration_m": 0.0027077636718750298,
+      "peak_normal_force_n": 204.74999999999935,
+      "normal_impulse_ns": 0.43071843266487164,
+      "xml_sha256": "9a222cfba747d8b63e7580013e3d59c6a3e4ac1af1dd95966097911eb12491ae"
+    },
+    {
+      "sim_dt": 0.0005,
+      "solref_time_constant_s": 0.004,
+      "damping_ratio": 1,
+      "first_contact_s": 0.0165,
+      "first_separation": {
+        "seconds": 0.0315,
+        "vx_m_s": 0.33686522556377113
+      },
+      "maximum_penetration_m": 0.003573560485921945,
+      "peak_normal_force_n": 204.74999999999935,
+      "normal_impulse_ns": 0.4425509751879483,
+      "xml_sha256": "72be3ce58377dcfd836cfadd05de1f7b7321dac29bf3dc0b8aedb4e1153d8dbe"
+    },
+    {
+      "sim_dt": 0.00025,
+      "solref_time_constant_s": 0.004,
+      "damping_ratio": 1,
+      "first_contact_s": 0.016,
+      "first_separation": {
+        "seconds": 0.03175,
+        "vx_m_s": 0.3301234189833579
+      },
+      "maximum_penetration_m": 0.003551362051993044,
+      "peak_normal_force_n": 191.00821328625585,
+      "normal_impulse_ns": 0.4414992533614039,
+      "xml_sha256": "ef49c01d1833f575a21f1342df7305d19ed726d199693282d1f23b850a6652a4"
+    },
+    {
+      "sim_dt": 0.000125,
+      "solref_time_constant_s": 0.004,
+      "damping_ratio": 1,
+      "first_contact_s": 0.01575,
+      "first_separation": {
+        "seconds": 0.031625,
+        "vx_m_s": 0.32714052463690807
+      },
+      "maximum_penetration_m": 0.0035380639801710217,
+      "peak_normal_force_n": 185.36441616733717,
+      "normal_impulse_ns": 0.4410339218433579,
+      "xml_sha256": "fc451cf4e23de4f0340cd67703bd952ce8dc2d04b98597dc560e4455bcbeebce"
+    },
+    {
+      "sim_dt": 6.25e-05,
+      "solref_time_constant_s": 0.004,
+      "damping_ratio": 1,
+      "first_contact_s": 0.0156875,
+      "first_separation": {
+        "seconds": 0.031625,
+        "vx_m_s": 0.33567573732241507
+      },
+      "maximum_penetration_m": 0.0036402552643849118,
+      "peak_normal_force_n": 185.36441616733686,
+      "normal_impulse_ns": 0.4423654150222969,
+      "xml_sha256": "032dd34f52abdb9bc7d11fdce6879ff734f3cd2110e5b035ad1c5561ddf5ec2a"
+    }
+  ]
+}
