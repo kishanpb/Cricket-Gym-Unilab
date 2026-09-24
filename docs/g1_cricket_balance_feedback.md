@@ -148,3 +148,46 @@ extension of the failed actors. All 29 joints remain policy-controlled around
 the same physical reference controller. Retain complete final evaluations and
 compare against the unchanged reference-only baseline. Completion alone cannot
 qualify the bat path, ball contact, running bowling or a showcase video.
+
+## Completed Small-Residual Pilot
+
+Both fresh runs complete 512 updates / 196,608 transitions. Both final actors
+complete the three-second dry swing and recovery without unintended loaded
+contacts. Their unchanged reference-only traces exactly match the preceding
+balanced pilot, not just its aggregate returns.
+
+| Hand / control | Return | Peak bat error | RMS bat error | Hard-limit excess |
+| --- | --- | --- | --- | --- |
+| Right reference | 17.0956 | 0.15650 m | 0.07376 m | 0 rad |
+| Right PPO | 17.3800 | 0.14836 m | 0.06624 m | 0.00389 rad |
+| Left reference | 17.0986 | 0.15641 m | 0.07370 m | 0 rad |
+| Left PPO | 17.2177 | 0.15063 m | 0.06518 m | 0.00553 rad |
+
+This is a completion improvement over the 0.25-rad actors, not a qualified
+batting result: both still fail the unchanged 0.08 m bat-path gate and
+0.0001 rad hard-limit tolerance. Both reach motor saturation; grip gaps stay
+below 1.136 mm and substep pelvis height stays above 0.766 m. Learned right/left
+fixture-force peaks are 71.11 / 69.31 N and torque peaks 7.47 / 7.14 Nm.
+These are uncalibrated simulation loads. The ball remains out of play; there
+is no learned interception, useful shot or running-bowling evidence here.
+
+The [complete two-hand video](../g1_cricket_results/bimanual_balanced_small_residual_v1/two_hand_ppo_diagnostic.mp4)
+shows right then left, each full final-policy episode at 0.5x, without cuts.
+The [contact sheet](../g1_cricket_results/bimanual_balanced_small_residual_v1/ppo_diagnostic_contact_sheet.png)
+uses fixed 0.02, 1.14, 1.80 and 3.00 s frames from each hand. Individual
+[right](../g1_cricket_results/bimanual_balanced_small_residual_v1/ppo_right/ppo_diagnostic.mp4)
+and [left](../g1_cricket_results/bimanual_balanced_small_residual_v1/ppo_left/ppo_diagnostic.mp4)
+episodes and their complete
+[right evaluation](../g1_cricket_results/bimanual_balanced_small_residual_v1/ppo_right/evaluation.json)
+and [left evaluation](../g1_cricket_results/bimanual_balanced_small_residual_v1/ppo_left/evaluation.json)
+are retained alongside final checkpoints, configs and 49 finite scalar series
+per run. All 26 evaluation input hashes match; all intervals have exact
+independent native-state and sensor replay agreement. These deterministic
+development episodes are not held-out robustness or full training-time safety
+evidence. Both videos decode completely with 175 nonblank frames each; the
+combined diagnostic has all 350 frames, including terminal labels.
+
+Next: resolve the remaining swing-time joint-stop excursions and bat-path lag,
+then introduce measured ball contact. Running bowling still requires a
+separate whole-body reference, legal plant and native physical release; this
+dry-swing pilot cannot substitute for it. No extra training budget is implied.

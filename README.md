@@ -36,8 +36,14 @@ controlling all 29 joints through native CPU mjbatch. It follows G1-scaled
 guard/backlift/downswing targets without a frozen walking policy or step-time
 pose overwrites. This remains a dry-swing development task: balance, actual
 ball hitting and running bowling are not yet showcase-qualified.
-The latest grounded-support pilot retains both failed full-episode videos and
-substep force, grip, joint-limit and collision audits in that report.
+The [balance-feedback study](docs/g1_cricket_balance_feedback.md) now completes
+both three-second reference-controlled swings without falls or unintended
+contacts. Complete controller and PPO diagnostic videos, including failures,
+retain substep force, grip, joint-limit and bat-path measurements; they are not
+advertising clips or evidence of learned ball hitting.
+The [latest two-hand PPO diagnostic](g1_cricket_results/bimanual_balanced_small_residual_v1/two_hand_ppo_diagnostic.mp4)
+completes both swings, but small joint-stop excursions and bat-path error still
+fail the physical/accuracy gates; the ball remains out of play.
 
 Earlier one-arm contact experiments and failed bowling trials remain in the
 research log, including [force/touch diagnostic video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)

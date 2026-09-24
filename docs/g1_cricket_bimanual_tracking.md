@@ -2,7 +2,9 @@
 
 The [balance-feedback follow-up](g1_cricket_balance_feedback.md) now completes
 both reference-only three-second motions without falling. It still misses the
-bat-tracking accuracy gate; learned cricket and running bowling are not done.
+bat-tracking accuracy gate. The smaller-residual PPO actors also complete both
+swings and improve dry tracking returns, but retain small joint-stop excursions;
+learned ball hitting and running bowling are not done.
 
 The earlier cricket demonstrations are the visual target: two hands on the bat,
 guard, backlift, downswing and follow-through; running approach, gather, legal

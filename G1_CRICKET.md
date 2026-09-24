@@ -7,7 +7,9 @@ the isolated-arm direction for the requested G1 showcase. It retargets the
 earlier batting choreography to G1's original proportions and controls all 29
 joints, with separate right/left PPO actors on native mjbatch. Two mechanical
 grips retain the bat; neither finger grasping nor completed batting is claimed.
-Dry-swing balance is still under development. Running bowling must similarly
+The [balance-feedback revision](docs/g1_cricket_balance_feedback.md) completes
+both reference-only swings, but bat-path accuracy and learned control remain
+under development. Running bowling must similarly
 learn the approach, gather, legal plant, release and recovery rather than rely
 on the slow walking prior used in the historical experiments below.
 
