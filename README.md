@@ -52,8 +52,11 @@ or a trained bowling demonstration.
 
 The [experimental bowling task](docs/g1_cricket_bowling_v1.md) now exposes
 arm/release controls and validated holder-force/touch telemetry on both CPU
-executors. All 32 untrained carry/drop checks complete; learning and legal
-delivery evaluation remain unfinished.
+executors. All 32 untrained carry/drop checks complete. The subsequent
+[both-hand PPO delivery pilot](G1_CRICKET.md#both-hand-delivery-learning-pilot)
+trains separate actors for 24,576 transitions each, but all 32 evaluated cases
+retain the ball: zero qualified deliveries. Full results and failed checkpoints
+are retained; this is not a learned-bowling showcase.
 
 ---
 

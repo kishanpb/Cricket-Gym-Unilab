@@ -17,6 +17,7 @@ __unilab_registry_modules__ = (
     "unilab.tasks.manipulation.g1_cricket",
     "unilab.tasks.manipulation.g1_cricket.compliance_v2",
     "unilab.tasks.manipulation.g1_cricket.bowling",
+    "unilab.tasks.manipulation.g1_cricket.delivery",
     "unilab.tasks.motion_tracking.g1",
     "unilab.tasks.motion_tracking.x2",
 )

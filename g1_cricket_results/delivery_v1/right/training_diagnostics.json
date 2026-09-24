@@ -1,0 +1,105 @@
+{
+  "scope": "native iteration-indexed scalars; redundant wall-time-indexed /time series omitted; no reconstructed KL or clip-fraction estimates",
+  "kl_series_available": false,
+  "clip_fraction_series_available": false,
+  "scalar_tags": {
+    "Loss/entropy": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -2.5130865573883057,
+      "maximum": -1.5322273969650269,
+      "final": -2.5088753700256348
+    },
+    "Loss/learning_rate": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 1.975308623514138e-05,
+      "maximum": 0.0003375000087544322,
+      "final": 2.9629629352712072e-05
+    },
+    "Loss/surrogate": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -0.05314735323190689,
+      "maximum": -0.0073279691860079765,
+      "final": -0.021977288648486137
+    },
+    "Loss/value": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 6.283254333538935e-05,
+      "maximum": 0.04946953430771828,
+      "final": 0.0001705579343251884
+    },
+    "Perf/collection_time": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.8639590740203857,
+      "maximum": 1.0938301086425781,
+      "final": 0.9250321388244629
+    },
+    "Perf/learning_time": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.010013818740844727,
+      "maximum": 0.026411056518554688,
+      "final": 0.010352849960327148
+    },
+    "Perf/total_fps": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 86.0,
+      "maximum": 109.0,
+      "final": 102.0
+    },
+    "Policy/mean_std": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.17747868597507477,
+      "maximum": 0.19959639012813568,
+      "final": 0.17775118350982666
+    },
+    "Train/mean_episode_length": {
+      "count": 248,
+      "all_finite": true,
+      "minimum": 200.0,
+      "maximum": 200.0,
+      "final": 200.0
+    },
+    "Train/mean_reward": {
+      "count": 248,
+      "all_finite": true,
+      "minimum": 5.825284004211426,
+      "maximum": 5.8545403480529785,
+      "final": 5.8545403480529785
+    },
+    "reward/action_rate": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -0.006966617424041033,
+      "maximum": -0.004365775268524885,
+      "final": -0.005069517996162176
+    },
+    "reward/bowling": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.3051522970199585,
+      "maximum": 0.5138447880744934,
+      "final": 0.4997953474521637
+    },
+    "reward/failure": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "reward/upright": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.9952521324157715,
+      "maximum": 0.9997562766075134,
+      "final": 0.9969106316566467
+    }
+  }
+}

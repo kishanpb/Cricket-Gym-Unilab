@@ -473,7 +473,7 @@ transactional randomized reset alignment, and validated holder force plus
 selected-hand geometric touch. Its complete 32-row carry/drop smoke finishes
 four seconds in both hands, both executors and both tested timesteps, with
 16 exact paired executor outcome/telemetry comparisons. It is untrained;
-full stability/contact/crease/delivery evaluation still needs implementation.
+the subsequent delivery pilot below adds an independent full-episode gate.
 Weld-site torque failed physical accounting and is deliberately omitted.
 
 Validation: 163 focused UniLab tests pass across release, existing backend/env
@@ -482,6 +482,58 @@ infer critic observations from policy observations. The companion native recorde
 and Batch tests pass 47 cases. Both G1 reset poses were rendered and inspected;
 the ball holder is an abstract constraint beside the fixed rubber hand, not an
 articulated gripper. This is not full repository CI or a long-horizon skill test.
+
+## Both-Hand Delivery Learning Pilot
+
+The [frozen delivery plan](docs/g1_cricket_delivery_v1.md) adds a separate
+`g1_cricket_delivery_v1` scene with both wicket sets 20.12 m apart, correctly
+edged crease paint and right/left starting offsets beside the bowler wicket.
+The original carry/drop evidence is unchanged. Each hand trains its own fresh
+122-input/eight-action PPO actor for 256 updates / 24,576 transitions on CPU
+native mjbatch. The frozen Unitree locomotion prior and provisional reward are
+unchanged; this is learned arm/release control, not retrained whole-body gait.
+
+The [complete evaluation](g1_cricket_results/delivery_v1/evaluation.json) retains
+all 32 cases: both hands, zero-control/final-PPO, seeds 6301/6302, .25/.125 ms
+physics and both executors. Every case completes four seconds, all 16 executor
+outcome pairs match exactly, and independent serial replay matches state and
+every named sensor at every control boundary. **Neither PPO actor releases the
+ball: zero of four PPO comparison contexts qualifies.** All four baseline
+contexts also fail. No checkpoint, seed or successful frame is selected.
+
+| Controller | Right mean return | Left mean return | Qualified contexts |
+| --- | ---: | ---: | ---: |
+| Zero arm / hold | 5.926270 | 5.927814 | 0/4 |
+| Separate final PPO actors | 5.944364 | 5.889944 | 0/4 |
+
+Means include both seeds and timesteps, counting each exactly matched executor
+pair once. The tiny right-hand reward gain is not bowling progress. Minimum
+pelvis height/up across all rows is .777264 m/.995679; peak simulated holder
+force is 20.155614 N. There are no ball contacts or penetration, and no sampled
+joint/actuator-limit exceedance. All eight comparisons pass the explicitly
+limited timestep checks in the plan; this is not convergence of an actual
+release, flight, impact, delivery stride or elbow-extension trajectory.
+
+The independent gate measures all foot collision geometry, genuine liftoff
+before loaded landing, the latest back/front landing order, pre-release elbow
+extension, all ball/body contacts and complete post-release flight. Synthetic
+negatives reject planted-force chatter, extend-then-reflex throws, foot faults,
+missing release and post-release falls. It is an engineering diagnostic, not
+ICC certification or hardware safety evidence.
+
+[Preflight](g1_cricket_results/delivery_v1/preflight.json) pins 92 local inputs,
+104 RL runtime source files, package versions, prior assets and native executor.
+Both final checkpoints, run summaries and all iteration scalars are retained
+under `g1_cricket_results/delivery_v1/{right,left}`; redundant intermediate
+checkpoints, events, external-checkout log snapshots and temporary QA images
+were removed. All training scalars and actor parameters are finite. Forty-nine
+focused tests pass (13 slow tests deselected, one existing RSL-RL warning).
+
+This closes the fixed-budget from-scratch pilot, not the humanoid goal. Next,
+establish a physically valid overarm demonstration and test imitation
+initialization before more PPO; scripted demonstrations must remain labeled as
+such, and every learned candidate must pass the same complete delivery gate.
+No new showcase video or policy promotion follows from this failed pilot.
 
 The completed batting evaluation/video remain frozen at source revision
 `7f936c78b9e0d882087be6deedadba4525bd7224`; their hashes do not imply that these
