@@ -71,9 +71,10 @@ first bounce falls short. This is development evidence, not a learned video.
 The [signed elbow and reward audit](G1_CRICKET.md#signed-elbow-and-release-reward)
 closes an angle-folding loophole and adds an opt-in reward correction without
 reclassifying those failed deliveries as successes.
-The [32-trial coordinated shoulder search](G1_CRICKET.md#coordinated-shoulder-search)
-also finds no qualified delivery; all trials and failures are retained, with no
-new learned-policy or showcase claim.
+The [32-trial shoulder search](G1_CRICKET.md#coordinated-shoulder-search) and
+[paired launch/braking controller tests](G1_CRICKET.md#positive-arc-and-controller-damping)
+also find no qualified delivery. Complete failures remain available; no new
+learned-bowling showcase is claimed.
 
 ---
 

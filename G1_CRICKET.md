@@ -788,6 +788,60 @@ and tied selection. The failed negative-pitch control family is not a useful
 bowling teacher; alternative swing geometry and safe braking need testing before
 BC/PPO and both-hand showcase validation.
 
+### Positive Arc and Controller Damping
+
+Two predeclared six-case comparisons test a positive shoulder-pitch launch,
+braking and recovery with the same fixed 2.28 s release. These are scripted
+left-hand development diagnostics, **not learned policies**. The
+[original-controller plan](docs/g1_cricket_positive_arc_v1.md) and
+[one-axis damping plan](docs/g1_cricket_shoulder_damping_v1.md) retain every
+case in their [baseline](g1_cricket_results/positive_arc_v1/evaluation.json)
+and [lower-damping](g1_cricket_results/shoulder_damping_v1/evaluation.json)
+results, including incomplete episodes.
+
+The active compiled cricket arm controller uses kp 40 and kd 10, not the raw
+robot XML gains: the locomotion-prior scene builder replaces those gains.
+The new, separately named owner changes only the selected shoulder-pitch kd
+from 10 to 2. Its kp 40, torque cap of +/-25 Nm, original joint limits, all
+other motors, holder, collision geometry and delivery gates stay unchanged.
+This is local controller retuning, not unchanged Unitree closed-loop behavior
+or a hardware-safe calibration.
+
+| Drive/brake control ticks | Forward release speed, kd 10 (m/s) | Forward release speed, kd 2 (m/s) | Completed ticks, kd 2 | kd 2 physical failure |
+| --- | ---: | ---: | ---: | --- |
+| 94/112 | 0.711 | -0.209 | 133/200 | Leg limit, low pelvis, self-contact |
+| 94/114 | 1.008 | 1.360 | 133/200 | Leg limit, low pelvis, self-contact |
+| 98/112 | 0.751 | 0.229 | 200/200 | Ball/hand contact |
+| 98/114 | 0.861 | 1.543 | 153/200 | Leg limit, low pelvis, self-contact |
+| 102/112 | 0.565 | 0.921 | 200/200 | None; delivery gates still fail |
+| 102/114 | 0.447 | 1.881 | 200/200 | None; delivery gates still fail |
+
+All six kd 10 cases complete four seconds but have ball/hand or wrist contact
+and invalid delivery stride. **Neither controller produces any full signed-gate
+pass.** Lower damping roughly doubles peak forward shoulder speed from
+4.85-5.01 to 10.23-11.09 rad/s, but much of that speed is lost before release.
+The two physically clean lower-damping cases still fail stride, forward speed,
+bounce-zone, bounce-count and target-corridor checks. The throwing shoulder
+stays inside its hard stop in all cases; lower-damping limit failures occur in
+the legs during whole-body recovery. More arm speed alone is not a bowling
+solution, and these twelve cases do not establish global infeasibility.
+
+Source is frozen at `b8918a72` for kd 10 and `e53d9fea` for kd 2. Preflight
+records pin 125 and 131 local inputs respectively, plus 104 learner-runtime
+files. Hashes are checked before and after each run; every physics substep is
+independently replayed with exact native endpoint and named-sensor agreement.
+Simulated contact and holder loads remain uncalibrated diagnostics. No state
+or velocity injection, relaxed gate, successful teacher, new trained checkpoint
+or new showcase video is claimed.
+
+The new action-owner identity participates in the strict checkpoint contract:
+old and retuned owners reject each other's checkpoints, while same-owner
+cross-engine resolution remains supported. Tests compare all compiled model
+arrays, verify the single gain change and actual torque law, and exercise
+replayed dynamics. Bypassing the contract or loading a legacy checkpoint without
+a validated sidecar is not a supported transfer. Release timing and whole-body
+recovery still need a qualified teacher before BC/PPO and both-hand validation.
+
 ## Learned Arm Residual: First Interception Experiment
 
 Native CPU PPO now learns seven bounded bat-arm corrections around the frozen
