@@ -31,8 +31,8 @@ class RunningDeliveryTargets:
         )
         self.arm_angle = CubicHermiteSpline(
             [GATHER_TIME, 1.66, RELEASE_TIME, 1.90, 2.14, END_TIME],
-            [-2.4, -1.6, 0.08, 1.2, 2.5, 3.1],
-            [0, 4, 10, 5, 0, 0],
+            [2.4, 1.6, 0.18, 1.2, 2.5, 3.1],
+            [0, -4, 10, 5, 0, 0],
         )
         self.flexion = PchipInterpolator(
             [0, GATHER_TIME, 1.66, 1.72, 1.90, 2.14, END_TIME],
@@ -87,10 +87,10 @@ class RunningDeliveryTargets:
     def arm(self, side, time):
         bowling = side == self.hand
         if time < GATHER_TIME:
-            angle = -np.pi + (0.5 if bowling else -0.5) * np.sin(2 * np.pi * time / 0.6)
+            angle = np.pi + (0.5 if bowling else -0.5) * np.sin(2 * np.pi * time / 0.6)
             blend = np.clip((time - 1) / 0.2, 0, 1)
             blend = blend**2 * (3 - 2 * blend)
-            angle = (1 - blend) * angle + blend * (-2.4 if bowling else 2.1 - 2 * np.pi)
+            angle = (1 - blend) * angle + blend * (2.4 if bowling else 2.1)
         elif bowling:
             angle = float(self.arm_angle(time))
         else:
@@ -98,7 +98,7 @@ class RunningDeliveryTargets:
                 np.interp(
                     time,
                     [GATHER_TIME, 1.65, RELEASE_TIME, 2.05, END_TIME],
-                    np.array([2.1, 1.1, 2.5, 3.4, 3.1]) - 2 * np.pi,
+                    [2.1, 1.1, 2.5, 3.4, 3.1],
                 )
             )
         flexion = float(self.flexion(time)) if bowling else np.radians(65)

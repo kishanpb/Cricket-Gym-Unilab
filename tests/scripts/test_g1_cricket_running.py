@@ -82,6 +82,14 @@ def test_arm_targets_are_continuous_at_gather(side):
     assert targets.arm("right", RELEASE_TIME)[0][2] > 0.8
 
 
+def test_bowling_windup_stays_in_front_and_moves_forward_at_release():
+    targets = RunningDeliveryTargets("right")
+    for time in np.linspace(GATHER_TIME, RELEASE_TIME, 63):
+        assert targets.arm("right", time)[0][0] > 0
+    assert targets.arm_angle.derivative()(RELEASE_TIME) == pytest.approx(10)
+    assert targets.flexion(RELEASE_TIME) == pytest.approx(np.radians(8))
+
+
 @pytest.mark.parametrize("hand", ["right", "left"])
 @pytest.mark.parametrize("reverse", [False, True])
 def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, reverse, tmp_path):

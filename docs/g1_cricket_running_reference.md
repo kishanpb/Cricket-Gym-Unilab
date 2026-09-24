@@ -111,3 +111,21 @@ in either solve direction. This tests whether the forward warm start trapped
 the shoulder in a poor solution branch; it cannot itself establish balance.
 Run both full hands once with `--reverse-ik --render` into
 `g1_cricket_results/running_reference_reverse_v1`, and retain all errors/falls.
+
+Backward continuation (source `c0ac67f1`) fails: maximum arm error is 110.06 mm,
+13 frames per hand have unexpected penetration, and both physical episodes fall
+at 0.36 s. No frame anywhere joins the forward and backward solutions within
+2.61 rad maximum joint difference. Reversing the warm-start order is not a repair.
+
+## G1-Adapted Front Raise
+
+The next bounded revision changes only the bowling-arm wind-up path. It raises
+the arm in front (2.4 to 1.6 to 0.18 rad from vertical) before the forward overarm
+delivery; it does not force a continuous rearward circle through the shoulder
+stop. The same full run-up, gather, plant, delivery and recovery phases remain.
+Elbow flexion stays at the 8-degree target through release, and release-angle
+rate remains +10 rad/s. All other targets, original robot limits, forward IK
+settings, physical PD control and failure checks stay fixed. Test both hands
+in `g1_cricket_results/running_front_raise_v1`; reject intersections and excessive
+tracking error before using it for whole-body learning. This adaptation is not
+an exact copy of human shoulder circumduction.
