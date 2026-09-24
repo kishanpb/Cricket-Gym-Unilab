@@ -35,7 +35,7 @@ Gains 2 and 4 complete the full motion on both sides; gain 4 has no unexpected
 loaded contacts or hard-limit excursions, grip gap below 1.136 mm and joint
 RMS error below 0.067 rad. It still fails bat tracking: maximum error is
 0.15681 m right / 0.15678 m left, at 1.70 seconds. Thus zero cases pass all
-declared gates. No PPO continuation was started.
+declared gates. These controller trials did not train a policy.
 
 ## Feedforward Encoding Comparison
 
@@ -121,6 +121,24 @@ terminates on incidental bat support at 1.10 s (return 5.9044), and left PPO
 terminates on end-effector tracking at 1.86 s (return 8.6948). Both reference-only
 controllers complete 3.00 s, with returns 17.0956 and 17.0986. Do not continue
 these checkpoints or select earlier ones for presentation.
+
+[Right evaluation](../g1_cricket_results/bimanual_balanced_v1/ppo_right/evaluation.json)
+and [left evaluation](../g1_cricket_results/bimanual_balanced_v1/ppo_left/evaluation.json)
+retain both controllers and every physical interval. Right PPO contacts
+`wicket_1` at 43.00 N with 1.50 mm penetration; "incidental bat support" is
+the termination name, not a ground-contact diagnosis. Left PPO reaches
+0.01335 rad hard-limit excess. Maximum bat-path errors are 0.19379 / 0.73067 m
+for learned right/left control versus 0.15650 / 0.15641 m for their baselines.
+The slight baseline difference from the earlier serial control audit reflects
+the native task's float32 target/state boundary; each evaluated episode itself
+has exact independent substep endpoint and sensor replay agreement.
+
+Both runs retain final checkpoints, configurations and 49 finite scalar series.
+The complete [right failed video](../g1_cricket_results/bimanual_balanced_v1/ppo_right/ppo_diagnostic.mp4),
+[left failed video](../g1_cricket_results/bimanual_balanced_v1/ppo_left/ppo_diagnostic.mp4)
+and [first/midpoint/final sheet](../g1_cricket_results/bimanual_balanced_v1/ppo_diagnostic_contact_sheet.png)
+are diagnostics, not advertising footage. Initial checkpoints, duplicate event
+logs and reference-only videos were removed; reference-only traces remain.
 
 Next fixed comparison: reduce only the residual position scale from 0.25 to
 0.05 rad. Train fresh, independent right/left actors with the same seed, 16

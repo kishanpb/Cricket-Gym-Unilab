@@ -28,8 +28,9 @@ that reference. It does not use the frozen walking policy. Both the standard
 MuJoCo and native mjbatch owners use the same task. Episodes start at clip
 frame zero, with no reset noise, and truncate at clip end instead of teleporting
 to the start. This first stage is dry-swing tracking, not trained ball hitting.
-The diagnostic script additionally uses motor-side gravity and ankle feedback;
-that hand-written diagnostic controller is not the PPO action owner.
+The original owner below has no support feedback. The newer supported and
+balanced owners explicitly add motor-side feedforward and ankle feedback;
+these analytic controller components are not learned by PPO.
 
 ## Development History
 
