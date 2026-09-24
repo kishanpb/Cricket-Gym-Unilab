@@ -1,0 +1,206 @@
+"""Complete dry-swing episodes from the retained whole-body PPO checkpoint."""
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+
+import imageio.v2 as imageio
+import mujoco
+import numpy as np
+import torch
+from omegaconf import OmegaConf
+from PIL import Image, ImageDraw, ImageFont
+from rsl_rl.runners import OnPolicyRunner
+from uni_rl.algos.rsl_rl import RslRlVecEnvWrapper, normalize_ppo_train_cfg
+
+from unilab.base import registry
+from unilab.base.config_adapter import BackendAdapter
+from unilab.training import algo_config_dict
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def evaluate(directory, render=False):
+    saved = json.loads((directory / "run_config.json").read_text())
+    summary = json.loads((directory / "run_summary.json").read_text())
+    checkpoint = Path(summary["last_checkpoint"])
+    owner = OmegaConf.create(saved["config"])
+    inputs = [
+        directory / "run_config.json",
+        checkpoint,
+        ROOT / owner.env.commands.motion.params.motion_file,
+        Path(__file__),
+    ]
+    inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
+    hashes = {
+        str(p.resolve().relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
+        for p in inputs
+    }
+    hand = owner.env.handedness
+    override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
+    override["auto_reset"] = False
+    registry.ensure_registries()
+    env = registry.make(
+        "G1CricketBimanualTracking", num_envs=1, sim_backend="mujoco", env_cfg_override=override
+    )
+    rows = []
+    try:
+        env.reset(seed=1)
+        wrapped = RslRlVecEnvWrapper(env, device="cpu")
+        cfg = normalize_ppo_train_cfg(algo_config_dict(owner))
+        cfg["logger"] = "none"
+        runner = OnPolicyRunner(wrapped, cfg, log_dir=None, device="cpu")
+        runner.load(
+            str(checkpoint),
+            load_cfg={
+                "actor": True,
+                "critic": False,
+                "optimizer": False,
+                "iteration": False,
+                "rnd": False,
+            },
+        )
+        policy = runner.get_inference_policy(device="cpu")
+        model = env.get_playback_model()
+        model.vis.global_.offwidth, model.vis.global_.offheight = 960, 540
+        data = mujoco.MjData(model)
+        camera = mujoco.MjvCamera()
+        camera.lookat[:] = [0.1, 0, 0.75]
+        camera.distance, camera.azimuth, camera.elevation = 2.7, -65 if hand == "right" else 65, -12
+        for controller in ("reference_only", "ppo"):
+            env.reset(seed=1)
+            trace, frames = [], []
+            renderer = mujoco.Renderer(model, height=540, width=960) if render else None
+            total_reward = 0.0
+            try:
+                for tick in range(env.max_episode_length):
+                    with torch.inference_mode():
+                        action = (
+                            policy(wrapped.get_observations())
+                            if controller == "ppo"
+                            else torch.zeros((1, 29))
+                        )
+                    if not torch.isfinite(action).all():
+                        raise RuntimeError("non-finite tracking policy action")
+                    _, reward, done, _ = wrapped.step(action)
+                    total_reward += float(reward[0])
+                    physical = env.get_physics_state_snapshot()[0]
+                    if not np.isfinite(physical).all() or not torch.isfinite(reward).all():
+                        raise RuntimeError("non-finite physical state or reward in evaluation")
+                    mujoco.mj_setState(model, data, physical, mujoco.mjtState.mjSTATE_FULLPHYSICS)
+                    mujoco.mj_forward(model, data)
+                    robot = env.scene["robot"]
+                    limits = robot.data.soft_joint_pos_limits
+                    joints = robot.data.joint_pos[0]
+                    if not np.isfinite(joints).all():
+                        raise RuntimeError("non-finite robot joints in evaluation")
+                    trace.append(
+                        {
+                            "time_s": float(data.time),
+                            "pelvis_height_m": float(data.qpos[2]),
+                            "grip_separation_m": float(
+                                np.linalg.norm(
+                                    data.site("bat_lower_grip").xpos
+                                    - data.site(f"{hand}_palm").xpos
+                                )
+                            ),
+                            "joint_limit_excess_rad": max(
+                                0.0,
+                                float(
+                                    np.maximum(limits[:, 0] - joints, joints - limits[:, 1]).max()
+                                ),
+                            ),
+                            "bat_center_m": data.site("bat_center").xpos.tolist(),
+                            "reference_joint_rmse_rad": float(
+                                np.sqrt(
+                                    np.mean(
+                                        (
+                                            env.command_manager.get_term("motion").joint_pos[0]
+                                            - joints
+                                        )
+                                        ** 2
+                                    )
+                                )
+                            ),
+                        }
+                    )
+                    if renderer is not None:
+                        renderer.update_scene(data, camera)
+                        frame = Image.fromarray(renderer.render())
+                        draw = ImageDraw.Draw(frame)
+                        draw.rectangle((0, 0, 960, 64), fill="#17201d")
+                        font = ImageFont.load_default(size=18)
+                        draw.text(
+                            (12, 8),
+                            f"G1 {hand} | {controller} | whole-body two-hand dry swing | t={data.time:.2f}s",
+                            font=font,
+                        )
+                        draw.text(
+                            (12, 34),
+                            "Development episode, no ball-hit claim | mechanical grips | 0.5x",
+                            font=font,
+                        )
+                        frames.append(np.asarray(frame))
+                    if bool(done[0]):
+                        break
+                failed = bool(env.state.terminated[0])
+                row = {
+                    "controller": controller,
+                    "hand": hand,
+                    "seed": 1,
+                    "return": total_reward,
+                    "steps": tick + 1,
+                    "terminated": failed,
+                    "truncated": bool(env.state.truncated[0]),
+                    "terminal_terms": [
+                        name
+                        for name in env.termination_manager.active_terms
+                        if env.termination_manager.get_term(name)[0]
+                    ],
+                    "trace": trace,
+                }
+                if frames:
+                    terminal = Image.fromarray(frames[-1])
+                    ImageDraw.Draw(terminal).text(
+                        (12, 80),
+                        "FAIL: " + ", ".join(row["terminal_terms"])
+                        if failed
+                        else "Complete dry-swing clip; not a ball-hit qualification",
+                        font=ImageFont.load_default(size=19),
+                        fill="red" if failed else "white",
+                    )
+                    frames.extend([np.asarray(terminal)] * 25)
+                    imageio.mimwrite(
+                        directory / f"{controller}_diagnostic.mp4",
+                        frames,
+                        fps=25,
+                        macro_block_size=1,
+                    )
+                rows.append(row)
+            finally:
+                if renderer is not None:
+                    renderer.close()
+    finally:
+        env.close()
+    report = {
+        "scope": "deterministic_development_dry_swing_not_held_out_cricket",
+        "checkpoint_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
+        "rows": rows,
+        "input_sha256": hashes,
+    }
+    if any(
+        hashlib.sha256(p.read_bytes()).hexdigest() != hashes[str(p.resolve().relative_to(ROOT))]
+        for p in inputs
+    ):
+        raise RuntimeError("evaluation inputs changed during execution")
+    (directory / "evaluation.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
+    print([{key: value for key, value in row.items() if key != "trace"} for row in rows])
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("directory", type=Path)
+    parser.add_argument("--render", action="store_true")
+    args = parser.parse_args()
+    evaluate(args.directory, args.render)

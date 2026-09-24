@@ -1,0 +1,65 @@
+# @package _global_
+defaults:
+  - /task/g1_motion_tracking/mujoco
+  - _self_
+
+training:
+  task_name: G1CricketBimanualTracking
+  device: cpu
+  no_play: true
+algo:
+  num_envs: 8
+  max_iterations: 100
+  save_interval: 100
+  policy:
+    actor_hidden_dims: [128, 128]
+    critic_hidden_dims: [128, 128]
+  algorithm:
+    num_mini_batches: 2
+env:
+  handedness: right
+  scene:
+    model_file: src/unilab/assets/robots/g1/g1.xml
+    default_keyframe_name: cricket_stand
+  sim_dt: 0.001
+  ctrl_dt: 0.02
+  max_episode_seconds: 3.0
+  actions:
+    joint_pos: null
+    reference:
+      _target_: unilab.tasks.manipulation.g1_cricket.tracking.CricketReferenceActionCfg
+      entity_name: robot
+      scale: 0.25
+      command_name: motion
+  commands:
+    motion:
+      params:
+        motion_file: g1_cricket_results/bimanual_v1/${env.handedness}_tracking.npz
+        sampling_mode: start
+        truncate_on_clip_end: true
+        pose_range:
+          x: [0, 0]
+          y: [0, 0]
+          z: [0, 0]
+          roll: [0, 0]
+          pitch: [0, 0]
+          yaw: [0, 0]
+        velocity_range:
+          x: [0, 0]
+          y: [0, 0]
+          z: [0, 0]
+          roll: [0, 0]
+          pitch: [0, 0]
+          yaw: [0, 0]
+        joint_position_range: [0.0, 0.0]
+        joint_default_position_range: [0.0, 0.0]
+  terminations:
+    incidental_bat_support:
+      func: unilab.tasks.manipulation.g1_cricket.task.IncidentalBatSupport
+    clip_end:
+      func: unilab.tasks.motion_tracking.common.manager_terms.motion_clip_end
+      params: {command_name: motion}
+      time_out: true
+reward:
+  motion_joint_pos:
+    weight: 1.0
