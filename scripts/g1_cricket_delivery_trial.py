@@ -209,7 +209,8 @@ class DeliveryEvents:
 
 
 class DeliveryReplay:
-    def __init__(self, env):
+    def __init__(self, env, *, action_name="residual"):
+        self.action_name = action_name
         self.model = env.get_playback_model()
         self.data, self.pose = mujoco.MjData(self.model), mujoco.MjData(self.model)
         m = self.model
@@ -247,7 +248,7 @@ class DeliveryReplay:
         m, d = self.model, self.data
         initial = env.get_physics_state_snapshot()[0].copy()
         state = env.step(action)
-        term = env.action_manager.get_term("residual")
+        term = env.action_manager.get_term(self.action_name)
         mujoco.mj_resetData(m, d)
         mujoco.mj_setState(m, d, initial, mujoco.mjtState.mjSTATE_FULLPHYSICS)
         d.eq_active[:] = env.equality_constraints.get_equality_active()[0]
