@@ -84,7 +84,7 @@ def cold_pose(replay, targets, hand):
     )
 
 
-def reach_trial(env, pitch, elbow):
+def reach_trial(env, pitch, elbow, *, observer=None):
     env.reset(seed=PLAN["seed"])
     term = env.action_manager.get_term("residual")
     neutral = env.scene["robot"].data.default_joint_pos[0, term.arm_ids].copy()
@@ -100,7 +100,12 @@ def reach_trial(env, pitch, elbow):
         target = target_at(neutral, env.cfg.handedness, pitch, elbow, tick)
         action = np.zeros((1, 8), dtype=np.float32)
         action[0, :7] = actions_for_targets(target, neutral, limits)
-        state = replay.step(env, action, events)
+        state = replay.step(
+            env,
+            action,
+            events,
+            observer=None if observer is None else lambda m, d: observer(tick, m, d),
+        )
         m, pose = replay.model, replay.pose
         snapshot = env.get_physics_state_snapshot()[0]
         mujoco.mj_setState(m, pose, snapshot, mujoco.mjtState.mjSTATE_FULLPHYSICS)

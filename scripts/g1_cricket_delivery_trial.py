@@ -243,7 +243,7 @@ class DeliveryReplay:
         self.site = m.site("holder_site").id
         self.holder_adr = m.sensor("holder_force").adr[0]
 
-    def step(self, env, action, events):
+    def step(self, env, action, events, *, observer=None):
         m, d = self.model, self.data
         initial = env.get_physics_state_snapshot()[0].copy()
         state = env.step(action)
@@ -266,6 +266,8 @@ class DeliveryReplay:
             )
         for _ in range(self.steps):
             mujoco.mj_step(m, d)
+            if observer is not None:
+                observer(m, d)
             solved_time = float(d.time - m.opt.timestep)
             upper, angle = arm_geometry(*d.xpos[self.arm])
             events.observe_arm(solved_time, upper, angle)
