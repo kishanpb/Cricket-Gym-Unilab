@@ -30,6 +30,8 @@ next extension is learned cricket on the repository's Unitree G1 model; the curr
 videos are not G1 demonstrations.
 
 **G1 work in progress:** [native foundation, PPO experiments and external locomotion transfer](G1_CRICKET.md).
+The first learned arm residual increases blade contact but fails every qualified
+shot; its complete negative evaluation and simulated contact-force evidence are retained.
 The corrected wrist mount completes all 24 ten-second prior stance trials;
 this is not yet locally learned cricket or a new showcase video.
 Earlier locally trained PPO checkpoints still fail through falls or incidental

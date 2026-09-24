@@ -23,6 +23,49 @@ incoming ball velocity are reset conditions; no robot root/joint pose is
 overwritten during a policy step. The incoming ball is a bowling-machine
 curriculum, not learned bowling.
 
+## Learned Arm Residual: First Interception Experiment
+
+Native CPU PPO now learns seven bounded bat-arm corrections around the frozen
+29-joint Unitree locomotion prior. The [predeclared contract](docs/g1_cricket_residual_v1.md)
+fixes a two-second airborne soft toss, three lanes, 199,680 training transitions
+(seed 1, right hand), and all 96 baseline/PPO evaluation rows. The prior retains
+its own action history; zero correction has exact native parity tests for both
+hands. This is privileged simulator-state control with a rigid wrist fixture,
+not full cricket, learned bowling, or a deployable robot policy.
+
+**The first learned checkpoint fails the shot gate.** Right-hand PPO makes
+blade-first contact in 24/24 trials (baseline 8/24), but achieves zero clean
+forward shots: first-separation x velocity stays negative. Sixteen trials also
+touch a robot foot or other body geometry; two have guarded contacts and one
+ends early. Left-hand untrained transfer misses all 24 deliveries, versus eight
+valid center-lane rebounds from the frozen baseline. No success rows are selected
+or advertised.
+
+| Controller | Right: valid shots | Left: valid shots |
+| --- | --- | --- |
+| Frozen prior, zero residual | 0/24 | 8/24 |
+| Final right-trained PPO | 0/24 | 0/24 (untrained transfer) |
+
+[Full report](g1_cricket_results/residual_v1/evaluation.json),
+[training summary](g1_cricket_results/residual_v1/right/run_summary.json), and
+[iteration diagnostics](g1_cricket_results/residual_v1/right/training_diagnostics.json)
+retain the final checkpoint, configuration, all scalar iterations and every
+failure. Each executed 20 ms interval is independently replayed at 2 ms;
+native endpoint state and named sensor values must match exactly before accepting
+ball/guard occupancy, contact-force peaks, actuator fractions and fixture loads.
+These are uncalibrated simulated tactile/contact diagnostics, not hardware force
+validation or timestep-converged impact loads. The increased contact rate is not
+a successful batting claim. Next: change the reward to favor clean forward
+separation rather than contact alone, without relaxing the evaluation gates.
+
+With the external prior cached as described below and the same CPU thread caps:
+
+```sh
+uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_residual_v1/mujoco \
+  training.log_dir=g1_cricket_results/residual_v1/right
+uv run python scripts/evaluate_g1_cricket_residual.py
+```
+
 ## External Locomotion Prior: Native Transfer
 
 A separate native owner now evaluates the official Unitree RL Lab 29-DoF
