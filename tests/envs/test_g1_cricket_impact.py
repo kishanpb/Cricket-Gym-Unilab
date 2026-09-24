@@ -84,6 +84,21 @@ def test_impact_rejects_underresolved_physics():
         make_env("impact_v1", "right", dt=0.002)
 
 
+@pytest.mark.parametrize("hand", ["right", "left"])
+def test_fine_resolution_preserves_control_period_and_native_replay(hand):
+    env = make_env("impact_v1", hand, dt=0.000125)
+    try:
+        replay = CricketReplay(env)
+        assert env.step_dt == 0.02 and env.cfg.sim_substeps == replay.steps == 160
+        assert replay.model.opt.timestep == 0.000125
+        env.reset(seed=4301)
+        state, *_ = replay.step(env, np.zeros((1, 7), dtype=np.float32))
+        assert not state.terminated[0]
+        assert replay.state_error == replay.sensor_error == 0
+    finally:
+        env.close()
+
+
 @pytest.mark.parametrize(
     "hand,prior,mount",
     [

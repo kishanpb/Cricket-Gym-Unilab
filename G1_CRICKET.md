@@ -9,8 +9,9 @@ The source robot XML and existing demonstrations are unchanged.
 
 **Development limitation:** historical checkpoints use a bat/ball model that
 permits about 28 mm penetration. The opt-in impact-v1 correction reduces this to
-5.65 mm in frozen-policy trials, but still fails the complete timestep comparison
-and produces no valid shots. Neither model is calibrated to physical cricket impacts.
+5.65 mm in frozen-policy trials, but still fails the complete timestep comparison.
+Fresh corrected-contact PPO also produces no valid shots in its full two-resolution
+evaluation. Neither model is calibrated to physical cricket impacts.
 
 ![Untrained G1 with the rigid wrist fixture in the practice scene](g1_cricket_results/initial_stance.png)
 
@@ -151,17 +152,70 @@ blade contact, leaving **10/40 contact-bearing pairs**. Penetration differs beyo
 tolerance in 29 pairs, peak force in six and separation velocity in three, with
 overlap. All controllers still produce **zero valid shots**; right PPO contacts
 16/24 balls but sends none forward at first separation under either resolution.
-The old policy was trained against the softer model and has not been retrained.
+This frozen comparison uses the old policy trained against the softer model;
+the fresh corrected-contact training experiment is reported below.
 
 No new showcase, policy promotion or physical-force validation is claimed.
-Next: extend resolution checks before interpreting loads or retraining against
-this correction. Historical report source hashes are checked against their
+Historical report source hashes are checked against their
 recorded revision for the explicitly migrated factory/evaluator files; other
 source and checkpoint hashes remain exact current-file checks.
 
 ```sh
 uv run python scripts/evaluate_g1_cricket_impact.py
 ```
+
+### Finer Resolution: Forces Agree, Penetration Still Sensitive
+
+The [predeclared extension](docs/g1_cricket_impact_resolution.md) repeats the
+complete 96-row frozen-policy pool at **0.125 ms**, retaining the 0.25 ms report
+unchanged as its comparison. [All new rows and paired differences](g1_cricket_results/impact_v1/resolution_extension.json)
+preserve checkpoint, configuration, model, runtime and source hashes.
+
+Every trial completes two seconds with exact native/serial state and sensor
+agreement, no guarded contacts or stability/joint/actuator violations, and
+maximum penetration **5.564 mm**. All paired peak-force and first-separation
+velocity checks meet the original tolerances. Penetration still differs beyond
+tolerance in **14/96 pairs**: overall consistency is **82/96**, or **26/40**
+among contact-bearing pairs. The other 56 pairs have no blade contact.
+This is improved agreement over two tested resolutions, not asymptotic
+convergence, physical calibration or a successful cricket policy; all 96 shot
+trials still fail.
+
+### Fresh Corrected-Contact PPO: Still No Valid Shots
+
+The [predeclared learning contract](docs/g1_cricket_impact_learning_v1.md) is
+now executed: fresh seed-1, right-hand native CPU PPO completed **199,680
+transitions**, with 0.25 ms physics and unchanged 20 ms control, reward,
+observations, action bounds and optimizer settings. This is the same transition
+budget as v3, not equal compute. Only the final checkpoint is evaluated;
+[scalar traces](g1_cricket_results/impact_v1/right/training_scalars.csv)
+retain all 2,080 updates, with finite recorded values verified by the
+[training diagnostics](g1_cricket_results/impact_v1/right/training_diagnostics.json).
+
+The [full evaluation](g1_cricket_results/impact_v1/trained_evaluation.json)
+contains all 96 trials at each of 0.25 and 0.125 ms. Every episode completes
+two seconds, and all native/serial state and sensor comparisons are exact.
+There are no guarded bat/robot or robot/wicket contacts, stability violations,
+joint-limit violations or actuator-limit violations. All 48 zero-residual rows
+at each resolution exactly reproduce the corresponding frozen comparison.
+
+At both resolutions, right PPO contacts **16/24** balls, but all first-separation
+x velocities remain negative; at 0.125 ms they range from **-2.185 to -0.002 m/s**.
+Left untrained transfer contacts **8/24**, with only **0.027-0.057 m/s** forward
+speed at 0.125 ms. Every controller/hand group has **0/24 valid shots** at both
+resolutions. Missed deliveries and resulting ball/pitch/wicket failures remain
+in the report; they are not excluded from the denominator.
+
+Maximum penetration across the full pool is 5.619 mm at 0.25 ms and 5.564 mm
+at 0.125 ms. **84/96** paired rows meet every numerical tolerance, or **28/40**
+among contact-bearing pairs; the 12 mismatches are penetration-only. These
+checks do not validate physical material parameters or justify policy promotion.
+No new showcase video is produced from this failed checkpoint.
+
+Next: run the [impact-to-reward timing audit](docs/g1_cricket_impact_reward_audit.md)
+on this fixed policy before another training change. It will distinguish short
+contacts missed by control-rate reward sampling from strikes that genuinely
+fail to produce forward ball motion. The audit is designed, not yet executed.
 
 ## Historical Contact Resolution: Excessive Compliance
 
@@ -191,15 +245,15 @@ At the finest 0.0625 ms step, the current 20 ms contact time constant permits
 18.35 mm penetration and approximately 80 ms contact. A 4 ms time-constant
 candidate reduces those to 3.64 mm and 16 ms, respectively. All 12 rows across
 six timesteps and both settings are retained; extra fine steps were added after
-the first four exposed peak-force sensitivity. The candidate is **not applied
-to the native task**, is not fitted to cricket materials, and is not a learned
+the first four exposed peak-force sensitivity. The candidate was **not applied
+to the native task in this historical probe**; the subsequent opt-in impact-v1
+experiment is documented above. It is not fitted to cricket materials or a learned
 policy improvement. Its coarse 2 ms apparent penetration of just 1 mm is a
 resolution artifact, not a better result.
 
-Next: introduce a versioned, explicit bat/ball contact response, verify both-hand
-native stability and penetration at adequate resolution, then retrain and repeat
-the unchanged full shot gates. Do not train further against the current excessive
-compliance or advertise the old numeric baseline passes as realistic impacts.
+This audit motivated the versioned impact-v1 correction and retraining above.
+Do not resume training against this historical excessive compliance or advertise
+the old numeric baseline passes as realistic impacts.
 
 ```sh
 uv run python scripts/audit_g1_cricket_contact_resolution.py
