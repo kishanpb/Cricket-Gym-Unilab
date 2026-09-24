@@ -104,21 +104,33 @@ def search_cost(outcome, signed, trace):
     )
 
 
-def trajectory_trial(env, parameters):
-    env.reset(seed=PLAN["seed"])
+def trajectory_trial(
+    env,
+    parameters,
+    *,
+    target_fn=shoulder_target,
+    seed=PLAN["seed"],
+    release_tick=PLAN["release_tick"],
+    audit_factory=GuardAudit,
+):
+    env.reset(seed=seed)
     term = env.action_manager.get_term("residual")
     neutral = env.scene["robot"].data.default_joint_pos[0, term.arm_ids].copy()
     limits = term.joint_limits[term.arm_ids]
-    replay, events, audit = SignedDeliveryReplay(env), DeliveryEvents(PLAN["hand"]), GuardAudit(env)
+    replay, events, audit = (
+        SignedDeliveryReplay(env),
+        DeliveryEvents(env.cfg.handedness),
+        audit_factory(env),
+    )
     m, pose = replay.model, replay.pose
     qadr = replay.joint_qadr[term.arm_ids]
     vadr = m.jnt_dofadr[replay.joints[term.arm_ids]]
     trace, total = [], 0.0
     for tick in range(env.max_episode_length):
-        target = shoulder_target(neutral, parameters, tick)
+        target = target_fn(neutral, parameters, tick)
         action = np.zeros((1, 8), np.float32)
         action[0, :7] = actions_for_targets(target, neutral, limits)
-        action[0, 7] = tick >= PLAN["release_tick"]
+        action[0, 7] = tick >= release_tick
         state = replay.step(env, action, events, observer=lambda m, d: audit(tick, m, d))
         snapshot = env.get_physics_state_snapshot()[0]
         mujoco.mj_setState(m, pose, snapshot, mujoco.mjtState.mjSTATE_FULLPHYSICS)
