@@ -23,6 +23,42 @@ incoming ball velocity are reset conditions; no robot root/joint pose is
 overwritten during a policy step. The incoming ball is a bowling-machine
 curriculum, not learned bowling.
 
+## External Prior Integration Plan
+
+The parallel mjbatch development branch now has a
+[complete 48-row locomotion transfer audit](https://github.com/kishanpb/mjbatch/blob/codex/g1-cricket/examples/cricket_g1_results/unitree_prior/evaluation.json)
+using the official Unitree RL Lab 29-DoF velocity prior. This is **not a UniLab
+result** and not locally learned cricket. Native integration is the next bounded
+step; do not reinterpret existing 130-input cricket checkpoints as this prior.
+
+The external contract is pinned to Unitree RL Lab commit
+`4960b84732b0c2ec593dccbfe963fda1bcd7b1e3`, paired velocity/v0 `policy.onnx` and
+`deploy.yaml`. The adapter needs 480 values: six terms with five oldest-first
+history frames, initialized by repeating the first observation. The terms are
+pelvis angular velocity (scale 0.2), pelvis-frame unit gravity, velocity command,
+policy-order joint position offsets, joint velocity (scale 0.05), and raw previous
+policy actions. The deployed primary IMU is the pelvis, not the current cricket
+torso sensor. Native history supports the required term-major ordering.
+
+Native actuator order is left leg, right leg, waist, left arm, right arm; the
+policy uses an interleaved order. Use the explicit `joint_ids_map` permutation,
+official joint defaults, 20 ms control and official SDK-order PD gains. All 29
+native gain pairs differ from this deployment contract. These controller changes
+must be versioned, not described as unchanged controls. The current global
+`[-1, 1]` clip bounds processed targets, not raw policy output, and is incompatible.
+Use a task-owned named position-target action with no such clip, through public
+entity APIs; do not reinterpret position actuators as torque motors.
+
+Cold-path geometry inspection found 26.2 mm of foot penetration when applying
+the imported default pose at the existing 0.758 m root height. A separately
+calibrated keyframe must update both qpos and ctrl; setting only reset qpos leaves
+default-relative observations inconsistent. An inspected height of 0.785202 m
+gives 1 mm clearance, to be rechecked for the final no-bat/fixture scene.
+First validate a no-bat zero-command rollout without root support, then both
+fixtures, contacts and limits. Native transient-contact snapshot limitations
+below still apply. No external checkpoint is redistributed or native prior
+success claimed by this plan.
+
 ## Signals
 
 Named public sensor views expose ball/blade, ball/pitch and ball/wicket contact
