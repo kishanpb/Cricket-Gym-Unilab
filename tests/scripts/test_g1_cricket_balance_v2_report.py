@@ -7,11 +7,20 @@ import json
 import subprocess
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_guarded_balance_evidence():
-    directory = ROOT / "g1_cricket_results/balance_v2/right"
+@pytest.mark.parametrize(
+    "version,source_commit",
+    [
+        ("balance_v2", "f326872e55a6551de17834a65b1ca07eea56d73d"),
+        ("balance_v3", "00057f30"),
+    ],
+)
+def test_guarded_balance_evidence(version, source_commit):
+    directory = ROOT / "g1_cricket_results" / version / "right"
     report = json.loads((directory / "evaluation.json").read_text())
     summary = json.loads((directory / "run_summary.json").read_text())
     assert summary["status"] == "completed"
@@ -28,12 +37,14 @@ def test_guarded_balance_evidence():
     )
     for name, digest in report["source_hashes"].items():
         frozen_source = subprocess.check_output(
-            ["git", "show", f"f326872e55a6551de17834a65b1ca07eea56d73d:{name}"], cwd=ROOT
+            ["git", "show", f"{source_commit}:{name}"], cwd=ROOT
         )
         assert hashlib.sha256(frozen_source).hexdigest() == digest
     evaluation = report["evaluation"]
     assert evaluation["horizon_seconds"] == 3.0
     assert "incidental bat-ground/wicket/robot contact" in evaluation["termination_contract"]
+    if version == "balance_v3":
+        assert evaluation["gravity_observation"].startswith("unit gravity in torso IMU frame")
     rows = evaluation["rows"]
     expected = set(itertools.product(("zero", "ppo"), ("right", "left"), (4101, 4102, 4103, 4104)))
     assert len(rows) == len(expected) == evaluation["expected_episodes"] == 16

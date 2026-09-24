@@ -1,0 +1,480 @@
+{
+  "scope": "native_CPU_PPO_balance_v3_not_trained_cricket",
+  "training": {
+    "actual_transitions": 199680,
+    "updates": 2080,
+    "last_zero_indexed_iteration": 2079,
+    "training_seed": 1,
+    "training_hand": "right",
+    "learner_device": "cpu",
+    "torch_threads": 2,
+    "python_cpu_count": 2,
+    "reward": {
+      "upright": {
+        "func": "unilab.tasks.manipulation.g1_cricket.task.upright",
+        "weight": 2.0
+      },
+      "action_rate": {
+        "func": "unilab.envs.mdp.action_rate_l2",
+        "weight": -0.01
+      },
+      "height": {
+        "func": "unilab.tasks.locomotion.common.manager_terms.base_height_l2",
+        "params": {
+          "target_height": 0.758
+        },
+        "weight": -500.0
+      },
+      "orientation": {
+        "func": "unilab.tasks.locomotion.common.sensor_reward_terms.orientation",
+        "params": {
+          "sensor_name": "torso_upvector"
+        },
+        "weight": -5.0
+      },
+      "vertical_velocity": {
+        "func": "unilab.tasks.locomotion.common.sensor_reward_terms.lin_vel_z",
+        "params": {
+          "sensor_name": "pelvis_local_linvel"
+        },
+        "weight": -1.0
+      },
+      "angular_velocity": {
+        "func": "unilab.tasks.locomotion.common.sensor_reward_terms.ang_vel_xy",
+        "params": {
+          "sensor_name": "torso_gyro"
+        },
+        "weight": -0.25
+      },
+      "pose": {
+        "func": "unilab.tasks.locomotion.g1.manager_terms.weighted_pose",
+        "params": {
+          "pose_weights": [
+            0.01,
+            1,
+            5,
+            0.01,
+            5,
+            5,
+            0.01,
+            1,
+            5,
+            0.01,
+            5,
+            5,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50,
+            50
+          ]
+        },
+        "weight": -0.1
+      }
+    }
+  },
+  "checkpoint": {
+    "path": "g1_cricket_results/balance_v3/right/model_2079.pt",
+    "sha256": "3ee7562f9957697639c441c6d995df07c78d1e8765dd95ccbf11e3f0cc8f1d5b",
+    "bytes": 340341,
+    "actor_dimensions": [
+      130,
+      64,
+      64,
+      29
+    ]
+  },
+  "task_source_commit": "00057f3056c666bf558e9616931eeb88d5993378",
+  "source_hashes": {
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "333cf99b39748e68f7f6a50876afa4ba43ca0afcb61eaa0aae5f42638b6e1bf9",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/conf/ppo/task/g1_cricket_batting/mujoco.yaml": "3891495ddf79f5f72f3d696c29fa6bdea35f0cd9fdf689d2b115e78ce29ed7cd",
+    "scripts/evaluate_g1_cricket_smoke.py": "aacceae7005aaf4d32aa5a06243bbef1ada14fad993f45fc8cf8748138f5e423",
+    "src/unilab/conf/ppo/task/g1_cricket_balance_v1/mujoco.yaml": "19740bc33338baef79e515563ece8c08759a5632f3d8f7d31af0d760291dcf9d",
+    "src/unilab/conf/ppo/task/g1_cricket_balance_v2/mujoco.yaml": "04d37611e0cec58072a3a301ec15f8cd924bfbcdd6d5fbe85c3fdaf305c47512",
+    "src/unilab/conf/ppo/task/g1_cricket_balance_v3/mujoco.yaml": "584e56a2fa22062e62069ddaa602634bac1c730010a2ac85a8afa246ddadf9cc"
+  },
+  "run_config_sha256": "d1d1a5c2a23d4a7077699cab0b1a91438c7a10c08bc540d6347009de5726b0b8",
+  "versions": {
+    "torch": "2.8.0",
+    "rsl-rl-lib": "5.0.1",
+    "unilab-rl": "1.2.0",
+    "unisim-core": "1.2.0",
+    "mujoco": "3.11.0"
+  },
+  "evaluation": {
+    "seeds": [
+      4101,
+      4102,
+      4103,
+      4104
+    ],
+    "hands": [
+      "right",
+      "left"
+    ],
+    "policies": [
+      "zero",
+      "ppo"
+    ],
+    "expected_episodes": 16,
+    "action_selection": "deterministic actor mean; zero baseline",
+    "reset_scope": "deterministic reset; seeds do not provide independent initial-state variation",
+    "hand_scope": "matched training hand plus untrained opposite-hand transfer diagnostic",
+    "horizon_seconds": 3.0,
+    "sensing_scope": "privileged simulator ball/root state, joint encoders, gyro, gravity and contact snapshots; not vision-only or deployable tactile hardware",
+    "contact_scope": "end-of-control sensor snapshots; not complete impact detection",
+    "gravity_observation": "unit gravity in torso IMU frame, inverse-rotated from world gravity",
+    "termination_contract": "fall or incidental bat-ground/wicket/robot contact; fixed wrist fixture exempt",
+    "rows": [
+      {
+        "policy": "zero",
+        "hand": "right",
+        "seed": 4101,
+        "steps": 34,
+        "seconds": 0.34,
+        "return": 0.5705669457092881,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_right_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 14.089219093322754,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 0.0,
+        "minimum_root_height_m": 0.7361426949501038,
+        "maximum_root_xy_displacement_m": 0.02944386936724186
+      },
+      {
+        "policy": "zero",
+        "hand": "right",
+        "seed": 4102,
+        "steps": 34,
+        "seconds": 0.34,
+        "return": 0.5705669457092881,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_right_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 14.089219093322754,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 0.0,
+        "minimum_root_height_m": 0.7361426949501038,
+        "maximum_root_xy_displacement_m": 0.02944386936724186
+      },
+      {
+        "policy": "zero",
+        "hand": "right",
+        "seed": 4103,
+        "steps": 34,
+        "seconds": 0.34,
+        "return": 0.5705669457092881,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_right_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 14.089219093322754,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 0.0,
+        "minimum_root_height_m": 0.7361426949501038,
+        "maximum_root_xy_displacement_m": 0.02944386936724186
+      },
+      {
+        "policy": "zero",
+        "hand": "right",
+        "seed": 4104,
+        "steps": 34,
+        "seconds": 0.34,
+        "return": 0.5705669457092881,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_right_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 14.089219093322754,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 0.0,
+        "minimum_root_height_m": 0.7361426949501038,
+        "maximum_root_xy_displacement_m": 0.02944386936724186
+      },
+      {
+        "policy": "ppo",
+        "hand": "right",
+        "seed": 4101,
+        "steps": 76,
+        "seconds": 0.76,
+        "return": 0.9702875884249806,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_right_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 22.208133697509766,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 2.3162283897399902,
+        "minimum_root_height_m": 0.716550350189209,
+        "maximum_root_xy_displacement_m": 0.298924058675766
+      },
+      {
+        "policy": "ppo",
+        "hand": "right",
+        "seed": 4102,
+        "steps": 76,
+        "seconds": 0.76,
+        "return": 0.9702875884249806,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_right_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 22.208133697509766,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 2.3162283897399902,
+        "minimum_root_height_m": 0.716550350189209,
+        "maximum_root_xy_displacement_m": 0.298924058675766
+      },
+      {
+        "policy": "ppo",
+        "hand": "right",
+        "seed": 4103,
+        "steps": 76,
+        "seconds": 0.76,
+        "return": 0.9702875884249806,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_right_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 22.208133697509766,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 2.3162283897399902,
+        "minimum_root_height_m": 0.716550350189209,
+        "maximum_root_xy_displacement_m": 0.298924058675766
+      },
+      {
+        "policy": "ppo",
+        "hand": "right",
+        "seed": 4104,
+        "steps": 76,
+        "seconds": 0.76,
+        "return": 0.9702875884249806,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_right_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 22.208133697509766,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 2.3162283897399902,
+        "minimum_root_height_m": 0.716550350189209,
+        "maximum_root_xy_displacement_m": 0.298924058675766
+      },
+      {
+        "policy": "zero",
+        "hand": "left",
+        "seed": 4101,
+        "steps": 33,
+        "seconds": 0.33,
+        "return": 0.5566772678866982,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_left_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 19.599197387695312,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 0.0,
+        "minimum_root_height_m": 0.7362405061721802,
+        "maximum_root_xy_displacement_m": 0.027900781482458115
+      },
+      {
+        "policy": "zero",
+        "hand": "left",
+        "seed": 4102,
+        "steps": 33,
+        "seconds": 0.33,
+        "return": 0.5566772678866982,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_left_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 19.599197387695312,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 0.0,
+        "minimum_root_height_m": 0.7362405061721802,
+        "maximum_root_xy_displacement_m": 0.027900781482458115
+      },
+      {
+        "policy": "zero",
+        "hand": "left",
+        "seed": 4103,
+        "steps": 33,
+        "seconds": 0.33,
+        "return": 0.5566772678866982,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_left_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 19.599197387695312,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 0.0,
+        "minimum_root_height_m": 0.7362405061721802,
+        "maximum_root_xy_displacement_m": 0.027900781482458115
+      },
+      {
+        "policy": "zero",
+        "hand": "left",
+        "seed": 4104,
+        "steps": 33,
+        "seconds": 0.33,
+        "return": 0.5566772678866982,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_left_hip_roll_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 19.599197387695312,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 0.0,
+        "minimum_root_height_m": 0.7362405061721802,
+        "maximum_root_xy_displacement_m": 0.027900781482458115
+      },
+      {
+        "policy": "ppo",
+        "hand": "left",
+        "seed": 4101,
+        "steps": 35,
+        "seconds": 0.35000000000000003,
+        "return": 0.5139964111149311,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_left_hip_yaw_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 21.498653411865234,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 1.5058331489562988,
+        "minimum_root_height_m": 0.757472038269043,
+        "maximum_root_xy_displacement_m": 0.051480457186698914
+      },
+      {
+        "policy": "ppo",
+        "hand": "left",
+        "seed": 4102,
+        "steps": 35,
+        "seconds": 0.35000000000000003,
+        "return": 0.5139964111149311,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_left_hip_yaw_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 21.498653411865234,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 1.5058331489562988,
+        "minimum_root_height_m": 0.757472038269043,
+        "maximum_root_xy_displacement_m": 0.051480457186698914
+      },
+      {
+        "policy": "ppo",
+        "hand": "left",
+        "seed": 4103,
+        "steps": 35,
+        "seconds": 0.35000000000000003,
+        "return": 0.5139964111149311,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_left_hip_yaw_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 21.498653411865234,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 1.5058331489562988,
+        "minimum_root_height_m": 0.757472038269043,
+        "maximum_root_xy_displacement_m": 0.051480457186698914
+      },
+      {
+        "policy": "ppo",
+        "hand": "left",
+        "seed": 4104,
+        "steps": 35,
+        "seconds": 0.35000000000000003,
+        "return": 0.5139964111149311,
+        "fallen": false,
+        "terminated": true,
+        "incidental_bat_contact_seen_at_control_snapshots": true,
+        "incidental_bat_contact_channels": [
+          "bat_robot_left_hip_yaw_link"
+        ],
+        "max_incidental_contact_force_norm_N_at_control_snapshots": 21.498653411865234,
+        "time_limit": false,
+        "bat_contact_seen_at_control_snapshots": false,
+        "max_joint_limit_excess_rad": 0.0,
+        "max_raw_action_abs": 1.5058331489562988,
+        "minimum_root_height_m": 0.757472038269043,
+        "maximum_root_xy_displacement_m": 0.051480457186698914
+      }
+    ]
+  }
+}

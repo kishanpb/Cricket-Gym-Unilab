@@ -268,3 +268,17 @@ uv run python scripts/evaluate_g1_cricket_smoke.py --scope balance-v3 \
 uv run python scripts/retain_g1_training_diagnostics.py \
   g1_cricket_results/balance_v3/right
 ```
+
+The bounded run completed all 199,680 transitions. All 16 retained episodes
+still fail the incidental-contact guard: zero control is unchanged at 0.34 s
+(right) and 0.33 s (left); PPO reaches 0.76 s on the trained right side and
+0.35 s in untrained left transfer. These are body contacts before a fall, not
+successful completions. Right PPO contacts the hip-roll link at a 22.21 N
+control-snapshot force norm, with 0.299 m horizontal drift. This is a regression
+against v2's 1.49 s matched-hand episode despite the corrected frame contract.
+
+[Full v3 evidence](g1_cricket_results/balance_v3/right/evaluation.json) preserves
+all rows, source/config/checkpoint hashes and explicit sensing semantics.
+All 16 legacy v2 rows replay exactly after adding the unused quaternion sensor.
+The frame correction is retained as a correctness fix, not promoted as learned
+balance, cricket performance or a robotics-quality video.
