@@ -4,6 +4,7 @@ import csv
 import hashlib
 import itertools
 import json
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -26,7 +27,10 @@ def test_guarded_balance_evidence():
         == report["run_config_sha256"]
     )
     for name, digest in report["source_hashes"].items():
-        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest
+        frozen_source = subprocess.check_output(
+            ["git", "show", f"f326872e55a6551de17834a65b1ca07eea56d73d:{name}"], cwd=ROOT
+        )
+        assert hashlib.sha256(frozen_source).hexdigest() == digest
     evaluation = report["evaluation"]
     assert evaluation["horizon_seconds"] == 3.0
     assert "incidental bat-ground/wicket/robot contact" in evaluation["termination_contract"]

@@ -170,8 +170,10 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
     sources += [ROOT / "src/unilab/conf/ppo/task/g1_cricket_batting/mujoco.yaml", Path(__file__)]
     if scope.startswith("balance-"):
         sources.append(ROOT / "src/unilab/conf/ppo/task/g1_cricket_balance_v1/mujoco.yaml")
-    if scope == "balance-v2":
+    if scope in ("balance-v2", "balance-v3"):
         sources.append(ROOT / "src/unilab/conf/ppo/task/g1_cricket_balance_v2/mujoco.yaml")
+    if scope == "balance-v3":
+        sources.append(ROOT / "src/unilab/conf/ppo/task/g1_cricket_balance_v3/mujoco.yaml")
     return {
         "scope": (
             "native_CPU_PPO_pipeline_smoke_not_trained_cricket"
@@ -215,9 +217,14 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
             "horizon_seconds": float(owner.env.max_episode_seconds),
             "sensing_scope": "privileged simulator ball/root state, joint encoders, gyro, gravity and contact snapshots; not vision-only or deployable tactile hardware",
             "contact_scope": "end-of-control sensor snapshots; not complete impact detection",
+            "gravity_observation": (
+                "unit gravity in torso IMU frame, inverse-rotated from world gravity"
+                if scope == "balance-v3"
+                else "legacy negated world-frame torso up-vector, not body-frame gravity"
+            ),
             "termination_contract": (
                 "fall or incidental bat-ground/wicket/robot contact; fixed wrist fixture exempt"
-                if scope == "balance-v2"
+                if scope in ("balance-v2", "balance-v3")
                 else "fall only; incidental bat contact is diagnostic, not a termination"
             ),
             "rows": rows,
@@ -228,7 +235,9 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-dir", type=Path, required=True)
-    parser.add_argument("--scope", choices=("smoke", "balance-v1", "balance-v2"), default="smoke")
+    parser.add_argument(
+        "--scope", choices=("smoke", "balance-v1", "balance-v2", "balance-v3"), default="smoke"
+    )
     args = parser.parse_args()
     report = evaluate(args.run_dir, args.scope)
     output = args.run_dir / "evaluation.json"

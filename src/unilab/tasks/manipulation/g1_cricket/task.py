@@ -15,6 +15,7 @@ from unilab.envs.manager_based_rl_env import (
     _resolve_backend_entity_contract,
 )
 from unilab.managers import ManagerTermBaseCfg
+from unilab.utils.rotation import np_quat_apply_inverse_batched
 
 from .scene import (
     BALL_CONTACT_NAMES,
@@ -90,6 +91,16 @@ class BallObservation:
             ),
             axis=1,
         )
+
+
+class BodyFrameGravity:
+    """Unit gravity in the named IMU frame, from its world-frame wxyz quaternion."""
+
+    def __init__(self, cfg: ManagerTermBaseCfg, env: ManagerBasedRlEnv):
+        self.orientation = env.scene.bind_sensor_data((cfg.params["sensor_name"],))
+
+    def __call__(self, env: ManagerBasedRlEnv, sensor_name: str) -> np.ndarray:
+        return np_quat_apply_inverse_batched(self.orientation.read(), np.array([0.0, 0.0, -1.0]))
 
 
 class ContactObservation:

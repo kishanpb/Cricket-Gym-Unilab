@@ -74,6 +74,9 @@ def build_scene(source: Path, destination: Path, handedness: str) -> tuple[str, 
     ET.SubElement(
         sensors, "framepos", name="bat_center_world", objtype="site", objname="bat_center"
     )
+    ET.SubElement(
+        sensors, "framequat", name="torso_world_quat", objtype="site", objname="imu_in_torso"
+    )
 
     ET.SubElement(
         world,

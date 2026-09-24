@@ -7,6 +7,7 @@ import mujoco
 import numpy as np
 import pytest
 from hydra import compose, initialize_config_dir
+from omegaconf import OmegaConf
 
 from unilab.base import registry
 from unilab.base.config_adapter import BackendAdapter
@@ -18,10 +19,29 @@ ROOT = Path(__file__).resolve().parents[2]
 ROBOT = ROOT / "src/unilab/assets/robots/g1/g1.xml"
 
 
-def make_env(handedness: str, task: str = "g1_cricket_batting/mujoco"):
+def make_env(handedness: str, task: str = "g1_cricket_batting/mujoco", rotation=None):
     registry.ensure_registries()
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
         owner = compose("config", overrides=[f"task={task}", f"env.handedness={handedness}"])
+    if rotation is not None:
+        OmegaConf.update(
+            owner,
+            "env.events.audit_rotation",
+            {
+                "func": "unilab.envs.mdp.reset_root_state_uniform",
+                "mode": "reset",
+                "params": {
+                    "pose_range": {
+                        name: [float(angle), float(angle)]
+                        for name, angle in zip(
+                            ("roll", "pitch", "yaw"), np.deg2rad(rotation), strict=True
+                        )
+                    },
+                    "velocity_range": {},
+                },
+            },
+            force_add=True,
+        )
     override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
     override["auto_reset"] = False
     return registry.make(
@@ -154,3 +174,50 @@ def test_balance_v2_guard_and_reset_clearance(handedness):
         assert state.terminated.all()
     finally:
         env.close()
+
+
+@pytest.mark.parametrize("handedness", ["right", "left"])
+@pytest.mark.parametrize(
+    "rotation",
+    [(0, 0, 0), (10, 0, 0), (-10, 0, 0), (0, 10, 0), (0, -10, 0), (0, 10, 60), (0, 0, 60)],
+)
+def test_balance_v3_gravity_is_in_torso_frame(handedness, rotation):
+    env = make_env(handedness, "g1_cricket_balance_v3/mujoco", rotation)
+    try:
+        obs, _ = env.reset(seed=4)
+        assert obs["obs"].shape == (2, 130)
+        roll, pitch, _ = np.deg2rad(rotation)
+        expected = [np.sin(pitch), -np.sin(roll) * np.cos(pitch), -np.cos(roll) * np.cos(pitch)]
+        gravity = obs["obs"][:, 58:61]
+        np.testing.assert_allclose(gravity, np.tile(expected, (2, 1)), atol=1e-6)
+        np.testing.assert_allclose(np.linalg.norm(gravity, axis=1), 1, atol=1e-6)
+    finally:
+        env.close()
+
+
+def test_legacy_v2_gravity_and_dynamics_are_preserved():
+    old = make_env("right", "g1_cricket_balance_v2/mujoco", (0, 10, 60))
+    new = make_env("right", "g1_cricket_balance_v3/mujoco", (0, 10, 60))
+    try:
+        original, _ = old.reset(seed=4)
+        corrected, _ = new.reset(seed=4)
+        legacy_gravity = -old.scene.bind_sensor_data(("torso_upvector",)).read()
+        np.testing.assert_allclose(original["obs"][:, 58:61], legacy_gravity)
+        assert not np.allclose(original["obs"][:, 58:61], corrected["obs"][:, 58:61])
+        for _ in range(5):
+            action = np.zeros((2, 29), dtype=np.float32)
+            a, b = old.step(action), new.step(action)
+            np.testing.assert_array_equal(a.reward, b.reward)
+            np.testing.assert_array_equal(a.terminated, b.terminated)
+            np.testing.assert_array_equal(
+                old.scene["robot"].data.root_link_pose_w, new.scene["robot"].data.root_link_pose_w
+            )
+            np.testing.assert_array_equal(
+                old.scene["robot"].data.root_link_vel_w, new.scene["robot"].data.root_link_vel_w
+            )
+            np.testing.assert_array_equal(
+                old.scene["robot"].data.joint_pos, new.scene["robot"].data.joint_pos
+            )
+    finally:
+        old.close()
+        new.close()

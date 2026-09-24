@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_balance_v2/mujoco
+  - _self_
+
+env:
+  observations:
+    policy:
+      terms:
+        gravity:
+          func: unilab.tasks.manipulation.g1_cricket.task.BodyFrameGravity
+          params: {sensor_name: torso_world_quat}

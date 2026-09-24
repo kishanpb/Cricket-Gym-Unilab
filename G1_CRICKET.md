@@ -236,3 +236,35 @@ uv run python scripts/evaluate_g1_cricket_smoke.py --scope balance-v2 \
 uv run python scripts/retain_g1_training_diagnostics.py \
   g1_cricket_results/balance_v2/right
 ```
+
+## Balance v3: torso-frame gravity contract
+
+The inherited `projected_gravity_from_sensor` term negates a world-frame torso
+up-vector. That is not gravity expressed in the local IMU frame: a positive
+10-degree pitch gives the wrong horizontal sign, and changing world yaw changes
+the legacy vector. The cricket-only v3 owner uses a public `framequat` sensor at
+`imu_in_torso` and inverse-rotates unit world gravity into that frame, matching
+the existing torso gyro. Shared locomotion code and v1/v2 semantics are unchanged.
+
+Both-hand tests cover identity, positive/negative roll and pitch, pure yaw and
+combined pitch/yaw. They check analytical direction, unit length, 130 observation
+dimensions, preserved legacy values and identical zero-action physical states
+and rewards. Sensor timing remains the existing end-of-control evaluation stage.
+
+The predeclared development comparison is a fresh right-hand PPO run with the
+same 199,680 transitions, seed, optimizer, reset, reward, contact guard and three-
+second horizon as v2. No v2 checkpoint is reused just because dimensions match:
+the observation meanings differ. This fixes a demonstrated frame defect; it is
+not evidence that the defect alone caused the failed balance policy. Retain all
+16 baseline/matched/left-transfer rows, and require all matched episodes to pass
+before a separate ten-second audit or any video claim.
+
+```sh
+uv run python -m unilab.scripts.train_rsl_rl \
+  task=g1_cricket_balance_v3/mujoco env.handedness=right \
+  training.log_dir=g1_cricket_results/balance_v3/right
+uv run python scripts/evaluate_g1_cricket_smoke.py --scope balance-v3 \
+  --run-dir g1_cricket_results/balance_v3/right
+uv run python scripts/retain_g1_training_diagnostics.py \
+  g1_cricket_results/balance_v3/right
+```
