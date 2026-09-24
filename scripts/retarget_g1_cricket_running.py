@@ -15,7 +15,7 @@ from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDelivery
 from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
 from unilab.tasks.manipulation.g1_cricket.running import (
     RELEASE_TIME,
-    BallisticRunupHeight,
+    BallisticRunupCOM,
     retarget_running_delivery,
 )
 from unilab.tasks.manipulation.g1_cricket.tracking import (
@@ -96,20 +96,22 @@ def run(hand, output, render, *, ballistic_parent=None, lane_offset=0.0):
         model.opt.timestep = 0.0000625
         model.vis.global_.offwidth, model.vis.global_.offheight = 960, 540
         times = np.arange(136) * 0.02
-        com_height = None
+        com_target = None
         if ballistic_parent is not None:
             with np.load(ballistic_parent / f"{hand}_reference.npz") as parent:
                 np.testing.assert_array_equal(parent["times"], times)
                 parent_poses = parent["qpos"]
             data = mujoco.MjData(model)
-            heights = []
+            centers = []
             for pose in parent_poses:
                 data.qpos[:] = pose
                 mujoco.mj_forward(model, data)
-                heights.append(data.subtree_com[0, 2])
-            com_height = BallisticRunupHeight(times, heights, -model.opt.gravity[2])
+                centers.append(data.subtree_com[0].copy())
+            centers = np.asarray(centers)
+            centers[:, 1] += lane_offset * (1 if hand == "right" else -1)
+            com_target = BallisticRunupCOM(times, centers, -model.opt.gravity[2])
         reference = retarget_running_delivery(
-            model, times, hand, com_height=com_height, lane_offset=lane_offset
+            model, times, hand, com_target=com_target, lane_offset=lane_offset
         )
         poses = reference["qpos"]
         velocity = velocity_reference(model, poses, 0.02)

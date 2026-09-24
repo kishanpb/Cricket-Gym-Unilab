@@ -4,25 +4,25 @@ import numpy as np
 import pytest
 from audit_g1_cricket_running_flight import aerial_residual
 
-from unilab.tasks.manipulation.g1_cricket.running import BallisticRunupHeight
+from unilab.tasks.manipulation.g1_cricket.running import BallisticRunupCOM
 
 
 def test_runup_height_is_ballistic_in_flight_and_c1_at_phase_boundaries():
     times = np.arange(136) * 0.02
-    parent = 0.7 + 0.02 * times
-    height = BallisticRunupHeight(times, parent, 9.81)
+    parent = np.column_stack((1.2 * times, 0.03 * times, 0.7 + 0.02 * times))
+    height = BallisticRunupCOM(times, parent, 9.81)
     for cycle in range(4):
         t = cycle * 0.3 + 0.26
         acceleration = (height(t + 0.01) - 2 * height(t) + height(t - 0.01)) / 0.01**2
-        assert acceleration == pytest.approx(-9.81, abs=1e-9)
+        np.testing.assert_allclose(acceleration, [0, 0, -9.81], atol=1e-9)
     boundaries = [0.22, 0.3, 0.52, 0.6, 0.82, 0.9, 1.12, 1.2, 1.32]
     delta = 1e-7
     for t in boundaries:
         before = (height(t) - height(t - delta)) / delta
         after = (height(t + delta) - height(t)) / delta
-        assert before == pytest.approx(after, abs=1e-5)
+        np.testing.assert_allclose(before, after, atol=1e-5)
     for t in times[times >= 1.32]:
-        assert height(t) == pytest.approx(0.7 + 0.02 * t)
+        np.testing.assert_allclose(height(t), [1.2 * t, 0.03 * t, 0.7 + 0.02 * t])
 
 
 def test_outward_lane_keeps_hand_mirror_and_other_targets():

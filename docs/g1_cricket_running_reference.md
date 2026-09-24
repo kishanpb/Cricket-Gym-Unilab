@@ -2,6 +2,25 @@
 
 ## Ballistic COM Repair Comparison
 
+The vertical-only candidate (`c6f348f8`, `running_ballistic_com_v1`) reduces
+inferred aerial vertical support from 393.6-475.5 N to below 0.10 N, but leaves
+115.6-204.1 N of forward residual. All 136 poses per hand have no unexpected
+intersection; maximum arm error is 5.27 mm, foot error 2.27 mm and COM height
+error 6.04 micrometers. Four/right and five/left IK frames hit the evaluation
+limit. Both PD baselines fall at 0.58 s, with joint excursions up to 0.0761 rad
+and hand/hip contact. This candidate is not an accepted teacher or showcase.
+
+The next bounded candidate extends the same COM repair to all three coordinates:
+constant horizontal COM velocity through the run-up, matching the parent's
+initial/gather COM positions, with the same ballistic vertical phases and C1
+gather transition. Pelvis translation and original joints are solved together;
+all foot/arm targets remain fixed. Run both hands into
+`g1_cricket_results/running_ballistic_com_v2` using the command below with that
+output name. The same geometry and native-physics checks apply. Original default
+retargeting and frozen PPO actors remain unchanged; no training on failed targets.
+
+### Vertical-Only Design (Historical)
+
 The lane-clearance diagnostic exposed upward COM acceleration during aerial
 run-up frames. The next fixed comparison changes vertical COM timing only,
 using the same outward y=+/-0.70 m lane, original foot placements, arm targets,

@@ -14,7 +14,7 @@ from unilab.tasks.manipulation.g1_cricket.running import (
     END_TIME,
     GATHER_TIME,
     RELEASE_TIME,
-    BallisticRunupHeight,
+    BallisticRunupCOM,
     RunningDeliveryTargets,
     retarget_running_delivery,
 )
@@ -145,18 +145,20 @@ def test_com_retarget_accounts_for_held_ball_and_preserves_model(hand, tmp_path)
     ) as parent:
         poses = parent["qpos"]
     data = mujoco.MjData(model)
-    heights = []
+    centers = []
     for pose in poses:
         data.qpos[:] = pose
         mujoco.mj_forward(model, data)
-        heights.append(data.subtree_com[0, 2])
-    height = BallisticRunupHeight(times, heights, -model.opt.gravity[2])
-    result = retarget_running_delivery(model, times[:3], hand, com_height=height, lane_offset=0.2)
+        centers.append(data.subtree_com[0].copy())
+    centers = np.asarray(centers)
+    centers[:, 1] += 0.2 if hand == "right" else -0.2
+    target = BallisticRunupCOM(times, centers, -model.opt.gravity[2])
+    result = retarget_running_delivery(model, times[:3], hand, com_target=target, lane_offset=0.2)
     for time, pose in zip(times, result["qpos"], strict=False):
         data.qpos[:] = pose
         mujoco.mj_forward(model, data)
-        assert data.subtree_com[0, 2] == pytest.approx(height(time), abs=1e-5)
-        assert pose[1] == pytest.approx(0.7 if hand == "right" else -0.7)
+        np.testing.assert_allclose(data.subtree_com[0], target(time), atol=1e-5)
+        assert abs(pose[1] - (0.7 if hand == "right" else -0.7)) < 0.01
         wrist = data.body(f"{hand}_wrist_yaw_link")
         held = wrist.xpos + wrist.xmat.reshape(3, 3) @ [0.15, 0.06 if hand == "left" else -0.06, 0]
         np.testing.assert_allclose(data.body("cricket_ball").xpos, held, atol=1e-12)
