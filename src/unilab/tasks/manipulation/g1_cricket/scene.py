@@ -11,11 +11,16 @@ SUPPORT_NAMES = ("left_support", "right_support")
 SUPPORT_SLOTS = 32
 
 
-def build_scene(source: Path, destination: Path, handedness: str) -> None:
+def build_scene(source: Path, destination: Path, handedness: str) -> tuple[str, ...]:
     if handedness not in {"right", "left"}:
         raise ValueError("handedness must be right or left")
     tree = ET.parse(source)
     root = tree.getroot()
+    guard_bodies = [
+        body.attrib["name"]
+        for body in root.findall(".//body")
+        if body.find("geom") is not None and body.get("name") != f"{handedness}_wrist_yaw_link"
+    ]
     compiler = root.find("compiler")
     assert compiler is not None
     compiler.set("meshdir", str((source.parent / compiler.get("meshdir", "assets")).resolve()))
@@ -165,6 +170,25 @@ def build_scene(source: Path, destination: Path, handedness: str) -> None:
             reduce="none",
         )
 
+    guard_names = []
+    guard_targets = [("bat_pitch", "geom2", "pitch")]
+    guard_targets += [(f"bat_wicket_{i}", "geom2", f"wicket_{i}") for i in range(3)]
+    guard_targets += [(f"bat_robot_{body}", "body2", body) for body in guard_bodies]
+    for name, target_type, target in guard_targets:
+        ET.SubElement(
+            sensors,
+            "contact",
+            {
+                "name": name,
+                "body1": "cricket_bat",
+                target_type: target,
+                "data": CONTACT_FIELDS,
+                "num": str(CONTACT_SLOTS),
+                "reduce": "none",
+            },
+        )
+        guard_names.append(name)
+
     stand = ET.parse(source.parent / "scene_flat.xml").find("keyframe/key[@name='stand']")
     assert stand is not None
     qpos = stand.get("qpos", "").split()
@@ -179,3 +203,4 @@ def build_scene(source: Path, destination: Path, handedness: str) -> None:
     )
     ET.indent(tree, space="  ")
     tree.write(destination, encoding="unicode")
+    return tuple(guard_names)

@@ -9,6 +9,7 @@ import json
 import os
 import subprocess
 from pathlib import Path
+from typing import cast
 
 import numpy as np
 import torch
@@ -19,6 +20,7 @@ from uni_rl.algos.rsl_rl_runtime import resolve_rsl_rl_ppo_runtime
 
 from unilab.base import registry
 from unilab.base.config_adapter import BackendAdapter
+from unilab.tasks.manipulation.g1_cricket.task import G1CricketCfg, G1CricketEnv, fallen
 from unilab.training import algo_config_dict
 from unilab.utils.sim2sim import policy_load_dim_guard
 from unilab.visualization.interactive_playback import infer_checkpoint_actor_input_dim
@@ -44,8 +46,11 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
     for hand in ("right", "left"):
         override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
         override.update(handedness=hand, auto_reset=False)
-        env = registry.make(
-            "G1CricketBatting", num_envs=1, sim_backend="mujoco", env_cfg_override=override
+        env = cast(
+            G1CricketEnv,
+            registry.make(
+                "G1CricketBatting", num_envs=1, sim_backend="mujoco", env_cfg_override=override
+            ),
         )
         try:
             rl_cfg = algo_config_dict(owner)
@@ -72,6 +77,8 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
                 )
             policy = runner.get_inference_policy(device="cpu")
             bat_contact = env.scene.bind_sensor_data(("ball_bat",))
+            guard_names = cast(G1CricketCfg, env.cfg).bat_guard_sensor_names
+            guard_contacts = env.scene.bind_sensor_data(guard_names)
             for policy_name in ("zero", "ppo"):
                 for seed in EVALUATION_SEEDS:
                     env.reset(seed=seed)
@@ -79,6 +86,8 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
                     contact_seen = False
                     max_joint_excess = 0.0
                     max_action = 0.0
+                    incidental_contacts: set[str] = set()
+                    max_incidental_force = 0.0
                     min_root_height = float(env.scene["robot"].data.root_link_pos_w[0, 2])
                     max_root_displacement = 0.0
                     initial_root_xy = env.scene["robot"].data.root_link_pos_w[0, :2].copy()
@@ -105,6 +114,17 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
                         contact_seen |= bool(
                             (bat_contact.read().reshape(1, 4, 17)[..., 0] > 0).any()
                         )
+                        guard_rows = guard_contacts.read().reshape(1, len(guard_names), 4, 17)
+                        touching = (guard_rows[0, ..., 0] > 0).any(axis=-1)
+                        incidental_contacts.update(
+                            name
+                            for name, active in zip(guard_names, touching, strict=True)
+                            if active
+                        )
+                        max_incidental_force = max(
+                            max_incidental_force,
+                            float(np.linalg.norm(guard_rows[..., 1:4], axis=-1).max()),
+                        )
                         joints = env.scene["robot"].data.joint_pos
                         limits = env.scene["robot"].data.soft_joint_pos_limits
                         max_joint_excess = max(
@@ -127,7 +147,13 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
                             "steps": step + 1,
                             "seconds": (step + 1) * env.step_dt,
                             "return": episode_return,
-                            "fallen": bool(state.terminated[0]),
+                            "fallen": bool(fallen(env)[0]),
+                            "terminated": bool(state.terminated[0]),
+                            "incidental_bat_contact_seen_at_control_snapshots": bool(
+                                incidental_contacts
+                            ),
+                            "incidental_bat_contact_channels": sorted(incidental_contacts),
+                            "max_incidental_contact_force_norm_N_at_control_snapshots": max_incidental_force,
                             "time_limit": bool(state.truncated[0]),
                             "bat_contact_seen_at_control_snapshots": contact_seen,
                             "max_joint_limit_excess_rad": max_joint_excess,
@@ -142,13 +168,15 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
         ROOT / "src/unilab/tasks/manipulation/g1_cricket" / name for name in ("task.py", "scene.py")
     ]
     sources += [ROOT / "src/unilab/conf/ppo/task/g1_cricket_batting/mujoco.yaml", Path(__file__)]
-    if scope == "balance-v1":
+    if scope.startswith("balance-"):
         sources.append(ROOT / "src/unilab/conf/ppo/task/g1_cricket_balance_v1/mujoco.yaml")
+    if scope == "balance-v2":
+        sources.append(ROOT / "src/unilab/conf/ppo/task/g1_cricket_balance_v2/mujoco.yaml")
     return {
         "scope": (
             "native_CPU_PPO_pipeline_smoke_not_trained_cricket"
             if scope == "smoke"
-            else "native_CPU_PPO_balance_v1_not_trained_cricket"
+            else f"native_CPU_PPO_{scope.replace('-', '_')}_not_trained_cricket"
         ),
         "training": {
             "actual_transitions": summary["run_env_steps"],
@@ -187,6 +215,11 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
             "horizon_seconds": float(owner.env.max_episode_seconds),
             "sensing_scope": "privileged simulator ball/root state, joint encoders, gyro, gravity and contact snapshots; not vision-only or deployable tactile hardware",
             "contact_scope": "end-of-control sensor snapshots; not complete impact detection",
+            "termination_contract": (
+                "fall or incidental bat-ground/wicket/robot contact; fixed wrist fixture exempt"
+                if scope == "balance-v2"
+                else "fall only; incidental bat contact is diagnostic, not a termination"
+            ),
             "rows": rows,
         },
     }
@@ -195,7 +228,7 @@ def evaluate(run_dir: Path, scope: str = "smoke") -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-dir", type=Path, required=True)
-    parser.add_argument("--scope", choices=("smoke", "balance-v1"), default="smoke")
+    parser.add_argument("--scope", choices=("smoke", "balance-v1", "balance-v2"), default="smoke")
     args = parser.parse_args()
     report = evaluate(args.run_dir, args.scope)
     output = args.run_dir / "evaluation.json"

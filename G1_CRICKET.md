@@ -182,3 +182,57 @@ for hand in right left; do
     g1_cricket_results/balance_v1/$hand
 done
 ```
+
+## Balance v2: reject incidental bat support
+
+`g1_cricket_balance_v2/mujoco` adds a public-sensor termination for any sampled
+bat contact with the pitch, wickets or robot body. The explicitly declared
+fixed wrist fixture is exempt; ball contact is permitted. The 33 named channels
+cover both bat geoms through body selection. No collision pair is disabled and
+no root/joint pose is overwritten during policy steps. Physics, reset, 130-input
+policy and rewards remain unchanged from v1. Sensor reads are **end-of-control
+snapshots**, not a complete substep contact history; brief impacts can be missed.
+
+Both hands are initially clear: blade-floor distance 0.237915 m, handle-floor
+0.526530 m, handle-to-nonfixture wrist-pitch 0.017 m, and blade-to-hip-roll about
+0.04451 m. All guard channels initially report no contact. The body clearance is
+narrow and deserves a later stance/fixture review, but this is not an initially
+penetrating or floor-supported pose. Tests check both reset clearances, unchanged
+collision exclusions and actual native zero-action guard termination.
+
+One fresh right-hand CPU PPO run collected **199,680 transitions**, 2,080 updates
+at four environments and 24 steps/update, with the same two-thread caps. Training
+took 133.07 s at 1,558 transitions/s. The full three-second declared evaluation
+contains 16 rows: zero and deterministic PPO, both hands, seeds 4101-4104. Resets
+remain deterministic and the left hand is untrained transfer, not independent
+seed robustness. [Complete guarded evidence](g1_cricket_results/balance_v2/right/evaluation.json)
+retains every row and checkpoint/config/source hashes.
+
+| Control / hand | Contact failures | Duration | Contact channel | Snapshot force norm |
+| --- | --- | --- | --- | --- |
+| Zero / right | 4/4 | 0.34 s | Right hip-roll | 14.09 N |
+| Zero / left | 4/4 | 0.33 s | Left hip-roll | 19.60 N |
+| PPO / right | 4/4 | 1.49 s | Bat-pitch | 163.77 N |
+| PPO / left | 4/4 | 0.29 s | Left hip-yaw | 46.20 N |
+
+All episodes terminate for incidental contact **before the fall threshold**;
+they are neither falls nor successful no-fall completions. Matched-hand PPO
+drifts 0.482 m horizontally and reaches a minimum root height of 0.606 m before
+bat-ground contact. No sampled bat-ball strike or three-second pass occurred,
+and no ten-second stress test or showcase was produced. V2 returns use this new
+termination contract and must not be merged with v1 returns as a single learning
+curve. This is a bounded negative result, not proof the guarded task is exhausted.
+
+The retained run contains only final `model_2079.pt`, config, summary, complete
+evaluation and exported scalar diagnostics. KL and clip-fraction traces remain
+unavailable from the native logger. Reproduce with the same CPU variables/runtime:
+
+```sh
+uv run python -m unilab.scripts.train_rsl_rl \
+  task=g1_cricket_balance_v2/mujoco env.handedness=right \
+  training.log_dir=g1_cricket_results/balance_v2/right
+uv run python scripts/evaluate_g1_cricket_smoke.py --scope balance-v2 \
+  --run-dir g1_cricket_results/balance_v2/right
+uv run python scripts/retain_g1_training_diagnostics.py \
+  g1_cricket_results/balance_v2/right
+```

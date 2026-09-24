@@ -32,6 +32,7 @@ if TYPE_CHECKING:
 @dataclass
 class G1CricketCfg(ManagerBasedRlEnvCfg):
     handedness: str = "right"
+    bat_guard_sensor_names: tuple[str, ...] = ()
 
 
 class G1CricketEnv(ManagerBasedRlEnv):
@@ -53,9 +54,9 @@ def make_g1_cricket_env(
     directory = TemporaryDirectory(prefix="unilab-g1-cricket-")
     try:
         scene_file = Path(directory.name) / "cricket.xml"
-        build_scene(Path(cfg.scene.model_file), scene_file, cfg.handedness)
+        guard_names = build_scene(Path(cfg.scene.model_file), scene_file, cfg.handedness)
         scene = replace(cfg.scene, model_file=str(scene_file))
-        cfg = replace(cfg, scene=scene)
+        cfg = replace(cfg, scene=scene, bat_guard_sensor_names=guard_names)
         base_name, body_state = _resolve_backend_entity_contract(cfg)
         kwargs = env_backend_kwargs(cfg)
         kwargs["base_name"] = base_name
@@ -121,6 +122,18 @@ class ResetBall:
         states = np.array(self.ball.data.default_root_state[env_ids], copy=True)
         states[:, 7] = -speed
         self.ball.write_root_state_to_sim(states, env_ids=env_ids)
+
+
+class IncidentalBatSupport:
+    """Reject sampled bat contact outside ball and the declared wrist fixture."""
+
+    def __init__(self, cfg: ManagerTermBaseCfg, env: ManagerBasedRlEnv):
+        names = cast("G1CricketCfg", env.cfg).bat_guard_sensor_names
+        self.contacts = env.scene.bind_sensor_data(names)
+
+    def __call__(self, env: ManagerBasedRlEnv) -> np.ndarray:
+        rows = self.contacts.read().reshape(env.num_envs, -1, CONTACT_WIDTH)
+        return (rows[..., 0] > 0).any(axis=1)
 
 
 def fallen(env: ManagerBasedRlEnv) -> np.ndarray:

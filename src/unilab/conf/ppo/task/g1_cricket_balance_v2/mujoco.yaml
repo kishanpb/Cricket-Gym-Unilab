@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_balance_v1/mujoco
+  - _self_
+
+algo:
+  max_iterations: 2080
+  save_interval: 2080
+env:
+  terminations:
+    incidental_bat_support:
+      func: unilab.tasks.manipulation.g1_cricket.task.IncidentalBatSupport

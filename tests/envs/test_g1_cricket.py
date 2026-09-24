@@ -12,6 +12,7 @@ from unilab.base import registry
 from unilab.base.config_adapter import BackendAdapter
 from unilab.base.entity import Entity
 from unilab.tasks.manipulation.g1_cricket.scene import build_scene
+from unilab.tasks.manipulation.g1_cricket.task import IncidentalBatSupport
 
 ROOT = Path(__file__).resolve().parents[2]
 ROBOT = ROOT / "src/unilab/assets/robots/g1/g1.xml"
@@ -42,6 +43,9 @@ def test_scene_preserves_robot_and_adds_free_ball(tmp_path, handedness):
     assert root.find(".//body[@name='cricket_bat']/joint") is None
     assert root.find(".//body[@mocap='true']") is None
     original = ET.fromstring(before)
+    assert [e.attrib for e in root.findall("contact/*")] == [
+        e.attrib for e in original.findall("contact/*")
+    ]
     assert [e.attrib for e in root.findall("actuator/*")] == [
         e.attrib for e in original.findall("actuator/*")
     ]
@@ -113,5 +117,40 @@ def test_balance_v1_native_reward_and_observation_contract(handedness):
         state = env.step(np.zeros((2, 29), dtype=np.float32))
         assert np.isfinite(state.reward).all()
         assert np.isfinite(state.obs["obs"]).all()
+    finally:
+        env.close()
+
+
+@pytest.mark.parametrize("handedness", ["right", "left"])
+def test_balance_v2_guard_and_reset_clearance(handedness):
+    env = make_env(handedness, "g1_cricket_balance_v2/mujoco")
+    try:
+        obs, _ = env.reset(seed=4)
+        assert obs["obs"].shape == (2, 130)
+        guard = IncidentalBatSupport(None, env)
+        assert not guard(env).any()
+        names = env.cfg.bat_guard_sensor_names
+        assert "bat_pitch" in names
+        assert f"bat_robot_{handedness}_wrist_yaw_link" not in names
+        assert "bat_robot_pelvis" in names
+        model = mujoco.MjModel.from_xml_path(str(Path(env.scene_directory.name) / "cricket.xml"))
+        data = mujoco.MjData(model)
+        mujoco.mj_resetDataKeyframe(model, data, 0)
+        mujoco.mj_forward(model, data)
+        ground = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, "pitch")
+        for geom in ("bat_blade", "bat_handle"):
+            geom_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, geom)
+            assert mujoco.mj_geomDistance(model, data, geom_id, ground, 10, None) > 0.04
+        blade = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, "bat_blade")
+        hip = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, f"{handedness}_hip_roll_link")
+        for geom_id in np.flatnonzero(model.geom_bodyid == hip):
+            if model.geom_contype[geom_id] or model.geom_conaffinity[geom_id]:
+                assert mujoco.mj_geomDistance(model, data, blade, geom_id, 10, None) > 0.04
+        for _ in range(env.max_episode_length):
+            state = env.step(np.zeros((2, 29), dtype=np.float32))
+            if state.terminated.any():
+                break
+        assert guard(env).all()
+        assert state.terminated.all()
     finally:
         env.close()

@@ -1,0 +1,196 @@
+{
+  "scope": "native iteration-indexed scalars; redundant wall-time-indexed /time series omitted; no reconstructed KL or clip-fraction estimates",
+  "kl_series_available": false,
+  "clip_fraction_series_available": false,
+  "scalar_tags": {
+    "Episode_Reward/action_rate": {
+      "count": 96,
+      "all_finite": true,
+      "minimum": -0.014507842250168324,
+      "maximum": -0.002141103846952319,
+      "final": -0.012379367835819721
+    },
+    "Episode_Reward/angular_velocity": {
+      "count": 96,
+      "all_finite": true,
+      "minimum": -0.08596529066562653,
+      "maximum": -0.0012650585267692804,
+      "final": -0.0204861331731081
+    },
+    "Episode_Reward/height": {
+      "count": 96,
+      "all_finite": true,
+      "minimum": -0.6485728025436401,
+      "maximum": -0.0016331480583176017,
+      "final": -0.6485728025436401
+    },
+    "Episode_Reward/orientation": {
+      "count": 96,
+      "all_finite": true,
+      "minimum": -0.2074434757232666,
+      "maximum": -0.0003778440586756915,
+      "final": -0.1392703652381897
+    },
+    "Episode_Reward/pose": {
+      "count": 96,
+      "all_finite": true,
+      "minimum": -0.40254467725753784,
+      "maximum": -0.007282853126525879,
+      "final": -0.22765617072582245
+    },
+    "Episode_Reward/upright": {
+      "count": 96,
+      "all_finite": true,
+      "minimum": 0.19484174251556396,
+      "maximum": 1.2043137550354004,
+      "final": 1.0694268941879272
+    },
+    "Episode_Reward/vertical_velocity": {
+      "count": 96,
+      "all_finite": true,
+      "minimum": -0.0028971927240490913,
+      "maximum": -0.0002238129818579182,
+      "final": -0.0015965094789862633
+    },
+    "Episode_Termination/fallen": {
+      "count": 96,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "Episode_Termination/incidental_bat_support": {
+      "count": 96,
+      "all_finite": true,
+      "minimum": 1.0,
+      "maximum": 1.5,
+      "final": 1.0
+    },
+    "Episode_Termination/time_out": {
+      "count": 96,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "Loss/entropy": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": -8.455814361572266,
+      "maximum": -5.464717388153076,
+      "final": -8.218269348144531
+    },
+    "Loss/learning_rate": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": 1.1561020073713735e-05,
+      "maximum": 0.00019753086962737143,
+      "final": 3.9018443203531206e-05
+    },
+    "Loss/surrogate": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": -0.06785276532173157,
+      "maximum": -0.020764026790857315,
+      "final": -0.05328141525387764
+    },
+    "Loss/value": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": 7.154952618293464e-05,
+      "maximum": 0.49814847111701965,
+      "final": 0.00798904150724411
+    },
+    "Perf/collection_time": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": 0.032505035400390625,
+      "maximum": 0.08066201210021973,
+      "final": 0.04432320594787598
+    },
+    "Perf/learning_time": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": 0.01140594482421875,
+      "maximum": 0.033580780029296875,
+      "final": 0.012190818786621094
+    },
+    "Perf/total_fps": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": 1032.0,
+      "maximum": 2137.0,
+      "final": 1698.0
+    },
+    "Policy/mean_std": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": 0.18281561136245728,
+      "maximum": 0.20052644610404968,
+      "final": 0.1851930320262909
+    },
+    "Train/mean_episode_length": {
+      "count": 2079,
+      "all_finite": true,
+      "minimum": 28.421052932739258,
+      "maximum": 135.11000061035156,
+      "final": 135.11000061035156
+    },
+    "Train/mean_reward": {
+      "count": 2079,
+      "all_finite": true,
+      "minimum": -0.4979870617389679,
+      "maximum": 1.2897242307662964,
+      "final": 1.1068902015686035
+    },
+    "reward/action_rate": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": -0.02678620256483555,
+      "maximum": -0.0200833510607481,
+      "final": -0.02273511327803135
+    },
+    "reward/angular_velocity": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": -0.565434992313385,
+      "maximum": -0.005242157727479935,
+      "final": -0.06292897462844849
+    },
+    "reward/height": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": -7.199167251586914,
+      "maximum": -0.0008085009176284075,
+      "final": -1.5229429006576538
+    },
+    "reward/orientation": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": -0.7183330655097961,
+      "maximum": -0.0009872957598417997,
+      "final": -0.30371469259262085
+    },
+    "reward/pose": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": -1.5969423055648804,
+      "maximum": -0.0599815659224987,
+      "final": -0.6677875518798828
+    },
+    "reward/upright": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": 1.8852468729019165,
+      "maximum": 1.9997564554214478,
+      "final": 1.9683881998062134
+    },
+    "reward/vertical_velocity": {
+      "count": 2080,
+      "all_finite": true,
+      "minimum": -0.024528369307518005,
+      "maximum": -0.0003971369005739689,
+      "final": -0.005715642124414444
+    }
+  }
+}
