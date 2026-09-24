@@ -1,0 +1,10 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_supported_tracking/mujoco
+  - _self_
+
+env:
+  actions:
+    reference:
+      _target_: unilab.tasks.manipulation.g1_cricket.tracking.BalancedCricketReferenceActionCfg
+      balance_gain: 4.0

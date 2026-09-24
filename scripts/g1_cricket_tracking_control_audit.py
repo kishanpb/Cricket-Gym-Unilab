@@ -11,6 +11,7 @@ import numpy as np
 
 from unilab.tasks.manipulation.g1_cricket.bimanual import build_bimanual_scene, support_feedforward
 from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
+from unilab.tasks.manipulation.g1_cricket.tracking import ankle_balance
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -18,16 +19,6 @@ ROOT = Path(__file__).resolve().parents[1]
 def position_velocity_control(model, position, velocity):
     """Encode Kp(q_ref-q) + Kd(v_ref-v) through the existing position actuator."""
     return position - model.actuator_biasprm[:, 2] / model.actuator_gainprm[:, 0] * velocity
-
-
-def ankle_balance(reference_quaternion, quaternion, angular_velocity, gain):
-    tilt = np.empty(3)
-    mujoco.mju_subQuat(tilt, quaternion, reference_quaternion)
-    reference_rotation, rotation = np.empty(9), np.empty(9)
-    mujoco.mju_quat2Mat(reference_rotation, reference_quaternion)
-    mujoco.mju_quat2Mat(rotation, quaternion)
-    velocity = reference_rotation.reshape(3, 3).T @ rotation.reshape(3, 3) @ angular_velocity
-    return np.clip(gain * (0.7 * tilt[:2] + 0.1 * velocity[:2]), -0.3, 0.3)
 
 
 def feasibility_checks(row):

@@ -1,5 +1,9 @@
 # G1 Cricket Motion Retargeting
 
+The [balance-feedback follow-up](g1_cricket_balance_feedback.md) now completes
+both reference-only three-second motions without falling. It still misses the
+bat-tracking accuracy gate; learned cricket and running bowling are not done.
+
 The earlier cricket demonstrations are the visual target: two hands on the bat,
 guard, backlift, downswing and follow-through; running approach, gather, legal
 plant and overarm delivery. The earlier bowling implementation posed the body

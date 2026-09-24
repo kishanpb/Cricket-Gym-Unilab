@@ -93,3 +93,25 @@ Zero gain exactly reproduces both clipped baselines. Gain 0.5 adds a root
 tracking failure; gains 1 and 1.5 introduce ground/self contact and other
 physical failures. None clears all gates. Reject waist compensation and
 retain the original waist targets; no runtime waist-feedback variant is added.
+
+## Runtime Integration and PPO Pilot
+
+`g1_cricket_balanced_tracking` adds only the gain-4 ankle-feedback action to the
+supported owner. It retains clipped motor encoding and no waist compensation.
+The action reads pelvis orientation/angular velocity through the entity API;
+it never changes robot state or applies a root support force. Both standard
+MuJoCo and native mjbatch owners complete the full three-second zero-residual
+motion in contract tests, with independent substep replay, no unexpected
+contacts, no hard-limit excursions above 0.0001 rad and grip gap below 6 mm.
+Bat accuracy remains an unresolved diagnostic, not a qualified teacher label.
+
+Fixed new learning experiment: independent fresh right/left PPO, seed 1,
+16 native mjbatch environments, 512 updates / 196,608 transitions per hand.
+Only the balance-feedback owner changes from the preceding supported pilot:
+same grounded references, 0.25 residual scale, 0.2 initial action noise,
+architecture, rewards, optimizer and strict finite checks. Keep both final
+checkpoints, all scalar series, reference-only and learned complete evaluations,
+and physical failure traces. No checkpoint selection or adaptive extra updates.
+Learning may improve tracking but cannot establish ball hitting or running
+bowling in this dry-swing task. Compare to its own balanced baseline, not a
+selected older failed rollout.

@@ -140,14 +140,18 @@ def test_supported_tracking_targets_use_same_reference_and_original_limits(hand)
 
 @pytest.mark.parametrize("engine", ["mujoco", "mjbatch"])
 @pytest.mark.parametrize("hand", ["right", "left"])
-def test_supported_tracking_substep_replay(engine, hand):
+@pytest.mark.parametrize("balanced", [False, True])
+def test_supported_tracking_substep_replay(engine, hand, balanced):
     from evaluate_g1_cricket_tracking import TrackingReplay
 
     registry.ensure_registries()
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
         owner = compose(
             "config",
-            overrides=[f"task=g1_cricket_supported_tracking/{engine}", f"env.handedness={hand}"],
+            overrides=[
+                f"task=g1_cricket_{'balanced' if balanced else 'supported'}_tracking/{engine}",
+                f"env.handedness={hand}",
+            ],
         )
     override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
     override["auto_reset"] = False
@@ -157,7 +161,7 @@ def test_supported_tracking_substep_replay(engine, hand):
     try:
         env.reset(seed=1)
         replay = TrackingReplay(env)
-        for _ in range(3):
+        for _ in range(150 if balanced else 3):
             initial = env.get_physics_state_snapshot()[0].copy()
             env.step(np.zeros((1, 29), dtype=np.float32))
             result = replay.measure(env, initial)
@@ -165,6 +169,12 @@ def test_supported_tracking_substep_replay(engine, hand):
             assert result["unexpected_contacts"] == []
             assert all(np.isfinite(value) for value in result["peaks"].values())
             assert result["peaks"]["motor_force_fraction"] <= 1
+            if balanced:
+                assert result["peaks"]["hard_joint_limit_excess_rad"] <= 0.0001
+                assert result["peaks"]["grip_separation_m"] < 0.006
+                assert env.scene["robot"].data.root_link_pos_w[0, 2] > 0.65
+        if balanced:
+            assert env.state.truncated[0] and not env.state.terminated[0]
         wrong = initial.copy()
         wrong[1] += 0.01
         with pytest.raises(AssertionError):
@@ -175,16 +185,16 @@ def test_supported_tracking_substep_replay(engine, hand):
 
 @pytest.mark.parametrize("hand", ["right", "left"])
 @pytest.mark.parametrize("engine", ["mujoco", "mjbatch"])
-@pytest.mark.parametrize("supported", [False, True])
+@pytest.mark.parametrize("owner_kind", ["bimanual", "supported", "balanced"])
 def test_whole_body_owner_has_no_mid_episode_pose_writes(
-    hand, engine, supported, monkeypatch, tmp_path
+    hand, engine, owner_kind, monkeypatch, tmp_path
 ):
     registry.ensure_registries()
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
         owner = compose(
             "config",
             overrides=[
-                f"task=g1_cricket_{'supported' if supported else 'bimanual'}_tracking/{engine}",
+                f"task=g1_cricket_{owner_kind}_tracking/{engine}",
                 f"env.handedness={hand}",
             ],
         )
@@ -195,7 +205,7 @@ def test_whole_body_owner_has_no_mid_episode_pose_writes(
         **{name: value if name == "fps" else value[:5] for name, value in motion.items()},
     )
     owner.env.commands.motion.params.motion_file = str(short_clip)
-    if supported:
+    if owner_kind != "bimanual":
         with np.load(ROOT / owner.env.actions.reference.reference_file) as full_reference:
             short_reference = tmp_path / "short_reference.npz"
             np.savez_compressed(short_reference, qpos=full_reference["qpos"][:5])
@@ -214,11 +224,23 @@ def test_whole_body_owner_has_no_mid_episode_pose_writes(
         action = np.zeros((2, 29), dtype=np.float32)
         action[:, 0] = 0.5
         expected = reference + 0.25 * action
-        if supported:
+        if owner_kind != "bimanual":
             term = env.action_manager.get_term("reference")
             command = env.command_manager.get_term("motion")
             expected += term.velocity_gain * command.joint_vel
             expected += term.gravity_offset[command.time_steps]
+            if owner_kind == "balanced":
+                from unilab.tasks.manipulation.g1_cricket.tracking import ankle_balance
+
+                for i in range(2):
+                    correction = ankle_balance(
+                        term.reference_root_quaternion[command.time_steps[i]],
+                        env.scene["robot"].data.root_link_quat_w[i],
+                        env.scene["robot"].data.root_link_ang_vel_b[i],
+                        4.0,
+                    )
+                    expected[i, [4, 10]] += correction[1]
+                    expected[i, [5, 11]] += correction[0]
             expected = np.clip(expected, term.control_limits[:, 0], term.control_limits[:, 1])
 
         def forbid(*args, **kwargs):
