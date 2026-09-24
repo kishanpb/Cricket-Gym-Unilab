@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import imageio.v2 as imageio
 import mujoco
@@ -18,6 +19,7 @@ from uni_rl.algos.rsl_rl import RslRlVecEnvWrapper, normalize_ppo_train_cfg
 
 from unilab.base import registry
 from unilab.base.config_adapter import BackendAdapter
+from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
 from unilab.training import algo_config_dict
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -80,16 +82,51 @@ def render_rollout(env, physical, directory, result):
     sheet.save(directory / f"{controller}_review.png")
 
 
-def evaluate(directory, render=False):
+def shift_lane(owner, output, outward_offset):
+    """Translate only free-body reference paths; keep world geometry and all velocities."""
+    hand = owner.env.handedness
+    offset = outward_offset * (1 if hand == "right" else -1)
+    with TemporaryDirectory(prefix="g1-running-lane-") as temporary:
+        scene = Path(temporary) / "scene.xml"
+        G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(
+            ROOT / owner.env.scene.model_file, scene
+        )
+        model = mujoco.MjModel.from_xml_path(str(scene))
+    free = np.flatnonzero(model.jnt_type == mujoco.mjtJoint.mjJNT_FREE)
+    with np.load(ROOT / owner.env.actions.reference.reference_file) as data:
+        reference = {name: data[name].copy() for name in data.files}
+    with np.load(ROOT / owner.env.commands.motion.params.motion_file) as data:
+        tracking = {name: data[name].copy() for name in data.files}
+    reference["qpos"][:, model.jnt_qposadr[free] + 1] += offset
+    moving = np.isin(model.body_rootid, model.jnt_bodyid[free])
+    tracking["body_pos_w"][:, moving, 1] += offset
+    ref_path, motion_path = output / "reference.npz", output / "tracking.npz"
+    np.savez_compressed(ref_path, **reference)
+    np.savez_compressed(motion_path, **tracking)
+    owner.env.actions.reference.reference_file = str(ref_path.resolve().relative_to(ROOT))
+    owner.env.commands.motion.params.motion_file = str(motion_path.resolve().relative_to(ROOT))
+    return ref_path, motion_path
+
+
+def evaluate(directory, render=False, *, output=None, lane_offset=0.0):
+    if not np.isfinite(lane_offset) or lane_offset < 0:
+        raise ValueError("lane offset must be finite and outward")
+    if lane_offset and output is None:
+        raise ValueError("lane changes require a separate output directory")
     saved = json.loads((directory / "run_config.json").read_text())
     summary = json.loads((directory / "run_summary.json").read_text())
     owner = OmegaConf.create(saved["config"])
     checkpoint = Path(summary["last_checkpoint"])
-    output = directory / "evaluation.json"
-    if output.exists():
-        raise FileExistsError(output)
+    if output is not None:
+        output.mkdir(parents=True, exist_ok=False)
+    else:
+        output = directory
+    result_path = output / "evaluation.json"
+    if result_path.exists():
+        raise FileExistsError(result_path)
     inputs = [
         directory / "run_config.json",
+        directory / "run_summary.json",
         checkpoint,
         Path(__file__),
         ROOT / "scripts/evaluate_g1_cricket_tracking.py",
@@ -99,6 +136,8 @@ def evaluate(directory, render=False):
         ROOT / "src/unilab/assets/robots/g1/g1.xml",
         ROOT / "src/unilab/assets/robots/g1/scene_flat.xml",
     ]
+    if lane_offset:
+        inputs.extend(shift_lane(owner, output, lane_offset))
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
     hashes = {
         str(p.resolve().relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
@@ -176,9 +215,9 @@ def evaluate(directory, render=False):
                 },
             )
             rows.append(result)
-            np.savez_compressed(directory / f"{controller}_physical.npz", state=physical)
+            np.savez_compressed(output / f"{controller}_physical.npz", state=physical)
             if render:
-                render_rollout(env, physical, directory, result)
+                render_rollout(env, physical, output, result)
     finally:
         env.close()
     for path, digest in hashes.items():
@@ -187,10 +226,12 @@ def evaluate(directory, render=False):
     result = {
         "scope": "whole_body_PPO_tracking_with_scheduled_release_not_qualified_bowling",
         "input_sha256": hashes,
+        "outward_lane_offset_m": lane_offset,
+        "changed_axis": "reference_lane_translation" if lane_offset else None,
         "rows": rows,
         "evaluation_pool": "both controls, deterministic start, seed 1; no heldout/generalization claim",
     }
-    output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
+    result_path.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
     print([{k: v for k, v in row.items() if k != "trace"} for row in rows])
 
 
@@ -198,5 +239,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory", type=Path)
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--lane-offset", type=float, default=0.0)
     args = parser.parse_args()
-    evaluate(args.directory, args.render)
+    evaluate(args.directory, args.render, output=args.output, lane_offset=args.lane_offset)

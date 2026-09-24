@@ -102,3 +102,26 @@ recorded states are byte-identical before and after this playback repair.
 Final checkpoints, configuration/summary, complete scalar CSVs and finite-value
 summaries are retained; redundant initial checkpoints, TensorBoard events and
 an unrelated installed-runtime git snapshot are pruned after scalar retention.
+
+## Frozen-Policy Lane Clearance Comparison
+
+Predeclared next comparison: outward lane offset 0.20 m, changing the approach
+from y=+/-0.50 to +/-0.70 m. Translate the robot and held-ball reference paths
+together; do not shift the pitch, wickets, crease lines or world-body origin.
+Preserve every joint angle, velocity, phase, gravity/balance term and scheduled
+release time. No retraining or checkpoint selection is permitted in this comparison.
+Evaluate both final actors and both reference-only controls from frame zero and
+seed 1 with the same full delivery gate. Save all four full-start trajectories,
+including early terminations; lane clearance alone is not bowling success.
+
+```sh
+PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
+  --python ../unilab_submission_checkout/.venv/bin/python \
+  python scripts/evaluate_g1_cricket_running.py \
+  g1_cricket_results/running_tracking_v1/ppo_right --render --lane-offset 0.20 \
+  --output g1_cricket_results/running_lane_clearance_v1/right
+```
+
+Use `ppo_left` and the `left` output directory for the other hand. The separate
+output includes translated reference/tracking arrays and hashes of both their
+original sources and the derived inputs. Parent evaluations remain immutable.
