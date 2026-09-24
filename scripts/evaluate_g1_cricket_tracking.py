@@ -182,6 +182,11 @@ def visual_model(scene, physics):
             raise RuntimeError(f"visual {kind} layout differs from the physics model")
     for name in ("jnt_qposadr", "jnt_dofadr"):
         np.testing.assert_array_equal(getattr(model, name), getattr(physics, name))
+    free_bodies = physics.jnt_bodyid[physics.jnt_type == mujoco.mjtJoint.mjJNT_FREE]
+    # Backend XML serialization rounds free-body origins; restore the native values.
+    # Replay uses the full saved qpos, not these initial free-body poses.
+    for name in ("body_pos", "body_quat"):
+        getattr(model, name)[free_bodies] = getattr(physics, name)[free_bodies]
     for name in ("body_pos", "body_quat", "body_mass"):
         np.testing.assert_allclose(getattr(model, name), getattr(physics, name), atol=1e-14, rtol=0)
     if (model.nq, model.nv, model.na) != (physics.nq, physics.nv, physics.na):

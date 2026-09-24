@@ -53,11 +53,17 @@ def test_visual_playback_restores_meshes_without_changing_state(tmp_path, hand):
     spec = mujoco.MjSpec.from_file(str(scene))
     spec.compiler.discardvisual = True
     physics = spec.compile()
+    free_bodies = physics.jnt_bodyid[physics.jnt_type == mujoco.mjtJoint.mjJNT_FREE]
+    physics.body_pos[free_bodies] += 3e-7
     restored = visual_model(scene, physics)
     assert physics.nmesh == 0 and restored.nmesh > 0
+    np.testing.assert_array_equal(restored.body_pos, physics.body_pos)
     actual, display = mujoco.MjData(physics), mujoco.MjData(restored)
     mujoco.mj_resetDataKeyframe(physics, actual, 0)
     display.qpos[:] = actual.qpos
     mujoco.mj_forward(physics, actual)
     mujoco.mj_forward(restored, display)
     np.testing.assert_allclose(actual.xpos, display.xpos, atol=1e-12)
+    physics.body_pos[physics.body("left_elbow_link").id, 0] += 3e-7
+    with pytest.raises(AssertionError):
+        visual_model(scene, physics)
