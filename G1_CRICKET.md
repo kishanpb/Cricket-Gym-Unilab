@@ -1,5 +1,18 @@
 # Native G1 cricket foundation
 
+## Current Direction: Whole-Body Cricket Motion
+
+The [two-hand whole-body task](docs/g1_cricket_bimanual_tracking.md) supersedes
+the isolated-arm direction for the requested G1 showcase. It retargets the
+earlier batting choreography to G1's original proportions and controls all 29
+joints, with separate right/left PPO actors on native mjbatch. Two mechanical
+grips retain the bat; neither finger grasping nor completed batting is claimed.
+Dry-swing balance is still under development. Running bowling must similarly
+learn the approach, gather, legal plant, release and recovery rather than rely
+on the slow walking prior used in the historical experiments below.
+
+## Historical Single-Wrist Foundation
+
 This experimental task uses UniLab's floating-base, 29-DoF Unitree G1 model
 with its original joint limits, inertias and motor force limits. A 0.70 kg bat
 is rigidly mounted to the selected wrist: this is a declared mechanical
@@ -841,6 +854,65 @@ arrays, verify the single gain change and actual torque law, and exercise
 replayed dynamics. Bypassing the contract or loading a legacy checkpoint without
 a validated sidecar is not a supported transfer. Release timing and whole-body
 recovery still need a qualified teacher before BC/PPO and both-hand validation.
+
+### Overarm Damping and Wrist Posture
+
+The [paired overarm study](docs/g1_cricket_overarm_damping_v1.md) returns to
+all six original negative-pitch preload/drive/release schedules and changes
+only shoulder-pitch kd 10 to 2 using the existing versioned controller.
+[Every retuned trace and failure](g1_cricket_results/overarm_damping_v1/evaluation.json)
+is retained. All six complete four seconds without physical safety failures,
+but **zero pass the full signed delivery gate**.
+
+| Drive target (rad) | Release delay (ticks) | Original forward speed (m/s) | Retuned forward speed (m/s) | Retuned vertical speed (m/s) |
+| --- | ---: | ---: | ---: | ---: |
+| 0.3 | 4 | 2.804 | 4.118 | -2.876 |
+| 0.3 | 8 | 2.021 | -0.620 | -9.423 |
+| 0.3 | 12 | -0.800 | -5.268 | 0.011 |
+| 1.0 | 4 | 3.128 | 4.118 | -2.876 |
+| 1.0 | 8 | 1.518 | -0.677 | -9.612 |
+| 1.0 | 12 | -2.311 | -6.711 | 2.427 |
+
+Drive starts at tick 110. Both earliest releases preserve the benchmark's
+stride and overarm checks but bounce at x of 1.796 m, too short to qualify.
+Later releases fail overarm and front-foot checks; more total speed is directed
+downward or backward. No joint-limit or actuator-limit violation occurs, minimum
+pelvis height is 0.680 m, and maximum ball penetration is 4.083 mm. Peak
+simulated holder force spans 13.46-40.84 N; maximum pitch force is 2.321 kN.
+These are uncalibrated simulated loads, not certified robot or material limits.
+
+Source is frozen at `8cfc847e`, with 128 local inputs and 104 runtime-file hashes.
+All six first 110 motion traces match exactly, and every physics substep has
+independent native endpoint/named-sensor replay checks. Retained force summaries
+are not raw tactile time-series. This scripted development comparison is not
+training, a successful teacher or a learned-video claim.
+
+The subsequent [wrist-posture study](docs/g1_cricket_wrist_delivery_v1.md)
+tests all nine combinations of wrist-pitch offsets [0, -0.8, -1.2] rad and
+release ticks [114, 115, 116], with drive target 1.0 and unchanged controller
+authority. This is a predeclared two-factor comparison, not a single-axis
+claim across different release times. [All nine outcomes and traces](g1_cricket_results/wrist_delivery_v1/evaluation.json)
+remain available, including episodes that terminate before release.
+
+| Wrist offset (rad) | Forward speed at ticks 114 / 115 / 116 (m/s) | Physical outcome |
+| --- | --- | --- |
+| 0 | 4.118 / 4.382 / 3.818 | All complete, physically clean; late front-foot failures |
+| -0.8 | 4.751 / 4.936 / 4.305 | All complete; hand/hip contact during follow-through |
+| -1.2 | No release in any case | All terminate at tick 113 with low pelvis and leg-limit violation |
+
+**Zero of nine qualify.** Pre-cocking improves forward speed within each
+tested release time, but does not flatten the actual outgoing trajectory:
+the -0.8 cases still have downward speeds of 2.915-7.091 m/s and strike the
+hip at tick 119. The larger wrist offset destabilizes the whole body before
+release. Configured wrist targets do not imply safe realized motion.
+
+Source is frozen at `f74a9d04`; 131 local inputs and 104 runtime files are
+fingerprinted. The neutral-wrist tick114 case exactly reproduces its previous
+outcome, signed audit, return and every shared trace field before further
+cases execute. Every substep is independently replay-checked, and final input
+hashes match. No state injection, relaxed qualification, new policy or learned
+showcase is claimed. Further learning needs coordinated arm/foot timing and
+collision-free follow-through, not selection of the fastest failing frame.
 
 ## Learned Arm Residual: First Interception Experiment
 

@@ -1,0 +1,1453 @@
+{
+  "scope": "deterministic_development_dry_swing_not_held_out_cricket",
+  "checkpoint_sha256": "d11c2dbe6b94e4954fe4116c8f02fca0014d00a69e49ce106989a04a8c96f697",
+  "rows": [
+    {
+      "controller": "reference_only",
+      "hand": "right",
+      "seed": 1,
+      "return": 1.7728798240423203,
+      "steps": 16,
+      "terminated": true,
+      "truncated": false,
+      "terminal_terms": [
+        "incidental_bat_support"
+      ],
+      "trace": [
+        {
+          "time_s": 0.019999999552965164,
+          "pelvis_height_m": 0.7885846495628357,
+          "grip_separation_m": 0.00023958454102800234,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.018807055174176784,
+            0.00044445822653500593,
+            0.5032521918579984
+          ],
+          "reference_joint_rmse_rad": 0.02071169577538967
+        },
+        {
+          "time_s": 0.03999999910593033,
+          "pelvis_height_m": 0.7833916544914246,
+          "grip_separation_m": 0.00016536838882207428,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.024334867725303844,
+            -0.001333655270880078,
+            0.49999742895782745
+          ],
+          "reference_joint_rmse_rad": 0.02537771314382553
+        },
+        {
+          "time_s": 0.05999999865889549,
+          "pelvis_height_m": 0.7817969918251038,
+          "grip_separation_m": 0.0001504114998306894,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.029209603777402882,
+            0.0030471543613749034,
+            0.493894336111406
+          ],
+          "reference_joint_rmse_rad": 0.02907838299870491
+        },
+        {
+          "time_s": 0.07999999821186066,
+          "pelvis_height_m": 0.7819565534591675,
+          "grip_separation_m": 6.733123686248782e-05,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.03321385036010539,
+            0.013372386076649647,
+            0.48572632227108004
+          ],
+          "reference_joint_rmse_rad": 0.03343683481216431
+        },
+        {
+          "time_s": 0.10000000149011612,
+          "pelvis_height_m": 0.7821632623672485,
+          "grip_separation_m": 5.7324220913158516e-05,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.03656220688779631,
+            0.02644420233667819,
+            0.4763503381997679
+          ],
+          "reference_joint_rmse_rad": 0.03814120590686798
+        },
+        {
+          "time_s": 0.12000000476837158,
+          "pelvis_height_m": 0.7821288108825684,
+          "grip_separation_m": 8.361308077420677e-05,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.03955225110558308,
+            0.04091131980241968,
+            0.46642592426441953
+          ],
+          "reference_joint_rmse_rad": 0.04343310743570328
+        },
+        {
+          "time_s": 0.14000000059604645,
+          "pelvis_height_m": 0.7818702459335327,
+          "grip_separation_m": 0.00011788425605714528,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.04252457466557072,
+            0.056132144455777806,
+            0.4565002644388646
+          ],
+          "reference_joint_rmse_rad": 0.049176376312971115
+        },
+        {
+          "time_s": 0.1599999964237213,
+          "pelvis_height_m": 0.7814869284629822,
+          "grip_separation_m": 0.00014972464313577226,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.0457134843000833,
+            0.07166593686354039,
+            0.4470688163103348
+          ],
+          "reference_joint_rmse_rad": 0.055012501776218414
+        },
+        {
+          "time_s": 0.17999999225139618,
+          "pelvis_height_m": 0.781071662902832,
+          "grip_separation_m": 0.0001781278600082384,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.04925651577223264,
+            0.08705915598404311,
+            0.4385606460694843
+          ],
+          "reference_joint_rmse_rad": 0.06054838001728058
+        },
+        {
+          "time_s": 0.19999998807907104,
+          "pelvis_height_m": 0.7806914448738098,
+          "grip_separation_m": 0.00020126617579774663,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.053291757522048754,
+            0.10178894235181282,
+            0.43132902514489824
+          ],
+          "reference_joint_rmse_rad": 0.0654098242521286
+        },
+        {
+          "time_s": 0.2199999839067459,
+          "pelvis_height_m": 0.780310869216919,
+          "grip_separation_m": 0.00021097390173987877,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.05781389438892565,
+            0.11521828634244785,
+            0.42559154054750764
+          ],
+          "reference_joint_rmse_rad": 0.07227359712123871
+        },
+        {
+          "time_s": 0.23999997973442078,
+          "pelvis_height_m": 0.7799302935600281,
+          "grip_separation_m": 0.00020578727336629304,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.06264035916133101,
+            0.12689000477509477,
+            0.4213179777029221
+          ],
+          "reference_joint_rmse_rad": 0.07918569445610046
+        },
+        {
+          "time_s": 0.25999999046325684,
+          "pelvis_height_m": 0.7796105146408081,
+          "grip_separation_m": 0.0001888284354861498,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.06752171696393187,
+            0.13668028257696782,
+            0.4183962322687171
+          ],
+          "reference_joint_rmse_rad": 0.08494765311479568
+        },
+        {
+          "time_s": 0.2800000011920929,
+          "pelvis_height_m": 0.7794005870819092,
+          "grip_separation_m": 0.00017084552868568205,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.0722430997975391,
+            0.14453738724113147,
+            0.41675355713389484
+          ],
+          "reference_joint_rmse_rad": 0.08953586220741272
+        },
+        {
+          "time_s": 0.30000001192092896,
+          "pelvis_height_m": 0.779310941696167,
+          "grip_separation_m": 0.00015882867124188683,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.07670850117364686,
+            0.15033259074527816,
+            0.41631508418279606
+          ],
+          "reference_joint_rmse_rad": 0.09315173327922821
+        },
+        {
+          "time_s": 0.320000022649765,
+          "pelvis_height_m": 0.7793050408363342,
+          "grip_separation_m": 0.00017327548472804267,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.08053337950144887,
+            0.1535420704078848,
+            0.41682385094354124
+          ],
+          "reference_joint_rmse_rad": 0.0884833037853241
+        }
+      ]
+    },
+    {
+      "controller": "ppo",
+      "hand": "right",
+      "seed": 1,
+      "return": 7.7729197815060616,
+      "steps": 100,
+      "terminated": true,
+      "truncated": false,
+      "terminal_terms": [
+        "anchor_pos"
+      ],
+      "trace": [
+        {
+          "time_s": 0.019999999552965164,
+          "pelvis_height_m": 0.7879115343093872,
+          "grip_separation_m": 0.0003516318354459834,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.015396127459674974,
+            -0.0011096380294651912,
+            0.506351311631629
+          ],
+          "reference_joint_rmse_rad": 0.03676530718803406
+        },
+        {
+          "time_s": 0.03999999910593033,
+          "pelvis_height_m": 0.785269021987915,
+          "grip_separation_m": 0.00024359020038128713,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.011937566977505698,
+            -0.009258151613674341,
+            0.511236019811446
+          ],
+          "reference_joint_rmse_rad": 0.0681748166680336
+        },
+        {
+          "time_s": 0.05999999865889549,
+          "pelvis_height_m": 0.7858552932739258,
+          "grip_separation_m": 0.00013388345529321064,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.007504845213131092,
+            -0.01573784746630707,
+            0.5164597385518854
+          ],
+          "reference_joint_rmse_rad": 0.09490753710269928
+        },
+        {
+          "time_s": 0.07999999821186066,
+          "pelvis_height_m": 0.7867271900177002,
+          "grip_separation_m": 0.00018633287640970196,
+          "joint_limit_excess_rad": 0.020062744617462158,
+          "bat_center_m": [
+            -0.004194125440361379,
+            -0.021740100524821976,
+            0.5215612880072515
+          ],
+          "reference_joint_rmse_rad": 0.11550576239824295
+        },
+        {
+          "time_s": 0.10000000149011612,
+          "pelvis_height_m": 0.787390410900116,
+          "grip_separation_m": 0.00022614301657854146,
+          "joint_limit_excess_rad": 0.02467404305934906,
+          "bat_center_m": [
+            -0.0014744428476611976,
+            -0.026646808545698272,
+            0.5261361617198942
+          ],
+          "reference_joint_rmse_rad": 0.12676754593849182
+        },
+        {
+          "time_s": 0.12000000476837158,
+          "pelvis_height_m": 0.7881360650062561,
+          "grip_separation_m": 0.00028196974326087637,
+          "joint_limit_excess_rad": 0.017054200172424316,
+          "bat_center_m": [
+            0.0011164231522144893,
+            -0.029599285404284418,
+            0.529940819433579
+          ],
+          "reference_joint_rmse_rad": 0.13427671790122986
+        },
+        {
+          "time_s": 0.14000000059604645,
+          "pelvis_height_m": 0.788875162601471,
+          "grip_separation_m": 0.00031565598009002723,
+          "joint_limit_excess_rad": 0.010629065334796906,
+          "bat_center_m": [
+            0.0030455600631433682,
+            -0.03087222294154518,
+            0.5333114543670996
+          ],
+          "reference_joint_rmse_rad": 0.138851597905159
+        },
+        {
+          "time_s": 0.1599999964237213,
+          "pelvis_height_m": 0.7895482778549194,
+          "grip_separation_m": 0.0003561990549725035,
+          "joint_limit_excess_rad": 0.006973437964916229,
+          "bat_center_m": [
+            0.003858376086199357,
+            -0.03153558682753818,
+            0.5368734182165414
+          ],
+          "reference_joint_rmse_rad": 0.14247171580791473
+        },
+        {
+          "time_s": 0.17999999225139618,
+          "pelvis_height_m": 0.7901976108551025,
+          "grip_separation_m": 0.0003880034581710259,
+          "joint_limit_excess_rad": 0.005169212818145752,
+          "bat_center_m": [
+            0.0035352127673845338,
+            -0.032605943832084275,
+            0.5411401921647594
+          ],
+          "reference_joint_rmse_rad": 0.14649704098701477
+        },
+        {
+          "time_s": 0.19999998807907104,
+          "pelvis_height_m": 0.7907369136810303,
+          "grip_separation_m": 0.00040737286627879824,
+          "joint_limit_excess_rad": 0.0042076632380485535,
+          "bat_center_m": [
+            0.0025446502087120015,
+            -0.03505832568399136,
+            0.546345916185887
+          ],
+          "reference_joint_rmse_rad": 0.1553579866886139
+        },
+        {
+          "time_s": 0.2199999839067459,
+          "pelvis_height_m": 0.7910937666893005,
+          "grip_separation_m": 0.0003923916312244038,
+          "joint_limit_excess_rad": 0.003278106451034546,
+          "bat_center_m": [
+            0.0016446599630766529,
+            -0.03943642894301518,
+            0.5523158428027151
+          ],
+          "reference_joint_rmse_rad": 0.1658400446176529
+        },
+        {
+          "time_s": 0.23999997973442078,
+          "pelvis_height_m": 0.7912688851356506,
+          "grip_separation_m": 0.00038551778201841106,
+          "joint_limit_excess_rad": 0.0022492334246635437,
+          "bat_center_m": [
+            0.0013734128732759976,
+            -0.044834373759992274,
+            0.5580989567823534
+          ],
+          "reference_joint_rmse_rad": 0.17548373341560364
+        },
+        {
+          "time_s": 0.25999999046325684,
+          "pelvis_height_m": 0.7913206815719604,
+          "grip_separation_m": 0.0003971296112317143,
+          "joint_limit_excess_rad": 0.0013548508286476135,
+          "bat_center_m": [
+            0.0016983369871003962,
+            -0.049677768502550235,
+            0.5626900008750148
+          ],
+          "reference_joint_rmse_rad": 0.18376964330673218
+        },
+        {
+          "time_s": 0.2800000011920929,
+          "pelvis_height_m": 0.7913053631782532,
+          "grip_separation_m": 0.00040336951995909677,
+          "joint_limit_excess_rad": 0.0006433650851249695,
+          "bat_center_m": [
+            0.002139187640374199,
+            -0.052992494197710724,
+            0.5656175382297844
+          ],
+          "reference_joint_rmse_rad": 0.19091171026229858
+        },
+        {
+          "time_s": 0.30000001192092896,
+          "pelvis_height_m": 0.7912851572036743,
+          "grip_separation_m": 0.0004035305859103875,
+          "joint_limit_excess_rad": 3.188103437423706e-05,
+          "bat_center_m": [
+            0.002149820036656133,
+            -0.0545220142109302,
+            0.5669597667671816
+          ],
+          "reference_joint_rmse_rad": 0.1971905678510666
+        },
+        {
+          "time_s": 0.320000022649765,
+          "pelvis_height_m": 0.7913053035736084,
+          "grip_separation_m": 0.000399081289402251,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            0.0013612756783792507,
+            -0.05445647683862144,
+            0.5670656533959193
+          ],
+          "reference_joint_rmse_rad": 0.20284652709960938
+        },
+        {
+          "time_s": 0.3400000333786011,
+          "pelvis_height_m": 0.7913579940795898,
+          "grip_separation_m": 0.00039255249580984875,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.0003687063042081412,
+            -0.053173805907461666,
+            0.5663327719244947
+          ],
+          "reference_joint_rmse_rad": 0.20790335536003113
+        },
+        {
+          "time_s": 0.36000004410743713,
+          "pelvis_height_m": 0.7914145588874817,
+          "grip_separation_m": 0.0003866785152034952,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.0030332581099061784,
+            -0.05111497817083173,
+            0.5651481391901513
+          ],
+          "reference_joint_rmse_rad": 0.21239662170410156
+        },
+        {
+          "time_s": 0.3800000548362732,
+          "pelvis_height_m": 0.7914630174636841,
+          "grip_separation_m": 0.000379911817945032,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.006549755886132033,
+            -0.04865450153471487,
+            0.5638310599240804
+          ],
+          "reference_joint_rmse_rad": 0.21636024117469788
+        },
+        {
+          "time_s": 0.40000006556510925,
+          "pelvis_height_m": 0.7915042042732239,
+          "grip_separation_m": 0.00037185286459887843,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.010783782816140605,
+            -0.046068976938039755,
+            0.5626193356361704
+          ],
+          "reference_joint_rmse_rad": 0.21983787417411804
+        },
+        {
+          "time_s": 0.4200000762939453,
+          "pelvis_height_m": 0.791547417640686,
+          "grip_separation_m": 0.0003627940932232214,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.015570108763335047,
+            -0.0435548115545452,
+            0.5616798190528028
+          ],
+          "reference_joint_rmse_rad": 0.22288207709789276
+        },
+        {
+          "time_s": 0.44000008702278137,
+          "pelvis_height_m": 0.791601300239563,
+          "grip_separation_m": 0.0003535921087656067,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.020746132350383348,
+            -0.0412458919838255,
+            0.5611148480580554
+          ],
+          "reference_joint_rmse_rad": 0.2255534678697586
+        },
+        {
+          "time_s": 0.46000009775161743,
+          "pelvis_height_m": 0.7916629314422607,
+          "grip_separation_m": 0.00034434516403549154,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.02616030671932644,
+            -0.03922066837292308,
+            0.5609653802504592
+          ],
+          "reference_joint_rmse_rad": 0.22788763046264648
+        },
+        {
+          "time_s": 0.4800001084804535,
+          "pelvis_height_m": 0.7917242646217346,
+          "grip_separation_m": 0.00033432757956813436,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.03166162762458788,
+            -0.0374993884928182,
+            0.5612207786148966
+          ],
+          "reference_joint_rmse_rad": 0.22988511621952057
+        },
+        {
+          "time_s": 0.5000001192092896,
+          "pelvis_height_m": 0.7917784452438354,
+          "grip_separation_m": 0.0003253237910189707,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.03711398805644179,
+            -0.0360845988531725,
+            0.561850393130293
+          ],
+          "reference_joint_rmse_rad": 0.23154939711093903
+        },
+        {
+          "time_s": 0.5200001001358032,
+          "pelvis_height_m": 0.7918221354484558,
+          "grip_separation_m": 0.00031769320492796703,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.04241761214844115,
+            -0.034953343073936244,
+            0.5628115223839931
+          ],
+          "reference_joint_rmse_rad": 0.23289288580417633
+        },
+        {
+          "time_s": 0.5400000810623169,
+          "pelvis_height_m": 0.7918539047241211,
+          "grip_separation_m": 0.0003108744888480883,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.04750329227562213,
+            -0.03408982491419827,
+            0.5640750657861406
+          ],
+          "reference_joint_rmse_rad": 0.23393861949443817
+        },
+        {
+          "time_s": 0.5600000619888306,
+          "pelvis_height_m": 0.7918739914894104,
+          "grip_separation_m": 0.0003045953267259408,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.05233112547572258,
+            -0.03347711993379072,
+            0.5656106816633595
+          ],
+          "reference_joint_rmse_rad": 0.2347390502691269
+        },
+        {
+          "time_s": 0.5800000429153442,
+          "pelvis_height_m": 0.7918825745582581,
+          "grip_separation_m": 0.0002986748937962392,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.05689074942802787,
+            -0.033090952860416654,
+            0.5673858597628558
+          ],
+          "reference_joint_rmse_rad": 0.23550018668174744
+        },
+        {
+          "time_s": 0.6000000238418579,
+          "pelvis_height_m": 0.7918787002563477,
+          "grip_separation_m": 0.0002943971776309447,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.061206275347770706,
+            -0.03290867954565335,
+            0.569372529767298
+          ],
+          "reference_joint_rmse_rad": 0.2362600564956665
+        },
+        {
+          "time_s": 0.6200000047683716,
+          "pelvis_height_m": 0.7918620109558105,
+          "grip_separation_m": 0.0002913907941938428,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.06533846466813231,
+            -0.032899008526564695,
+            0.5715486150835409
+          ],
+          "reference_joint_rmse_rad": 0.23700015246868134
+        },
+        {
+          "time_s": 0.6399999856948853,
+          "pelvis_height_m": 0.7918354868888855,
+          "grip_separation_m": 0.0002886983451879455,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.06935224084619519,
+            -0.033021586195604094,
+            0.5738978003309811
+          ],
+          "reference_joint_rmse_rad": 0.23770755529403687
+        },
+        {
+          "time_s": 0.6599999666213989,
+          "pelvis_height_m": 0.7918070554733276,
+          "grip_separation_m": 0.00028572046643611423,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.07329441496077398,
+            -0.03323686556438553,
+            0.5764111013788444
+          ],
+          "reference_joint_rmse_rad": 0.2383708953857422
+        },
+        {
+          "time_s": 0.6799999475479126,
+          "pelvis_height_m": 0.7917747497558594,
+          "grip_separation_m": 0.00028262855977145824,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.07719202133124162,
+            -0.03352120602020291,
+            0.5790770767713168
+          ],
+          "reference_joint_rmse_rad": 0.23897401988506317
+        },
+        {
+          "time_s": 0.6999999284744263,
+          "pelvis_height_m": 0.7917383313179016,
+          "grip_separation_m": 0.0002794906848497425,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.08106287158012729,
+            -0.03384877692362949,
+            0.5818827529183815
+          ],
+          "reference_joint_rmse_rad": 0.2395118921995163
+        },
+        {
+          "time_s": 0.7199999094009399,
+          "pelvis_height_m": 0.7916988134384155,
+          "grip_separation_m": 0.0002764271116072593,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.08491846537959728,
+            -0.03419406423439045,
+            0.5848188416018495
+          ],
+          "reference_joint_rmse_rad": 0.2399832159280777
+        },
+        {
+          "time_s": 0.7399998903274536,
+          "pelvis_height_m": 0.7916497588157654,
+          "grip_separation_m": 0.00027112911099167933,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.08877704401300919,
+            -0.03460800642064475,
+            0.5878722819409863
+          ],
+          "reference_joint_rmse_rad": 0.2407875806093216
+        },
+        {
+          "time_s": 0.7599998712539673,
+          "pelvis_height_m": 0.7915231585502625,
+          "grip_separation_m": 0.0002592537921078018,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.09289526491938162,
+            -0.03526368731144601,
+            0.5910420730295989
+          ],
+          "reference_joint_rmse_rad": 0.24276311695575714
+        },
+        {
+          "time_s": 0.779999852180481,
+          "pelvis_height_m": 0.7912665009498596,
+          "grip_separation_m": 0.00022249631892246304,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.09771182243508306,
+            -0.03592610000336208,
+            0.594111403872899
+          ],
+          "reference_joint_rmse_rad": 0.24525363743305206
+        },
+        {
+          "time_s": 0.7999998331069946,
+          "pelvis_height_m": 0.7909425497055054,
+          "grip_separation_m": 0.00019935214775614074,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.1032331015425756,
+            -0.03578557490491141,
+            0.5965865107376802
+          ],
+          "reference_joint_rmse_rad": 0.24760262668132782
+        },
+        {
+          "time_s": 0.8199998140335083,
+          "pelvis_height_m": 0.790646493434906,
+          "grip_separation_m": 0.0001942748453565156,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.10907006488923018,
+            -0.03451903744073126,
+            0.5983020120520572
+          ],
+          "reference_joint_rmse_rad": 0.24968230724334717
+        },
+        {
+          "time_s": 0.839999794960022,
+          "pelvis_height_m": 0.7904126644134521,
+          "grip_separation_m": 0.00019941677723649842,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.11486477473327,
+            -0.03231718479665906,
+            0.5994198570112976
+          ],
+          "reference_joint_rmse_rad": 0.2515544593334198
+        },
+        {
+          "time_s": 0.8599997758865356,
+          "pelvis_height_m": 0.7902434468269348,
+          "grip_separation_m": 0.0002068310148573928,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.12044767510336067,
+            -0.029511581038289228,
+            0.6002369504396454
+          ],
+          "reference_joint_rmse_rad": 0.25324347615242004
+        },
+        {
+          "time_s": 0.8799997568130493,
+          "pelvis_height_m": 0.7901548743247986,
+          "grip_separation_m": 0.00021576012904534495,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.1257474386567791,
+            -0.026392317568404808,
+            0.6010593357167245
+          ],
+          "reference_joint_rmse_rad": 0.25463441014289856
+        },
+        {
+          "time_s": 0.899999737739563,
+          "pelvis_height_m": 0.7901437878608704,
+          "grip_separation_m": 0.0002209183540976899,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.13068987825860967,
+            -0.023223934633418264,
+            0.6021344506778044
+          ],
+          "reference_joint_rmse_rad": 0.2557271718978882
+        },
+        {
+          "time_s": 0.9199997186660767,
+          "pelvis_height_m": 0.7901911735534668,
+          "grip_separation_m": 0.0002162451139355874,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.13524089865095112,
+            -0.020217024349724486,
+            0.6036381550644054
+          ],
+          "reference_joint_rmse_rad": 0.2564976215362549
+        },
+        {
+          "time_s": 0.9399996995925903,
+          "pelvis_height_m": 0.7902765274047852,
+          "grip_separation_m": 0.00020771206677904392,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.13949432157685115,
+            -0.01749413252135773,
+            0.6057126752338795
+          ],
+          "reference_joint_rmse_rad": 0.25691014528274536
+        },
+        {
+          "time_s": 0.959999680519104,
+          "pelvis_height_m": 0.7903871536254883,
+          "grip_separation_m": 0.00020200491731367084,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.14354012554735304,
+            -0.015108918164375595,
+            0.6084702364667521
+          ],
+          "reference_joint_rmse_rad": 0.25692418217658997
+        },
+        {
+          "time_s": 0.9799996614456177,
+          "pelvis_height_m": 0.7905134558677673,
+          "grip_separation_m": 0.00019962052977271554,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.1473439754628865,
+            -0.013083226397062962,
+            0.6119360404051407
+          ],
+          "reference_joint_rmse_rad": 0.2565060257911682
+        },
+        {
+          "time_s": 0.9999996423721313,
+          "pelvis_height_m": 0.7906404733657837,
+          "grip_separation_m": 0.00019895926911802744,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.15085571241550289,
+            -0.011426595721248482,
+            0.6160898803811139
+          ],
+          "reference_joint_rmse_rad": 0.25564128160476685
+        },
+        {
+          "time_s": 1.019999623298645,
+          "pelvis_height_m": 0.7907624840736389,
+          "grip_separation_m": 0.00019843597398309554,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.15403884622552488,
+            -0.010115974122782957,
+            0.6208796387068412
+          ],
+          "reference_joint_rmse_rad": 0.2543178200721741
+        },
+        {
+          "time_s": 1.0399996042251587,
+          "pelvis_height_m": 0.7908633947372437,
+          "grip_separation_m": 0.0001988087284981353,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.15686292004378088,
+            -0.00910534631349487,
+            0.6262210167159001
+          ],
+          "reference_joint_rmse_rad": 0.2525424063205719
+        },
+        {
+          "time_s": 1.0599995851516724,
+          "pelvis_height_m": 0.7909296751022339,
+          "grip_separation_m": 0.00020115485308420237,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.15927346467122044,
+            -0.008332816832895232,
+            0.6319972032189236
+          ],
+          "reference_joint_rmse_rad": 0.25032225251197815
+        },
+        {
+          "time_s": 1.079999566078186,
+          "pelvis_height_m": 0.7909577488899231,
+          "grip_separation_m": 0.00020500014614143215,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.16120097840960435,
+            -0.007710456048460629,
+            0.6380635511443884
+          ],
+          "reference_joint_rmse_rad": 0.24768535792827606
+        },
+        {
+          "time_s": 1.0999995470046997,
+          "pelvis_height_m": 0.7909494042396545,
+          "grip_separation_m": 0.0002093137284768675,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.16257753807168046,
+            -0.0071411622708008465,
+            0.644274879048111
+          ],
+          "reference_joint_rmse_rad": 0.24466606974601746
+        },
+        {
+          "time_s": 1.1199995279312134,
+          "pelvis_height_m": 0.7909078598022461,
+          "grip_separation_m": 0.00021369301091799393,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.16335161084456762,
+            -0.006525752184759398,
+            0.6504940335758584
+          ],
+          "reference_joint_rmse_rad": 0.2411656230688095
+        },
+        {
+          "time_s": 1.139999508857727,
+          "pelvis_height_m": 0.7908259034156799,
+          "grip_separation_m": 0.0002166623731767619,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.16349480216246443,
+            -0.0058038330594985255,
+            0.6566094083102549
+          ],
+          "reference_joint_rmse_rad": 0.23756560683250427
+        },
+        {
+          "time_s": 1.1599994897842407,
+          "pelvis_height_m": 0.7906917929649353,
+          "grip_separation_m": 0.0002201804076477001,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.16298416227393875,
+            -0.004860241269617774,
+            0.662471098813699
+          ],
+          "reference_joint_rmse_rad": 0.2331131249666214
+        },
+        {
+          "time_s": 1.1799994707107544,
+          "pelvis_height_m": 0.7905359864234924,
+          "grip_separation_m": 0.00024954102256522084,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.16127090725247842,
+            -0.0031009774673820822,
+            0.667239730766241
+          ],
+          "reference_joint_rmse_rad": 0.22658951580524445
+        },
+        {
+          "time_s": 1.199999451637268,
+          "pelvis_height_m": 0.7903422117233276,
+          "grip_separation_m": 0.00030116686631751594,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.15731980812271318,
+            -1.563841508474273e-05,
+            0.6693223986142578
+          ],
+          "reference_joint_rmse_rad": 0.2188594937324524
+        },
+        {
+          "time_s": 1.2199994325637817,
+          "pelvis_height_m": 0.790051281452179,
+          "grip_separation_m": 0.0002858177682491024,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.1503000953560948,
+            0.00484105940279049,
+            0.6672003706051068
+          ],
+          "reference_joint_rmse_rad": 0.2114904522895813
+        },
+        {
+          "time_s": 1.2399994134902954,
+          "pelvis_height_m": 0.7894160747528076,
+          "grip_separation_m": 0.00024266428531156872,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.14010190170479592,
+            0.011871118693619204,
+            0.6603641920352672
+          ],
+          "reference_joint_rmse_rad": 0.20558899641036987
+        },
+        {
+          "time_s": 1.259999394416809,
+          "pelvis_height_m": 0.788286030292511,
+          "grip_separation_m": 0.00021197807017213442,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.12693887504602913,
+            0.021222134638676303,
+            0.6493331091064535
+          ],
+          "reference_joint_rmse_rad": 0.20229382812976837
+        },
+        {
+          "time_s": 1.2799993753433228,
+          "pelvis_height_m": 0.7867471575737,
+          "grip_separation_m": 0.00023926273409806,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.11125396810305223,
+            0.03278651640935576,
+            0.6351899268338661
+          ],
+          "reference_joint_rmse_rad": 0.20232433080673218
+        },
+        {
+          "time_s": 1.2999993562698364,
+          "pelvis_height_m": 0.7850399017333984,
+          "grip_separation_m": 0.0003049807220992769,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.09381003168979025,
+            0.046675347025459016,
+            0.6191718700924134
+          ],
+          "reference_joint_rmse_rad": 0.2062835842370987
+        },
+        {
+          "time_s": 1.31999933719635,
+          "pelvis_height_m": 0.7834161520004272,
+          "grip_separation_m": 0.00038395732311515555,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.0755823284236297,
+            0.06304221792975212,
+            0.6022449745659048
+          ],
+          "reference_joint_rmse_rad": 0.21568098664283752
+        },
+        {
+          "time_s": 1.3399993181228638,
+          "pelvis_height_m": 0.7819677591323853,
+          "grip_separation_m": 0.00043643450289618084,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.05763047449432282,
+            0.08214724829361675,
+            0.5846899127250973
+          ],
+          "reference_joint_rmse_rad": 0.23396064341068268
+        },
+        {
+          "time_s": 1.3599992990493774,
+          "pelvis_height_m": 0.7808115482330322,
+          "grip_separation_m": 0.00049078994023821,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.04011918153044741,
+            0.10390413253380111,
+            0.5651134245260896
+          ],
+          "reference_joint_rmse_rad": 0.2488827258348465
+        },
+        {
+          "time_s": 1.3799992799758911,
+          "pelvis_height_m": 0.7800569534301758,
+          "grip_separation_m": 0.00044463533547930317,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.024788778656270258,
+            0.1297885493950869,
+            0.5431933649898752
+          ],
+          "reference_joint_rmse_rad": 0.2509723901748657
+        },
+        {
+          "time_s": 1.3999992609024048,
+          "pelvis_height_m": 0.7796531915664673,
+          "grip_separation_m": 0.0004602381369710285,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.01723176827314142,
+            0.16089329751835543,
+            0.5216016549984519
+          ],
+          "reference_joint_rmse_rad": 0.30108538269996643
+        },
+        {
+          "time_s": 1.4199992418289185,
+          "pelvis_height_m": 0.7791290283203125,
+          "grip_separation_m": 0.0004121893145435214,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.016320286585387894,
+            0.1947594927315188,
+            0.5014408352104652
+          ],
+          "reference_joint_rmse_rad": 0.35075023770332336
+        },
+        {
+          "time_s": 1.4399992227554321,
+          "pelvis_height_m": 0.7780211567878723,
+          "grip_separation_m": 0.0004436547323912274,
+          "joint_limit_excess_rad": 0.0019776225090026855,
+          "bat_center_m": [
+            -0.013910060708841848,
+            0.22643735525544623,
+            0.48365326411000953
+          ],
+          "reference_joint_rmse_rad": 0.33966803550720215
+        },
+        {
+          "time_s": 1.4599992036819458,
+          "pelvis_height_m": 0.7761048078536987,
+          "grip_separation_m": 0.00047980151024543,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            -0.0032552058202276746,
+            0.2511352552250705,
+            0.46946197970221787
+          ],
+          "reference_joint_rmse_rad": 0.3330549895763397
+        },
+        {
+          "time_s": 1.4799991846084595,
+          "pelvis_height_m": 0.7733641266822815,
+          "grip_separation_m": 0.00036120490237064235,
+          "joint_limit_excess_rad": 0.0,
+          "bat_center_m": [
+            0.01513699982217609,
+            0.2679459112196178,
+            0.45902876112527413
+          ],
+          "reference_joint_rmse_rad": 0.3345094919204712
+        },
+        {
+          "time_s": 1.4999991655349731,
+          "pelvis_height_m": 0.7699155211448669,
+          "grip_separation_m": 0.00020953874788637883,
+          "joint_limit_excess_rad": 0.007909819483757019,
+          "bat_center_m": [
+            0.038418041382531465,
+            0.2780014804635805,
+            0.4521251453889127
+          ],
+          "reference_joint_rmse_rad": 0.34322893619537354
+        },
+        {
+          "time_s": 1.5199991464614868,
+          "pelvis_height_m": 0.7663116455078125,
+          "grip_separation_m": 0.00018131257691933909,
+          "joint_limit_excess_rad": 0.01551888883113861,
+          "bat_center_m": [
+            0.06369939456336449,
+            0.28279506948448485,
+            0.44813687689995085
+          ],
+          "reference_joint_rmse_rad": 0.3577115833759308
+        },
+        {
+          "time_s": 1.5399991273880005,
+          "pelvis_height_m": 0.7631210684776306,
+          "grip_separation_m": 0.000385076314015029,
+          "joint_limit_excess_rad": 0.01846960186958313,
+          "bat_center_m": [
+            0.08723908496494709,
+            0.28407167475762957,
+            0.4471188844455597
+          ],
+          "reference_joint_rmse_rad": 0.37035998702049255
+        },
+        {
+          "time_s": 1.5599991083145142,
+          "pelvis_height_m": 0.7603932023048401,
+          "grip_separation_m": 0.0004273033100430487,
+          "joint_limit_excess_rad": 0.014046542346477509,
+          "bat_center_m": [
+            0.1066421415521003,
+            0.28262547171326724,
+            0.44967857817023427
+          ],
+          "reference_joint_rmse_rad": 0.3755233883857727
+        },
+        {
+          "time_s": 1.5799990892410278,
+          "pelvis_height_m": 0.7576788663864136,
+          "grip_separation_m": 0.0003982241544730696,
+          "joint_limit_excess_rad": 0.010006919503211975,
+          "bat_center_m": [
+            0.12288008797046518,
+            0.27815036734119974,
+            0.45539898323587685
+          ],
+          "reference_joint_rmse_rad": 0.3676505386829376
+        },
+        {
+          "time_s": 1.5999990701675415,
+          "pelvis_height_m": 0.7548648118972778,
+          "grip_separation_m": 0.00036860495242088334,
+          "joint_limit_excess_rad": 0.008691400289535522,
+          "bat_center_m": [
+            0.13736674837332913,
+            0.27224484802981086,
+            0.46387863930356477
+          ],
+          "reference_joint_rmse_rad": 0.358793169260025
+        },
+        {
+          "time_s": 1.6199990510940552,
+          "pelvis_height_m": 0.7519856095314026,
+          "grip_separation_m": 0.00036206768066407273,
+          "joint_limit_excess_rad": 0.009028762578964233,
+          "bat_center_m": [
+            0.15062311454630523,
+            0.2655570665151414,
+            0.47462460057199474
+          ],
+          "reference_joint_rmse_rad": 0.349830687046051
+        },
+        {
+          "time_s": 1.6399990320205688,
+          "pelvis_height_m": 0.7490547895431519,
+          "grip_separation_m": 0.0003722743735126727,
+          "joint_limit_excess_rad": 0.007613778114318848,
+          "bat_center_m": [
+            0.16295870686811714,
+            0.25795024080523066,
+            0.4874786265261388
+          ],
+          "reference_joint_rmse_rad": 0.3415733873844147
+        },
+        {
+          "time_s": 1.6599990129470825,
+          "pelvis_height_m": 0.7461593151092529,
+          "grip_separation_m": 0.0004022742724437041,
+          "joint_limit_excess_rad": 0.0070011913776397705,
+          "bat_center_m": [
+            0.1739731379213638,
+            0.248557630997438,
+            0.5026659511434394
+          ],
+          "reference_joint_rmse_rad": 0.33157193660736084
+        },
+        {
+          "time_s": 1.6799989938735962,
+          "pelvis_height_m": 0.7431756854057312,
+          "grip_separation_m": 0.0003681016279232632,
+          "joint_limit_excess_rad": 0.006995648145675659,
+          "bat_center_m": [
+            0.18319396144203146,
+            0.23637243279253523,
+            0.5203582499420533
+          ],
+          "reference_joint_rmse_rad": 0.32406601309776306
+        },
+        {
+          "time_s": 1.6999989748001099,
+          "pelvis_height_m": 0.7395516633987427,
+          "grip_separation_m": 0.0003280841339345838,
+          "joint_limit_excess_rad": 0.007014214992523193,
+          "bat_center_m": [
+            0.1926779699967758,
+            0.2234599962025527,
+            0.5401364937098939
+          ],
+          "reference_joint_rmse_rad": 0.3184175491333008
+        },
+        {
+          "time_s": 1.7199989557266235,
+          "pelvis_height_m": 0.7350896000862122,
+          "grip_separation_m": 0.00032022221919949726,
+          "joint_limit_excess_rad": 0.0066907405853271484,
+          "bat_center_m": [
+            0.20467392508475685,
+            0.2125916201863019,
+            0.5610180265526646
+          ],
+          "reference_joint_rmse_rad": 0.3142228424549103
+        },
+        {
+          "time_s": 1.7399989366531372,
+          "pelvis_height_m": 0.7300258278846741,
+          "grip_separation_m": 0.0003288715342148666,
+          "joint_limit_excess_rad": 0.006018638610839844,
+          "bat_center_m": [
+            0.2198664974229248,
+            0.2058027926903516,
+            0.5817924588193737
+          ],
+          "reference_joint_rmse_rad": 0.3111443519592285
+        },
+        {
+          "time_s": 1.7599989175796509,
+          "pelvis_height_m": 0.7236719131469727,
+          "grip_separation_m": 0.0003429110794175359,
+          "joint_limit_excess_rad": 0.0057087242603302,
+          "bat_center_m": [
+            0.23892092437794268,
+            0.20445881670030097,
+            0.6009998970594101
+          ],
+          "reference_joint_rmse_rad": 0.30921605229377747
+        },
+        {
+          "time_s": 1.7799988985061646,
+          "pelvis_height_m": 0.7157464027404785,
+          "grip_separation_m": 0.0003530940908685988,
+          "joint_limit_excess_rad": 0.005562961101531982,
+          "bat_center_m": [
+            0.26158718605573256,
+            0.2090698603016482,
+            0.6175754550874515
+          ],
+          "reference_joint_rmse_rad": 0.305250883102417
+        },
+        {
+          "time_s": 1.7999988794326782,
+          "pelvis_height_m": 0.706514298915863,
+          "grip_separation_m": 0.00037555958493463114,
+          "joint_limit_excess_rad": 0.005228966474533081,
+          "bat_center_m": [
+            0.2866741124763114,
+            0.2198796020568915,
+            0.6308184774579237
+          ],
+          "reference_joint_rmse_rad": 0.29619503021240234
+        },
+        {
+          "time_s": 1.819998860359192,
+          "pelvis_height_m": 0.6958877444267273,
+          "grip_separation_m": 0.00040898879354248053,
+          "joint_limit_excess_rad": 0.006343245506286621,
+          "bat_center_m": [
+            0.312629996749674,
+            0.23695378741085316,
+            0.6403934466049486
+          ],
+          "reference_joint_rmse_rad": 0.28087034821510315
+        },
+        {
+          "time_s": 1.8399988412857056,
+          "pelvis_height_m": 0.6844006180763245,
+          "grip_separation_m": 0.000444716065529278,
+          "joint_limit_excess_rad": 0.01289677619934082,
+          "bat_center_m": [
+            0.33774451652979787,
+            0.2590991104079411,
+            0.6468923576536885
+          ],
+          "reference_joint_rmse_rad": 0.2602817416191101
+        },
+        {
+          "time_s": 1.8599988222122192,
+          "pelvis_height_m": 0.6716717481613159,
+          "grip_separation_m": 0.00043441721600763527,
+          "joint_limit_excess_rad": 0.008670270442962646,
+          "bat_center_m": [
+            0.3614078792422628,
+            0.28494756160902857,
+            0.6512793089120298
+          ],
+          "reference_joint_rmse_rad": 0.24022145569324493
+        },
+        {
+          "time_s": 1.879998803138733,
+          "pelvis_height_m": 0.6573166251182556,
+          "grip_separation_m": 0.0004010932290062381,
+          "joint_limit_excess_rad": 0.001325070858001709,
+          "bat_center_m": [
+            0.3839358287029924,
+            0.31355034131148424,
+            0.654154410524687
+          ],
+          "reference_joint_rmse_rad": 0.2257658988237381
+        },
+        {
+          "time_s": 1.8999987840652466,
+          "pelvis_height_m": 0.6404702067375183,
+          "grip_separation_m": 0.00036806747625058495,
+          "joint_limit_excess_rad": 0.001780293881893158,
+          "bat_center_m": [
+            0.4062891356510123,
+            0.3442511104763597,
+            0.6557981300212542
+          ],
+          "reference_joint_rmse_rad": 0.22075669467449188
+        },
+        {
+          "time_s": 1.9199987649917603,
+          "pelvis_height_m": 0.6214098930358887,
+          "grip_separation_m": 0.00034351504171626566,
+          "joint_limit_excess_rad": 0.0022707879543304443,
+          "bat_center_m": [
+            0.4282249022170322,
+            0.37641778488068317,
+            0.656294542737089
+          ],
+          "reference_joint_rmse_rad": 0.22210246324539185
+        },
+        {
+          "time_s": 1.939998745918274,
+          "pelvis_height_m": 0.6005642414093018,
+          "grip_separation_m": 0.0003368856235769033,
+          "joint_limit_excess_rad": 0.002685844898223877,
+          "bat_center_m": [
+            0.4482842070406341,
+            0.40947416557645056,
+            0.655320073931308
+          ],
+          "reference_joint_rmse_rad": 0.22866198420524597
+        },
+        {
+          "time_s": 1.9599987268447876,
+          "pelvis_height_m": 0.5779694318771362,
+          "grip_separation_m": 0.0003341735413240407,
+          "joint_limit_excess_rad": 0.002898856997489929,
+          "bat_center_m": [
+            0.46579180283565874,
+            0.44342192549795817,
+            0.6525334559236433
+          ],
+          "reference_joint_rmse_rad": 0.2367662638425827
+        },
+        {
+          "time_s": 1.9799987077713013,
+          "pelvis_height_m": 0.5534792542457581,
+          "grip_separation_m": 0.00033870588900379155,
+          "joint_limit_excess_rad": 0.0029254555702209473,
+          "bat_center_m": [
+            0.4805606501594105,
+            0.4781754318053912,
+            0.6479868817388115
+          ],
+          "reference_joint_rmse_rad": 0.24664759635925293
+        },
+        {
+          "time_s": 1.999998688697815,
+          "pelvis_height_m": 0.5269542336463928,
+          "grip_separation_m": 0.0003439658152042025,
+          "joint_limit_excess_rad": 0.00353829562664032,
+          "bat_center_m": [
+            0.4926164951521559,
+            0.5135340272695852,
+            0.6421388462334348
+          ],
+          "reference_joint_rmse_rad": 0.23662585020065308
+        }
+      ]
+    }
+  ],
+  "input_sha256": {
+    "g1_cricket_results/bimanual_v1/ppo_right_continued/run_config.json": "ce004bce9cd680caef8208c5fb55203f4f256096f4b6b06879460b70699a122a",
+    "g1_cricket_results/bimanual_v1/ppo_right_continued/model_1022.pt": "d11c2dbe6b94e4954fe4116c8f02fca0014d00a69e49ce106989a04a8c96f697",
+    "g1_cricket_results/bimanual_v1/right_tracking.npz": "21412a9ca563eac0f86be7b9f9db052873ca918cd248f3de538a444d29984e28",
+    "scripts/evaluate_g1_cricket_tracking.py": "d8f48d3ca57cb593117edd6c741ae2ef24d2a2b49a398bd5f5dcd873b40399d8",
+    "src/unilab/tasks/manipulation/g1_cricket/__init__.py": "cb9dc85782824c3c2204fc68f6810cceb2ec2ef1f5780c0d6704d6dbf36cae3b",
+    "src/unilab/tasks/manipulation/g1_cricket/arm_geometry.py": "47aced740d3bbf992edfcc65ec5d37aa6c0e11c32f7cb3786349db8c07ed4352",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual.py": "1cb63cf37885e7636798c556e1d71144d13e4a9830c5ee5bdd58e6fee55d1b42",
+    "src/unilab/tasks/manipulation/g1_cricket/bowling.py": "3c690fd588f29e4fae4ae2e419fba3096320bd7999df252e076f3ca1e0ba9299",
+    "src/unilab/tasks/manipulation/g1_cricket/compliance_v2.py": "e0c0def29df2caa4ef23cb46f318669b46b9942e82c939ea810dee46a0ae7005",
+    "src/unilab/tasks/manipulation/g1_cricket/delivery.py": "a1a82ea56f4bb0add72b4a3fe96a603e5378c749f7871cac246be4566f1e1a46",
+    "src/unilab/tasks/manipulation/g1_cricket/forward_exit_reward.py": "113a460361bb64db6be5b58974c42de96f978e0405df8dad4617e5d45ae66e6c",
+    "src/unilab/tasks/manipulation/g1_cricket/holder.py": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "b621885e9858c031685082855e668b8fb1ce31b9d3a7526e7331e7dbc0b59341",
+    "src/unilab/tasks/manipulation/g1_cricket/impedance.py": "7c51705a9ab41d93e587f65ec3faba11f990b5cf257068756cc6ecfed7b5486d",
+    "src/unilab/tasks/manipulation/g1_cricket/overarm.py": "06ac693650070e4434056da3f52f87dc64bd581453ba2efcff198d255fa44add",
+    "src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py": "304bffb9013bfec2d8ac57d805f2ce8156421b8024bda316f373f856fa61830f",
+    "src/unilab/tasks/manipulation/g1_cricket/prior.py": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739",
+    "src/unilab/tasks/manipulation/g1_cricket/residual.py": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/tasks/manipulation/g1_cricket/separation_reward.py": "e10c9a7918f67f8621d2e00af12729e31c389b1f8f7c288d90de77fcfff12994",
+    "src/unilab/tasks/manipulation/g1_cricket/substep_reward.py": "f2c2f7e35655cb4cda10f922660c004f297ee536abe9775d5e237b50206b4cb4",
+    "src/unilab/tasks/manipulation/g1_cricket/swing_reward.py": "08696424ea2556348e067c40e5c3bb9286b5caa9f89bd25add868ab87081a0a9",
+    "src/unilab/tasks/manipulation/g1_cricket/tanh_residual.py": "904a8dde165f872b200ef824466d38834e4b3d177882e7d01561995596466fa0",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb",
+    "src/unilab/tasks/manipulation/g1_cricket/tracking.py": "900f9fb9da89cae1ae0a49f07c09664fbf306d583847394829f1b315b67d400b"
+  }
+}

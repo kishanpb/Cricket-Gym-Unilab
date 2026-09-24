@@ -65,6 +65,39 @@ checkpoint selection. Evaluate each final checkpoint against reference-only
 control and render complete failed or completed episodes. A completed dry swing
 still cannot establish contact quality, running bowling or a showcase result.
 
+### Completed Continuation
+
+Both continuations completed their full budgets: **393,216 cumulative
+transitions per hand**, with final checkpoint `model_1022.pt`. The learner's
+resume counter repeats label 511; each retained scalar CSV has 512 update rows,
+so transition counts, not the last checkpoint label, define the budget.
+
+| Hand | Initial PPO duration / return | Continued PPO duration / return | Final result |
+| --- | --- | --- | --- |
+| Right | 1.56 s / 6.3136 | 2.00 s / 7.7729 | Anchor-height failure |
+| Left | 1.68 s / 6.7105 | 2.64 s / 10.2905 | Anchor-height failure |
+
+Neither completes the three-second motion. Both tip backward during the swing;
+control-boundary grip separation remains below 0.491 mm and 0.630 mm, while
+reported configured joint-limit excess reaches 0.02467 and 0.01810 rad. These
+are endpoint diagnostics, not a complete substep safety/contact qualification.
+No ball-hit, running, hardware-load or policy-promotion claim follows.
+
+[Right complete evaluation](../g1_cricket_results/bimanual_v1/ppo_right_continued/evaluation.json)
+and [left complete evaluation](../g1_cricket_results/bimanual_v1/ppo_left_continued/evaluation.json)
+retain all reference-only and learned traces. The initial pilot's reports,
+final parent checkpoints, saved configurations, all iteration scalars and
+continued final checkpoints are retained alongside them. All 49 scalar series
+per run are finite. Redundant event files, intermediate checkpoints and the
+learner's unrelated installed-checkout diff were removed after scalar export.
+
+[Right failed development video](../g1_cricket_results/bimanual_v1/ppo_right_continued/ppo_diagnostic.mp4)
+and [left failed development video](../g1_cricket_results/bimanual_v1/ppo_left_continued/ppo_diagnostic.mp4)
+show each complete episode at 0.5x, including terminal failure. The
+[contact sheet](../g1_cricket_results/bimanual_v1/ppo_diagnostic_contact_sheet.png)
+uses the first, midpoint and last physical frame of both final episodes. These
+are diagnostics, not replacements for the earlier showcase videos.
+
 ## Reproduction
 
 Generate references and a complete diagnostic in a new output directory:

@@ -30,51 +30,18 @@ next extension is learned cricket on the repository's Unitree G1 model; the curr
 videos are not G1 demonstrations.
 
 **Unitree G1 research:** [setup, experiments and complete results](G1_CRICKET.md).
-A locally fitted bat-arm actor now continues with 24,576 PPO transitions around
-an explicitly frozen external locomotion prior and a rigid wrist bat. The
-[576-row evaluation](G1_CRICKET.md#imitation-initialization-and-bounded-ppo)
-matches exactly across MuJoCo and native mjbatch. BC qualifies on 2/24 right-hand
-development contexts; PPO completes all 24 with blade contact and no guard
-violations, but all fall below the strict forward-speed target. Left-hand use is
-untrained transfer and fails. Simulated contact loads are not hardware calibration.
-Learned bowling and a robust both-hand G1 showcase remain unfinished; the earlier
-highlights above are preserved, and historical task/checkpoint results remain
-available in the research log.
+The current [whole-body motion-tracking task](docs/g1_cricket_bimanual_tracking.md)
+uses two mechanical hand grips and independently trained right/left PPO actors
+controlling all 29 joints through native CPU mjbatch. It follows G1-scaled
+guard/backlift/downswing targets without a frozen walking policy or step-time
+pose overwrites. This remains a dry-swing development task: balance, actual
+ball hitting and running bowling are not yet showcase-qualified.
 
-[G1 development video with force/touch overlays](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)
-and [six-view contact sheet](g1_cricket_results/bc_v1/learned_development_contact_sheet.png):
-fixed contexts including failures, not an advertising reel or learned bowling.
-
-The [bowling release foundation](G1_CRICKET.md#bowling-release-foundation)
-now tests both G1 wrists with a declared compliant ball holder and continuous
-release in both executors. This is mechanics infrastructure, not learned grasping
-or a trained bowling demonstration.
-
-The [experimental bowling task](docs/g1_cricket_bowling_v1.md) now exposes
-arm/release controls and validated holder-force/touch telemetry on both CPU
-executors. All 32 untrained carry/drop checks complete. The subsequent
-[both-hand PPO delivery pilot](G1_CRICKET.md#both-hand-delivery-learning-pilot)
-trains separate actors for 24,576 transitions each, but all 32 evaluated cases
-retain the ball: zero qualified deliveries. Full results and failed checkpoints
-are retained; this is not a learned-bowling showcase.
-
-The [absolute-arm reach study](G1_CRICKET.md#absolute-arm-reach-and-prior-target-guard)
-now achieves three left-hand scripted raise-and-recovery witnesses after bounding
-the locomotion prior's motor targets. All right-hand trials still fail physical
-checks. These are one-seed preload diagnostics, not learned releases or a bowling
-showcase; the full failures and contact-model limitations remain linked.
-
-The subsequent [fixed drive/release study](G1_CRICKET.md#fixed-overarm-drive-and-release)
-completes six left-hand scripted releases with stable recovery, but **zero
-qualified deliveries**: maximum forward release speed is 3.13 m/s and every
-first bounce falls short. This is development evidence, not a learned video.
-The [signed elbow and reward audit](G1_CRICKET.md#signed-elbow-and-release-reward)
-closes an angle-folding loophole and adds an opt-in reward correction without
-reclassifying those failed deliveries as successes.
-The [32-trial shoulder search](G1_CRICKET.md#coordinated-shoulder-search) and
-[paired launch/braking controller tests](G1_CRICKET.md#positive-arc-and-controller-damping)
-also find no qualified delivery. Complete failures remain available; no new
-learned-bowling showcase is claimed.
+Earlier one-arm contact experiments and failed bowling trials remain in the
+research log, including [force/touch diagnostic video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)
+and [complete overarm/wrist results](G1_CRICKET.md#overarm-damping-and-wrist-posture).
+Simulated contact loads are uncalibrated; mechanical grips are not learned
+finger grasping. The original highlights above are unchanged.
 
 ---
 

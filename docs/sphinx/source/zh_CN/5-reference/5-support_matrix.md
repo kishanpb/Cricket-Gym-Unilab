@@ -90,6 +90,7 @@ uv run scripts/generate_support_matrix.py --write
 | PPO (torch) | `g1_cricket_balance_v3` (g1 cricket balance v3) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_batting` (g1 cricket batting) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_bc_v1` (g1 cricket bc v1) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_bimanual_tracking` (g1 cricket bimanual tracking) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_bowling_v1` (g1 cricket bowling v1) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_compliance_v2` (g1 cricket compliance v2) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_delivery_pitch_v2` (g1 cricket delivery pitch v2) | Tested | - | - | - | - | - | - | - |
