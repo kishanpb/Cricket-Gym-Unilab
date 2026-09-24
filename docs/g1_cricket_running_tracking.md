@@ -40,13 +40,16 @@ PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
 ```
 
 Use `left` and `ppo_left` for the other independent run. Evaluate each final run
-directory with `scripts/evaluate_g1_cricket_running.py`. It retains complete
+directory with `scripts/evaluate_g1_cricket_running.py --render`. It retains complete
 reference-only and deterministic PPO episodes from frame zero and seed 1,
 including all failures and full physics states. Every held-control interval must
 match independent native state and sensor replay exactly. The unchanged delivery
 gate checks actual stride/foot geometry, elbow, overarm release, stability,
 joint/actuator limits, ball contacts, bounce and target corridor. Scheduled
 release, tracking rewards or a short clip cannot replace those checks.
+The videos replay those saved physics states at 0.5x, including terminal falls,
+with simulated holder-load/contact readouts and a fixed-frame review per control.
+They are not offline target animations or selected successful intervals.
 
 This 2.7-second initial tracking curriculum may end before downfield ball flight
 can be qualified. It is not a full-match, held-out, hardware, independently

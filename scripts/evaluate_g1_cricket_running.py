@@ -5,10 +5,14 @@ import hashlib
 import json
 from pathlib import Path
 
+import imageio.v2 as imageio
+import mujoco
 import numpy as np
 import torch
+from evaluate_g1_cricket_tracking import visual_model
 from g1_cricket_delivery_trial import DeliveryEvents, DeliveryReplay
 from omegaconf import OmegaConf
+from PIL import Image, ImageDraw, ImageFont
 from rsl_rl.runners import OnPolicyRunner
 from uni_rl.algos.rsl_rl import RslRlVecEnvWrapper, normalize_ppo_train_cfg
 
@@ -19,7 +23,64 @@ from unilab.training import algo_config_dict
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def evaluate(directory):
+def render_rollout(env, physical, directory, result):
+    model = visual_model(Path(env.scene_directory.name) / "cricket.xml", env.get_playback_model())
+    model.vis.global_.offwidth, model.vis.global_.offheight = 960, 540
+    data = mujoco.MjData(model)
+    camera = mujoco.MjvCamera()
+    camera.distance = 4.2
+    camera.azimuth = -90 if env.cfg.handedness == "right" else 90
+    camera.elevation = -8
+    controller = result["controller"]
+    selected = np.linspace(0, len(physical) - 1, 6, dtype=int)
+    sheet = Image.new("RGB", (1440, 135))
+    with mujoco.Renderer(model, height=540, width=960) as renderer:
+        with imageio.get_writer(
+            directory / f"{controller}.mp4", fps=25, macro_block_size=1
+        ) as writer:
+            for index, state in enumerate(physical):
+                mujoco.mj_setState(model, data, state, mujoco.mjtState.mjSTATE_FULLPHYSICS)
+                mujoco.mj_forward(model, data)
+                camera.lookat[:] = [data.qpos[0], 0, 0.8]
+                renderer.update_scene(data, camera)
+                frame = Image.fromarray(renderer.render())
+                draw = ImageDraw.Draw(frame)
+                draw.rectangle((0, 0, 960, 70), fill="#17201d")
+                draw.text(
+                    (12, 8),
+                    f"G1 {env.cfg.handedness} | {controller} | physics t={data.time:.2f}s | 0.5x",
+                    font=ImageFont.load_default(size=18),
+                )
+                draw.text(
+                    (12, 34),
+                    "Development diagnostic | scheduled holder release | NOT qualified bowling",
+                    font=ImageFont.load_default(size=16),
+                )
+                if index:
+                    sample = result["trace"][index - 1]
+                    draw.rectangle((0, 462, 960, 496), fill="#17201d")
+                    draw.text(
+                        (12, 470),
+                        f"Simulated holder load: {sample['holder_peak_force_n']:.1f} N | "
+                        f"hand contact: {sample['hand_touch_fraction']:.0%} | "
+                        f"released: {sample['released']}",
+                        font=ImageFont.load_default(size=16),
+                    )
+                if index == len(physical) - 1:
+                    flags = [name for name, active in result["termination_flags"].items() if active]
+                    draw.rectangle((0, 496, 960, 540), fill="#17201d")
+                    draw.text(
+                        (12, 506),
+                        "Episode end: " + ", ".join(flags),
+                        font=ImageFont.load_default(size=16),
+                    )
+                writer.append_data(np.asarray(frame))
+                for column in np.flatnonzero(selected == index):
+                    sheet.paste(frame.resize((240, 135)), (int(column) * 240, 0))
+    sheet.save(directory / f"{controller}_review.png")
+
+
+def evaluate(directory, render=False):
     saved = json.loads((directory / "run_config.json").read_text())
     summary = json.loads((directory / "run_summary.json").read_text())
     owner = OmegaConf.create(saved["config"])
@@ -31,6 +92,7 @@ def evaluate(directory):
         directory / "run_config.json",
         checkpoint,
         Path(__file__),
+        ROOT / "scripts/evaluate_g1_cricket_tracking.py",
         ROOT / "scripts/g1_cricket_delivery_trial.py",
         ROOT / owner.env.commands.motion.params.motion_file,
         ROOT / owner.env.actions.reference.reference_file,
@@ -115,6 +177,8 @@ def evaluate(directory):
             )
             rows.append(result)
             np.savez_compressed(directory / f"{controller}_physical.npz", state=physical)
+            if render:
+                render_rollout(env, physical, directory, result)
     finally:
         env.close()
     for path, digest in hashes.items():
@@ -133,4 +197,6 @@ def evaluate(directory):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory", type=Path)
-    evaluate(parser.parse_args().directory)
+    parser.add_argument("--render", action="store_true")
+    args = parser.parse_args()
+    evaluate(args.directory, args.render)
