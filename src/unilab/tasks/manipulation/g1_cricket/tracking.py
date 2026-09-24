@@ -23,6 +23,13 @@ def ankle_balance(reference_quaternion, quaternion, angular_velocity, gain):
     return np.clip(gain * (0.7 * tilt[:2] + 0.1 * velocity[:2]), -0.3, 0.3)
 
 
+def root_position_balance(reference_quaternion, position_error, velocity_error, gain):
+    rotation = np.empty(9)
+    mujoco.mju_quat2Mat(rotation, reference_quaternion)
+    error = rotation.reshape(3, 3).T @ (position_error + 0.2 * velocity_error)
+    return gain * np.array([-error[1], error[0]])
+
+
 @dataclass
 class G1BimanualTrackingCfg(G1CricketCfg):
     def build_scene(self, source: Path, destination: Path) -> tuple[str, ...]:
@@ -88,6 +95,10 @@ class SupportedCricketReferenceAction(CricketReferenceAction):
         with np.load(cfg.reference_file) as saved:
             poses = saved["qpos"]
         self.reference_root_quaternion = poses[:, 3:7].copy()
+        self.reference_root_position = poses[:, :3].copy()
+        self.reference_root_velocity = np.gradient(
+            self.reference_root_position, 1 / self.command.motion.fps, axis=0
+        )
         motion = self.command.motion.get_motion_at_frame(np.arange(len(poses)))
         np.testing.assert_allclose(
             motion.joint_pos, poses[:, model.jnt_qposadr[joints]], atol=1e-6, rtol=0
@@ -114,6 +125,7 @@ class SupportedCricketReferenceAction(CricketReferenceAction):
 class BalancedCricketReferenceActionCfg(SupportedCricketReferenceActionCfg):
     balance_gain: float = 4.0
     waist_tracking_gain: float = 0.0
+    root_position_gain: float = 0.0
 
     def build(self, env):
         return BalancedCricketReferenceAction(self, env)
@@ -125,10 +137,21 @@ class BalancedCricketReferenceAction(SupportedCricketReferenceAction):
         reference = self.reference_root_quaternion[self.command.time_steps]
         quaternion = self._entity.data.root_link_quat_w
         angular_velocity = self._entity.data.root_link_ang_vel_b
+        position_error = self._entity.data.root_link_pos_w - (
+            self.reference_root_position[self.command.time_steps] + self._env.scene.env_origins
+        )
+        velocity_error = (
+            self._entity.data.root_link_lin_vel_w
+            - self.reference_root_velocity[self.command.time_steps]
+        )
         for i in range(self.num_envs):
             correction = ankle_balance(
                 reference[i], quaternion[i], angular_velocity[i], self.cfg.balance_gain
             )
+            correction += root_position_balance(
+                reference[i], position_error[i], velocity_error[i], self.cfg.root_position_gain
+            )
+            correction = np.clip(correction, -0.3, 0.3)
             self.target[i, [4, 10]] += correction[1]
             self.target[i, [5, 11]] += correction[0]
         self.target[:, 14] += self.cfg.waist_tracking_gain * (

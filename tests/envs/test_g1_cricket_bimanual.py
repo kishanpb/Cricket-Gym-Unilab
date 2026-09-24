@@ -151,6 +151,7 @@ def test_waist_tracking_feedback_preserves_model_and_replay(engine, hand):
                 f"task=g1_cricket_balanced_tracking/{engine}",
                 f"env.handedness={hand}",
                 "env.actions.reference.waist_tracking_gain=2.0",
+                "env.actions.reference.root_position_gain=1.0",
             ],
         )
     override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()

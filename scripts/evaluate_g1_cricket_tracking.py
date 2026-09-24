@@ -151,8 +151,10 @@ def visual_model(scene, physics):
     return model
 
 
-def evaluate(directory, render=False, *, output=None, waist_tracking_gain=None):
-    if waist_tracking_gain is not None and (
+def evaluate(
+    directory, render=False, *, output=None, waist_tracking_gain=None, root_position_gain=None
+):
+    if (waist_tracking_gain is not None or root_position_gain is not None) and (
         output is None or output.resolve() == directory.resolve()
     ):
         raise ValueError("controller variants require a separate output directory")
@@ -164,6 +166,9 @@ def evaluate(directory, render=False, *, output=None, waist_tracking_gain=None):
     if waist_tracking_gain is not None:
         owner.env.actions.reference.waist_tracking_gain = waist_tracking_gain
         evaluation_overrides["waist_tracking_gain"] = waist_tracking_gain
+    if root_position_gain is not None:
+        owner.env.actions.reference.root_position_gain = root_position_gain
+        evaluation_overrides["root_position_gain"] = root_position_gain
     if output is not None:
         output.mkdir(parents=True, exist_ok=False)
     else:
@@ -385,7 +390,12 @@ if __name__ == "__main__":
     parser.add_argument("--render", action="store_true")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--waist-tracking-gain", type=float)
+    parser.add_argument("--root-position-gain", type=float)
     args = parser.parse_args()
     evaluate(
-        args.directory, args.render, output=args.output, waist_tracking_gain=args.waist_tracking_gain
+        args.directory,
+        args.render,
+        output=args.output,
+        waist_tracking_gain=args.waist_tracking_gain,
+        root_position_gain=args.root_position_gain,
     )

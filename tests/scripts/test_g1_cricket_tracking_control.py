@@ -10,6 +10,8 @@ from g1_cricket_tracking_control_audit import (
     position_velocity_control,
 )
 
+from unilab.tasks.manipulation.g1_cricket.tracking import root_position_balance
+
 
 def test_velocity_reference_cancels_damping_at_desired_motion():
     model = mujoco.MjModel.from_xml_string("""
@@ -82,7 +84,23 @@ def test_bat_reference_uses_forward_kinematics_without_changing_poses():
 
 
 @pytest.mark.parametrize("same_output", [False, True])
-def test_controller_variant_cannot_overwrite_parent(tmp_path, same_output):
+@pytest.mark.parametrize("term", ["waist_tracking_gain", "root_position_gain"])
+def test_controller_variant_cannot_overwrite_parent(tmp_path, same_output, term):
     with pytest.raises(ValueError, match="separate output"):
-        evaluate(tmp_path, output=tmp_path if same_output else None, waist_tracking_gain=2)
+        evaluate(tmp_path, output=tmp_path if same_output else None, **{term: 2})
     assert not list(tmp_path.iterdir())
+
+
+def test_root_feedback_uses_reference_axes_and_velocity_damping():
+    position, velocity = np.array([0.1, 0.2, 0.0]), np.array([0.4, -0.2, 0.0])
+    for yaw in (0, -np.pi / 2, np.pi / 2):
+        quaternion = np.array([np.cos(yaw / 2), 0, 0, np.sin(yaw / 2)])
+        rotation = np.empty(9)
+        mujoco.mju_quat2Mat(rotation, quaternion)
+        rotation = rotation.reshape(3, 3)
+        np.testing.assert_allclose(
+            root_position_balance(quaternion, rotation @ position, rotation @ velocity, 2),
+            [-0.32, 0.36],
+            atol=1e-15,
+        )
+        np.testing.assert_array_equal(root_position_balance(quaternion, position, velocity, 0), 0)

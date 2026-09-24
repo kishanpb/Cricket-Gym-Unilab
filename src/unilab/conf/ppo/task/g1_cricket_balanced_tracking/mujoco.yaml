@@ -9,3 +9,4 @@ env:
       _target_: unilab.tasks.manipulation.g1_cricket.tracking.BalancedCricketReferenceActionCfg
       balance_gain: 4.0
       waist_tracking_gain: 0.0
+      root_position_gain: 0.0

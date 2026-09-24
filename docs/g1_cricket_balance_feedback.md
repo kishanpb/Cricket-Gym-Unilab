@@ -215,3 +215,30 @@ The evaluator now records the offending joint at each substep-audited interval
 and pins the source robot XML, stand keyframe XML and referenced visual meshes,
 in addition to checkpoint, references and task sources. Controller overrides
 require separate, new output directories and cannot overwrite parent evidence.
+
+All 16 episodes complete, but none passes all nine original feasibility gates.
+Gain-zero traces exactly reproduce every previously reported field. Positive
+waist gains remove the two PPO waist-pitch violations; the right actor's peak
+bat error improves to 0.13087 / 0.12812 / 0.12948 m at gains 1 / 2 / 4. The left
+actor instead drifts, with peak bat errors 0.23686 / 0.28281 / 0.27152 m and
+failed root-position gates. Reference-only control also drifts on both hands;
+gain 4 adds waist-roll stop excursions. Gain 1 is the lowest tested gain that
+clears joint stops in all four reference/PPO episodes, not an accepted policy.
+Each report retains 63 verified input hashes and all substep replay results.
+
+## Root-Position Feedback Comparison
+
+Keep waist gain 1 fixed and add only a planar root-position/velocity feedback
+term to the existing ankle correction. In reference-root coordinates, the
+pitch term is gain times `(x_error + 0.2 * x_velocity_error)`; roll uses the
+negative y equivalent. Errors are actual minus reference, including environment
+origins and the reference root velocity. The total ankle correction remains
+clipped to +/-0.3 rad. This changes motor targets only, not floating-base state,
+contact geometry or force limits.
+
+Fixed comparison: root gains `0, 0.5, 1, 2, 4`, both hands and reference-only/PPO
+control, using the same two frozen final checkpoints: exactly 20 complete or
+failed episodes, no training or adaptive extension. Root gain zero must exactly
+match the retained waist-gain-1 traces. Keep all nine feasibility gates, complete
+traces and all failures in `bimanual_root_tracking_v1`. This experiment addresses
+the drift induced by the waist correction; it is not a running-bowling result.
