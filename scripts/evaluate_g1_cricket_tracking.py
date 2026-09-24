@@ -21,6 +21,16 @@ from unilab.training import algo_config_dict
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def reference_bat_positions(model, poses):
+    data = mujoco.MjData(model)
+    positions = []
+    for pose in poses:
+        data.qpos[:] = pose
+        mujoco.mj_forward(model, data)
+        positions.append(data.site("bat_center").xpos.copy())
+    return np.asarray(positions)
+
+
 class TrackingReplay:
     """Measure solve-phase loads while independently replaying each held control."""
 
@@ -52,8 +62,10 @@ class TrackingReplay:
         )
         contacts = set()
         wrench = np.empty(6)
+        minimum_height = float(data.qpos[2])
         for _ in range(env.cfg.sim_substeps):
             mujoco.mj_step(model, data)
+            minimum_height = min(minimum_height, float(data.qpos[2]))
             q = data.qpos[model.jnt_qposadr[joints]]
             values = {
                 "hard_joint_limit_excess_rad": max(
@@ -109,6 +121,7 @@ class TrackingReplay:
             "substeps": env.cfg.sim_substeps,
             "peaks": peaks,
             "unexpected_contacts": sorted(contacts),
+            "minimum_pelvis_height_m": minimum_height,
         }
 
 
@@ -176,6 +189,10 @@ def evaluate(directory, render=False):
         policy = runner.get_inference_policy(device="cpu")
         model = env.get_playback_model()
         replay = TrackingReplay(env)
+        bat_reference = None
+        if "reference_file" in owner.env.actions.reference:
+            with np.load(ROOT / owner.env.actions.reference.reference_file) as reference:
+                bat_reference = reference_bat_positions(model, reference["qpos"])
         display = (
             visual_model(Path(env.scene_directory.name) / "cricket.xml", model) if render else None
         )
@@ -246,6 +263,12 @@ def evaluate(directory, render=False):
                             ),
                         }
                     )
+                    if bat_reference is not None:
+                        index = int(env.command_manager.get_term("motion").time_steps[0])
+                        trace[-1]["reference_bat_center_m"] = bat_reference[index].tolist()
+                        trace[-1]["bat_tracking_error_m"] = float(
+                            np.linalg.norm(data.site("bat_center").xpos - bat_reference[index])
+                        )
                     if renderer is not None:
                         mujoco.mj_setState(
                             display, display_data, physical, mujoco.mjtState.mjSTATE_FULLPHYSICS

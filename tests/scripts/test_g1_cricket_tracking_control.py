@@ -2,6 +2,7 @@
 
 import mujoco
 import numpy as np
+from evaluate_g1_cricket_tracking import reference_bat_positions
 from g1_cricket_tracking_control_audit import (
     ankle_balance,
     feasibility_checks,
@@ -63,3 +64,17 @@ def test_completion_alone_cannot_clear_feasibility():
     assert checks["complete"]
     assert not checks["hard_joint_limits"]
     assert not checks["no_unexpected_contact"]
+
+
+def test_bat_reference_uses_forward_kinematics_without_changing_poses():
+    model = mujoco.MjModel.from_xml_string("""
+    <mujoco><worldbody><body><joint type="slide" axis="1 0 0"/>
+      <geom type="sphere" size=".1"/><site name="bat_center" pos=".2 .3 .4"/>
+    </body></worldbody></mujoco>
+    """)
+    poses = np.array([[0.0], [0.5], [-0.25]])
+    original = poses.copy()
+    np.testing.assert_allclose(
+        reference_bat_positions(model, poses), [[0.2, 0.3, 0.4], [0.7, 0.3, 0.4], [-0.05, 0.3, 0.4]]
+    )
+    np.testing.assert_array_equal(poses, original)
