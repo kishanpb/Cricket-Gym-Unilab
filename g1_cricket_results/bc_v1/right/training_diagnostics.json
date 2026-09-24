@@ -1,0 +1,154 @@
+{
+  "scope": "native iteration-indexed scalars; redundant wall-time-indexed /time series omitted; no reconstructed KL or clip-fraction estimates",
+  "kl_series_available": false,
+  "clip_fraction_series_available": false,
+  "scalar_tags": {
+    "Episode_Reward/action_rate": {
+      "count": 1,
+      "all_finite": true,
+      "minimum": -0.021137403324246407,
+      "maximum": -0.021137403324246407,
+      "final": -0.021137403324246407
+    },
+    "Episode_Reward/batting": {
+      "count": 1,
+      "all_finite": true,
+      "minimum": 1.5607995986938477,
+      "maximum": 1.5607995986938477,
+      "final": 1.5607995986938477
+    },
+    "Episode_Reward/failure": {
+      "count": 1,
+      "all_finite": true,
+      "minimum": -1.25,
+      "maximum": -1.25,
+      "final": -1.25
+    },
+    "Episode_Reward/upright": {
+      "count": 1,
+      "all_finite": true,
+      "minimum": 0.30984342098236084,
+      "maximum": 0.30984342098236084,
+      "final": 0.30984342098236084
+    },
+    "Episode_Termination/fallen": {
+      "count": 1,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "Episode_Termination/invalid_contact": {
+      "count": 1,
+      "all_finite": true,
+      "minimum": 0.5,
+      "maximum": 0.5,
+      "final": 0.5
+    },
+    "Episode_Termination/time_out": {
+      "count": 1,
+      "all_finite": true,
+      "minimum": 0.5,
+      "maximum": 0.5,
+      "final": 0.5
+    },
+    "Loss/entropy": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -1.7554166316986084,
+      "maximum": -1.2874093055725098,
+      "final": -1.7554166316986084
+    },
+    "Loss/learning_rate": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 9.999999747378752e-06,
+      "maximum": 0.0002562890585977584,
+      "final": 0.00017085937724914402
+    },
+    "Loss/surrogate": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -0.04308716207742691,
+      "maximum": 0.008975019678473473,
+      "final": -0.013077410869300365
+    },
+    "Loss/value": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.0012340917019173503,
+      "maximum": 6.968987464904785,
+      "final": 0.047696635127067566
+    },
+    "Perf/collection_time": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 1.497736930847168,
+      "maximum": 1.915743112564087,
+      "final": 1.534329891204834
+    },
+    "Perf/learning_time": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.010759115219116211,
+      "maximum": 0.11119675636291504,
+      "final": 0.011312007904052734
+    },
+    "Perf/total_fps": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 49.0,
+      "maximum": 63.0,
+      "final": 62.0
+    },
+    "Policy/mean_std": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.188534215092659,
+      "maximum": 0.20131249725818634,
+      "final": 0.188534215092659
+    },
+    "Train/mean_episode_length": {
+      "count": 255,
+      "all_finite": true,
+      "minimum": 31.0,
+      "maximum": 99.25,
+      "final": 99.25
+    },
+    "Train/mean_reward": {
+      "count": 255,
+      "all_finite": true,
+      "minimum": 1.1990108489990234,
+      "maximum": 6.3272809982299805,
+      "final": 6.077678680419922
+    },
+    "reward/action_rate": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -0.20851737260818481,
+      "maximum": -0.0047307307831943035,
+      "final": -0.07303876429796219
+    },
+    "reward/batting": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 8.914484977722168,
+      "final": 1.5739468336105347
+    },
+    "reward/failure": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -5.208333492279053,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "reward/upright": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.9993199706077576,
+      "maximum": 0.9998524188995361,
+      "final": 0.9996245503425598
+    }
+  }
+}

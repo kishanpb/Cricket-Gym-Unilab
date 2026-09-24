@@ -51,7 +51,10 @@ the overlap-versus-force tradeoff and required finer timesteps. The subsequent
 [32-case robot transfer](G1_CRICKET.md#contact-model-transfer-to-g1) retains exact
 MuJoCo/native-mjbatch parity, but its narrow speed pass fails at the finer timestep.
 The 2 ms contact model is opt-in; historical tasks and checkpoints are unchanged.
-No learned G1 showcase is claimed.
+An [imitation-initialized PPO run](G1_CRICKET.md#imitation-initialization-and-bounded-ppo)
+has now completed 24,576 transitions on that model, retaining both BC-only and
+final PPO checkpoints. Its full 576-case evaluation is pending; training reward
+is not a qualified strike, and no learned G1 showcase is claimed.
 
 ---
 

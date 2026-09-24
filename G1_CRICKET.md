@@ -324,14 +324,55 @@ model contrasts. Validation: 146 focused tests pass, including missing/duplicate
 context rejection and synthetic impact/fixture discrepancies. This is a bounded
 model-transfer diagnostic, not new training, material calibration, or promotion.
 
-Next is a separately frozen imitation-initialization plus bounded PPO experiment
-on the opt-in model, rather than another small scripted-command grid. Its teacher
-must remain explicitly labeled a near miss, retain all failed demonstrations,
-and initialize only the actor, not restore an old physical model's optimizer or
-critic. Closed-loop BC and final PPO must pass the unchanged shot, contact,
-actuator, stability and fine-timestep checks; imitation loss cannot qualify a
-video. Both-hand learned batting, learned bowling and new showcase videos remain
-unfinished.
+The imitation-initialization experiment below follows this result. Both-hand
+learned batting, learned bowling and new showcase videos remain unfinished.
+
+### Imitation Initialization and Bounded PPO
+
+The [frozen experiment](docs/g1_cricket_bc_v1.md) now retains a completed
+actor-only imitation stage followed by 256 PPO updates (24,576 transitions,
+399.20 seconds on the local CPU runtime). It uses the explicitly versioned
+2 ms contact model, unchanged physical limits/reward, and a fresh critic and
+PPO optimizer. It does not resume an earlier 4 ms policy's training state.
+
+[All 24 teacher episodes](g1_cricket_results/bc_v1/teacher_evaluation.json)
+are retained: 1,885 pre-action observation/command samples, seven genuine early
+terminations and four individual passes at the training timestep. No failed
+demonstrations were filtered out; the teacher remains an imperfect scripted
+controller, not a validated learned skill. Sampling balances the back-swing,
+forward-swing and follow-through phases despite their 240/240/1,405 sample counts.
+
+The 2,000 actor-only Adam updates reduce sampled imitation MSE from 2.221526 to
+0.009001. Final full-dataset phase MSE is 0.008974/0.009978/0.000758. The critic
+matches fresh seed-1 initialization exactly; initial noise remains 0.2, the PPO
+optimizer remains empty and its iteration remains zero until PPO starts.
+This is action fitting, **not closed-loop batting success**.
+
+The [BC-only checkpoint](g1_cricket_results/bc_v1/right/bc.pt) and
+[final PPO checkpoint](g1_cricket_results/bc_v1/right/ppo.pt),
+[run summary](g1_cricket_results/bc_v1/right/run_summary.json) and
+[all native scalar iterations](g1_cricket_results/bc_v1/right/training_scalars.csv)
+are retained with model/dataset provenance. PPO changes the actor and completes
+the exact budget without triggering the numerical hard stop. Its final logged
+mean training reward is 6.077679 and episode length 99.25 control ticks;
+neither quantity substitutes for the full shot gate. TensorBoard is flushed and
+closed before portable scalar verification and removal of redundant events and
+intermediate checkpoints. The logger's unrelated installed-checkout diff is also
+discarded; the experiment's 105 source/input pins remain authoritative.
+
+**The 576-case closed-loop evaluation is pending.** It compares zero, BC-only
+and final PPO across both hands, all three lanes, eight reused development seeds,
+both fine timesteps and both executors. Left-hand use is untrained transfer.
+Existing contact, penetration, speed, stability and actuator gates remain in
+force, with full executor parity and fixture-load resolution checks. No successful
+G1 batting, learned bowling, held-out generalization or new video is claimed.
+
+The local runner now hard-stops on nonfinite control/observation/reward/physics
+before framework reward sanitization, without changing historical framework code.
+Tests cover actual short PPO execution and actor-only checkpoint reload, preservation
+of critic/noise/optimizer during imitation, physical-provenance rejection,
+complete context pairing, fine-step failure, fixture-load disagreement and complete
+scalar retention. This is experimental branch evidence, not full repository CI.
 
 ## Learned Arm Residual: First Interception Experiment
 

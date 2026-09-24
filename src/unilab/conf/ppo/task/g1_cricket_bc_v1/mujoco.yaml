@@ -1,0 +1,10 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_compliance_v2/mujoco
+  - _self_
+
+algo:
+  max_iterations: 256
+  save_interval: 256
+training:
+  log_dir: g1_cricket_results/bc_v1/right

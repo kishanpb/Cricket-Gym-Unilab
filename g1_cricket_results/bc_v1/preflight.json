@@ -1,0 +1,541 @@
+{
+  "plan": {
+    "training_seeds": [
+      5301,
+      5302,
+      5303,
+      5304,
+      5305,
+      5306,
+      5307,
+      5308
+    ],
+    "training_offsets_m": [
+      -0.12,
+      -0.1,
+      0.0
+    ],
+    "teacher": {
+      "id": "pmppppp_s10",
+      "signs": [
+        1,
+        -1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "switch_tick": 10
+    },
+    "teacher_hand": "right",
+    "teacher_episodes": 24,
+    "bc_updates": 2000,
+    "bc_samples_per_phase": 32,
+    "bc_learning_rate": 0.001,
+    "bc_seed": 1,
+    "phase_tick_ranges": [
+      [
+        0,
+        10
+      ],
+      [
+        10,
+        20
+      ],
+      [
+        20,
+        100
+      ]
+    ],
+    "ppo_iterations": 256,
+    "ppo_transitions": 24576,
+    "evaluation_seeds": [
+      4301,
+      4302,
+      4303,
+      4304,
+      4305,
+      4306,
+      4307,
+      4308
+    ],
+    "evaluation_hands": [
+      "right",
+      "left"
+    ],
+    "evaluation_timesteps_s": [
+      6.25e-05,
+      3.125e-05
+    ],
+    "evaluation_executors": [
+      "mujoco",
+      "mjbatch"
+    ],
+    "evaluation_controllers": [
+      "zero_residual",
+      "bc",
+      "ppo"
+    ],
+    "evaluation_rows": 576,
+    "evaluation_scope": "reused_development_seeds_left_untrained_transfer_not_holdout"
+  },
+  "config": {
+    "algo": {
+      "algo": "ppo",
+      "algo_log_name": "rsl_rl_ppo",
+      "seed": 1,
+      "num_envs": 4,
+      "num_steps_per_env": 24,
+      "max_iterations": 256,
+      "save_interval": 256,
+      "empirical_normalization": false,
+      "runner_class_name": "OnPolicyRunner",
+      "obs_groups": {
+        "default": [
+          "policy"
+        ]
+      },
+      "experiment_name": "test",
+      "run_name": "",
+      "resume": false,
+      "load_run": "-1",
+      "checkpoint": -1,
+      "resume_path": null,
+      "policy": {
+        "init_noise_std": 0.2,
+        "actor_hidden_dims": [
+          64,
+          64
+        ],
+        "critic_hidden_dims": [
+          64,
+          64
+        ],
+        "activation": "elu",
+        "class_name": "ActorCritic"
+      },
+      "algorithm": {
+        "class_name": "uni_rl.algos.rsl_rl_ppo:FinalObservationAwarePPO",
+        "value_loss_coef": 1.0,
+        "use_clipped_value_loss": true,
+        "clip_param": 0.2,
+        "entropy_coef": 0.0,
+        "num_learning_epochs": 5,
+        "num_mini_batches": 2,
+        "learning_rate": 0.0001,
+        "schedule": "adaptive",
+        "gamma": 0.99,
+        "lam": 0.95,
+        "desired_kl": 0.01,
+        "target_kl_stop": 0.02,
+        "max_grad_norm": 1.0,
+        "adaptive_kl_beta": 0.9,
+        "adaptive_lr_growth": 1.1,
+        "adaptive_lr_decay": 1.2,
+        "adaptive_lr_update_interval": 5,
+        "metrics_interval": 8,
+        "finite_check_interval": 8,
+        "enable_compile": false,
+        "warmup_strict_iters": 10,
+        "warmup_metrics_interval": 2,
+        "warmup_finite_check_interval": 2,
+        "disable_finite_checks": false
+      }
+    },
+    "training": {
+      "task_name": "G1CricketImpactV2",
+      "devices": null,
+      "dp_collector_cpu_ids": null,
+      "device": "cpu",
+      "logger": "tensorboard",
+      "wandb_project": "unilab",
+      "wandb_entity": null,
+      "wandb_group": null,
+      "wandb_job_type": null,
+      "wandb_name": null,
+      "wandb_tags": [],
+      "wandb_notes": null,
+      "wandb_mode": null,
+      "sim_backend": "mujoco",
+      "nan_guard": {
+        "enabled": true,
+        "buffer_size": 100,
+        "max_envs_to_dump": 5,
+        "output_dir": null
+      },
+      "play_only": false,
+      "no_play": true,
+      "sim2sim_strict": true,
+      "play_render_mode": "auto",
+      "play_env_num": 16,
+      "render_spacing": 1.0,
+      "play_steps": 200,
+      "cam_distance": 6.0,
+      "cam_elevation": -20.0,
+      "cam_azimuth": 90.0,
+      "cam_lookat": null,
+      "cam_tracking": false,
+      "cam_tracking_env_idx": 0,
+      "cam_tracking_extra_envs": 2,
+      "log_root": null,
+      "num_timesteps": null,
+      "log_dir": "g1_cricket_results/bc_v1/right"
+    },
+    "interactive": {
+      "action_mode": "zero",
+      "policy_obs_mode": "auto",
+      "show_target_bodies": false,
+      "show_reward_debug": false,
+      "target_show_axes": false,
+      "target_body_names": "",
+      "target_max_bodies": 0,
+      "target_marker_radius": 0.02,
+      "target_axis_length": 0.08,
+      "target_marker_alpha": 0.75,
+      "reward_debug_show_velocity": false,
+      "reward_debug_lin_vel_scale": 0.08,
+      "reward_debug_ang_vel_scale": 0.05,
+      "reward_debug_show_connectors": false,
+      "reward_debug_show_global_anchor": false,
+      "camera_follow_body": true,
+      "camera_focus_body_name": "",
+      "camera_height_offset": 0.15,
+      "camera_distance": null,
+      "camera_elevation": null,
+      "camera_azimuth": null,
+      "use_env_visual_model": true,
+      "speed": 1.0,
+      "start_paused": false,
+      "keyboard": false,
+      "keyboard_step_lin": 0.1,
+      "keyboard_step_ang": 0.2
+    },
+    "viser": {
+      "port": 8080,
+      "env_idx": 0,
+      "display_mode": "all",
+      "max_envs": 16
+    },
+    "env": {
+      "post_step_forward_sensor": false,
+      "adaptive_chunk_size": false,
+      "chunk_size": null,
+      "locomotion_prior": true,
+      "handedness": "right",
+      "seed": 1,
+      "scene": {
+        "model_file": "src/unilab/assets/robots/g1/g1.xml",
+        "default_keyframe_name": "cricket_stand",
+        "entities": {
+          "robot": {
+            "root_body_name": "pelvis",
+            "joint_names": [
+              "left_hip_pitch_joint",
+              "left_hip_roll_joint",
+              "left_hip_yaw_joint",
+              "left_knee_joint",
+              "left_ankle_pitch_joint",
+              "left_ankle_roll_joint",
+              "right_hip_pitch_joint",
+              "right_hip_roll_joint",
+              "right_hip_yaw_joint",
+              "right_knee_joint",
+              "right_ankle_pitch_joint",
+              "right_ankle_roll_joint",
+              "waist_yaw_joint",
+              "waist_roll_joint",
+              "waist_pitch_joint",
+              "left_shoulder_pitch_joint",
+              "left_shoulder_roll_joint",
+              "left_shoulder_yaw_joint",
+              "left_elbow_joint",
+              "left_wrist_roll_joint",
+              "left_wrist_pitch_joint",
+              "left_wrist_yaw_joint",
+              "right_shoulder_pitch_joint",
+              "right_shoulder_roll_joint",
+              "right_shoulder_yaw_joint",
+              "right_elbow_joint",
+              "right_wrist_roll_joint",
+              "right_wrist_pitch_joint",
+              "right_wrist_yaw_joint"
+            ],
+            "actuator_names": [
+              "left_hip_pitch_joint",
+              "left_hip_roll_joint",
+              "left_hip_yaw_joint",
+              "left_knee_joint",
+              "left_ankle_pitch_joint",
+              "left_ankle_roll_joint",
+              "right_hip_pitch_joint",
+              "right_hip_roll_joint",
+              "right_hip_yaw_joint",
+              "right_knee_joint",
+              "right_ankle_pitch_joint",
+              "right_ankle_roll_joint",
+              "waist_yaw_joint",
+              "waist_roll_joint",
+              "waist_pitch_joint",
+              "left_shoulder_pitch_joint",
+              "left_shoulder_roll_joint",
+              "left_shoulder_yaw_joint",
+              "left_elbow_joint",
+              "left_wrist_roll_joint",
+              "left_wrist_pitch_joint",
+              "left_wrist_yaw_joint",
+              "right_shoulder_pitch_joint",
+              "right_shoulder_roll_joint",
+              "right_shoulder_yaw_joint",
+              "right_elbow_joint",
+              "right_wrist_roll_joint",
+              "right_wrist_pitch_joint",
+              "right_wrist_yaw_joint"
+            ],
+            "body_names": [
+              "pelvis",
+              "cricket_bat"
+            ]
+          },
+          "ball": {
+            "root_body_name": "cricket_ball",
+            "body_names": [
+              "cricket_ball"
+            ]
+          }
+        }
+      },
+      "sim_dt": 6.25e-05,
+      "ctrl_dt": 0.02,
+      "max_episode_seconds": 2.0,
+      "auto_reset": true,
+      "observations": {
+        "policy": {
+          "history_length": 5,
+          "terms": {
+            "gyro": {
+              "func": "unilab.envs.mdp.builtin_sensor",
+              "params": {
+                "sensor_name": "pelvis_gyro"
+              },
+              "scale": 0.2
+            },
+            "gravity": {
+              "func": "unilab.tasks.manipulation.g1_cricket.task.BodyFrameGravity",
+              "params": {
+                "sensor_name": "pelvis_world_quat"
+              }
+            },
+            "command": {
+              "func": "unilab.tasks.manipulation.g1_cricket.prior.zero_command"
+            },
+            "joint_pos": {
+              "func": "unilab.tasks.manipulation.g1_cricket.prior.joint_position_policy_order"
+            },
+            "joint_vel": {
+              "func": "unilab.tasks.manipulation.g1_cricket.prior.joint_velocity_policy_order",
+              "scale": 0.05
+            },
+            "last_action": {
+              "func": "unilab.tasks.manipulation.g1_cricket.residual.last_baseline_action"
+            }
+          }
+        },
+        "cricket": {
+          "history_length": 0,
+          "terms": {
+            "state": {
+              "func": "unilab.tasks.manipulation.g1_cricket.residual.CricketObservation"
+            }
+          }
+        }
+      },
+      "actions": {
+        "joint_pos": null,
+        "residual": {
+          "_target_": "unilab.tasks.manipulation.g1_cricket.tanh_residual.TanhPriorResidualCfg",
+          "entity_name": "robot",
+          "asset_directory": "~/Library/Caches/unitree_rl_lab/4960b84732b0c2ec593dccbfe963fda1bcd7b1e3"
+        }
+      },
+      "events": {
+        "reset_scene": {
+          "func": "unilab.envs.mdp.reset_scene_to_default",
+          "mode": "reset"
+        },
+        "reset_jitter": {
+          "func": "unilab.tasks.manipulation.g1_cricket.prior.reset_jitter",
+          "mode": "reset"
+        },
+        "reset_toss": {
+          "func": "unilab.tasks.manipulation.g1_cricket.residual.ResetToss",
+          "mode": "reset",
+          "params": {
+            "offsets": [
+              -0.12,
+              -0.1,
+              0.0
+            ],
+            "enabled": true
+          }
+        }
+      },
+      "terminations": {
+        "time_out": {
+          "func": "unilab.envs.mdp.time_out",
+          "time_out": true
+        },
+        "fallen": {
+          "func": "unilab.tasks.manipulation.g1_cricket.task.fallen"
+        },
+        "invalid_contact": {
+          "func": "unilab.tasks.manipulation.g1_cricket.prior.PriorContactGuard"
+        }
+      },
+      "policy_observation_group": "cricket",
+      "critic_observation_group": null,
+      "prior_bat_mount": "forward_down",
+      "mujoco_observe_substeps": true
+    },
+    "reward": {
+      "upright": {
+        "func": "unilab.tasks.manipulation.g1_cricket.task.upright",
+        "weight": 1.0
+      },
+      "batting": {
+        "func": "unilab.tasks.manipulation.g1_cricket.substep_reward.SubstepForwardExitReward",
+        "weight": 1.0
+      },
+      "failure": {
+        "func": "unilab.tasks.manipulation.g1_cricket.residual.failure_penalty",
+        "weight": -5.0
+      },
+      "action_rate": {
+        "func": "unilab.envs.mdp.action_rate_l2",
+        "weight": -0.01
+      }
+    }
+  },
+  "input_sha256": {
+    "scripts/evaluate_g1_cricket_residual.py": "d550bf3fedab5b24149da739342941fd8af612e9cab54efe3af6c5f13555a6d2",
+    "scripts/audit_g1_cricket_prior_substeps.py": "0c3b98758c9306a4b5c0f3107ea248fe80ad8b14991180f04130511d05b8d1bd",
+    "src/unilab/tasks/manipulation/g1_cricket/residual.py": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c",
+    "src/unilab/tasks/manipulation/g1_cricket/prior.py": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/conf/ppo/task/g1_cricket_residual_v1/mujoco.yaml": "532488c1804b74f2585d352f400c98243368d40d8bf0782f1352c93fbeed248f",
+    "src/unilab/conf/ppo/task/g1_cricket_prior_v1/mujoco.yaml": "ccc36640e433739f6b8af0c26da18dca2baeb530b80fc9ef345b07abd3d92a80",
+    "src/unilab/conf/ppo/task/g1_cricket_prior_v2/mujoco.yaml": "8836e77a759e562efd051ce24041edf23c748d3ed64b895237d910e0d1f7d52b",
+    "src/unilab/assets/robots/g1/g1.xml": "bb6089243f8fe1c97a6410ccde8754eaa58e5d8e476aca69d790ce501cb4a48e",
+    "src/unilab/assets/robots/g1/scene_flat.xml": "13ce8b2c7706885fa4f041ea8ebb5c2875506512bec6cef02a0455eddb9e4de2",
+    "docs/g1_cricket_residual_v1.md": "6758a030bea142311250d565eeda10f91258d7b60a5237a277b0ca9acad5fb43",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "b621885e9858c031685082855e668b8fb1ce31b9d3a7526e7331e7dbc0b59341",
+    "src/unilab/tasks/manipulation/g1_cricket/__init__.py": "cbff37e287f5968fd7db02eed0f2697adaf66251fe8a915355e9008408da06e8",
+    "src/unilab/tasks/manipulation/g1_cricket/forward_exit_reward.py": "113a460361bb64db6be5b58974c42de96f978e0405df8dad4617e5d45ae66e6c",
+    "src/unilab/tasks/manipulation/g1_cricket/separation_reward.py": "e10c9a7918f67f8621d2e00af12729e31c389b1f8f7c288d90de77fcfff12994",
+    "src/unilab/conf/ppo/task/g1_cricket_impact_v1/mujoco.yaml": "e7ae50f74030dc8a24eca7209ed6e406a87f9eee47ff9e2063a169733ead66bd",
+    "src/unilab/conf/ppo/task/g1_cricket_residual_v2/mujoco.yaml": "9fb05335312d45e3b1e298ed91fcf075ee71424ecfbd1fed115d51361ef56ffe",
+    "src/unilab/conf/ppo/task/g1_cricket_residual_v3/mujoco.yaml": "504007ae25a4447462cf694c2d2eb9607d694a952b972dacbfc14627d9e86f9b",
+    "scripts/evaluate_g1_cricket_impact.py": "ec2a92a85328890bb8caff22fb71cc81a1c5b478a23557ad4322ae129fcb69ca",
+    "scripts/g1_cricket_historical_sources.py": "ae96c7274996da3c7a8460de982677659c214e629a990b9f793d84300449ea0f",
+    "docs/g1_cricket_impact_v1.md": "897941a014480837de7d9d0194bce0f8dc603bfa191ac5172c0b689eb9be034b",
+    "scripts/evaluate_g1_cricket_impact_resolution.py": "4b40cbff2063c6245fc085eefd62f458e0b89aec57ed99b6bc628b82b4acbe4b",
+    "docs/g1_cricket_impact_resolution.md": "ee7afe9351fb5e95e1639497b941ebd3a693fb1f276a557c2c4dc7ba70d1d647",
+    "scripts/evaluate_g1_cricket_impact_learning.py": "d3ae8d0d2f65a877944656d2d40d3aa79fac5503b47bc1075ebdef2b92decdf4",
+    "docs/g1_cricket_impact_learning_v1.md": "657b8cb06c16dd5c81977bf30dae649456d446db7d309ccfd0cbe847f08b4bc0",
+    "scripts/audit_g1_cricket_impact_reward.py": "6b34d7aa61fcd740eeafdfa12c41b34ec32a2dde654276035b0a06971ec1ed2a",
+    "docs/g1_cricket_impact_reward_audit.md": "7ea5aa02b183a8b0d79bfad7356ba7a216162aedb9cf4c5d377ee610fa4427e1",
+    "src/unilab/managers/reward_manager.py": "04335d22131c96aeb36cc30869984adc012e92547971df42dee756df9c57bf93",
+    "src/unilab/envs/manager_based_rl_env.py": "79886d3264e448fd822b32d07063a43acab52fd8d09188513fc2ac070e9d8b31",
+    "scripts/evaluate_g1_cricket_impact_events.py": "92e14c0cca194076b983428491dc9e34de3ab58920033bbec843eec72a5f0d0d",
+    "docs/g1_cricket_impact_events_v1.md": "e52d1fa91bb55aaef9e11c2a558c886941f032a20a78361bb47345d75779e374",
+    "docs/sphinx/source/adr/ADR-0010-experimental-substep-observation.md": "4fd46caeec9408ad8fd0afcc86b4675ce6210b1d04d2049e80c9a93ba5a7441f",
+    "src/unilab/base/backend_substeps.py": "1174442bdc5b7dd45da9f1750a909e31d0f2ed4a90aa9599e13d838b02eed19d",
+    "src/unilab/base/mujoco_substeps.py": "df26c97ec96b16ab29bacab27b4b0c14ef97cc22fa3ed6dd1685d20a983d2b8f",
+    "src/unilab/base/base.py": "3271d65bbf1dfbc036a74a1716e68c371f4872a07a6183ad7837a7b22f5603a7",
+    "src/unilab/base/backend_factory.py": "b205db1a331dfa31aa3c680603d723587619dbc41ebc0cfc121bb241b99c8ae8",
+    "src/unilab/base/np_env.py": "712b076db1e710c1bd13c2651f85971fbe01ef314d5c5787ff034404e016987d",
+    "src/unilab/tasks/manipulation/g1_cricket/substep_reward.py": "f2c2f7e35655cb4cda10f922660c004f297ee536abe9775d5e237b50206b4cb4",
+    "src/unilab/conf/ppo/task/g1_cricket_impact_events_v1/mujoco.yaml": "84d072f96c6e94d0bfbd84d0bf4f80d7d391ab59e76302d2168419325dd58c45",
+    "scripts/evaluate_g1_cricket_impact_events_learning.py": "2da3a14cd8ae9e1c594c1a6bfcbd00afd6ff1a3c5ace5c5c31252477d089f5a2",
+    "src/unilab/tasks/manipulation/g1_cricket/tanh_residual.py": "904a8dde165f872b200ef824466d38834e4b3d177882e7d01561995596466fa0",
+    "src/unilab/conf/ppo/task/g1_cricket_tanh_v1/mujoco.yaml": "2770f20960ce65536ed4b615f260c0f72d712324b90f04431c7e45f600f8c6af",
+    "docs/g1_cricket_tanh_v1.md": "8dddf4a695bb3b8725a02b9175b8305ce4b9877bad1b8c232b4514c8f695d6f1",
+    "scripts/evaluate_g1_cricket_tanh.py": "2e4917306dac2bd3b445219966363855b5e83a88b0a071131441a4acd2658b5e",
+    "scripts/evaluate_g1_cricket_swing.py": "da1b1b2f95d3fb7c2437871df6170abe84f1e85a551a6d88b76f644a258138e1",
+    "scripts/evaluate_g1_cricket_mjbatch.py": "de4b977debe13c710b9bb469bcaada7fafb76aa56087c42b57bc66fad2adf11e",
+    "scripts/g1_cricket_archival_sources.py": "9f7bbc280d2a5a096500bf62bdb77204f5cff027f8ea1b22725fe0d61f0a66c0",
+    "src/unilab/conf/ppo/task/g1_cricket_tanh_v1/mjbatch.yaml": "4d9fe91ff3d928589ba1bb2712df3a800014336c0a5886ff08a94dd5d70f17c2",
+    "docs/g1_cricket_mjbatch_v1.md": "eca63ade35d621643683966148bd34d9f03aeffe83edf580a29888fc596bc545",
+    "docs/sphinx/source/adr/ADR-0011-experimental-mjbatch-recorder.md": "e0631fc8cf976c77024daa64984984eea65b872353e4d4c2837ca4d3d864303b",
+    "g1_cricket_results/tanh_v1/trained_evaluation.json": "eea6c13606df641b48994dffc6863b0a0c4d350a42f38ea9854a857de673f3b3",
+    "g1_cricket_results/tanh_v1/right/run_config.json": "abcbf82d17eafc8c2a67116a5be62dc684d62c5bd20b692c30ddc475398c7458",
+    "g1_cricket_results/tanh_v1/right/run_summary.json": "3babf186cae75e0b393f1fe18adf2e0f5d7abf50cb207f06991832bf10ad6995",
+    "g1_cricket_results/tanh_v1/right/model_2079.pt": "4e25d2ca2d46d9a2114cde37e40c258974fb873d51099810a25a8576fb54843a",
+    "g1_cricket_results/native_mjbatch_v1/preflight.json": "4c7a1168dd390433be60cf165b6a33dabb3d7a42512f5efb0a11b3c621ca01df",
+    "scripts/probe_g1_cricket_reachability.py": "f1a6a43ae172cb2e7ffb50095cd9259ca36328a0d3b5e1f87e63f2aa99613199",
+    "scripts/g1_cricket_trial.py": "b2f39ec7f8fce2e88aa88347aa0e8a00bbe771e2ac3af341e9d8b6d283d494b5",
+    "tests/scripts/test_g1_cricket_reachability.py": "f6f69e43fa90d5cf423929409441d78256b4d67469f94d4034d83dfa8e244c0b",
+    "docs/g1_cricket_reachability_v1.md": "d780a08690291f52125d198bcaabfd051d114c916517d8628923a1eb39e1a674",
+    "g1_cricket_results/native_mjbatch_v1/evaluation.json": "0bde47a19fe2444bf36bb59f55b0797ae833b8520c9a20e944a757f87f95d1e5",
+    "g1_cricket_results/reachability_v1/preflight.json": "5c95e2da655e7503f4d83c3f401288afdaa474261fbf50c401c51791b54f03ec",
+    "g1_cricket_results/reachability_v1/evaluation.json": "f56f346dafa5f4b24cbdf15a1c0d9b13961b35f87cc89aa081721ae0efc3a0b5",
+    "scripts/probe_g1_cricket_terminal_residual.py": "43d6b595349c7697acaf6046a815066d2ec5e9d68fc3bdb1c97085532ac508b3",
+    "tests/scripts/test_g1_cricket_terminal_residual.py": "c442e3bc71771fa24f5c6638d31b723e6da73d3c324b57af2d12306d5ff68532",
+    "docs/g1_cricket_terminal_residual_v1.md": "0ac318bf891c9dcf6d699821092dfb091e9a3eab7d50c8b7de4b8b60815d20e0",
+    "g1_cricket_results/terminal_residual_v1/preflight.json": "805c4b9cedfab50df5bddd97cf9bf580fbf28f5eea3b4d2dd580eba2822ca7bd",
+    "g1_cricket_results/terminal_residual_v1/evaluation.json": "817eb216ce5c4f1e2ec67b39a12aa58f16f1727caea750f9337173aec249cf17",
+    "scripts/probe_g1_cricket_wrist_pitch.py": "61580f73cd9cdd2c6c83cbc52f6a005dca75fef1298e8f2ca79eff15df9832d7",
+    "tests/scripts/test_g1_cricket_wrist_pitch.py": "96ee6e9ab4382e270361216b4fe9e6db5097aac4de4e59151206b2efe8e790e2",
+    "docs/g1_cricket_wrist_pitch_v1.md": "4940daaa4fbfee40a6b20c5ffce66dc896a87817b827d04942c817b2a8c70cdf",
+    "g1_cricket_results/wrist_pitch_v1/preflight.json": "a74cf185b1b68c675985148e31464a9bfb0ff0201a243a18d1613789ed45c6c5",
+    "g1_cricket_results/wrist_pitch_v1/evaluation.json": "3e913142b31ddb2d06558569274ad1304bba744a6e3adca37eb7854d07abc046",
+    "scripts/audit_g1_cricket_wrist_saturation.py": "1083a515066018779656b6522a0ff9adc2e5f343840f5e87dd634d69b815853f",
+    "tests/scripts/test_g1_cricket_wrist_saturation.py": "c824f8e2e94f3465461fc125af51e5ad25ebbd8a89b7b70a4abcb68278fbbdbb",
+    "g1_cricket_results/wrist_pitch_v1/wrist_saturation.json": "af2bf26b34272ff6ae7a4433e279cf55abce7535c6f53e26f0209b553526f275",
+    "scripts/g1_cricket_motor_replay.py": "53a9ca60da8003d6500261e9152bbe80bbfad5aeb67de651d1a74b6b5c3b48fe",
+    "scripts/probe_g1_cricket_elbow.py": "e6fd8358cda8b54e5c6fecf29d6ba47a4c5229597feeeab8a9f71f0338f3bcd9",
+    "tests/scripts/test_g1_cricket_elbow.py": "f8bc97e884aabbec72d8bbe0e51b67461cc7adc504e9c9e22b7d8d37d05c6483",
+    "docs/g1_cricket_elbow_v1.md": "132e5f007cb438dd6eadcf147dba25524160f992db1853b21d5f065b2fa88510",
+    "g1_cricket_results/elbow_v1/preflight.json": "b27e5c2781427152498ddde02ad014c3b0049f3362e7e1b0c6788646753150eb",
+    "scripts/probe_g1_cricket_compliance.py": "634d5c7d9953eb09c417c0231b6b27bade0321bef71fef3697ad7982fc0229c8",
+    "tests/scripts/test_g1_cricket_compliance.py": "7ab3feee709fe3f6aa4e035357214b2e9dfcaa18cb2ed027d78f18f95745a2f9",
+    "docs/g1_cricket_compliance_v1.md": "ee936efcf1eae59c07430e710075d219556ec47dec6987f127a4c23aa2e6604b",
+    "scripts/probe_g1_cricket_impact.py": "2028ddf5b8a08a9255344cb0e0479349c94ec7abd891f0af5768ea062800713e",
+    "g1_cricket_results/residual_v3/isolated_impact.json": "37f98e7c5e51e75fb2c9d83e63c9a210c9b8177327304d8f13ed2e008143adc7",
+    "g1_cricket_results/elbow_v1/evaluation.json": "629b82fe3acb5a440457bb8d07c00587da8446fa9e22f472da56056b9d2b7012",
+    "g1_cricket_results/compliance_v1/preflight.json": "64f351dd811a4bd47abf28ecb39c7655d195577cefa06e091254278802eea15e",
+    "src/unilab/tasks/__init__.py": "603390af2938fc3d12caf456e83438d62ceb4981ef30269e4ad0a6690260bb99",
+    "src/unilab/tasks/manipulation/g1_cricket/compliance_v2.py": "e0c0def29df2caa4ef23cb46f318669b46b9942e82c939ea810dee46a0ae7005",
+    "src/unilab/conf/ppo/task/g1_cricket_compliance_v2/mujoco.yaml": "da130f1e03eea17472c58fcac0e19bd9b2ca4c889a305eeb78f4e0dc54f0a998",
+    "src/unilab/conf/ppo/task/g1_cricket_compliance_v2/mjbatch.yaml": "e170502b3071aabab252715dbaf272393b952ebcad7fb85d4662f4548f139af6",
+    "scripts/probe_g1_cricket_model_transfer.py": "c4a36b7af2d7d57eeac731df5fbed60501a21052b17c6480120ac6be2ef31cb2",
+    "tests/scripts/test_g1_cricket_model_transfer.py": "052637caf2fd7e5593930b481b94d3a7b4ff822188961805be5f1335aefb0d5a",
+    "docs/g1_cricket_model_transfer_v1.md": "125b8b3d5a6287348092f30d9a30cb25d4534d01f1b5357835e826322461f1ef",
+    "g1_cricket_results/compliance_v1/evaluation.json": "580314cdca8030e54fa505241bcaeb2a9dcad054d8a2239082006068e52cdd1f",
+    "g1_cricket_results/model_transfer_v1/preflight.json": "497f07a2f9a171f8d31dd3178272b2904f94feaa89a635ed8fca4dcc57b08bef",
+    "scripts/train_g1_cricket_bc.py": "5837c2b56af0304c158484fe60c3e74ad592073e7c815ff0399dac773d5c7485",
+    "scripts/retain_g1_training_diagnostics.py": "e873f9986daadeaf9af93ecf8d17840d1be74b409c3e55ee992d3be8105b47cf",
+    "src/unilab/training/run.py": "9a92003d02b5cfb2ab5aeba8847c3b348dd5b03582e6ca72189693894d4668a8",
+    "src/unilab/utils/nan_guard.py": "c651b4e73d89fb8ab3b30b233ab233f68ecfb6a94552cb00a48d85e114cddd4f",
+    "src/unilab/conf/ppo/task/g1_cricket_bc_v1/mujoco.yaml": "f1b9bccba69be6ac43a90013312411323aade0ef34974125dba2cc03cbdef9d0",
+    "tests/scripts/test_g1_cricket_bc.py": "624c544ae31275ea5ab4bd9399c3196fbfb7aebe6d3c39dece04b32440acb67e",
+    "docs/g1_cricket_bc_v1.md": "df383a8d07f6a9eb3fee0634afee52f8ccda407c88d2dc8b37852c84604a4af2",
+    "g1_cricket_results/model_transfer_v1/evaluation.json": "7677e37bc48e99055cf2a95d3f36db9eaddb181cf3f00930fad5fb1fc041f44b"
+  },
+  "executor": {
+    "version": "0.1.0",
+    "python_sha256": "6ae4e170a3be58bed01e2fda40ad1f5ec034390c993518b20d989713a79bb081",
+    "batch_wrapper_sha256": "eda0cfcb668bd052f49c0817537356cc5796a53bfa62c9870f4bb75566d005ac",
+    "native_extension_sha256": "0fd9fa1df88ed37367839465612263b31f9f9056d841e2317595725020dc881a"
+  },
+  "versions": {
+    "unilab-rl": "1.2.0",
+    "unisim-core": "1.2.0",
+    "mujoco": "3.11.0",
+    "onnxruntime": "1.24.4",
+    "torch": "2.8.0",
+    "rsl-rl-lib": "5.0.1"
+  },
+  "policy_promoted": false
+}
