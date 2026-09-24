@@ -140,6 +140,52 @@ def test_supported_tracking_targets_use_same_reference_and_original_limits(hand)
 
 @pytest.mark.parametrize("engine", ["mujoco", "mjbatch"])
 @pytest.mark.parametrize("hand", ["right", "left"])
+def test_waist_tracking_feedback_preserves_model_and_replay(engine, hand):
+    from evaluate_g1_cricket_tracking import TrackingReplay
+
+    registry.ensure_registries()
+    with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
+        owner = compose(
+            "config",
+            overrides=[
+                f"task=g1_cricket_balanced_tracking/{engine}",
+                f"env.handedness={hand}",
+                "env.actions.reference.waist_tracking_gain=2.0",
+            ],
+        )
+    override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
+    env = registry.make(
+        "G1CricketBimanualTracking", num_envs=1, sim_backend="mujoco", env_cfg_override=override
+    )
+    try:
+        env.reset(seed=1)
+        replay = TrackingReplay(env)
+        model = replay.model
+        limits, forces = model.jnt_range.copy(), model.actuator_forcerange.copy()
+        term = env.action_manager.get_term("reference")
+        for _ in range(5):
+            command = env.command_manager.get_term("motion")
+            delta = command.joint_pos[0, 14] - env.scene["robot"].data.joint_pos[0, 14]
+            expected = np.clip(
+                command.joint_pos[0, 14]
+                + term.velocity_gain[14] * command.joint_vel[0, 14]
+                + term.gravity_offset[command.time_steps[0], 14]
+                + 2 * delta,
+                *term.control_limits[14],
+            )
+            initial = env.get_physics_state_snapshot()[0].copy()
+            env.step(np.zeros((1, 29), dtype=np.float32))
+            assert term.target[0, 14] == pytest.approx(expected, abs=1e-6)
+            replay.measure(env, initial)
+        assert abs(delta) > 1e-7
+        np.testing.assert_array_equal(model.jnt_range, limits)
+        np.testing.assert_array_equal(model.actuator_forcerange, forces)
+    finally:
+        env.close()
+
+
+@pytest.mark.parametrize("engine", ["mujoco", "mjbatch"])
+@pytest.mark.parametrize("hand", ["right", "left"])
 @pytest.mark.parametrize("balanced", [False, True])
 def test_supported_tracking_substep_replay(engine, hand, balanced):
     from evaluate_g1_cricket_tracking import TrackingReplay

@@ -191,3 +191,27 @@ Next: resolve the remaining swing-time joint-stop excursions and bat-path lag,
 then introduce measured ball contact. Running bowling still requires a
 separate whole-body reference, legal plant and native physical release; this
 dry-swing pilot cannot substitute for it. No extra training budget is implied.
+
+## Waist-Joint Tracking Comparison
+
+Replaying both complete small-residual policies identifies `waist_pitch_joint`
+as the sole hard-stop offender. The worst endpoint is 0.52383 rad at 1.66 s
+(right) and 0.52542 rad at 2.32 s (left), against a 0.52 rad stop. Motor targets
+are already inside it, at 0.30459 and 0.35125 rad, while the reference is 0.42
+rad. Thus a tighter motor-target clip is not the immediate remedy.
+
+Fixed next experiment: retain both final small-residual actors and the same
+reference, then compare waist-position feedback gains `0, 1, 2, 4`. Add gain
+times the reference-minus-measured waist-pitch angle to that joint's motor
+target. This is not the rejected pelvis counter-rotation mechanism: it tracks
+the existing waist reference, not an inverse pelvis tilt. All other controls,
+robot geometry, model gains, force caps, rewards, seed and gates remain fixed.
+Evaluate reference-only and frozen PPO for both hands at each gain: 16 complete
+or failed episodes, no training or adaptive gain search. Gain zero must match
+all old trace fields exactly. Positive gains are controller-transfer diagnostics,
+not newly trained actors. Retain all failures in `bimanual_waist_tracking_v1`.
+
+The evaluator now records the offending joint at each substep-audited interval
+and pins the source robot XML, stand keyframe XML and referenced visual meshes,
+in addition to checkpoint, references and task sources. Controller overrides
+require separate, new output directories and cannot overwrite parent evidence.

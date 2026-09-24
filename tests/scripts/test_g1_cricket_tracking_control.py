@@ -2,7 +2,8 @@
 
 import mujoco
 import numpy as np
-from evaluate_g1_cricket_tracking import reference_bat_positions
+import pytest
+from evaluate_g1_cricket_tracking import evaluate, reference_bat_positions
 from g1_cricket_tracking_control_audit import (
     ankle_balance,
     feasibility_checks,
@@ -78,3 +79,10 @@ def test_bat_reference_uses_forward_kinematics_without_changing_poses():
         reference_bat_positions(model, poses), [[0.2, 0.3, 0.4], [0.7, 0.3, 0.4], [-0.05, 0.3, 0.4]]
     )
     np.testing.assert_array_equal(poses, original)
+
+
+@pytest.mark.parametrize("same_output", [False, True])
+def test_controller_variant_cannot_overwrite_parent(tmp_path, same_output):
+    with pytest.raises(ValueError, match="separate output"):
+        evaluate(tmp_path, output=tmp_path if same_output else None, waist_tracking_gain=2)
+    assert not list(tmp_path.iterdir())

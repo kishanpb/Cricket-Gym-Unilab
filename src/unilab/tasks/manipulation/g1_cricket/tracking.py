@@ -113,6 +113,7 @@ class SupportedCricketReferenceAction(CricketReferenceAction):
 @dataclass(kw_only=True)
 class BalancedCricketReferenceActionCfg(SupportedCricketReferenceActionCfg):
     balance_gain: float = 4.0
+    waist_tracking_gain: float = 0.0
 
     def build(self, env):
         return BalancedCricketReferenceAction(self, env)
@@ -130,6 +131,9 @@ class BalancedCricketReferenceAction(SupportedCricketReferenceAction):
             )
             self.target[i, [4, 10]] += correction[1]
             self.target[i, [5, 11]] += correction[0]
+        self.target[:, 14] += self.cfg.waist_tracking_gain * (
+            self.command.joint_pos[:, 14] - self._entity.data.joint_pos[:, 14]
+        )
         np.clip(self.target, self.control_limits[:, 0], self.control_limits[:, 1], out=self.target)
 
 

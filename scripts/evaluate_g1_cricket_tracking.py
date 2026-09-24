@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import imageio.v2 as imageio
@@ -61,12 +62,17 @@ class TrackingReplay:
             0.0,
         )
         contacts = set()
+        joint_excess = {}
         wrench = np.empty(6)
         minimum_height = float(data.qpos[2])
         for _ in range(env.cfg.sim_substeps):
             mujoco.mj_step(model, data)
             minimum_height = min(minimum_height, float(data.qpos[2]))
             q = data.qpos[model.jnt_qposadr[joints]]
+            excess = np.maximum(model.jnt_range[joints, 0] - q, q - model.jnt_range[joints, 1])
+            for index in np.flatnonzero(excess > 0):
+                name = model.joint(int(joints[index])).name
+                joint_excess[name] = max(joint_excess.get(name, 0.0), float(excess[index]))
             values = {
                 "hard_joint_limit_excess_rad": max(
                     0.0,
@@ -122,6 +128,7 @@ class TrackingReplay:
             "peaks": peaks,
             "unexpected_contacts": sorted(contacts),
             "minimum_pelvis_height_m": minimum_height,
+            "joint_limit_excess_by_name_rad": joint_excess,
         }
 
 
@@ -144,17 +151,35 @@ def visual_model(scene, physics):
     return model
 
 
-def evaluate(directory, render=False):
+def evaluate(directory, render=False, *, output=None, waist_tracking_gain=None):
+    if waist_tracking_gain is not None and (
+        output is None or output.resolve() == directory.resolve()
+    ):
+        raise ValueError("controller variants require a separate output directory")
     saved = json.loads((directory / "run_config.json").read_text())
     summary = json.loads((directory / "run_summary.json").read_text())
     checkpoint = Path(summary["last_checkpoint"])
     owner = OmegaConf.create(saved["config"])
+    evaluation_overrides = {}
+    if waist_tracking_gain is not None:
+        owner.env.actions.reference.waist_tracking_gain = waist_tracking_gain
+        evaluation_overrides["waist_tracking_gain"] = waist_tracking_gain
+    if output is not None:
+        output.mkdir(parents=True, exist_ok=False)
+    else:
+        output = directory
+    robot = ROOT / owner.env.scene.model_file
+    robot_xml = ET.parse(robot)
+    mesh_dir = robot.parent / robot_xml.find("compiler").get("meshdir", ".")
     inputs = [
         directory / "run_config.json",
         checkpoint,
         ROOT / owner.env.commands.motion.params.motion_file,
         Path(__file__),
+        robot,
+        robot.parent / "scene_flat.xml",
     ]
+    inputs += [mesh_dir / mesh.get("file") for mesh in robot_xml.findall("asset/mesh[@file]")]
     if "reference_file" in owner.env.actions.reference:
         inputs.append(ROOT / owner.env.actions.reference.reference_file)
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
@@ -193,6 +218,7 @@ def evaluate(directory, render=False):
         if "reference_file" in owner.env.actions.reference:
             with np.load(ROOT / owner.env.actions.reference.reference_file) as reference:
                 bat_reference = reference_bat_positions(model, reference["qpos"])
+                root_reference = reference["qpos"][:, :3].copy()
         display = (
             visual_model(Path(env.scene_directory.name) / "cricket.xml", model) if render else None
         )
@@ -269,6 +295,9 @@ def evaluate(directory, render=False):
                         trace[-1]["bat_tracking_error_m"] = float(
                             np.linalg.norm(data.site("bat_center").xpos - bat_reference[index])
                         )
+                        trace[-1]["root_translation_error_m"] = float(
+                            np.linalg.norm(data.qpos[:3] - root_reference[index])
+                        )
                     if renderer is not None:
                         mujoco.mj_setState(
                             display, display_data, physical, mujoco.mjtState.mjSTATE_FULLPHYSICS
@@ -320,7 +349,7 @@ def evaluate(directory, render=False):
                     )
                     frames.extend([np.asarray(terminal)] * 25)
                     imageio.mimwrite(
-                        directory / f"{controller}_diagnostic.mp4",
+                        output / f"{controller}_diagnostic.mp4",
                         frames,
                         fps=25,
                         macro_block_size=1,
@@ -334,6 +363,8 @@ def evaluate(directory, render=False):
     report = {
         "scope": "deterministic_development_dry_swing_not_held_out_cricket",
         "checkpoint_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
+        "evaluation_overrides": evaluation_overrides,
+        "mujoco_version": mujoco.__version__,
         "rows": rows,
         "input_sha256": hashes,
         "substep_audit": "all intervals independently replayed; exact native endpoint and sensor agreement; simulated loads are uncalibrated",
@@ -343,13 +374,18 @@ def evaluate(directory, render=False):
         for p in inputs
     ):
         raise RuntimeError("evaluation inputs changed during execution")
-    (directory / "evaluation.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
+    (output / "evaluation.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
     print([{key: value for key, value in row.items() if key != "trace"} for row in rows])
+    return report
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory", type=Path)
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--waist-tracking-gain", type=float)
     args = parser.parse_args()
-    evaluate(args.directory, args.render)
+    evaluate(
+        args.directory, args.render, output=args.output, waist_tracking_gain=args.waist_tracking_gain
+    )
