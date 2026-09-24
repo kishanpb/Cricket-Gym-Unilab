@@ -98,6 +98,8 @@ def env_backend_kwargs(cfg: "EnvCfg") -> dict[str, Any]:
             )
         }
         result["mujoco_observe_substeps"] = True
+        if cfg.mujoco_substep_engine != "rollout":
+            result["substep_engine"] = cfg.mujoco_substep_engine
     return result
 
 

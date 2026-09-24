@@ -16,7 +16,7 @@ import evaluate_g1_cricket_tanh as tanh
 from evaluate_g1_cricket_impact_events_learning import validate_baseline, validate_pool
 from evaluate_g1_cricket_impact_resolution import compare
 from evaluate_g1_cricket_residual import sha256
-from evaluate_g1_cricket_swing import check_hashes
+from g1_cricket_archival_sources import check_retained_hashes
 
 
 @pytest.fixture(params=[(swing, False), (tanh, True)], ids=["swing", "tanh"])
@@ -60,7 +60,7 @@ def test_pretraining_contract(variant):
     runner, _ = variant
     PARENT, DIRECTORY = runner.PARENT, runner.DIRECTORY
     contract = json.loads((DIRECTORY / "preflight.json").read_text())
-    check_hashes({**contract["input_sha256"], **contract["source_sha256"]})
+    check_retained_hashes(ROOT, {**contract["input_sha256"], **contract["source_sha256"]})
     runner.validate_config(
         contract["config"], json.loads((PARENT / "right/run_config.json").read_text())["config"]
     )
@@ -81,7 +81,7 @@ def test_complete_learning_result(variant):
     assert summary["completed_iterations"] == 2079
     assert summary["global_num_envs"] == 4 and summary["samples_per_iteration"] == 96
     assert summary["last_checkpoint"] == str(DIRECTORY.relative_to(ROOT) / "right/model_2079.pt")
-    check_hashes(result["input_sha256"])
+    check_retained_hashes(ROOT, result["input_sha256"])
     assert result["input_sha256"][str(DIRECTORY.relative_to(ROOT) / "preflight.json")] == sha256(
         DIRECTORY / "preflight.json"
     )
@@ -98,7 +98,7 @@ def test_complete_learning_result(variant):
         assert report["evaluation"]["left_hand"] == "untrained_transfer"
         assert report["checkpoint"]["path"] == summary["last_checkpoint"]
         assert report["checkpoint"]["sha256"] == sha256(ROOT / summary["last_checkpoint"])
-        check_hashes(report["source_sha256"])
+        check_retained_hashes(ROOT, report["source_sha256"])
         for key in ("versions", "contact_models", "external_asset_sha256"):
             assert report[key] == parent["reports"][index][key]
         for name in ("run_config", "run_summary"):

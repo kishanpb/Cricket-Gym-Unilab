@@ -29,6 +29,60 @@ incoming ball velocity are reset conditions; no robot root/joint pose is
 overwritten during a policy step. The incoming ball is a bowling-machine
 curriculum, not learned bowling.
 
+## Experimental Native mjbatch Execution
+
+`task=g1_cricket_tanh_v1/mjbatch` runs the same task through the companion
+fork's native `Batch.step()` executor. Only the executor changes: materialized
+robot/scene, 0.70 kg wrist fixture, prior, PPO observations, tanh residuals, reward
+and physical gates are unchanged. This is not the legacy mjbatch example's
+1.12 kg fixture or its different reset/training curriculum.
+
+The [fixed-model contract](docs/g1_cricket_mjbatch_v1.md) and
+[ADR-0011](docs/sphinx/source/adr/ADR-0011-experimental-mjbatch-recorder.md)
+describe interval warmstart, solved-phase contact sensors and float32 endpoints.
+State resets and external wrenches are supported; reset-time model mutation is
+rejected. Any MuJoCo warning aborts the interval rather than accepting a
+finite-looking state after solver auto-reset. The default executor is unchanged.
+This first recorder makes no speedup claim.
+
+Install the optional companion fork in the existing UniLab runtime, without
+upgrading its pinned dependencies:
+
+```sh
+uv pip install --no-deps \
+  'git+https://github.com/kishanpb/mjbatch.git@84431fea2bd0e86640968d8f06e975322747e5d9'
+```
+
+The 16 native G1 trajectory cases cover both hands, both timesteps, two lanes,
+and zero/sinusoidal raw actions through actual termination. Every substep state
+and sensor, policy observation, action target, reward and separation latch matches
+the default engine exactly. Partial resets and applied-wrench tests also pass.
+The [complete frozen-policy evaluation](g1_cricket_results/native_mjbatch_v1/evaluation.json)
+now reproduces **all 192 rows exactly**: 96 identities at each of 0.25 and
+0.125 ms, both hands, zero residual/PPO, three lanes and eight seeds. Every
+executed interval also matches independent serial replay at its state/sensor
+endpoint. Returns, force/contact evidence and every failure remain unchanged.
+The [preflight](g1_cricket_results/native_mjbatch_v1/preflight.json) pins current
+sources, the parent checkpoint/report and the companion recorder, Batch wrapper
+and native binary; the completed report verifies 56 source/input hashes.
+
+Right PPO still contacts 24/24 balls but has **0/24 qualified forward shots**
+at each timestep. Left PPO remains untrained transfer and misses all 24.
+This is verified native execution of a retained checkpoint, not fresh mjbatch
+training, improved impact convergence, physical calibration or a showcase-ready
+policy. Both-hand learning, bowling and new videos remain unfinished.
+
+With the documented external prior and runtime installed, the focused verification is:
+
+```sh
+uv run --no-sync python -m pytest tests/envs/test_g1_cricket_mjbatch.py \
+  tests/scripts/test_g1_cricket_mjbatch_report.py tests/base/test_mujoco_substeps.py -q
+```
+
+The [evaluation runner](scripts/evaluate_g1_cricket_mjbatch.py) refuses to
+overwrite retained evidence. Its result is specific to the pinned runtime and
+executor build; the native binary digest is not a cross-platform identity claim.
+
 ## Learned Arm Residual: First Interception Experiment
 
 Native CPU PPO now learns seven bounded bat-arm corrections around the frozen

@@ -1,8 +1,11 @@
 """Fork-only held-control trajectory adapter, isolated from task code (ADR-0010)."""
 
+from __future__ import annotations
+
 import time
 from collections.abc import Sequence
-from typing import cast
+from dataclasses import replace
+from typing import TYPE_CHECKING, cast
 
 import mujoco
 import numpy as np
@@ -11,10 +14,25 @@ from unisim.backend.mujoco.backend import MuJoCoBackend
 
 from unilab.base.backend_substeps import SubstepObservationBackend, SubstepObserver
 
+if TYPE_CHECKING:
+    from mjbatch.held_control import HeldControlRollout
+
 
 class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend):
     _observer: SubstepObserver | None = None
-    _recorder: Rollout | None = None
+    _recorder: Rollout | HeldControlRollout | None = None
+
+    def __init__(self, *args, substep_engine="rollout", **kwargs):
+        if substep_engine not in ("rollout", "mjbatch"):
+            raise ValueError("unknown substep engine")
+        self.substep_engine = substep_engine
+        super().__init__(*args, **kwargs)
+
+    def get_dr_capabilities(self):
+        capabilities = super().get_dr_capabilities()
+        if self.substep_engine == "mjbatch":
+            return replace(capabilities, supported_reset_terms=frozenset())
+        return capabilities
 
     def materialize(self) -> None:
         if self._post_step_forward_sensor or self._cpu_ids is not None:
@@ -22,7 +40,14 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend):
         super().materialize()
         assert self._pool is not None
         workspace_model = max(self._pool.get_all_models(), key=lambda model: model.nbvh)
-        self._recorder = Rollout(nthread=self._n_threads)
+        if self.substep_engine == "mjbatch":
+            from mjbatch.held_control import HeldControlRollout
+
+            self._recorder = HeldControlRollout(
+                self._pool.get_all_models(), num_threads=self._n_threads
+            )
+        else:
+            self._recorder = Rollout(nthread=self._n_threads)
         self._record_data = [mujoco.MjData(workspace_model) for _ in range(self._n_threads)]
 
     def set_substep_observer(
@@ -44,7 +69,7 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend):
         super().set_pre_step_control(fn)
 
     def step(self, ctrl: np.ndarray, nsteps: int = 1) -> dict | None:
-        if self._observer is None:
+        if self._observer is None and self.substep_engine == "rollout":
             return cast(dict | None, super().step(ctrl, nsteps))
         assert self._pool is not None and self._recorder is not None
         start = time.perf_counter()
@@ -73,11 +98,12 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend):
             self._pending_xfrc_applied.fill(0)
         self._physics_state[:] = states[:, -1]
         self._sensor_data[:] = sensors[:, -1]
-        observed_sensors = sensors[:, :, self._observe_sensors]
-        observed_velocity = states[:, :, self._observe_velocity]
-        observed_sensors.setflags(write=False)
-        observed_velocity.setflags(write=False)
-        self._observer(observed_sensors, observed_velocity)
+        if self._observer is not None:
+            observed_sensors = sensors[:, :, self._observe_sensors]
+            observed_velocity = states[:, :, self._observe_velocity]
+            observed_sensors.setflags(write=False)
+            observed_velocity.setflags(write=False)
+            self._observer(observed_sensors, observed_velocity)
         return {
             "timing": {
                 "set_ctrl_ms": (prepared - start) * 1000,

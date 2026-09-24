@@ -20,6 +20,7 @@ from evaluate_g1_cricket_impact_events_learning import (
 )
 from evaluate_g1_cricket_impact_resolution import compare
 from evaluate_g1_cricket_residual import sha256
+from g1_cricket_archival_sources import check_retained_hashes
 
 DIRECTORY = ROOT / "g1_cricket_results/impact_events_v1"
 PREVIOUS = ROOT / "g1_cricket_results/impact_v1"
@@ -139,8 +140,7 @@ def test_complete_learning_result():
         assert report["checkpoint"]["sha256"] == sha256(ROOT / summary["last_checkpoint"])
         for name in ("run_config", "run_summary"):
             assert report[f"{name}_sha256"] == sha256(DIRECTORY / "right" / f"{name}.json")
-        for path, expected in report["source_sha256"].items():
-            assert sha256(ROOT / path) == expected
+        check_retained_hashes(ROOT, report["source_sha256"])
         for row in report["rows"]:
             assert row["maximum_endpoint_state_error"] == row["maximum_endpoint_sensor_error"] == 0
             assert row["passed"] == (not row["failures"])

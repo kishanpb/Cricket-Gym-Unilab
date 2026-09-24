@@ -127,3 +127,55 @@ def test_factory_is_opt_in_and_rejects_unsupported_combinations(tmp_path):
             backend.materialize()
     finally:
         backend.cleanup_scene_assets()
+
+
+def test_mjbatch_selection_without_observer_and_reset_model_mutation(tmp_path):
+    pytest.importorskip("mjbatch.held_control")
+    from mjbatch.held_control import HeldControlRollout
+    from unisim.dr.types import ResetRandomizationPayload
+
+    path = tmp_path / "native.xml"
+    path.write_text(XML)
+    cfg = EnvCfg(scene=SceneCfg(model_file=str(path)), adaptive_chunk_size=False)
+    cfg.mujoco_substep_engine = "wrong"
+    with pytest.raises(ValueError, match="mujoco_substep_engine"):
+        cfg.validate()
+    cfg.mujoco_substep_engine = "mjbatch"
+    with pytest.raises(ValueError, match="requires mujoco_observe_substeps"):
+        cfg.validate()
+    cfg.mujoco_observe_substeps = True
+    cfg.validate()
+    backends = [
+        MuJoCoBackend(cfg.scene, 1, 0.00025, adaptive_chunk_size=False),
+        create_backend("mujoco", cfg.scene, 1, 0.00025, **env_backend_kwargs(cfg)),
+    ]
+    try:
+        for backend in backends:
+            backend.materialize()
+        assert isinstance(backends[1]._recorder, HeldControlRollout)
+        for backend in backends:
+            backend.step(np.empty((1, 0)), 80)
+        np.testing.assert_array_equal(
+            backends[0].get_physics_state(), backends[1].get_physics_state()
+        )
+        np.testing.assert_array_equal(backends[0]._sensor_data, backends[1]._sensor_data)
+        model = backends[1].get_playback_model()
+        with pytest.raises(NotImplementedError, match="reset randomization"):
+            backends[1].set_state(
+                np.array([0]),
+                model.qpos0[None],
+                np.zeros((1, model.nv)),
+                randomization=ResetRandomizationPayload(body_mass=model.body_mass[None]),
+            )
+    finally:
+        for backend in backends:
+            backend.cleanup_scene_assets()
+    with pytest.raises(ValueError, match="MuJoCo-only"):
+        create_backend("motrix", cfg.scene, 1, 0.00025, **env_backend_kwargs(cfg))
+    cfg.post_step_forward_sensor = True
+    backend = create_backend("mujoco", cfg.scene, 1, 0.00025, **env_backend_kwargs(cfg))
+    try:
+        with pytest.raises(ValueError, match="solved sensors"):
+            backend.materialize()
+    finally:
+        backend.cleanup_scene_assets()

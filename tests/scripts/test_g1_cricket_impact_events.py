@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 from evaluate_g1_cricket_impact_events import compare_row
 from evaluate_g1_cricket_residual import sha256
+from g1_cricket_archival_sources import check_retained_hashes
 
 
 def test_comparison_rejects_physics_or_unexplained_reward_changes():
@@ -39,8 +40,7 @@ def test_complete_preflight():
     assert result["parent_report_sha256"] == sha256(parent_path)
     assert result["reward_audit_sha256"] == sha256(audit_path)
     report = result["report"]
-    for path, expected in report["source_sha256"].items():
-        assert sha256(ROOT / path) == expected
+    check_retained_hashes(ROOT, report["source_sha256"])
     parent = json.loads(parent_path.read_text())["reports"][1]
     audit = json.loads(audit_path.read_text())
     assert len(report["rows"]) == len(result["comparisons"]) == 96

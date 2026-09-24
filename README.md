@@ -36,6 +36,9 @@ The corrected wrist mount completes all 24 ten-second prior stance trials;
 this is not yet locally learned cricket or a new showcase video.
 Earlier locally trained PPO checkpoints still fail through falls or incidental
 bat contact; their full negative results remain available.
+The experimental [native mjbatch executor](G1_CRICKET.md#experimental-native-mjbatch-execution)
+reproduces all 192 frozen-policy trials, including contact-force evidence, exactly.
+This verifies execution parity, not a successful cricket policy or a new video.
 
 ---
 

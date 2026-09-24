@@ -19,6 +19,7 @@ from audit_g1_cricket_impact_headroom import (
 from evaluate_g1_cricket_impact_events_learning import validate_pool
 from evaluate_g1_cricket_impact_resolution import IDENTITY
 from evaluate_g1_cricket_residual import load_policy, sha256
+from g1_cricket_archival_sources import check_retained_hashes
 
 from unilab.base.config_adapter import BackendAdapter, create_env
 
@@ -101,8 +102,7 @@ def test_complete_headroom_report():
     parent_path = DIRECTORY / "trained_evaluation.json"
     parent = json.loads(parent_path.read_text())["reports"][1]
     assert result["parent_report_sha256"] == sha256(parent_path)
-    for name, expected in result["input_sha256"].items():
-        assert sha256(ROOT / name) == expected
+    check_retained_hashes(ROOT, result["input_sha256"])
     assert result["checkpoint"] == parent["checkpoint"]
     assert result["versions"] == parent["versions"]
     assert result["external_asset_sha256"] == parent["external_asset_sha256"]
