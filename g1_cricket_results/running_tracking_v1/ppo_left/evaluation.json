@@ -1,0 +1,1101 @@
+{
+  "scope": "whole_body_PPO_tracking_with_scheduled_release_not_qualified_bowling",
+  "input_sha256": {
+    "g1_cricket_results/running_tracking_v1/ppo_left/run_config.json": "d048e61d16a5adad4b7943b3357cc407859619923bfff0956e5b216b4760497c",
+    "g1_cricket_results/running_tracking_v1/ppo_left/model_127.pt": "dd0fd50db850b908b37b6db7d1eaf6c972fe5c45e424f90fa8ab26909ff24d17",
+    "scripts/evaluate_g1_cricket_running.py": "7aa57a36b1613d8aaafd28e1be20be4bfed11fa1cf9aef9eb24b5152a3d79599",
+    "scripts/evaluate_g1_cricket_tracking.py": "23267c28a926babadf038bd9e74590f4973be5748d6f4106e4cbdf6ff793022c",
+    "scripts/g1_cricket_delivery_trial.py": "ec3c9b467226ec5c850978bc335d1ee9fb5e66372983bca86b2f295d66326b5d",
+    "g1_cricket_results/running_front_raise_v1/left_tracking.npz": "39983d4340aec314fd693cf9beebabdc9e4388f1a6745ba50df6a8a5cc728b41",
+    "g1_cricket_results/running_front_raise_v1/left_reference.npz": "b4f039ed0a43912e101f6741f1051b4685b19390959f25223230efa411a315c6",
+    "src/unilab/assets/robots/g1/g1.xml": "bb6089243f8fe1c97a6410ccde8754eaa58e5d8e476aca69d790ce501cb4a48e",
+    "src/unilab/assets/robots/g1/scene_flat.xml": "13ce8b2c7706885fa4f041ea8ebb5c2875506512bec6cef02a0455eddb9e4de2",
+    "src/unilab/tasks/manipulation/g1_cricket/__init__.py": "043181eac62df43a6ee774e1bbd83d8b11344794db5c18fb88a726f7dcc0b86a",
+    "src/unilab/tasks/manipulation/g1_cricket/arm_geometry.py": "47aced740d3bbf992edfcc65ec5d37aa6c0e11c32f7cb3786349db8c07ed4352",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual.py": "57ad5803011b869536153465b7212b5a4a4d8fb7a91f54d8c8d38f1aa4a84282",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual_contact.py": "0ce4482b48cf7dedd86f3b644711a938150cf67085934647820c684ec5f3e9ba",
+    "src/unilab/tasks/manipulation/g1_cricket/bowling.py": "3c690fd588f29e4fae4ae2e419fba3096320bd7999df252e076f3ca1e0ba9299",
+    "src/unilab/tasks/manipulation/g1_cricket/compliance_v2.py": "e0c0def29df2caa4ef23cb46f318669b46b9942e82c939ea810dee46a0ae7005",
+    "src/unilab/tasks/manipulation/g1_cricket/delivery.py": "a1a82ea56f4bb0add72b4a3fe96a603e5378c749f7871cac246be4566f1e1a46",
+    "src/unilab/tasks/manipulation/g1_cricket/forward_exit_reward.py": "113a460361bb64db6be5b58974c42de96f978e0405df8dad4617e5d45ae66e6c",
+    "src/unilab/tasks/manipulation/g1_cricket/holder.py": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "c4cdf46ea64515324292cfe2947be8164c5de4925f67c6763e459fe2632a3a17",
+    "src/unilab/tasks/manipulation/g1_cricket/impedance.py": "7c51705a9ab41d93e587f65ec3faba11f990b5cf257068756cc6ecfed7b5486d",
+    "src/unilab/tasks/manipulation/g1_cricket/overarm.py": "06ac693650070e4434056da3f52f87dc64bd581453ba2efcff198d255fa44add",
+    "src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py": "304bffb9013bfec2d8ac57d805f2ce8156421b8024bda316f373f856fa61830f",
+    "src/unilab/tasks/manipulation/g1_cricket/prior.py": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739",
+    "src/unilab/tasks/manipulation/g1_cricket/residual.py": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c",
+    "src/unilab/tasks/manipulation/g1_cricket/running.py": "18090ff292cf14f79e876cecfc541f7c60597cbcfb8baa102ac90df795d3d978",
+    "src/unilab/tasks/manipulation/g1_cricket/running_task.py": "cea5ad13d85526afe4a74d1589561ca27ca7f5711106d475e71a6bae375fdcab",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/tasks/manipulation/g1_cricket/separation_reward.py": "e10c9a7918f67f8621d2e00af12729e31c389b1f8f7c288d90de77fcfff12994",
+    "src/unilab/tasks/manipulation/g1_cricket/substep_reward.py": "f2c2f7e35655cb4cda10f922660c004f297ee536abe9775d5e237b50206b4cb4",
+    "src/unilab/tasks/manipulation/g1_cricket/swing_reward.py": "08696424ea2556348e067c40e5c3bb9286b5caa9f89bd25add868ab87081a0a9",
+    "src/unilab/tasks/manipulation/g1_cricket/tanh_residual.py": "904a8dde165f872b200ef824466d38834e4b3d177882e7d01561995596466fa0",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb",
+    "src/unilab/tasks/manipulation/g1_cricket/tracking.py": "8299edf82737817cf037b8bde9f5aeb1a7d4a2508d78e4a67f0b7a27235723d0"
+  },
+  "rows": [
+    {
+      "passed": false,
+      "failures": [
+        "episode_incomplete",
+        "first_bounce_outside_delivery_zone",
+        "joint_limit",
+        "no_release",
+        "not_exactly_one_bounce_before_target",
+        "robot_self_or_wicket_contact",
+        "target_corridor_missed"
+      ],
+      "release": null,
+      "first_bounce": null,
+      "target_crossing": null,
+      "bounces_before_target": 0,
+      "ball_contact_counts": {},
+      "ball_contact_peak_force_n": {},
+      "maximum_ball_penetration_m": 0.0,
+      "minimum_pelvis_height_m": 0.6028515441027713,
+      "minimum_pelvis_up": 0.7536888889540773,
+      "maximum_joint_limit_excess_rad": 0.006115470511982912,
+      "maximum_actuator_limit_fraction": 1.0,
+      "peak_holder_force_n": 15.66091431200184,
+      "holder_impulse_world_ns": [
+        0.3563222724423493,
+        -0.09682879552204976,
+        0.8178887289057509
+      ],
+      "hand": "left",
+      "controller": "reference_only",
+      "seed": 1,
+      "steps": 28,
+      "episode_return": 2.0179565735161304,
+      "exact_endpoint_and_sensor_replay": true,
+      "trace": [
+        {
+          "time_s": 0.019999999552965164,
+          "pelvis_position_m": [
+            -2.079502820968628,
+            -0.4999488294124603,
+            0.7284799814224243
+          ],
+          "holder_peak_force_n": 2.542036921308646,
+          "holder_impulse_world_ns": [
+            -0.014742682116724975,
+            -0.009802075892318608,
+            0.04602932666206297
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.11653309315443039
+        },
+        {
+          "time_s": 0.03999999910593033,
+          "pelvis_position_m": [
+            -2.059793472290039,
+            -0.49955031275749207,
+            0.7237433791160583
+          ],
+          "holder_peak_force_n": 9.878477671102969,
+          "holder_impulse_world_ns": [
+            -0.014865001701447519,
+            -0.012570307068163335,
+            0.049376870749950945
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.11406107246875763
+        },
+        {
+          "time_s": 0.05999999865889549,
+          "pelvis_position_m": [
+            -2.0408263206481934,
+            -0.4991777837276459,
+            0.7168912291526794
+          ],
+          "holder_peak_force_n": 15.31340323280748,
+          "holder_impulse_world_ns": [
+            -0.0006368871150899664,
+            -0.002411313644856179,
+            0.061108555160182675
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.1098102480173111
+        },
+        {
+          "time_s": 0.07999999821186066,
+          "pelvis_position_m": [
+            -2.0217928886413574,
+            -0.4992617666721344,
+            0.7089861631393433
+          ],
+          "holder_peak_force_n": 5.661871285494149,
+          "holder_impulse_world_ns": [
+            0.007793231742567204,
+            -0.004203568884584914,
+            0.05605304009749016
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.10764457285404205
+        },
+        {
+          "time_s": 0.10000000149011612,
+          "pelvis_position_m": [
+            -2.002152919769287,
+            -0.4998762309551239,
+            0.7010817527770996
+          ],
+          "holder_peak_force_n": 3.487671792684103,
+          "holder_impulse_world_ns": [
+            0.024529497337332878,
+            -0.008445391729832183,
+            0.05792124731615189
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.10490301251411438
+        },
+        {
+          "time_s": 0.12000000476837158,
+          "pelvis_position_m": [
+            -1.9816073179244995,
+            -0.5009565353393555,
+            0.6941010355949402
+          ],
+          "holder_peak_force_n": 3.9889298512433866,
+          "holder_impulse_world_ns": [
+            0.043060486540161,
+            -0.011073957659307411,
+            0.05701774511685392
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.10148105025291443
+        },
+        {
+          "time_s": 0.14000000059604645,
+          "pelvis_position_m": [
+            -1.9599504470825195,
+            -0.5023510456085205,
+            0.6885588765144348
+          ],
+          "holder_peak_force_n": 4.480852347331186,
+          "holder_impulse_world_ns": [
+            0.05783330944720567,
+            -0.010714822455346775,
+            0.051624676206393154
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.09745527058839798
+        },
+        {
+          "time_s": 0.1599999964237213,
+          "pelvis_position_m": [
+            -1.9370157718658447,
+            -0.5038899183273315,
+            0.6846441030502319
+          ],
+          "holder_peak_force_n": 4.757383954263952,
+          "holder_impulse_world_ns": [
+            0.06773329051901071,
+            -0.010958123542367354,
+            0.04569487950281511
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.09290540218353271
+        },
+        {
+          "time_s": 0.17999999225139618,
+          "pelvis_position_m": [
+            -1.912764549255371,
+            -0.5060940384864807,
+            0.6837530732154846
+          ],
+          "holder_peak_force_n": 5.08750492861085,
+          "holder_impulse_world_ns": [
+            0.06980386399717145,
+            -0.015439035469202765,
+            0.055272745437940425
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.08719466626644135
+        },
+        {
+          "time_s": 0.19999998807907104,
+          "pelvis_position_m": [
+            -1.887330174446106,
+            -0.5083172917366028,
+            0.6864116787910461
+          ],
+          "holder_peak_force_n": 5.545087294364475,
+          "holder_impulse_world_ns": [
+            0.07138607466482887,
+            0.0037779314590738826,
+            0.06670673060743673
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.08303486555814743
+        },
+        {
+          "time_s": 0.2199999839067459,
+          "pelvis_position_m": [
+            -1.861325740814209,
+            -0.509800136089325,
+            0.6918032765388489
+          ],
+          "holder_peak_force_n": 15.66091431200184,
+          "holder_impulse_world_ns": [
+            0.02274085669882734,
+            0.060000539514880775,
+            0.06964414525141988
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07785126566886902
+        },
+        {
+          "time_s": 0.23999997973442078,
+          "pelvis_position_m": [
+            -1.83578622341156,
+            -0.5095785856246948,
+            0.6984226703643799
+          ],
+          "holder_peak_force_n": 13.599902578636145,
+          "holder_impulse_world_ns": [
+            0.04251566211842538,
+            0.05246445926850296,
+            0.08718149284444653
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07401160895824432
+        },
+        {
+          "time_s": 0.25999999046325684,
+          "pelvis_position_m": [
+            -1.8119467496871948,
+            -0.5068203210830688,
+            0.7048421502113342
+          ],
+          "holder_peak_force_n": 6.593057541979486,
+          "holder_impulse_world_ns": [
+            0.02175311370453818,
+            0.07760734581389082,
+            0.08510975410089196
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07033316791057587
+        },
+        {
+          "time_s": 0.2800000011920929,
+          "pelvis_position_m": [
+            -1.7904317378997803,
+            -0.5019574165344238,
+            0.7098848819732666
+          ],
+          "holder_peak_force_n": 7.193855874031922,
+          "holder_impulse_world_ns": [
+            -0.017288746009366408,
+            0.0942282479741197,
+            0.07873178138541645
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.06610485166311264
+        },
+        {
+          "time_s": 0.30000001192092896,
+          "pelvis_position_m": [
+            -1.771289587020874,
+            -0.4959924519062042,
+            0.712917685508728
+          ],
+          "holder_peak_force_n": 7.0451335664310655,
+          "holder_impulse_world_ns": [
+            -0.04265423293697469,
+            0.08138237226527435,
+            0.07213647795665346
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.062450602650642395
+        },
+        {
+          "time_s": 0.320000022649765,
+          "pelvis_position_m": [
+            -1.7540700435638428,
+            -0.48991474509239197,
+            0.713793933391571
+          ],
+          "holder_peak_force_n": 5.83757697693537,
+          "holder_impulse_world_ns": [
+            -0.052139758089370866,
+            0.047354952023678475,
+            0.062415410200220595
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.059545040130615234
+        },
+        {
+          "time_s": 0.3400000333786011,
+          "pelvis_position_m": [
+            -1.7378140687942505,
+            -0.4845290184020996,
+            0.7125690579414368
+          ],
+          "holder_peak_force_n": 3.8549282985580615,
+          "holder_impulse_world_ns": [
+            -0.042776071776127106,
+            0.0029503323032955987,
+            0.046545041446240824
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.057207442820072174
+        },
+        {
+          "time_s": 0.36000004410743713,
+          "pelvis_position_m": [
+            -1.721473217010498,
+            -0.4801901578903198,
+            0.7094082236289978
+          ],
+          "holder_peak_force_n": 2.4776892450769052,
+          "holder_impulse_world_ns": [
+            -0.02323155899985117,
+            -0.0316067021115637,
+            0.026050528572455097
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.054950401186943054
+        },
+        {
+          "time_s": 0.3800000548362732,
+          "pelvis_position_m": [
+            -1.7043286561965942,
+            -0.4768992066383362,
+            0.7044954299926758
+          ],
+          "holder_peak_force_n": 2.730404469617074,
+          "holder_impulse_world_ns": [
+            -0.0023816714224295186,
+            -0.05140197896118487,
+            0.0014943857645342376
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.0528097078204155
+        },
+        {
+          "time_s": 0.40000006556510925,
+          "pelvis_position_m": [
+            -1.685921311378479,
+            -0.4746168553829193,
+            0.6980800032615662
+          ],
+          "holder_peak_force_n": 3.7527329892984724,
+          "holder_impulse_world_ns": [
+            0.010608570353812413,
+            -0.05891089844482257,
+            -0.02324261522871536
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.051425106823444366
+        },
+        {
+          "time_s": 0.4200000762939453,
+          "pelvis_position_m": [
+            -1.6657860279083252,
+            -0.47332698106765747,
+            0.6911419630050659
+          ],
+          "holder_peak_force_n": 4.6676154289254,
+          "holder_impulse_world_ns": [
+            0.012936186524840989,
+            -0.06106791251028923,
+            -0.04178896323166854
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.051075201481580734
+        },
+        {
+          "time_s": 0.44000008702278137,
+          "pelvis_position_m": [
+            -1.6433260440826416,
+            -0.4721387028694153,
+            0.6838578581809998
+          ],
+          "holder_peak_force_n": 5.038456639510551,
+          "holder_impulse_world_ns": [
+            0.017184249363003223,
+            -0.05126120797420917,
+            -0.04717446726433059
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.05185120180249214
+        },
+        {
+          "time_s": 0.46000009775161743,
+          "pelvis_position_m": [
+            -1.6182174682617188,
+            -0.4704376757144928,
+            0.6756063103675842
+          ],
+          "holder_peak_force_n": 4.806861389843968,
+          "holder_impulse_world_ns": [
+            0.01977459137285412,
+            -0.04294377001095132,
+            -0.0430337096249714
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.05282237008213997
+        },
+        {
+          "time_s": 0.4800001084804535,
+          "pelvis_position_m": [
+            -1.5903403759002686,
+            -0.4679326117038727,
+            0.6656200289726257
+          ],
+          "holder_peak_force_n": 4.382901366579143,
+          "holder_impulse_world_ns": [
+            0.019218915923833905,
+            -0.03642342267877615,
+            -0.03407239092461618
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.05205497890710831
+        },
+        {
+          "time_s": 0.5000001192092896,
+          "pelvis_position_m": [
+            -1.5598944425582886,
+            -0.4639509618282318,
+            0.6528702974319458
+          ],
+          "holder_peak_force_n": 4.528448310720513,
+          "holder_impulse_world_ns": [
+            0.017637978046112633,
+            -0.033518568892601394,
+            -0.02760878969787296
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.050682444125413895
+        },
+        {
+          "time_s": 0.5200001001358032,
+          "pelvis_position_m": [
+            -1.5266032218933105,
+            -0.45704108476638794,
+            0.6382340788841248
+          ],
+          "holder_peak_force_n": 4.209636945941739,
+          "holder_impulse_world_ns": [
+            0.017949035484505514,
+            -0.023612536980056435,
+            -0.014245441733432913
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.04450551047921181
+        },
+        {
+          "time_s": 0.5400000810623169,
+          "pelvis_position_m": [
+            -1.4902499914169312,
+            -0.4475621283054352,
+            0.6218618750572205
+          ],
+          "holder_peak_force_n": 3.6595770121507836,
+          "holder_impulse_world_ns": [
+            0.01677085033751265,
+            -0.01813617656122822,
+            -0.00959261833556585
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.03923952952027321
+        },
+        {
+          "time_s": 0.5600000619888306,
+          "pelvis_position_m": [
+            -1.4519033432006836,
+            -0.4366511404514313,
+            0.6028515696525574
+          ],
+          "holder_peak_force_n": 3.4354212371037973,
+          "holder_impulse_world_ns": [
+            0.005809118433188771,
+            -0.02209320467310415,
+            -0.017467109432630457
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.03401288762688637
+        }
+      ],
+      "termination_flags": {
+        "time_out": false,
+        "anchor_pos": false,
+        "anchor_ori": false,
+        "ee_body_pos": true,
+        "incidental_bat_support": false,
+        "clip_end": false,
+        "fallen": false
+      }
+    },
+    {
+      "passed": false,
+      "failures": [
+        "episode_incomplete",
+        "first_bounce_outside_delivery_zone",
+        "no_release",
+        "not_exactly_one_bounce_before_target",
+        "robot_self_or_wicket_contact",
+        "target_corridor_missed"
+      ],
+      "release": null,
+      "first_bounce": null,
+      "target_crossing": null,
+      "bounces_before_target": 0,
+      "ball_contact_counts": {},
+      "ball_contact_peak_force_n": {},
+      "maximum_ball_penetration_m": 0.0,
+      "minimum_pelvis_height_m": 0.6859580414378675,
+      "minimum_pelvis_up": 0.944275654112767,
+      "maximum_joint_limit_excess_rad": 0.0,
+      "maximum_actuator_limit_fraction": 1.0,
+      "peak_holder_force_n": 40.69242244879747,
+      "holder_impulse_world_ns": [
+        0.2473246073213514,
+        -0.04385781021688836,
+        0.9033273757891243
+      ],
+      "hand": "left",
+      "controller": "ppo",
+      "seed": 1,
+      "steps": 29,
+      "episode_return": 2.3482988625764847,
+      "exact_endpoint_and_sensor_replay": true,
+      "trace": [
+        {
+          "time_s": 0.019999999552965164,
+          "pelvis_position_m": [
+            -2.0793702602386475,
+            -0.4992939233779907,
+            0.7287954688072205
+          ],
+          "holder_peak_force_n": 3.3832166323104285,
+          "holder_impulse_world_ns": [
+            -0.007636240415940812,
+            -0.012411024034298907,
+            0.050195677904321966
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.10721777379512787
+        },
+        {
+          "time_s": 0.03999999910593033,
+          "pelvis_position_m": [
+            -2.060957670211792,
+            -0.498198539018631,
+            0.7247819304466248
+          ],
+          "holder_peak_force_n": 11.339519467476654,
+          "holder_impulse_world_ns": [
+            -0.021839779556038986,
+            -0.008558545660425387,
+            0.05149906362863978
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.10940470546483994
+        },
+        {
+          "time_s": 0.05999999865889549,
+          "pelvis_position_m": [
+            -2.0439794063568115,
+            -0.4974992871284485,
+            0.7185630798339844
+          ],
+          "holder_peak_force_n": 15.850748555665632,
+          "holder_impulse_world_ns": [
+            -0.014042238669330482,
+            -0.0023532124399067256,
+            0.05402614860660087
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.10682240128517151
+        },
+        {
+          "time_s": 0.07999999821186066,
+          "pelvis_position_m": [
+            -2.0269970893859863,
+            -0.4976584315299988,
+            0.711097776889801
+          ],
+          "holder_peak_force_n": 5.072900585525666,
+          "holder_impulse_world_ns": [
+            -0.00604096482393203,
+            -0.009109728445199802,
+            0.05117298451174371
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.1043989360332489
+        },
+        {
+          "time_s": 0.10000000149011612,
+          "pelvis_position_m": [
+            -2.008964776992798,
+            -0.4983487129211426,
+            0.7036435008049011
+          ],
+          "holder_peak_force_n": 4.408440754498994,
+          "holder_impulse_world_ns": [
+            0.023455839322858163,
+            -0.010515387840882939,
+            0.06857015672306273
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.102774977684021
+        },
+        {
+          "time_s": 0.12000000476837158,
+          "pelvis_position_m": [
+            -1.9891060590744019,
+            -0.49911731481552124,
+            0.697223961353302
+          ],
+          "holder_peak_force_n": 5.007911090171947,
+          "holder_impulse_world_ns": [
+            0.05465747073818719,
+            -0.0055983033972527565,
+            0.07482275172556264
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.10149098187685013
+        },
+        {
+          "time_s": 0.14000000059604645,
+          "pelvis_position_m": [
+            -1.9670321941375732,
+            -0.49947598576545715,
+            0.6923774480819702
+          ],
+          "holder_peak_force_n": 6.066404525893108,
+          "holder_impulse_world_ns": [
+            0.07809646769521258,
+            0.002133444575794676,
+            0.07093668924388405
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.09897678345441818
+        },
+        {
+          "time_s": 0.1599999964237213,
+          "pelvis_position_m": [
+            -1.9426878690719604,
+            -0.4990383982658386,
+            0.6890738606452942
+          ],
+          "holder_peak_force_n": 6.823332088072557,
+          "holder_impulse_world_ns": [
+            0.08882461453170949,
+            0.012252399059596896,
+            0.060850316332393746
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.09514815360307693
+        },
+        {
+          "time_s": 0.17999999225139618,
+          "pelvis_position_m": [
+            -1.9162598848342896,
+            -0.49756863713264465,
+            0.6868073344230652
+          ],
+          "holder_peak_force_n": 6.444332461039312,
+          "holder_impulse_world_ns": [
+            0.08327217587441342,
+            0.023061197955344327,
+            0.05170163938581941
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.09100891649723053
+        },
+        {
+          "time_s": 0.19999998807907104,
+          "pelvis_position_m": [
+            -1.8885995149612427,
+            -0.49569177627563477,
+            0.6859601736068726
+          ],
+          "holder_peak_force_n": 5.79289285502442,
+          "holder_impulse_world_ns": [
+            0.06725277947718605,
+            0.022079734922458925,
+            0.0588386288855918
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.08726944774389267
+        },
+        {
+          "time_s": 0.2199999839067459,
+          "pelvis_position_m": [
+            -1.8605091571807861,
+            -0.49323585629463196,
+            0.6869001388549805
+          ],
+          "holder_peak_force_n": 5.895055088713914,
+          "holder_impulse_world_ns": [
+            0.049046669009768326,
+            0.0372157648771397,
+            0.07288153444549035
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.08240403980016708
+        },
+        {
+          "time_s": 0.23999997973442078,
+          "pelvis_position_m": [
+            -1.8329943418502808,
+            -0.4897778034210205,
+            0.6889944076538086
+          ],
+          "holder_peak_force_n": 5.974162000048912,
+          "holder_impulse_world_ns": [
+            0.01547581432215766,
+            0.05250540026964525,
+            0.08244289515960802
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07898853719234467
+        },
+        {
+          "time_s": 0.25999999046325684,
+          "pelvis_position_m": [
+            -1.8071534633636475,
+            -0.48504069447517395,
+            0.6914402842521667
+          ],
+          "holder_peak_force_n": 6.573686011588584,
+          "holder_impulse_world_ns": [
+            -0.017586720032871643,
+            0.0587099879544608,
+            0.08436026018158621
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07671258598566055
+        },
+        {
+          "time_s": 0.2800000011920929,
+          "pelvis_position_m": [
+            -1.7840116024017334,
+            -0.4793301522731781,
+            0.6935291290283203
+          ],
+          "holder_peak_force_n": 7.14287627561295,
+          "holder_impulse_world_ns": [
+            -0.042125737857454756,
+            0.05207670505211644,
+            0.07419808835118612
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07403528690338135
+        },
+        {
+          "time_s": 0.30000001192092896,
+          "pelvis_position_m": [
+            -1.7637783288955688,
+            -0.4733947515487671,
+            0.6945815086364746
+          ],
+          "holder_peak_force_n": 6.095555439016853,
+          "holder_impulse_world_ns": [
+            -0.05015730231210111,
+            0.0337854560299545,
+            0.05849471613940476
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07205989211797714
+        },
+        {
+          "time_s": 0.320000022649765,
+          "pelvis_position_m": [
+            -1.7461329698562622,
+            -0.4681084454059601,
+            0.694385826587677
+          ],
+          "holder_peak_force_n": 4.22101959684565,
+          "holder_impulse_world_ns": [
+            -0.039933619748428205,
+            0.008796642738839284,
+            0.03887037880541356
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07009705156087875
+        },
+        {
+          "time_s": 0.3400000333786011,
+          "pelvis_position_m": [
+            -1.7301253080368042,
+            -0.46378180384635925,
+            0.6931853294372559
+          ],
+          "holder_peak_force_n": 2.427085805106707,
+          "holder_impulse_world_ns": [
+            -0.021622866629576815,
+            -0.012378542090620125,
+            0.027374968014133718
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.06821169704198837
+        },
+        {
+          "time_s": 0.36000004410743713,
+          "pelvis_position_m": [
+            -1.7145005464553833,
+            -0.4602001905441284,
+            0.6913211941719055
+          ],
+          "holder_peak_force_n": 1.693091181845747,
+          "holder_impulse_world_ns": [
+            -0.0014963659198557982,
+            -0.025089900423649513,
+            0.017137641486495454
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.06773912906646729
+        },
+        {
+          "time_s": 0.3800000548362732,
+          "pelvis_position_m": [
+            -1.6986141204833984,
+            -0.45710164308547974,
+            0.6892164349555969
+          ],
+          "holder_peak_force_n": 2.1158097043646684,
+          "holder_impulse_world_ns": [
+            0.014874016188577598,
+            -0.03616255438059217,
+            0.0028197178471592653
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.06926001608371735
+        },
+        {
+          "time_s": 0.40000006556510925,
+          "pelvis_position_m": [
+            -1.6817024946212769,
+            -0.45389166474342346,
+            0.6876576542854309
+          ],
+          "holder_peak_force_n": 3.135895040517649,
+          "holder_impulse_world_ns": [
+            0.028347996981259317,
+            -0.03712671737277748,
+            0.0014353428711378533
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07221399992704391
+        },
+        {
+          "time_s": 0.4200000762939453,
+          "pelvis_position_m": [
+            -1.6631195545196533,
+            -0.4498272240161896,
+            0.6869507431983948
+          ],
+          "holder_peak_force_n": 3.8245236094411355,
+          "holder_impulse_world_ns": [
+            0.04003897071894064,
+            -0.03341013881519405,
+            0.0017475656257349057
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07568008452653885
+        },
+        {
+          "time_s": 0.44000008702278137,
+          "pelvis_position_m": [
+            -1.6424623727798462,
+            -0.4446009695529938,
+            0.6871271729469299
+          ],
+          "holder_peak_force_n": 4.247271615550732,
+          "holder_impulse_world_ns": [
+            0.039368146060386244,
+            -0.03026808909866694,
+            0.006124669881961941
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.0781949833035469
+        },
+        {
+          "time_s": 0.46000009775161743,
+          "pelvis_position_m": [
+            -1.6193169355392456,
+            -0.43804293870925903,
+            0.687928318977356
+          ],
+          "holder_peak_force_n": 4.600785228290001,
+          "holder_impulse_world_ns": [
+            0.0334559698407311,
+            -0.026780337465219732,
+            0.009730987534214336
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07676529139280319
+        },
+        {
+          "time_s": 0.4800001084804535,
+          "pelvis_position_m": [
+            -1.593533992767334,
+            -0.42966097593307495,
+            0.6891959309577942
+          ],
+          "holder_peak_force_n": 4.77566216898312,
+          "holder_impulse_world_ns": [
+            0.025827063242384356,
+            -0.021795311783461373,
+            0.009342845467893494
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.07065566629171371
+        },
+        {
+          "time_s": 0.5000001192092896,
+          "pelvis_position_m": [
+            -1.5656145811080933,
+            -0.4193451404571533,
+            0.6916884779930115
+          ],
+          "holder_peak_force_n": 4.548505540189748,
+          "holder_impulse_world_ns": [
+            -0.000536584525851787,
+            -0.016522064001825633,
+            -0.0002566944307660336
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.06705522537231445
+        },
+        {
+          "time_s": 0.5200001001358032,
+          "pelvis_position_m": [
+            -1.5363069772720337,
+            -0.4081155061721802,
+            0.6947262287139893
+          ],
+          "holder_peak_force_n": 3.369517714456941,
+          "holder_impulse_world_ns": [
+            -0.002245542136281761,
+            -0.011119400109909729,
+            -0.022147320529449628
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.06440811604261398
+        },
+        {
+          "time_s": 0.5400000810623169,
+          "pelvis_position_m": [
+            -1.506615400314331,
+            -0.3973667621612549,
+            0.6976382732391357
+          ],
+          "holder_peak_force_n": 3.7934115156217834,
+          "holder_impulse_world_ns": [
+            -0.010198583878383282,
+            -0.02056135453508592,
+            -0.05149268594598211
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.0618613064289093
+        },
+        {
+          "time_s": 0.5600000619888306,
+          "pelvis_position_m": [
+            -1.4775749444961548,
+            -0.38803204894065857,
+            0.6999388933181763
+          ],
+          "holder_peak_force_n": 5.070401082953054,
+          "holder_impulse_world_ns": [
+            -0.025655373347005125,
+            -0.034506232944182924,
+            -0.07488601887968707
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.059144459664821625
+        },
+        {
+          "time_s": 0.5800000429153442,
+          "pelvis_position_m": [
+            -1.4499666690826416,
+            -0.3805032968521118,
+            0.7011605501174927
+          ],
+          "holder_peak_force_n": 40.69242244879747,
+          "holder_impulse_world_ns": [
+            -0.1335514668293693,
+            0.007792301186912521,
+            -0.02746557318402842
+          ],
+          "hand_touch_fraction": 0.0,
+          "released": false,
+          "reward": 0.058298416435718536
+        }
+      ],
+      "termination_flags": {
+        "time_out": false,
+        "anchor_pos": false,
+        "anchor_ori": false,
+        "ee_body_pos": false,
+        "incidental_bat_support": true,
+        "clip_end": false,
+        "fallen": false
+      }
+    }
+  ],
+  "evaluation_pool": "both controls, deterministic start, seed 1; no heldout/generalization claim"
+}

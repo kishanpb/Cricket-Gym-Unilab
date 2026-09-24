@@ -56,3 +56,49 @@ can be qualified. It is not a full-match, held-out, hardware, independently
 retrained Menagerie-model, or learned-release claim. A usable showcase still
 requires successful full start-to-recovery motion and the complete delivery
 evaluation, including longer ball-flight observation and resolution checks.
+
+## Complete Pilot Results
+
+Both runs finished all 128 updates, 24,576 transitions per hand, with final
+checkpoint `model_127.pt` (zero-based iteration index). All retained native
+training scalars are finite. Left training was temporarily suspended while right
+finished because concurrent runs caused local contention; wall-clock throughput
+is therefore not an algorithm or handedness comparison.
+
+| Hand | Control | Duration (s) | Minimum pelvis (m) | Joint excess (rad) | Peak holder load (N) |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Right | Reference only | 0.56 | 0.6026 | 0.006269 | 15.758 |
+| Right | Final PPO | 0.52 | 0.6831 | 0 | 34.399 |
+| Left | Reference only | 0.56 | 0.6029 | 0.006115 | 15.661 |
+| Left | Final PPO | 0.58 | 0.6860 | 0 | 40.692 |
+
+**All four fail the unchanged full delivery gate; none reaches release.**
+PPO remains more upright at its early stop, but both learned policies terminate
+on the unintended-contact guard. The reference controls stop on tracked-body
+deviation and also have substep self/wicket contacts and joint-stop excursions.
+Every interval passes exact independent native endpoint and sensor replay.
+Scheduled release is implemented, not demonstrated in these episodes.
+
+[Right complete report](../g1_cricket_results/running_tracking_v1/ppo_right/evaluation.json)
+and [left complete report](../g1_cricket_results/running_tracking_v1/ppo_left/evaluation.json)
+retain both controls, all failures, contact loads and full state arrays.
+[Right final PPO video](../g1_cricket_results/running_tracking_v1/ppo_right/ppo.mp4)
+and [left final PPO video](../g1_cricket_results/running_tracking_v1/ppo_left/ppo.mp4)
+show the entire start-to-terminal episode at 0.5x, not selected successful motion.
+Reference-only videos and fixed-frame reviews are alongside them.
+
+The right/left PPO recorded terminal endpoints show the hand intersecting the
+bowler-end wicket by 10.404 / 3.291 mm. This is endpoint geometry, not a reconstructed
+substep force. The early approach needs clearance and dynamic balance work;
+simply increasing this pilot's training budget is not the next experiment.
+The next bounded comparison should shift the complete reference lane outward
+by 0.20 m for both hands, keep the frozen actors and all physical/cricket gates,
+and retain both controls from frame zero. Any collision-free partial approach
+still fails unless it proceeds through actual gather, plant, release and recovery.
+
+Playback restores rounded free-body origins from the native model without
+changing physics, fixed links, masses or state layout. The right baseline's
+recorded states are byte-identical before and after this playback repair.
+Final checkpoints, configuration/summary, complete scalar CSVs and finite-value
+summaries are retained; redundant initial checkpoints, TensorBoard events and
+an unrelated installed-runtime git snapshot are pruned after scalar retention.

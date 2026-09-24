@@ -54,6 +54,11 @@ Its offline targets are not learned motion: physical PD baselines fall before
 delivery. A G1-adapted front raise now keeps arm tracking within 5.25 mm with
 no audited intersections across both complete references; dynamic balance is
 still unfinished.
+The [native whole-body running PPO pilot](docs/g1_cricket_running_tracking.md)
+now trains all 29 joints with simulated holder-load/contact observations.
+Both final policies stop on unintended contact before release (right 0.52 s,
+left 0.58 s); complete diagnostic videos and both reference controls are retained.
+These are failed development episodes, not the requested bowling showcase.
 
 Earlier one-arm contact experiments and failed bowling trials remain in the
 research log, including [force/touch diagnostic video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)
