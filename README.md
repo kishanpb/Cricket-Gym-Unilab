@@ -50,6 +50,11 @@ now tests both G1 wrists with a declared compliant ball holder and continuous
 release in both executors. This is mechanics infrastructure, not learned grasping
 or a trained bowling demonstration.
 
+The [experimental bowling task](docs/g1_cricket_bowling_v1.md) now exposes
+arm/release controls and validated holder-force/touch telemetry on both CPU
+executors. All 32 untrained carry/drop checks complete; learning and legal
+delivery evaluation remain unfinished.
+
 ---
 
 <h3 align="center">

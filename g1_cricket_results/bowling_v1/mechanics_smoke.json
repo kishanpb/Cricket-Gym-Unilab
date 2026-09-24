@@ -1,0 +1,1034 @@
+{
+  "scope": "untrained_carry_and_timed_drop_not_learned_bowling_or_legal_delivery",
+  "force_scope": "simulated_fixture_force_not_finger_tactile_or_hardware_calibration",
+  "torque_scope": "omitted_unvalidated_weld_site_torque",
+  "versions": {
+    "mujoco": "3.11.0",
+    "mjbatch": "0.1.0",
+    "numpy": "2.4.4",
+    "onnxruntime": "1.24.4"
+  },
+  "source_sha256": {
+    "scripts/audit_g1_cricket_bowling.py": "54a35d5e151fbe047c3d2e5679a0929581de36dadf96ec3858682e77d5e44795",
+    "src/unilab/tasks/manipulation/g1_cricket/__init__.py": "cbff37e287f5968fd7db02eed0f2697adaf66251fe8a915355e9008408da06e8",
+    "src/unilab/tasks/manipulation/g1_cricket/bowling.py": "9563d7f86459b0aa1ac03184e3103f20a579859346385ca86075efe3336559d7",
+    "src/unilab/tasks/manipulation/g1_cricket/compliance_v2.py": "e0c0def29df2caa4ef23cb46f318669b46b9942e82c939ea810dee46a0ae7005",
+    "src/unilab/tasks/manipulation/g1_cricket/forward_exit_reward.py": "113a460361bb64db6be5b58974c42de96f978e0405df8dad4617e5d45ae66e6c",
+    "src/unilab/tasks/manipulation/g1_cricket/holder.py": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "b621885e9858c031685082855e668b8fb1ce31b9d3a7526e7331e7dbc0b59341",
+    "src/unilab/tasks/manipulation/g1_cricket/prior.py": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739",
+    "src/unilab/tasks/manipulation/g1_cricket/residual.py": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/tasks/manipulation/g1_cricket/separation_reward.py": "e10c9a7918f67f8621d2e00af12729e31c389b1f8f7c288d90de77fcfff12994",
+    "src/unilab/tasks/manipulation/g1_cricket/substep_reward.py": "f2c2f7e35655cb4cda10f922660c004f297ee536abe9775d5e237b50206b4cb4",
+    "src/unilab/tasks/manipulation/g1_cricket/swing_reward.py": "08696424ea2556348e067c40e5c3bb9286b5caa9f89bd25add868ab87081a0a9",
+    "src/unilab/tasks/manipulation/g1_cricket/tanh_residual.py": "904a8dde165f872b200ef824466d38834e4b3d177882e7d01561995596466fa0",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb",
+    "src/unilab/conf/ppo/task/g1_cricket_bowling_v1/mjbatch.yaml": "c3e0191b805af38c30e89a92fc9408a25f5e19e4e9273ac98e8c140814d82d35",
+    "src/unilab/conf/ppo/task/g1_cricket_bowling_v1/mujoco.yaml": "24d16af331071c7acc691a9f867f7329ff6f5fbf007bd4fd1714c9df3ec4154d"
+  },
+  "summary": {
+    "rows": 32,
+    "exact_executor_pairs": 16,
+    "completed": 32,
+    "released": 16,
+    "geometric_touch_intervals": 0,
+    "maximum_holder_force_n": 4.208318557465362,
+    "minimum_pelvis_height_m": 0.7790970206260681,
+    "minimum_up_component": 0.9991291165351868
+  },
+  "rows": [
+    {
+      "engine": "mujoco",
+      "hand": "right",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 0,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 4.181281335737807,
+      "holder_impulse_world_ns": [
+        0.0870312151494536,
+        -0.008124469290482161,
+        6.1330862487572695
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7792164087295532,
+      "minimum_up_component": 0.9992802143096924,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40439799427986145,
+        -0.10553057491779327,
+        0.7880969047546387
+      ],
+      "released": false
+    },
+    {
+      "engine": "mujoco",
+      "hand": "right",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 1,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 4.208318557465362,
+      "holder_impulse_world_ns": [
+        0.08659452533809389,
+        -0.007552312630062206,
+        6.132878336537984
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7792735695838928,
+      "minimum_up_component": 0.9992789626121521,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4045731723308563,
+        -0.10436632484197617,
+        0.7881031632423401
+      ],
+      "released": false
+    },
+    {
+      "engine": "mujoco",
+      "hand": "right",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 2,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 4.145077031562852,
+      "holder_impulse_world_ns": [
+        0.06590135803081595,
+        -0.01809083888752177,
+        1.5018693351333783
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7794325351715088,
+      "minimum_up_component": 0.9992333054542542,
+      "release_position_m": [
+        -0.6822710037231445,
+        -0.3593737781047821,
+        0.5911868214607239
+      ],
+      "release_velocity_m_s": [
+        0.4224446415901184,
+        -0.11596690863370895,
+        -0.1826324760913849
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4053810238838196,
+        -0.11261570453643799,
+        0.787994921207428
+      ],
+      "released": true
+    },
+    {
+      "engine": "mujoco",
+      "hand": "right",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 3,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 4.194726633038375,
+      "holder_impulse_world_ns": [
+        0.06775967205098297,
+        -0.01725958723896643,
+        1.5041491086236531
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7793487310409546,
+      "minimum_up_component": 0.999255895614624,
+      "release_position_m": [
+        -0.6808816194534302,
+        -0.3573790490627289,
+        0.5908742547035217
+      ],
+      "release_velocity_m_s": [
+        0.4343569278717041,
+        -0.11063835769891739,
+        -0.16801856458187103
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40606769919395447,
+        -0.10573363304138184,
+        0.7879950404167175
+      ],
+      "released": true
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "right",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 0,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 4.181281335737807,
+      "holder_impulse_world_ns": [
+        0.0870312151494536,
+        -0.008124469290482161,
+        6.1330862487572695
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7792164087295532,
+      "minimum_up_component": 0.9992802143096924,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40439799427986145,
+        -0.10553057491779327,
+        0.7880969047546387
+      ],
+      "released": false
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "right",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 1,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 4.208318557465362,
+      "holder_impulse_world_ns": [
+        0.08659452533809389,
+        -0.007552312630062206,
+        6.132878336537984
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7792735695838928,
+      "minimum_up_component": 0.9992789626121521,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4045731723308563,
+        -0.10436632484197617,
+        0.7881031632423401
+      ],
+      "released": false
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "right",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 2,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 4.145077031562852,
+      "holder_impulse_world_ns": [
+        0.06590135803081595,
+        -0.01809083888752177,
+        1.5018693351333783
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7794325351715088,
+      "minimum_up_component": 0.9992333054542542,
+      "release_position_m": [
+        -0.6822710037231445,
+        -0.3593737781047821,
+        0.5911868214607239
+      ],
+      "release_velocity_m_s": [
+        0.4224446415901184,
+        -0.11596690863370895,
+        -0.1826324760913849
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4053810238838196,
+        -0.11261570453643799,
+        0.787994921207428
+      ],
+      "released": true
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "right",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 3,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 4.194726633038375,
+      "holder_impulse_world_ns": [
+        0.06775967205098297,
+        -0.01725958723896643,
+        1.5041491086236531
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7793487310409546,
+      "minimum_up_component": 0.999255895614624,
+      "release_position_m": [
+        -0.6808816194534302,
+        -0.3573790490627289,
+        0.5908742547035217
+      ],
+      "release_velocity_m_s": [
+        0.4343569278717041,
+        -0.11063835769891739,
+        -0.16801856458187103
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40606769919395447,
+        -0.10573363304138184,
+        0.7879950404167175
+      ],
+      "released": true
+    },
+    {
+      "engine": "mujoco",
+      "hand": "right",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 0,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 4.1616760376776,
+      "holder_impulse_world_ns": [
+        0.08633855798748491,
+        -0.007389427361418217,
+        6.132837365316338
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7792391180992126,
+      "minimum_up_component": 0.9992828965187073,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4032253324985504,
+        -0.10650239139795303,
+        0.7880867719650269
+      ],
+      "released": false
+    },
+    {
+      "engine": "mujoco",
+      "hand": "right",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 1,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 4.203834557133596,
+      "holder_impulse_world_ns": [
+        0.08556738107773539,
+        -0.006826196217069363,
+        6.132593741307209
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7792742252349854,
+      "minimum_up_component": 0.9992803335189819,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40348297357559204,
+        -0.1040102019906044,
+        0.7880727648735046
+      ],
+      "released": false
+    },
+    {
+      "engine": "mujoco",
+      "hand": "right",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 2,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 4.134042297011907,
+      "holder_impulse_world_ns": [
+        0.06641811919419667,
+        -0.01790500163348771,
+        1.5023222856455702
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7794392704963684,
+      "minimum_up_component": 0.9992361068725586,
+      "release_position_m": [
+        -0.682579517364502,
+        -0.3593950867652893,
+        0.5910835862159729
+      ],
+      "release_velocity_m_s": [
+        0.42575716972351074,
+        -0.1147756427526474,
+        -0.17972888052463531
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4041903614997864,
+        -0.11270477622747421,
+        0.7880141139030457
+      ],
+      "released": true
+    },
+    {
+      "engine": "mujoco",
+      "hand": "right",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 3,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 4.17016527010907,
+      "holder_impulse_world_ns": [
+        0.06815126496051382,
+        -0.017122663672025085,
+        1.504587884897569
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7793635725975037,
+      "minimum_up_component": 0.9992607235908508,
+      "release_position_m": [
+        -0.6812900304794312,
+        -0.35743868350982666,
+        0.5908303260803223
+      ],
+      "release_velocity_m_s": [
+        0.43686702847480774,
+        -0.10976067930459976,
+        -0.16520585119724274
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40472108125686646,
+        -0.10604044795036316,
+        0.7880361676216125
+      ],
+      "released": true
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "right",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 0,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 4.1616760376776,
+      "holder_impulse_world_ns": [
+        0.08633855798748491,
+        -0.007389427361418217,
+        6.132837365316338
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7792391180992126,
+      "minimum_up_component": 0.9992828965187073,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4032253324985504,
+        -0.10650239139795303,
+        0.7880867719650269
+      ],
+      "released": false
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "right",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 1,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 4.203834557133596,
+      "holder_impulse_world_ns": [
+        0.08556738107773539,
+        -0.006826196217069363,
+        6.132593741307209
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7792742252349854,
+      "minimum_up_component": 0.9992803335189819,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40348297357559204,
+        -0.1040102019906044,
+        0.7880727648735046
+      ],
+      "released": false
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "right",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 2,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 4.134042297011907,
+      "holder_impulse_world_ns": [
+        0.06641811919419667,
+        -0.01790500163348771,
+        1.5023222856455702
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7794392704963684,
+      "minimum_up_component": 0.9992361068725586,
+      "release_position_m": [
+        -0.682579517364502,
+        -0.3593950867652893,
+        0.5910835862159729
+      ],
+      "release_velocity_m_s": [
+        0.42575716972351074,
+        -0.1147756427526474,
+        -0.17972888052463531
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4041903614997864,
+        -0.11270477622747421,
+        0.7880141139030457
+      ],
+      "released": true
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "right",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 3,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 4.17016527010907,
+      "holder_impulse_world_ns": [
+        0.06815126496051382,
+        -0.017122663672025085,
+        1.504587884897569
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7793635725975037,
+      "minimum_up_component": 0.9992607235908508,
+      "release_position_m": [
+        -0.6812900304794312,
+        -0.35743868350982666,
+        0.5908303260803223
+      ],
+      "release_velocity_m_s": [
+        0.43686702847480774,
+        -0.10976067930459976,
+        -0.16520585119724274
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40472108125686646,
+        -0.10604044795036316,
+        0.7880361676216125
+      ],
+      "released": true
+    },
+    {
+      "engine": "mujoco",
+      "hand": "left",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 0,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 3.4370346189372447,
+      "holder_impulse_world_ns": [
+        0.04269358430465013,
+        0.01462234223402382,
+        6.126682489566782
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7790970206260681,
+      "minimum_up_component": 0.9991658329963684,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40883103013038635,
+        -0.10911792516708374,
+        0.7883220911026001
+      ],
+      "released": false
+    },
+    {
+      "engine": "mujoco",
+      "hand": "left",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 1,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 3.4777203173815234,
+      "holder_impulse_world_ns": [
+        0.04283733474617982,
+        0.014910397000209694,
+        6.125726998540097
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7791061401367188,
+      "minimum_up_component": 0.9991758465766907,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4074394702911377,
+        -0.10395174473524094,
+        0.7882878184318542
+      ],
+      "released": false
+    },
+    {
+      "engine": "mujoco",
+      "hand": "left",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 2,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 3.440268993234509,
+      "holder_impulse_world_ns": [
+        0.06505646534085699,
+        -0.035280576284971214,
+        1.5427342973096767
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7793774604797363,
+      "minimum_up_component": 0.9991291165351868,
+      "release_position_m": [
+        -0.6369995474815369,
+        0.28371313214302063,
+        0.6090834736824036
+      ],
+      "release_velocity_m_s": [
+        0.41702860593795776,
+        -0.226157546043396,
+        0.07932239025831223
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40631556510925293,
+        -0.10840630531311035,
+        0.788030207157135
+      ],
+      "released": true
+    },
+    {
+      "engine": "mujoco",
+      "hand": "left",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 3,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 3.4521172293892475,
+      "holder_impulse_world_ns": [
+        0.06503851151081075,
+        -0.03442319340657494,
+        1.543200333189399
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7791790962219238,
+      "minimum_up_component": 0.9991451501846313,
+      "release_position_m": [
+        -0.6387066841125488,
+        0.28557848930358887,
+        0.6091893315315247
+      ],
+      "release_velocity_m_s": [
+        0.4169135093688965,
+        -0.220661461353302,
+        0.0823097974061966
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40633001923561096,
+        -0.10000553727149963,
+        0.7881518006324768
+      ],
+      "released": true
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "left",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 0,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 3.4370346189372447,
+      "holder_impulse_world_ns": [
+        0.04269358430465013,
+        0.01462234223402382,
+        6.126682489566782
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7790970206260681,
+      "minimum_up_component": 0.9991658329963684,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40883103013038635,
+        -0.10911792516708374,
+        0.7883220911026001
+      ],
+      "released": false
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "left",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 1,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 3.4777203173815234,
+      "holder_impulse_world_ns": [
+        0.04283733474617982,
+        0.014910397000209694,
+        6.125726998540097
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7791061401367188,
+      "minimum_up_component": 0.9991758465766907,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4074394702911377,
+        -0.10395174473524094,
+        0.7882878184318542
+      ],
+      "released": false
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "left",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 2,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 3.440268993234509,
+      "holder_impulse_world_ns": [
+        0.06505646534085699,
+        -0.035280576284971214,
+        1.5427342973096767
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7793774604797363,
+      "minimum_up_component": 0.9991291165351868,
+      "release_position_m": [
+        -0.6369995474815369,
+        0.28371313214302063,
+        0.6090834736824036
+      ],
+      "release_velocity_m_s": [
+        0.41702860593795776,
+        -0.226157546043396,
+        0.07932239025831223
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40631556510925293,
+        -0.10840630531311035,
+        0.788030207157135
+      ],
+      "released": true
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "left",
+      "physics_dt_s": 0.00025,
+      "seed": 5301,
+      "row": 3,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 3.4521172293892475,
+      "holder_impulse_world_ns": [
+        0.06503851151081075,
+        -0.03442319340657494,
+        1.543200333189399
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7791790962219238,
+      "minimum_up_component": 0.9991451501846313,
+      "release_position_m": [
+        -0.6387066841125488,
+        0.28557848930358887,
+        0.6091893315315247
+      ],
+      "release_velocity_m_s": [
+        0.4169135093688965,
+        -0.220661461353302,
+        0.0823097974061966
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40633001923561096,
+        -0.10000553727149963,
+        0.7881518006324768
+      ],
+      "released": true
+    },
+    {
+      "engine": "mujoco",
+      "hand": "left",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 0,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 3.4339299689451606,
+      "holder_impulse_world_ns": [
+        0.042759316735507945,
+        0.014743384057677224,
+        6.125291642997861
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7790985703468323,
+      "minimum_up_component": 0.9991678595542908,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4074198007583618,
+        -0.1087670847773552,
+        0.7882738709449768
+      ],
+      "released": false
+    },
+    {
+      "engine": "mujoco",
+      "hand": "left",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 1,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 3.474483764289123,
+      "holder_impulse_world_ns": [
+        0.042786584912115386,
+        0.014813783930173848,
+        6.124664745709247
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7790992856025696,
+      "minimum_up_component": 0.9991762638092041,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40664181113243103,
+        -0.10398474335670471,
+        0.7882667779922485
+      ],
+      "released": false
+    },
+    {
+      "engine": "mujoco",
+      "hand": "left",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 2,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 3.437776364804398,
+      "holder_impulse_world_ns": [
+        0.06512176513241498,
+        -0.03521372239229901,
+        1.5427596638649785
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7793620824813843,
+      "minimum_up_component": 0.9991306662559509,
+      "release_position_m": [
+        -0.6372195482254028,
+        0.2837706506252289,
+        0.609062135219574
+      ],
+      "release_velocity_m_s": [
+        0.4174472689628601,
+        -0.22572897374629974,
+        0.0794849693775177
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40543514490127563,
+        -0.10843472182750702,
+        0.7880966663360596
+      ],
+      "released": true
+    },
+    {
+      "engine": "mujoco",
+      "hand": "left",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 3,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 3.451969172492199,
+      "holder_impulse_world_ns": [
+        0.06489161234283741,
+        -0.03416171561052042,
+        1.5433740352155267
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7791789770126343,
+      "minimum_up_component": 0.9991496205329895,
+      "release_position_m": [
+        -0.6389697194099426,
+        0.2854304313659668,
+        0.6092162132263184
+      ],
+      "release_velocity_m_s": [
+        0.41597193479537964,
+        -0.21898533403873444,
+        0.08342336863279343
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4048703908920288,
+        -0.10024478286504745,
+        0.7882838249206543
+      ],
+      "released": true
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "left",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 0,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 3.4339299689451606,
+      "holder_impulse_world_ns": [
+        0.042759316735507945,
+        0.014743384057677224,
+        6.125291642997861
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7790985703468323,
+      "minimum_up_component": 0.9991678595542908,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4074198007583618,
+        -0.1087670847773552,
+        0.7882738709449768
+      ],
+      "released": false
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "left",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 1,
+      "controller": "zero_arm_hold",
+      "steps": 200,
+      "peak_holder_force_n": 3.474483764289123,
+      "holder_impulse_world_ns": [
+        0.042786584912115386,
+        0.014813783930173848,
+        6.124664745709247
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7790992856025696,
+      "minimum_up_component": 0.9991762638092041,
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40664181113243103,
+        -0.10398474335670471,
+        0.7882667779922485
+      ],
+      "released": false
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "left",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 2,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 3.437776364804398,
+      "holder_impulse_world_ns": [
+        0.06512176513241498,
+        -0.03521372239229901,
+        1.5427596638649785
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7793620824813843,
+      "minimum_up_component": 0.9991306662559509,
+      "release_position_m": [
+        -0.6372195482254028,
+        0.2837706506252289,
+        0.609062135219574
+      ],
+      "release_velocity_m_s": [
+        0.4174472689628601,
+        -0.22572897374629974,
+        0.0794849693775177
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.40543514490127563,
+        -0.10843472182750702,
+        0.7880966663360596
+      ],
+      "released": true
+    },
+    {
+      "engine": "mjbatch",
+      "hand": "left",
+      "physics_dt_s": 0.000125,
+      "seed": 5301,
+      "row": 3,
+      "controller": "zero_arm_drop_at_1s",
+      "steps": 200,
+      "peak_holder_force_n": 3.451969172492199,
+      "holder_impulse_world_ns": [
+        0.06489161234283741,
+        -0.03416171561052042,
+        1.5433740352155267
+      ],
+      "touch_intervals": 0,
+      "minimum_pelvis_height_m": 0.7791789770126343,
+      "minimum_up_component": 0.9991496205329895,
+      "release_position_m": [
+        -0.6389697194099426,
+        0.2854304313659668,
+        0.6092162132263184
+      ],
+      "release_velocity_m_s": [
+        0.41597193479537964,
+        -0.21898533403873444,
+        0.08342336863279343
+      ],
+      "terminated": false,
+      "truncated": true,
+      "final_root_position_m": [
+        0.4048703908920288,
+        -0.10024478286504745,
+        0.7882838249206543
+      ],
+      "released": true
+    }
+  ]
+}

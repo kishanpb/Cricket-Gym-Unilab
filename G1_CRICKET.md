@@ -467,12 +467,14 @@ state/sensor parity, continuous release, gravity-only flight and zero released
 ball constraint force. Translated toy-holder tests additionally check controls,
 external wrenches, initially inactive constraints, observer on/off and selective
 resets. This is not a trained bowling task, legal delivery, sustained run-up or
-new showcase. The policy release latch, bowling observation/reward contract and
-full stability/contact/crease evaluation still need implementation.
-Reset alignment is verified only at the nominal keyframe. Future randomized
-joint resets must realign the ball to the randomized wrist during reset before
-activating the holder; step-time pose writes remain prohibited. Dedicated
-holder-force/tactile telemetry is also unfinished.
+new showcase. The subsequent [bowling task foundation](docs/g1_cricket_bowling_v1.md)
+adds the policy release latch, 122-value observation, provisional reward,
+transactional randomized reset alignment, and validated holder force plus
+selected-hand geometric touch. Its complete 32-row carry/drop smoke finishes
+four seconds in both hands, both executors and both tested timesteps, with
+16 exact paired executor outcome/telemetry comparisons. It is untrained;
+full stability/contact/crease/delivery evaluation still needs implementation.
+Weld-site torque failed physical accounting and is deliberately omitted.
 
 Validation: 163 focused UniLab tests pass across release, existing backend/env
 behavior, prior/mjbatch execution, BC/media paths and documentation; two existing RSL-RL warnings

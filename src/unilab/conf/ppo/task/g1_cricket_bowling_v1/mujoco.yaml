@@ -1,0 +1,67 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_prior_v1/mujoco
+  - _self_
+
+training:
+  task_name: G1CricketBowling
+algo:
+  num_envs: 4
+  num_steps_per_env: 24
+  max_iterations: 256
+  save_interval: 256
+  policy:
+    actor_hidden_dims: [64, 64]
+    critic_hidden_dims: [64, 64]
+    init_noise_std: 0.2
+  algorithm:
+    num_mini_batches: 2
+    learning_rate: 0.0001
+    entropy_coef: 0.0
+    target_kl_stop: 0.02
+    disable_finite_checks: false
+env:
+  handedness: right
+  sim_dt: 0.00025
+  max_episode_seconds: 4.0
+  auto_reset: true
+  adaptive_chunk_size: false
+  mujoco_observe_substeps: true
+  scene:
+    entities:
+      robot:
+        body_names: [pelvis, left_wrist_yaw_link, right_wrist_yaw_link]
+  observations:
+    policy:
+      terms:
+        command:
+          func: unilab.tasks.manipulation.g1_cricket.bowling.runup_command
+        last_action:
+          func: unilab.tasks.manipulation.g1_cricket.residual.last_baseline_action
+    bowling:
+      history_length: 0
+      terms:
+        state:
+          func: unilab.tasks.manipulation.g1_cricket.bowling.BowlingObservation
+  policy_observation_group: bowling
+  actions:
+    joint_pos: null
+    residual:
+      _target_: unilab.tasks.manipulation.g1_cricket.bowling.BowlingActionCfg
+      entity_name: robot
+      asset_directory: ~/Library/Caches/unitree_rl_lab/4960b84732b0c2ec593dccbfe963fda1bcd7b1e3
+  events:
+    reset_jitter: null
+    reset_bowler:
+      func: unilab.tasks.manipulation.g1_cricket.bowling.ResetBowler
+      mode: reset
+reward:
+  bowling:
+    func: unilab.tasks.manipulation.g1_cricket.bowling.bowling_reward
+    weight: 1.0
+  failure:
+    func: unilab.tasks.manipulation.g1_cricket.residual.failure_penalty
+    weight: -5.0
+  action_rate:
+    func: unilab.envs.mdp.action_rate_l2
+    weight: -0.01
