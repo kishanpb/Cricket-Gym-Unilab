@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_overarm_guard_v1/mujoco
+  - _self_
+
+training:
+  task_name: G1CricketShoulderDamping
+env:
+  actions:
+    residual:
+      _target_: unilab.tasks.manipulation.g1_cricket.impedance.ShoulderDampingActionCfg

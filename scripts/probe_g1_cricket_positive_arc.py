@@ -140,14 +140,14 @@ def inputs():
     return record
 
 
-def run():
-    if DIRECTORY.exists():
+def run(*, directory=DIRECTORY, owner_factory=owner_config, input_record=inputs):
+    if directory.exists():
         raise FileExistsError("inspect retained positive-arc study instead of restarting")
-    record = inputs()
-    DIRECTORY.mkdir()
-    write_json(DIRECTORY / "preflight.json", record)
+    record = input_record()
+    directory.mkdir()
+    write_json(directory / "preflight.json", record)
     rows = []
-    env = make_env(owner_config(), PLAN["hand"], dt=PLAN["dt"], engine=PLAN["engine"])
+    env = make_env(owner_factory(), PLAN["hand"], dt=PLAN["dt"], engine=PLAN["engine"])
     try:
         for candidate in candidates():
             audits = []
@@ -173,13 +173,13 @@ def run():
             )
     finally:
         env.close()
-    if record != inputs():
+    if record != input_record():
         raise ValueError("positive-arc study inputs changed")
     assert len(rows) == PLAN["rows"]
     write_json(
-        DIRECTORY / "evaluation.json",
+        directory / "evaluation.json",
         dict(
-            preflight_sha256=sha256(DIRECTORY / "preflight.json"),
+            preflight_sha256=sha256(directory / "preflight.json"),
             rows=rows,
             full_signed_gate_passes=sum(r["signed_audit"]["passed"] for r in rows),
             scope="six_scripted_left_development_launch_braking_cases_not_learning",
