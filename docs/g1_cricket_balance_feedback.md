@@ -115,3 +115,18 @@ and physical failure traces. No checkpoint selection or adaptive extra updates.
 Learning may improve tracking but cannot establish ball hitting or running
 bowling in this dry-swing task. Compare to its own balanced baseline, not a
 selected older failed rollout.
+
+The balanced pilot completes its fixed budget but fails evaluation: right PPO
+terminates on incidental bat support at 1.10 s (return 5.9044), and left PPO
+terminates on end-effector tracking at 1.86 s (return 8.6948). Both reference-only
+controllers complete 3.00 s, with returns 17.0956 and 17.0986. Do not continue
+these checkpoints or select earlier ones for presentation.
+
+Next fixed comparison: reduce only the residual position scale from 0.25 to
+0.05 rad. Train fresh, independent right/left actors with the same seed, 16
+environments, 512 updates / 196,608 transitions, initial noise, reward and
+optimizer. Output is `bimanual_balanced_small_residual_v1`; this is not an
+extension of the failed actors. All 29 joints remain policy-controlled around
+the same physical reference controller. Retain complete final evaluations and
+compare against the unchanged reference-only baseline. Completion alone cannot
+qualify the bat path, ball contact, running bowling or a showcase video.
