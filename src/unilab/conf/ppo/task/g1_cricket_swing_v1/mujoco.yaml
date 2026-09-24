@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_impact_events_v1/mujoco
+  - _self_
+
+reward:
+  batting:
+    func: unilab.tasks.manipulation.g1_cricket.swing_reward.ForwardSwingReward

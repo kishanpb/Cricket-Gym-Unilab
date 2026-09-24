@@ -371,16 +371,79 @@ and do not contradict the full-episode maximum actuator fraction of 1.0.
 This supports a receding, partially saturated learned posture, not a successful
 swing or proof that stronger motors are required. It does not establish an
 achievable-speed ceiling or justify enlarging joint/residual limits. The next
-bounded candidate is a **reward-only forward-motion shaping experiment**:
+bounded candidate was a **reward-only forward-motion shaping experiment**:
 replace proximity-only approach shaping with a pre-contact term that favors
 forward blade motion near the approaching ball. Preserve the first-separation
 bonus, final-checkpoint evaluation, all collision/stability gates, both-hand
 pool, action limits, physics and training budget. Define and test the new term
-before a fresh run; its effectiveness is not yet established. No policy is
+before a fresh run. Its completed negative result follows below. No policy is
 promoted and no showcase video is claimed from this diagnostic.
 
 ```bash
 uv run scripts/audit_g1_cricket_impact_headroom.py
+```
+
+### Forward-Swing Reward v1: Closed After Contact Regression
+
+The [predeclared reward-only experiment](docs/g1_cricket_swing_v1.md) replaces
+proximity-only approach shaping with forward blade-center motion near the incoming
+ball. It uses existing public body velocity plus angular velocity crossed with
+the blade-center offset. Native tests match independent solved-phase site velocity
+for both hands; no sensor, policy input, physical parameter or action limit changes.
+Approach shaping is suppressed throughout the first-contact control interval and
+afterward, preventing collision-induced blade movement from earning that term.
+The physics-rate first-separation bonus is unchanged.
+
+Fresh seed-1 right-hand CPU PPO completed **199,680 transitions / 2,080 updates**
+in **927.31 seconds**, with the parent's network, optimizer and budget. The
+[pretraining config/source contract](g1_cricket_results/swing_v1/preflight.json),
+[final run summary](g1_cricket_results/swing_v1/right/run_summary.json) and
+[complete scalar history](g1_cricket_results/swing_v1/right/training_scalars.csv)
+are retained. All checkpoint tensors are finite; scalar exports preserve all
+14 dense 2,080-entry tags and seven sparse 11-entry episode tags without filling
+missing entries. No resume, intermediate checkpoint selection or budget extension.
+
+The [complete final evaluation](g1_cricket_results/swing_v1/trained_evaluation.json)
+contains 96 rows at each of 0.25 and 0.125 ms. Both resolutions give:
+
+| Hand / controller | Blade contacts | Valid shots | Outcome |
+| --- | ---: | ---: | --- |
+| Right / zero residual | 8/24 | 0/24 | Unchanged physical baseline |
+| Right / PPO | 0/24 | 0/24 | All three lanes missed; all episodes reach 2 s |
+| Left / zero residual | 8/24 | 0/24 | Unchanged physical baseline |
+| Left / PPO transfer | 1/24 | 0/24 | All 24 have bat-to-left-hip guard contact |
+
+Right-hand contact coverage regresses from the parent's 24/24 to **0/24**.
+Its absent first-exit velocity is unavailable, not zero or a valid shot. All
+24 balls hit the pitch; wicket contacts are retained. Left transfer has 21 early
+terminations; the three episodes reaching 2 s still fail physics-step guard
+checks. Its single blade contact exits backward (-0.0829 / -0.0591 m/s), not a
+successful transfer. No fall-free or small-penetration result substitutes for
+actual batting.
+
+Native/serial endpoints and named sensors agree exactly in every trial. All 48
+zero-residual physical rows reproduce at each timestep; returns are deliberately
+excluded from this comparison because the reward changed. Numerical checks pass
+**87/96 pairs but only 8/17 contact-bearing pairs**; nine penetration differences
+remain. The larger all-row fraction than the parent is not impact progress:
+most of this policy's rows contain no blade impact. Contact calibration and
+policy promotion remain false.
+
+This candidate is closed without promotion. The next hypothesis returns to the
+contact-seeking parent's reward and changes only the residual action mapping:
+test `tanh(raw) * limits` instead of hard clipping, with the same physical bounds.
+The headroom evidence motivates avoiding exactly flat clipped tails, not enlarging
+motor limits or claiming a guaranteed forward swing. That candidate is not yet
+implemented or trained. Both-hand learned batting, bowling, mjbatch transfer and
+validated videos in both fork READMEs remain unfinished; earlier highlights are
+preserved and are not relabeled as Unitree demonstrations.
+
+```bash
+uv run scripts/evaluate_g1_cricket_swing.py --preflight
+uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_swing_v1/mujoco \
+  training.log_dir=g1_cricket_results/swing_v1/right
+uv run scripts/retain_g1_training_diagnostics.py g1_cricket_results/swing_v1/right
+uv run scripts/evaluate_g1_cricket_swing.py
 ```
 
 ## Historical Contact Resolution: Excessive Compliance
