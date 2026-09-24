@@ -72,6 +72,39 @@ This is verified native execution of a retained checkpoint, not fresh mjbatch
 training, improved impact convergence, physical calibration or a showcase-ready
 policy. Both-hand learning, bowling and new videos remain unfinished.
 
+### Bounded Reversal Diagnostic
+
+The [fixed search contract](docs/g1_cricket_reachability_v1.md) and
+[complete report](g1_cricket_results/reachability_v1/evaluation.json) retain
+161 scripted prefixes: zero plus 128 arm-sign vectors and 32 declared timing
+refinements. This is one right-handed seed/center toss, not training or a
+tournament. Eight complete zero-action baselines first reproduced both hands,
+timesteps and executors exactly. Of 62 prefix-safe nonzero motions, only
+`pmppppp_s10` exceeded 1 m/s and qualified for full replay.
+
+Both executors produced identical full two-second outcomes:
+
+| Physics step | First exit vx | Maximum penetration | Complete shot gate |
+| --- | ---: | ---: | --- |
+| 0.25 ms | 1.028620 m/s | 5.953697 mm | Pass |
+| 0.125 ms | 1.066471 m/s | 6.620823 mm | Fail: above 6 mm |
+
+No forbidden contacts, falls or joint-limit violations occurred in those four
+full replays. The timestep comparison nevertheless fails penetration agreement
+and gate consistency: **zero validated witnesses**. Fine-step simulated blade
+force peaks at 273.684 N; fixture force/torque peaks are 99.198 N / 28.911 Nm.
+The first loaded bat contact point moves forward at 1.263 m/s, and its first
+impact delivers 0.556369 N s of positive-x ball impulse. These are uncalibrated
+simulation diagnostics, not hardware loads or learned batting results.
+
+All 161 prefix `passed` fields remain false; their shortened horizon cannot
+establish a full shot. Missing separation by 0.50 s excludes a schedule from
+full replay, so later outcomes for those schedules remain unknown. The report
+checks 62 source/input hashes and native executor hashes; 70 focused tests pass.
+The result motivates a bounded motion refinement with margin below the overlap
+limit before more PPO training. It does not relax that limit or authorize a
+learned-policy showcase, and the previous videos remain unchanged.
+
 With the documented external prior and runtime installed, the focused verification is:
 
 ```sh

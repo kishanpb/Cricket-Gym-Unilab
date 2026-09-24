@@ -39,6 +39,9 @@ bat contact; their full negative results remain available.
 The experimental [native mjbatch executor](G1_CRICKET.md#experimental-native-mjbatch-execution)
 reproduces all 192 frozen-policy trials, including contact-force evidence, exactly.
 This verifies execution parity, not a successful cricket policy or a new video.
+The [161-motion scripted diagnostic](G1_CRICKET.md#bounded-reversal-diagnostic)
+finds a forward strike, but rejects it at the finer timestep for excessive
+bat-ball overlap. No validated learned G1 showcase is claimed.
 
 ---
 
