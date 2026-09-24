@@ -69,7 +69,7 @@ With the external prior cached as described below and the same CPU thread caps:
 ```sh
 uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_residual_v1/mujoco \
   training.log_dir=g1_cricket_results/residual_v1/right
-uv run python scripts/evaluate_g1_cricket_residual.py
+uv run scripts/evaluate_g1_cricket_residual.py
 ```
 
 ### Reward-only v2: Rejected
@@ -125,8 +125,8 @@ and check timestep/contact-parameter sensitivity before treating loads as realis
 ```sh
 uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_residual_v3/mujoco \
   training.log_dir=g1_cricket_results/residual_v3/right
-uv run python scripts/evaluate_g1_cricket_residual_v3.py
-uv run python scripts/render_g1_cricket_residual.py \
+uv run scripts/evaluate_g1_cricket_residual_v3.py
+uv run scripts/render_g1_cricket_residual.py \
   --run-dir g1_cricket_results/residual_v3/right
 ```
 
@@ -161,7 +161,7 @@ recorded revision for the explicitly migrated factory/evaluator files; other
 source and checkpoint hashes remain exact current-file checks.
 
 ```sh
-uv run python scripts/evaluate_g1_cricket_impact.py
+uv run scripts/evaluate_g1_cricket_impact.py
 ```
 
 ### Finer Resolution: Forces Agree, Penetration Still Sensitive
@@ -256,14 +256,43 @@ at -2.185 to -2.008 m/s. Left transfer has only 0.073-0.092 m/s forward bat
 point speed and 0.027-0.057 m/s ball exit speed. No trial clears the unchanged
 1 m/s shot gate, and the force/impulse data remain uncalibrated simulator values.
 
-Next single-axis change: capture the first separation at physics-substep rate,
-while preserving the scalar reward formula, control cadence, contact model,
-action bounds and evaluation pool. UniLab's current control callback does not
-refresh intermediate sensors; this needs an explicit opt-in backend observation
-capability, not reward-side access to private engine state. Verify native state
-parity, between-sample contacts, final-substep delivery, reset boundaries and
-single payout before retraining. This adapter is not implemented yet; better
-event capture alone is not a successful-shot or showcase claim.
+### Physics-Rate Event Capture: Implemented And Verified
+
+The new owner `g1_cricket_impact_events_v1/mujoco` changes only first-separation
+event acquisition. Its [contract](docs/g1_cricket_impact_events_v1.md) preserves
+the scalar reward formula, approach shaping, control cadence, contact model,
+action bounds, observations and complete evaluation pool. An opt-in backend
+observer supplies solved contact occupancy and post-integration ball velocity
+to a once-per-episode reward latch, including contacts wholly between control
+samples. Existing task owners and the default backend path are unchanged.
+
+The [full frozen-policy preflight](g1_cricket_results/impact_events_v1/preflight.json)
+passes all **96 rows** at 0.125 ms. Every original non-return field matches
+exactly, including native/serial state, sensors, force/contact evidence and
+safety decisions. All **nine** missing first events are recovered: all 40
+contact-bearing trials now receive their separation bonus, without duplicate
+payout. Every new return reconciles with the unchanged scalar formula;
+the maximum absolute residual is **1.38e-7**, below the predeclared 1e-5 tolerance.
+
+The [experimental adapter ADR](docs/sphinx/source/adr/ADR-0010-experimental-substep-observation.md)
+records a fork-only compatibility boundary, not approved upstream support.
+Official MuJoCo Rollout is the single authoritative trajectory and retains
+solver warm-start within each control interval. The existing control-callback
+route was rejected because it clears warm-start each substep; repeated
+single-step calls would likewise alter the physics. No installed dependency
+was patched and task code does not access private engine state. Full trajectory
+capture adds memory/copy cost; this is not an equal-compute performance claim.
+
+Focused tests cover both G1 hands at 0.25/0.125 ms, exact policy observations,
+pending forces/torques, partial resets, final-substep exits and single payout.
+This clears the bounded fresh-PPO training preflight, **not a learned-shot gate**:
+all 96 frozen-policy trials still fail, physical calibration is unverified,
+and no new training or showcase video is claimed here. Next is the declared
+199,680-transition fresh right-hand PPO run and full two-resolution evaluation.
+
+```bash
+uv run scripts/evaluate_g1_cricket_impact_events.py
+```
 
 ## Historical Contact Resolution: Excessive Compliance
 
@@ -304,8 +333,8 @@ Do not resume training against this historical excessive compliance or advertise
 the old numeric baseline passes as realistic impacts.
 
 ```sh
-uv run python scripts/audit_g1_cricket_contact_resolution.py
-uv run python scripts/probe_g1_cricket_impact.py
+uv run scripts/audit_g1_cricket_contact_resolution.py
+uv run scripts/probe_g1_cricket_impact.py
 ```
 
 ## External Locomotion Prior: Native Transfer
@@ -376,9 +405,9 @@ redistribution has not been cleared. With separately obtained matching upstream
 assets and ONNX Runtime installed, use the CPU environment variables below:
 
 ```sh
-uv run python scripts/evaluate_g1_cricket_prior.py --assets <local-asset-directory> \
+uv run scripts/evaluate_g1_cricket_prior.py --assets <local-asset-directory> \
   --version v1 --output g1_cricket_results/unitree_prior/evaluation.json
-uv run python scripts/evaluate_g1_cricket_prior.py --assets <local-asset-directory> \
+uv run scripts/evaluate_g1_cricket_prior.py --assets <local-asset-directory> \
   --version v2 --output g1_cricket_results/unitree_prior_v2/evaluation.json
 ```
 
@@ -415,7 +444,7 @@ state. The original training observations remain 20 ms snapshots; this offline
 replay does not add a native post-substep hook or change their timing.
 
 ```sh
-uv run python scripts/audit_g1_cricket_prior_substeps.py \
+uv run scripts/audit_g1_cricket_prior_substeps.py \
   --assets <local-asset-directory> \
   --output g1_cricket_results/unitree_prior_v2/substep_audit.json
 ```
@@ -507,7 +536,7 @@ uv run python -m unilab.scripts.train_rsl_rl \
   training.log_dir=g1_cricket_results/ppo_smoke algo.max_iterations=10 \
   algo.num_envs=4 algo.num_steps_per_env=24 algo.save_interval=10 \
   env.adaptive_chunk_size=false
-uv run python scripts/evaluate_g1_cricket_smoke.py \
+uv run scripts/evaluate_g1_cricket_smoke.py \
   --run-dir g1_cricket_results/ppo_smoke
 ```
 
@@ -577,9 +606,9 @@ for hand in right left; do
   uv run python -m unilab.scripts.train_rsl_rl \
     task=g1_cricket_balance_v1/mujoco env.handedness=$hand \
     training.log_dir=g1_cricket_results/balance_v1/$hand
-  uv run python scripts/evaluate_g1_cricket_smoke.py --scope balance-v1 \
+  uv run scripts/evaluate_g1_cricket_smoke.py --scope balance-v1 \
     --run-dir g1_cricket_results/balance_v1/$hand
-  uv run python scripts/retain_g1_training_diagnostics.py \
+  uv run scripts/retain_g1_training_diagnostics.py \
     g1_cricket_results/balance_v1/$hand
 done
 ```
@@ -632,9 +661,9 @@ unavailable from the native logger. Reproduce with the same CPU variables/runtim
 uv run python -m unilab.scripts.train_rsl_rl \
   task=g1_cricket_balance_v2/mujoco env.handedness=right \
   training.log_dir=g1_cricket_results/balance_v2/right
-uv run python scripts/evaluate_g1_cricket_smoke.py --scope balance-v2 \
+uv run scripts/evaluate_g1_cricket_smoke.py --scope balance-v2 \
   --run-dir g1_cricket_results/balance_v2/right
-uv run python scripts/retain_g1_training_diagnostics.py \
+uv run scripts/retain_g1_training_diagnostics.py \
   g1_cricket_results/balance_v2/right
 ```
 
@@ -664,9 +693,9 @@ before a separate ten-second audit or any video claim.
 uv run python -m unilab.scripts.train_rsl_rl \
   task=g1_cricket_balance_v3/mujoco env.handedness=right \
   training.log_dir=g1_cricket_results/balance_v3/right
-uv run python scripts/evaluate_g1_cricket_smoke.py --scope balance-v3 \
+uv run scripts/evaluate_g1_cricket_smoke.py --scope balance-v3 \
   --run-dir g1_cricket_results/balance_v3/right
-uv run python scripts/retain_g1_training_diagnostics.py \
+uv run scripts/retain_g1_training_diagnostics.py \
   g1_cricket_results/balance_v3/right
 ```
 

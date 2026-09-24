@@ -51,6 +51,7 @@ class EnvCfg:
     superdex_allow_contact_approximation: bool = False
     motrix_max_iterations: Optional[int] = None
     post_step_forward_sensor: bool = False
+    mujoco_observe_substeps: bool = False
     adaptive_chunk_size: bool = True
     chunk_size: Optional[int] = None
     # Explicit CPU block owned by this env's process (Linux affinity only).

@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from enum import IntEnum
 from pathlib import Path
 
+from hydra import compose, initialize_config_dir
 from omegaconf import OmegaConf
 
 from unilab.base import registry
@@ -205,6 +206,10 @@ def _load_task_name(task_path: Path) -> str:
     if not isinstance(raw, dict):
         raise ValueError(f"Expected mapping config in {task_path}")
     training = raw.get("training")
+    if (not isinstance(training, dict) or "task_name" not in training) and "defaults" in raw:
+        with initialize_config_dir(config_dir=str(task_path.parents[2]), version_base="1.3"):
+            owner = compose("config", overrides=[f"task={task_path.parent.name}/{task_path.stem}"])
+        training = OmegaConf.to_container(owner.training, resolve=True)
     if not isinstance(training, dict) or "task_name" not in training:
         raise ValueError(f"Missing training.task_name in {task_path}")
     task_name = training["task_name"]
@@ -246,6 +251,8 @@ def _configured_entries(root: Path, spec: EntrypointSpec) -> dict[str, dict[str,
 
 
 def _is_tested(spec: EntrypointSpec, task_slug: str, backend: str, root: Path) -> bool:
+    if task_slug == "g1_cricket_impact_events_v1":
+        return False
     if backend == "superdex":
         # Bounded native smoke/short training does not establish full training support.
         return False

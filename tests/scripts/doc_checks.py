@@ -130,9 +130,9 @@ def check_file_paths(content: str, doc_path: Path, root: Path) -> list[str]:
         r"`(src/[^`]+)`",
         r"`(conf/[^`]+)`",
         r"`(tests/[^`]+)`",
-        r"\(src/[^\)]+\)",
-        r"\(conf/[^\)]+\)",
-        r"\(tests/[^\)]+\)",
+        r"\((src/[^\)]+)\)",
+        r"\((conf/[^\)]+)\)",
+        r"\((tests/[^\)]+)\)",
     ]
 
     for pattern in path_patterns:

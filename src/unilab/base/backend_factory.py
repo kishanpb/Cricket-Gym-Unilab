@@ -3,7 +3,8 @@
 This module owns only UniLab concerns: resolving hosted robot assets and
 translating :class:`EnvCfg` backend options into the public ``unisim``
 factory. Physics implementations and their public contract live in the
-``unisim-core`` distribution.
+``unisim-core`` distribution. ADR-0010 documents the opt-in, fork-only
+substep-observation compatibility adapter.
 """
 
 from __future__ import annotations
@@ -85,6 +86,18 @@ def env_backend_kwargs(cfg: "EnvCfg") -> dict[str, Any]:
     # the updated adapter.
     if cfg.superdex_execution_mode != "batch":
         result["superdex_execution_mode"] = cfg.superdex_execution_mode
+    if cfg.mujoco_observe_substeps:
+        result = {
+            key: result[key]
+            for key in (
+                "post_step_forward_sensor",
+                "chunk_size",
+                "adaptive_chunk_size",
+                "cpu_ids",
+                "bench_nsteps",
+            )
+        }
+        result["mujoco_observe_substeps"] = True
     return result
 
 
@@ -116,6 +129,14 @@ def create_backend(
     ensure_robot_assets_for_paths(
         [scene.model_file, scene.visual_model_file, *scene.fragment_files]
     )
+    if kwargs.pop("mujoco_observe_substeps", False):
+        if backend_type != "mujoco":
+            raise ValueError("substep observation is experimental MuJoCo-only functionality")
+        from unilab.base.mujoco_substeps import SubstepMuJoCoBackend
+
+        return SubstepMuJoCoBackend(
+            scene, num_envs, sim_dt, add_body_sensors=body_state_required, **kwargs
+        )
     if backend_type != "newton":
         # Keep the owner translation forward-compatible with unisim-core
         # releases that predate the Newton adapter and therefore do not pop

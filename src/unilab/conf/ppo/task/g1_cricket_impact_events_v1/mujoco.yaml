@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_impact_v1/mujoco
+  - _self_
+
+env:
+  sim_dt: 0.00025
+  mujoco_observe_substeps: true
+
+reward:
+  batting:
+    func: unilab.tasks.manipulation.g1_cricket.substep_reward.SubstepForwardExitReward

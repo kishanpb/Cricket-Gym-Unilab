@@ -72,8 +72,8 @@ uv run scripts/generate_support_matrix.py --write
 | PPO (torch) | `allegro_inhand` (Allegro in-hand) | Tested | - | Tested | - | - | - | - | - |
 | PPO (torch) | `a2_joystick_flat` (a2 joystick flat) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `allegro_inhand_grasp` (allegro inhand grasp) | Tested | - | Tested | - | - | - | - | - |
-| PPO (torch) | `cricket_bowling` (cricket bowling) | - | - | - | - | - | - | - | - |
-| PPO (torch) | `cricket_motor` (cricket motor) | - | - | - | - | - | - | - | - |
+| PPO (torch) | `cricket_bowling` (cricket bowling) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `cricket_motor` (cricket motor) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `fr3_joint_target` (fr3 joint target) | - | - | - | - | - | - | - | Configured |
 | PPO (torch) | `g1_23dof_box_tracking` (g1 23dof box tracking) | Tested | - | Tested | - | - | - | - | - |
 | PPO (torch) | `g1_23dof_climb_tracking` (g1 23dof climb tracking) | Tested | - | Tested | - | - | - | - | - |
@@ -85,6 +85,17 @@ uv run scripts/generate_support_matrix.py --write
 | PPO (torch) | `g1_23dof_wall_flip_tracking` (g1 23dof wall flip tracking) | Tested | - | Tested | - | - | - | - | - |
 | PPO (torch) | `g1_box_tracking` (g1 box tracking) | Tested | - | Tested | - | - | - | - | - |
 | PPO (torch) | `g1_climb_tracking` (g1 climb tracking) | Tested | - | Tested | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_balance_v1` (g1 cricket balance v1) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_balance_v2` (g1 cricket balance v2) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_balance_v3` (g1 cricket balance v3) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_batting` (g1 cricket batting) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_impact_events_v1` (g1 cricket impact events v1) | Configured | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_impact_v1` (g1 cricket impact v1) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_prior_v1` (g1 cricket prior v1) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_prior_v2` (g1 cricket prior v2) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_residual_v1` (g1 cricket residual v1) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_residual_v2` (g1 cricket residual v2) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_residual_v3` (g1 cricket residual v3) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_motion_tracking_deploy` (g1 motion tracking deploy) | Tested | - | Tested | - | - | - | - | - |
 | PPO (torch) | `go1_joystick_rough` (go1 joystick rough) | Tested | - | Tested | - | - | - | - | - |
 | PPO (torch) | `go2_footstand` (go2 footstand) | Tested | - | Tested | - | - | - | - | - |
