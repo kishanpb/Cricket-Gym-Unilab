@@ -20,7 +20,34 @@ def position_velocity_control(model, position, velocity):
     return position - model.actuator_biasprm[:, 2] / model.actuator_gainprm[:, 0] * velocity
 
 
-def audit(hand, reference_path, motion, controller):
+def ankle_balance(reference_quaternion, quaternion, angular_velocity, gain):
+    tilt = np.empty(3)
+    mujoco.mju_subQuat(tilt, quaternion, reference_quaternion)
+    reference_rotation, rotation = np.empty(9), np.empty(9)
+    mujoco.mju_quat2Mat(reference_rotation, reference_quaternion)
+    mujoco.mju_quat2Mat(rotation, quaternion)
+    velocity = reference_rotation.reshape(3, 3).T @ rotation.reshape(3, 3) @ angular_velocity
+    return np.clip(gain * (0.7 * tilt[:2] + 0.1 * velocity[:2]), -0.3, 0.3)
+
+
+def feasibility_checks(row):
+    trace = row["trace"]
+    return {
+        "complete": row["completed_three_seconds"],
+        "pelvis_height": min(t["minimum_substep_pelvis_height_m"] for t in trace) > 0.65,
+        "no_unexpected_contact": not any(t["unexpected_contacts"] for t in trace),
+        "hard_joint_limits": max(t["joint_limit_excess_rad"] for t in trace) <= 0.0001,
+        "grip": max(t["maximum_substep_grip_gap_m"] for t in trace) < 0.006,
+        "motor_limits": max(t["motor_fraction_peak"] for t in trace) <= 1,
+        "root_tracking": max(t["root_translation_error_m"] for t in trace) < 0.15,
+        "joint_tracking": max(t["joint_rmse_rad"] for t in trace) < 0.2,
+        "bat_tracking": max(t["bat_tracking_error_m"] for t in trace) < 0.08,
+    }
+
+
+def audit(
+    hand, reference_path, motion, controller, balance_gain=0.0, clip_motor_target=True, states=None
+):
     with TemporaryDirectory(prefix="g1-tracking-control-") as directory:
         scene = Path(directory) / "scene.xml"
         build_bimanual_scene(ROOT / "src/unilab/assets/robots/g1/g1.xml", scene, hand)
@@ -42,6 +69,8 @@ def audit(hand, reference_path, motion, controller):
         data.qpos[ball.qposadr[0] : ball.qposadr[0] + 3] = [8, 0, 0.036]
         data.qvel[ball.dofadr[0] : ball.dofadr[0] + 6] = 0
         mujoco.mj_forward(model, data)
+        if states is not None:
+            states.append((data.qpos.copy(), data.qvel.copy(), data.ctrl.copy()))
         joints = np.array([model.joint(name).id for name in SDK_JOINTS])
         addresses, dofs = model.jnt_qposadr[joints], model.jnt_dofadr[joints]
         limits = model.jnt_range[joints]
@@ -50,6 +79,7 @@ def audit(hand, reference_path, motion, controller):
             if controller == "supported_pd"
             else None
         )
+        reference_data = mujoco.MjData(model)
         contact_force = np.empty(6)
         trace = []
         for i, pose in enumerate(poses[:-1]):
@@ -58,9 +88,14 @@ def audit(hand, reference_path, motion, controller):
                 target = position_velocity_control(model, target, velocity[i, dofs])
             if feedforward is not None:
                 target = target + feedforward[i][0] / model.actuator_gainprm[:, 0]
-                target = np.clip(target, limits[:, 0], limits[:, 1])
+                correction = ankle_balance(pose[3:7], data.qpos[3:7], data.qvel[3:6], balance_gain)
+                target[[4, 10]] += correction[1]
+                target[[5, 11]] += correction[0]
+                if clip_motor_target:
+                    target = np.clip(target, limits[:, 0], limits[:, 1])
             data.ctrl[:] = target
             peak_motor_fraction = peak_contact = excess = 0.0
+            minimum_height, grip_gap = float(data.qpos[2]), 0.0
             contacts = set()
             for _ in range(20):
                 mujoco.mj_step(model, data)
@@ -75,6 +110,15 @@ def audit(hand, reference_path, motion, controller):
                     float(np.max(np.abs(data.actuator_force) / model.actuator_forcerange[:, 1])),
                 )
                 q = data.qpos[addresses]
+                minimum_height = min(minimum_height, float(data.qpos[2]))
+                grip_gap = max(
+                    grip_gap,
+                    float(
+                        np.linalg.norm(
+                            data.site("bat_lower_grip").xpos - data.site(f"{hand}_palm").xpos
+                        )
+                    ),
+                )
                 excess = max(excess, float(np.maximum(limits[:, 0] - q, q - limits[:, 1]).max()))
                 for j, contact in enumerate(data.contact):
                     names = {model.geom(int(g)).name for g in contact.geom}
@@ -87,10 +131,21 @@ def audit(hand, reference_path, motion, controller):
                         peak_contact = max(peak_contact, float(contact_force[0]))
                         contacts.add("/".join(sorted(names)))
             mujoco.mj_forward(model, data)
+            if states is not None:
+                states.append((data.qpos.copy(), data.qvel.copy(), data.ctrl.copy()))
+            reference_data.qpos[:] = poses[i + 1]
+            mujoco.mj_kinematics(model, reference_data)
             trace.append(
                 {
                     "time_s": float(data.time),
                     "pelvis_height_m": float(data.qpos[2]),
+                    "minimum_substep_pelvis_height_m": minimum_height,
+                    "maximum_substep_grip_gap_m": grip_gap,
+                    "bat_tracking_error_m": float(
+                        np.linalg.norm(
+                            data.site("bat_center").xpos - reference_data.site("bat_center").xpos
+                        )
+                    ),
                     "root_translation_error_m": float(np.linalg.norm(data.qpos[:3] - pose[:3])),
                     "joint_rmse_rad": float(
                         np.sqrt(np.mean((data.qpos[addresses] - pose[addresses]) ** 2))
@@ -107,6 +162,8 @@ def audit(hand, reference_path, motion, controller):
             "hand": hand,
             "reference": "swing" if motion else "static_guard",
             "controller": controller,
+            "balance_gain": balance_gain,
+            "clip_motor_target": clip_motor_target,
             "maximum_static_base_force_residual_n": max(
                 np.linalg.norm(row[1][:3]) for row in feedforward
             )
@@ -126,6 +183,9 @@ def audit(hand, reference_path, motion, controller):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--balance-sweep", action="store_true")
+    mode.add_argument("--feedforward-sweep", action="store_true")
     parser.add_argument(
         "--reference-dir", type=Path, default=ROOT / "g1_cricket_results/bimanual_v1"
     )
@@ -138,19 +198,45 @@ def main():
     }
     sources += list(references.values())
     hashes = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
-    rows = [
-        audit(hand, reference, motion, tracking)
-        for hand, reference in references.items()
-        for motion in (False, True)
-        for tracking in ("position", "position_velocity", "supported_pd")
-    ]
+    if args.balance_sweep:
+        rows = [
+            audit(hand, reference, True, "supported_pd", gain)
+            for hand, reference in references.items()
+            for gain in (-2.0, -1.0, 0.0, 0.5, 1.0, 2.0, 4.0)
+        ]
+    elif args.feedforward_sweep:
+        rows = []
+        for hand, reference in references.items():
+            for clipped in (True, False):
+                states = []
+                row = audit(hand, reference, True, "supported_pd", 4.0, clipped, states)
+                row["trajectory_file"] = f"{hand}_{'clipped' if clipped else 'unclipped'}.npz"
+                np.savez_compressed(
+                    args.output / row["trajectory_file"],
+                    qpos=np.array([s[0] for s in states]),
+                    qvel=np.array([s[1] for s in states]),
+                    control=np.array([s[2] for s in states]),
+                )
+                rows.append(row)
+    else:
+        rows = [
+            audit(hand, reference, motion, tracking)
+            for hand, reference in references.items()
+            for motion in (False, True)
+            for tracking in ("position", "position_velocity", "supported_pd")
+        ]
     if any(
         hashlib.sha256(p.read_bytes()).hexdigest() != hashes[str(p.relative_to(ROOT))]
         for p in sources
     ):
         raise RuntimeError("control-audit sources changed")
+    if args.balance_sweep or args.feedforward_sweep:
+        for row in rows:
+            row["feasibility_checks"] = feasibility_checks(row)
     report = {
         "scope": "serial_physics_feasibility_not_RL_or_full_cricket_qualification",
+        "balance_sweep": args.balance_sweep,
+        "feedforward_sweep": args.feedforward_sweep,
         "physics_dt_s": 0.001,
         "control_dt_s": 0.02,
         "stop_rule": "pelvis below 0.5 m or 3 seconds; any solver warning/nonfinite aborts",
@@ -166,9 +252,12 @@ def main():
             r["hand"],
             r["reference"],
             r["controller"],
+            r["balance_gain"],
+            r["clip_motor_target"],
             r["trace"][-1]["time_s"],
             r["trace"][-1]["pelvis_height_m"],
             sorted({c for t in r["trace"] for c in t["unexpected_contacts"]}),
+            [name for name, passed in r.get("feasibility_checks", {}).items() if not passed],
         )
 
 
