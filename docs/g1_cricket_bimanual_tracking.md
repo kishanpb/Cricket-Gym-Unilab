@@ -38,12 +38,39 @@ the simple PD/gravity/ankle controller still fell. These are failed development
 tests, not successful batting or evidence that the motion is impossible.
 Intermediate media are superseded by one complete both-hand diagnostic.
 
+## Whole-Body PPO Pilot
+
+Both hands were trained independently with CPU native mjbatch, seed 1, 16
+environments, 512 updates and 196,608 transitions each. The deterministic
+development evaluation starts at the first reference frame and keeps every
+episode through termination. The right policy lasts 1.56 seconds; the left
+lasts 1.68 seconds. Both fail the anchor-height gate during downswing. The
+reference-only controller terminates at 0.32 seconds on incidental bat support
+for both hands. This is not a completed swing, held-out evaluation or ball hit.
+
+The first pilot inherited the learner's disabled finite checks; its complete
+saved scalars and independent evaluation are checked for finite values, not
+claimed as a strict training-time finite-state audit. Future runs enable learner
+finite checks explicitly. The evaluator restores the original visual meshes
+from the same generated scene because the physics compiler strips them; it
+checks state-layout and body-transform compatibility before rendering, while
+measurements still use the original physics model.
+
+Predeclared continuation: resume each hand's final `model_511.pt` for exactly
+512 additional updates (another 196,608 transitions per hand), using the same
+seed, reference, reward, action scale, model, episode horizon and termination
+gates. Enable learner finite checks and explicitly select the existing critic
+observation group. Keep both outcomes regardless of improvement; no adaptive
+checkpoint selection. Evaluate each final checkpoint against reference-only
+control and render complete failed or completed episodes. A completed dry swing
+still cannot establish contact quality, running bowling or a showcase result.
+
 ## Reproduction
 
 Generate references and a complete diagnostic in a new output directory:
 
 ```sh
-PYTHONPATH=src uv run python scripts/retarget_g1_cricket_batting.py \
+PYTHONPATH=src uv run --with scipy python scripts/retarget_g1_cricket_batting.py \
   --output g1_cricket_results/bimanual_v1 --render
 ```
 

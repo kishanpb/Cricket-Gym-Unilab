@@ -1,9 +1,14 @@
 """Constraint-force interpretation and immutable diagnostic outputs."""
 
+from pathlib import Path
+
 import mujoco
 import numpy as np
 import pytest
+from evaluate_g1_cricket_tracking import visual_model
 from retarget_g1_cricket_batting import grip_force, main
+
+from unilab.tasks.manipulation.g1_cricket.bimanual import build_bimanual_scene
 
 
 def test_connect_force_norm_and_inactive_rows():
@@ -38,3 +43,21 @@ def test_existing_output_is_not_overwritten(tmp_path, monkeypatch):
     with pytest.raises(FileExistsError):
         main()
     assert not list(tmp_path.iterdir())
+
+
+@pytest.mark.parametrize("hand", ["right", "left"])
+def test_visual_playback_restores_meshes_without_changing_state(tmp_path, hand):
+    root = Path(__file__).resolve().parents[2]
+    scene = tmp_path / "scene.xml"
+    build_bimanual_scene(root / "src/unilab/assets/robots/g1/g1.xml", scene, hand)
+    spec = mujoco.MjSpec.from_file(str(scene))
+    spec.compiler.discardvisual = True
+    physics = spec.compile()
+    restored = visual_model(scene, physics)
+    assert physics.nmesh == 0 and restored.nmesh > 0
+    actual, display = mujoco.MjData(physics), mujoco.MjData(restored)
+    mujoco.mj_resetDataKeyframe(physics, actual, 0)
+    display.qpos[:] = actual.qpos
+    mujoco.mj_forward(physics, actual)
+    mujoco.mj_forward(restored, display)
+    np.testing.assert_allclose(actual.xpos, display.xpos, atol=1e-12)

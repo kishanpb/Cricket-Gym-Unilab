@@ -21,6 +21,25 @@ from unilab.training import algo_config_dict
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def visual_model(scene, physics):
+    """Restore meshes stripped by the training compiler without changing state layout."""
+    model = mujoco.MjModel.from_xml_path(str(scene))
+    for kind, count in (("joint", physics.njnt), ("body", physics.nbody)):
+        if [getattr(model, kind)(i).name for i in range(count)] != [
+            getattr(physics, kind)(i).name for i in range(count)
+        ]:
+            raise RuntimeError(f"visual {kind} layout differs from the physics model")
+    for name in ("jnt_qposadr", "jnt_dofadr"):
+        np.testing.assert_array_equal(getattr(model, name), getattr(physics, name))
+    for name in ("body_pos", "body_quat", "body_mass"):
+        np.testing.assert_allclose(getattr(model, name), getattr(physics, name), atol=1e-14, rtol=0)
+    if (model.nq, model.nv, model.na) != (physics.nq, physics.nv, physics.na):
+        raise RuntimeError("visual state layout differs from the physics model")
+    if model.nmesh == 0:
+        raise RuntimeError("G1 visual meshes are missing")
+    return model
+
+
 def evaluate(directory, render=False):
     saved = json.loads((directory / "run_config.json").read_text())
     summary = json.loads((directory / "run_summary.json").read_text())
@@ -63,7 +82,12 @@ def evaluate(directory, render=False):
         )
         policy = runner.get_inference_policy(device="cpu")
         model = env.get_playback_model()
-        model.vis.global_.offwidth, model.vis.global_.offheight = 960, 540
+        display = (
+            visual_model(Path(env.scene_directory.name) / "cricket.xml", model) if render else None
+        )
+        if display is not None:
+            display.vis.global_.offwidth, display.vis.global_.offheight = 960, 540
+        display_data = mujoco.MjData(display) if display is not None else None
         data = mujoco.MjData(model)
         camera = mujoco.MjvCamera()
         camera.lookat[:] = [0.1, 0, 0.75]
@@ -71,7 +95,7 @@ def evaluate(directory, render=False):
         for controller in ("reference_only", "ppo"):
             env.reset(seed=1)
             trace, frames = [], []
-            renderer = mujoco.Renderer(model, height=540, width=960) if render else None
+            renderer = mujoco.Renderer(display, height=540, width=960) if render else None
             total_reward = 0.0
             try:
                 for tick in range(env.max_episode_length):
@@ -126,7 +150,11 @@ def evaluate(directory, render=False):
                         }
                     )
                     if renderer is not None:
-                        renderer.update_scene(data, camera)
+                        mujoco.mj_setState(
+                            display, display_data, physical, mujoco.mjtState.mjSTATE_FULLPHYSICS
+                        )
+                        mujoco.mj_forward(display, display_data)
+                        renderer.update_scene(display_data, camera)
                         frame = Image.fromarray(renderer.render())
                         draw = ImageDraw.Draw(frame)
                         draw.rectangle((0, 0, 960, 64), fill="#17201d")

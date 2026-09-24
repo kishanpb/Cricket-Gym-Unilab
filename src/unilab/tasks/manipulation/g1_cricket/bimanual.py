@@ -5,9 +5,6 @@ from pathlib import Path
 
 import mujoco
 import numpy as np
-from scipy.interpolate import PchipInterpolator
-from scipy.optimize import least_squares
-from scipy.spatial.transform import Rotation
 
 from .prior import SDK_DEFAULT, SDK_JOINTS, build_prior_scene
 
@@ -58,6 +55,9 @@ def build_bimanual_scene(source: Path, destination: Path, hand: str) -> tuple[st
 
 def batting_targets(times: np.ndarray, hand: str) -> tuple[np.ndarray, np.ndarray]:
     """Guard, backlift, downswing, drive, recovery; scaled to G1 reach."""
+    from scipy.interpolate import PchipInterpolator
+    from scipy.spatial.transform import Rotation
+
     if hand not in {"right", "left"}:
         raise ValueError("hand must be right or left")
     knots = [0, 0.55, 1.15, 1.45, 1.8, 2.45, 3.0]
@@ -80,6 +80,9 @@ def batting_targets(times: np.ndarray, hand: str) -> tuple[np.ndarray, np.ndarra
 
 def retarget_batting(model: mujoco.MjModel, times: np.ndarray, hand: str) -> dict:
     """Offline IK only. The returned poses are targets, not physics evidence."""
+    from scipy.optimize import least_squares
+    from scipy.spatial.transform import Rotation
+
     data = mujoco.MjData(model)
     mujoco.mj_resetDataKeyframe(model, data, 0)
     joint_ids = np.array([model.joint(name).id for name in SDK_JOINTS])

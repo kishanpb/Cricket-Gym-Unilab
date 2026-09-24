@@ -11,11 +11,14 @@ algo:
   num_envs: 8
   max_iterations: 100
   save_interval: 100
+  obs_groups:
+    critic: [critic]
   policy:
     actor_hidden_dims: [128, 128]
     critic_hidden_dims: [128, 128]
   algorithm:
     num_mini_batches: 2
+    disable_finite_checks: false
 env:
   handedness: right
   scene:
