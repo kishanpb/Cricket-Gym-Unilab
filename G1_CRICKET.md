@@ -136,7 +136,54 @@ remain uncalibrated. This closes only the tested attenuation family, not the
 possibility of G1 batting. A separately bounded pre-contact face-orientation
 study is a better next hypothesis than more tiny late-command adjustments:
 the retained parent impact normal has a vertical component that adds to normal
-closing speed. That hypothesis has not yet been tested; no showcase is ready.
+closing speed. The wrist-only test below probes that hypothesis; no showcase
+is ready.
+
+### Wrist Pitch And Motor Saturation
+
+The [fixed wrist-pitch experiment](docs/g1_cricket_wrist_pitch_v1.md) changes only
+channel 5 during ticks 10-19 of the same parent motion. Seven scales receive
+complete two-second trials at both timesteps in both engines. The
+[28-row report](g1_cricket_results/wrist_pitch_v1/evaluation.json) retains all
+outcomes and first-contact direction diagnostics; all 14 executor pairs and
+four unchanged-parent baselines match exactly, with zero replay error.
+
+| Pitch scale | Coarse exit vx | Coarse penetration | Fine exit vx | Fine penetration |
+| --- | ---: | ---: | ---: | ---: |
+| 1, 0.75, 0.5, 0 (each) | 1.028620 m/s | 5.953697 mm | 1.066471 m/s | 6.620823 mm |
+| -0.5 | 1.033778 m/s | 6.047993 mm | 1.065627 m/s | 6.605200 mm |
+| -0.75 | 1.025395 m/s | 5.893790 mm | 1.056031 m/s | 6.427966 mm |
+| -1 | 1.059571 m/s | 6.486581 mm | 1.064644 m/s | 6.568480 mm |
+
+Ten individual coarse rows pass; **zero scales qualify across all contexts**.
+All 18 failing rows fail only penetration. The intended contact-orientation
+change was barely achieved: at the fine step, scale -1 changes first-contact
+normal z from 0.271933 to 0.270656, and its vertical closing-speed contribution
+from -1.071596 to -1.066727 m/s. Contact normals are not necessarily blade-face
+normals, and command targets are not achieved joint angles.
+
+A separate [motor audit](g1_cricket_results/wrist_pitch_v1/wrist_saturation.json)
+replays scales 1 and 0 in native mjbatch at both timesteps, requiring each full
+result to equal its retained row. It reconstructs requested affine PD torque
+from matched solve-phase actuator caches and compares every applied sample
+with the unchanged +/-5 N m wrist-pitch limit. Across these four complete
+trials, 48,000 physics solves are checked and summarized in 400 control ticks.
+Reconstruction error is at most 1.78e-15 N m overall and zero during the forward
+phase. During ticks 10-19, **every solve is saturated at -5 N m**:
+800/800 per coarse trial and 1,600/1,600 per fine trial.
+Fine-step requested torque spans -50.302 to -12.176 N m for scale 1 and
+-44.602 to -6.476 N m for scale 0. Both commands therefore produce the same
+applied torque throughout that phase; the different targets do not establish
+a meaningful change in contact orientation.
+
+The sweep verifies 72 source/input hashes; the additional audit verifies 75.
+There are 57 passing focused tests, including nine new command/direction tests
+and three new torque-audit tests. Reproduce the additional audit with the same
+runtime via `python scripts/audit_g1_cricket_wrist_saturation.py` under `uv run`.
+No motor limit, gain, contact model, reward or prior was changed. These are
+uncalibrated simulation diagnostics, not new learning or a showcase. Further
+motion search should account for the weak wrist through proximal-arm motion,
+not infer wrist controllability from target changes or increase hardware limits.
 
 With the documented external prior and runtime installed, the focused verification is:
 

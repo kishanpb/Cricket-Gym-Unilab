@@ -41,9 +41,10 @@ reproduces all 192 frozen-policy trials, including contact-force evidence, exact
 This verifies execution parity, not a successful cricket policy or a new video.
 The [161-motion scripted diagnostic](G1_CRICKET.md#bounded-reversal-diagnostic)
 finds a forward strike, but rejects it at the finer timestep for excessive
-bat-ball overlap. A [24-trial last-command refinement](G1_CRICKET.md#terminal-command-attenuation)
-also fails validation: reducing that command does not resolve the overlap/speed
-tradeoff. No validated learned G1 showcase is claimed.
+bat-ball overlap. Subsequent command refinements still fail validation; the
+[wrist-pitch audit](G1_CRICKET.md#wrist-pitch-and-motor-saturation) explains why
+different wrist targets can produce identical motion at the motor's torque limit.
+No validated learned G1 showcase is claimed.
 
 ---
 
