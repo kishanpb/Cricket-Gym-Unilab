@@ -83,6 +83,47 @@ The next reward design should remove that avoidance incentive while still
 favoring forward exits over weak touches, without weakening the success gate.
 No version here is ready for a learned-cricket showcase.
 
+### Reward-only v3: Forward Contact, Below The Shot Gate
+
+The [v3 contract](docs/g1_cricket_residual_v3.md) replaces the signed separation
+event with `5 * (1 + tanh(vx - 1))`; misses receive no event bonus. Everything
+else, including the strict outgoing velocity gate, stays unchanged. Another
+fresh seed-1 right-hand CPU PPO run completes 199,680 transitions. In the full
+[96-row development evaluation](g1_cricket_results/residual_v3/evaluation.json),
+right PPO makes blade-first contact in 16/24 trials. Those first-separation
+velocities are **0.412-0.703 m/s**, below the required **>1 m/s**. The center lane
+misses all eight deliveries. Left-hand untrained transfer touches eight balls
+but sends none forward. Both hands complete all two-second episodes without
+guarded bat/robot, bat/ground or robot/wicket contact; neither passes a shot.
+The frozen baseline's physical outcomes remain exactly unchanged.
+
+The [27-second slow-motion diagnostic](g1_cricket_results/residual_v3/development_diagnostic.mp4)
+shows the first declared seed in every lane for both hands, including all misses;
+it is **not a showcase or a successful-policy claim**. It replays the evaluated
+checkpoint, checks native/serial agreement at every control interval and includes
+simulated contact and fixture loads. [Media provenance](g1_cricket_results/residual_v3/development_media.json)
+records all six complete clips, trajectory hashes and the full video decode.
+Loads precede the rendered integrated pose by one 2 ms substep and remain
+uncalibrated; a brief force spike can occur between displayed frames.
+
+![Fixed development diagnostics, including failed lanes](g1_cricket_results/residual_v3/development_contact_sheet.png)
+
+This removes the v2 all-miss behavior without relaxing the gate, but forward
+speed and lane coverage still need improvement. These reused development seeds
+are not held-out generalization. Separately trained left-hand control, learned
+bowling, A2C/tournament comparisons and impact-convergence checks remain open.
+The right-hand contacts persist for 124-162 ms before first separation, so the
+next physical audit must distinguish a prolonged push from a brief bat impact
+and check timestep/contact-parameter sensitivity before treating loads as realistic.
+
+```sh
+uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_residual_v3/mujoco \
+  training.log_dir=g1_cricket_results/residual_v3/right
+uv run python scripts/evaluate_g1_cricket_residual_v3.py
+uv run python scripts/render_g1_cricket_residual.py \
+  --run-dir g1_cricket_results/residual_v3/right
+```
+
 ## External Locomotion Prior: Native Transfer
 
 A separate native owner now evaluates the official Unitree RL Lab 29-DoF

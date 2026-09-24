@@ -1,0 +1,111 @@
+{
+  "scope": "development_diagnostic_not_showcase_or_policy_promotion",
+  "selection": "first declared seed, both hands, all three lanes; full episodes including failures; contact sheet at .30 s or terminal if earlier",
+  "playback": "100 simulated frames/s played at 50 fps, 0.5x speed, then .5 s terminal hold per clip",
+  "force_timing": "loads from the replayed 2 ms contact solve, preceding the rendered integrated pose by one substep; rendering forward is used for kinematics only",
+  "evaluation_sha256": "0eb0416f48b17a056d4e6db1bdca2a13e631953cc6a0d4a18e207aa9261c3257",
+  "checkpoint_sha256": "b0d0b3e6f192a30ca0b09a69b0c8d08225c1d4d7715b03e199ee55fdcf1a7504",
+  "renderer_sha256": "9781b97aec5c0d116774c0a627705294cfb14ff974467f0ea11e29902bc15fa2",
+  "video_sha256": "9a823eea48714b09602dd963dc637d1c89f16ef87718b0253b8e918e3dd461c0",
+  "sheet_sha256": "424bfa714e0e1b5a50cbf480fcb1ab6115917cded5c42fef8c56f938b2a2c110",
+  "decoded_frames": 1350,
+  "clips": [
+    {
+      "hand": "right",
+      "offset_m": -0.12,
+      "seed": 4301,
+      "passed": false,
+      "failures": [
+        "outgoing_velocity_not_above_1_m_s"
+      ],
+      "simulation_seconds": 2.0,
+      "motion_frames": 200,
+      "hold_frames": 25,
+      "trajectory_sha256": "a3f38d3bce604e106f0450b4b044c6a55f6e6e7b0ae93741d92e8a31c0f08927",
+      "first_to_last_mean_pixel_change": 1.6468582818930042
+    },
+    {
+      "hand": "right",
+      "offset_m": -0.1,
+      "seed": 4301,
+      "passed": false,
+      "failures": [
+        "outgoing_velocity_not_above_1_m_s"
+      ],
+      "simulation_seconds": 2.0,
+      "motion_frames": 200,
+      "hold_frames": 25,
+      "trajectory_sha256": "81ed26b42d3229b4a914446f1b907b5f34e5cb4df691bd5d470d7961a9cdab1c",
+      "first_to_last_mean_pixel_change": 1.6347768775720164
+    },
+    {
+      "hand": "right",
+      "offset_m": 0.0,
+      "seed": 4301,
+      "passed": false,
+      "failures": [
+        "ball_contact:pitch",
+        "ball_contact:wicket_1",
+        "ball_contact:wicket_2",
+        "first_contact_not_blade_only",
+        "no_blade_contact",
+        "outgoing_velocity_not_above_1_m_s"
+      ],
+      "simulation_seconds": 2.0,
+      "motion_frames": 200,
+      "hold_frames": 25,
+      "trajectory_sha256": "5f23fb9342dd6f74657506798e6c3297f5d70d922cb2b221e856005b10ed049f",
+      "first_to_last_mean_pixel_change": 1.5349369855967079
+    },
+    {
+      "hand": "left",
+      "offset_m": -0.12,
+      "seed": 4301,
+      "passed": false,
+      "failures": [
+        "ball_contact:pitch",
+        "ball_contact:wicket_1",
+        "ball_contact:wicket_2",
+        "first_contact_not_blade_only",
+        "no_blade_contact",
+        "outgoing_velocity_not_above_1_m_s"
+      ],
+      "simulation_seconds": 2.0,
+      "motion_frames": 200,
+      "hold_frames": 25,
+      "trajectory_sha256": "53fd3399f912aefba7f95f54de5751743ae2646766f9a0b6be51688e6857fb9d",
+      "first_to_last_mean_pixel_change": 1.6862969393004115
+    },
+    {
+      "hand": "left",
+      "offset_m": -0.1,
+      "seed": 4301,
+      "passed": false,
+      "failures": [
+        "ball_contact:pitch",
+        "first_contact_not_blade_only",
+        "no_blade_contact",
+        "outgoing_velocity_not_above_1_m_s"
+      ],
+      "simulation_seconds": 2.0,
+      "motion_frames": 200,
+      "hold_frames": 25,
+      "trajectory_sha256": "479e5d5b2fc70ef46daecd927ad4a92c5dba7b5ccb3565cc86b0d37cc2f4a1af",
+      "first_to_last_mean_pixel_change": 1.6666152263374485
+    },
+    {
+      "hand": "left",
+      "offset_m": 0.0,
+      "seed": 4301,
+      "passed": false,
+      "failures": [
+        "outgoing_velocity_not_above_1_m_s"
+      ],
+      "simulation_seconds": 2.0,
+      "motion_frames": 200,
+      "hold_frames": 25,
+      "trajectory_sha256": "76734ff6cb029e2eab05adfcdecd6d374622d910f01660739b6f609dc63519f7",
+      "first_to_last_mean_pixel_change": 1.738204732510288
+    }
+  ]
+}
