@@ -105,6 +105,39 @@ The result motivates a bounded motion refinement with margin below the overlap
 limit before more PPO training. It does not relax that limit or authorize a
 learned-policy showcase, and the previous videos remain unchanged.
 
+### Terminal Command Attenuation
+
+The [frozen contract](docs/g1_cricket_terminal_residual_v1.md) and
+[complete report](g1_cricket_results/terminal_residual_v1/evaluation.json) test
+six scales for only tick 19 of `pmppppp_s10`: 0, 0.25, 0.5, 0.75, 0.875 and 1.
+All other commands, physics parameters, rewards and gates are unchanged. Each
+scale receives the full two-second trial at both timesteps and in both engines:
+24 rows, with no adaptive selection or shortened-horizon claims.
+
+| Tick-19 scale | Coarse exit vx | Coarse penetration | Fine exit vx | Fine penetration |
+| --- | ---: | ---: | ---: | ---: |
+| 1 | 1.028620 m/s | 5.953697 mm | 1.066471 m/s | 6.620823 mm |
+| 0.875 | 1.018909 m/s | 5.931236 mm | 1.056453 m/s | 6.596869 mm |
+| 0.75 | 1.009034 m/s | 5.911940 mm | 1.046252 m/s | 6.575707 mm |
+| 0.5 | 0.988094 m/s | 5.867714 mm | 1.024786 m/s | 6.527888 mm |
+| 0.25 | 0.966415 m/s | 5.819693 mm | 1.003344 m/s | 6.476335 mm |
+| 0 | 0.997288 m/s | 6.628370 mm | 0.986107 m/s | 6.422581 mm |
+
+The two executors match exactly for all 12 pairs, including first-impact
+evidence; all four scale-1 baselines reproduce the parent. All rows finish by
+native truncation with zero replay error. Six individual coarse rows pass, but
+**zero scales qualify across all four contexts**: every fine trial exceeds
+6 mm. Scale 0 passes the numerical timestep comparison but fails the physical
+shot gates; the other five fail penetration agreement and gate consistency.
+
+All 67 source/input hashes were verified, and 45 focused tests pass (including
+12 new tests). No policy was trained or promoted, and these simulated forces
+remain uncalibrated. This closes only the tested attenuation family, not the
+possibility of G1 batting. A separately bounded pre-contact face-orientation
+study is a better next hypothesis than more tiny late-command adjustments:
+the retained parent impact normal has a vertical component that adds to normal
+closing speed. That hypothesis has not yet been tested; no showcase is ready.
+
 With the documented external prior and runtime installed, the focused verification is:
 
 ```sh
