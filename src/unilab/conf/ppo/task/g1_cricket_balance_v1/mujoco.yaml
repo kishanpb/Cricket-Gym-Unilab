@@ -1,0 +1,50 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_batting/mujoco
+  - _self_
+
+algo:
+  max_iterations: 500
+  save_interval: 500
+  policy:
+    init_noise_std: 0.2
+  algorithm:
+    entropy_coef: 0.0
+    target_kl_stop: 0.02
+    disable_finite_checks: false
+env:
+  max_episode_seconds: 3.0
+  adaptive_chunk_size: false
+  observations:
+    policy:
+      terms:
+        local_velocity:
+          func: unilab.envs.mdp.builtin_sensor
+          params: {sensor_name: pelvis_local_linvel}
+reward:
+  upright:
+    weight: 2.0
+  action_rate:
+    weight: -0.01
+  height:
+    func: unilab.tasks.locomotion.common.manager_terms.base_height_l2
+    params: {target_height: 0.758}
+    weight: -500.0
+  orientation:
+    func: unilab.tasks.locomotion.common.sensor_reward_terms.orientation
+    params: {sensor_name: torso_upvector}
+    weight: -5.0
+  vertical_velocity:
+    func: unilab.tasks.locomotion.common.sensor_reward_terms.lin_vel_z
+    params: {sensor_name: pelvis_local_linvel}
+    weight: -1.0
+  angular_velocity:
+    func: unilab.tasks.locomotion.common.sensor_reward_terms.ang_vel_xy
+    params: {sensor_name: torso_gyro}
+    weight: -0.25
+  pose:
+    func: unilab.tasks.locomotion.g1.manager_terms.weighted_pose
+    params:
+      pose_weights: [0.01, 1, 5, 0.01, 5, 5, 0.01, 1, 5, 0.01, 5, 5,
+                     50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+    weight: -0.1

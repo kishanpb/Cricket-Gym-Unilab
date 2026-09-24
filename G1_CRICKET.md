@@ -119,3 +119,66 @@ The existing interactive/evaluation entrypoint is
 `unilab.cli.eval_main`, which routes PPO to the same runner's playback loader;
 the retained headless evaluator additionally enumerates every test episode and
 fails instead of falling back to zero actions when a checkpoint is missing.
+
+## Balance curriculum v1: bounded negative result
+
+The separate `g1_cricket_balance_v1/mujoco` owner config preserves all robot
+inertias, joints, position actuators, action scaling, bat fixture and ball/reset
+dynamics. It changes the objective to a three-second stance curriculum, reusing
+the stock G1 height, orientation, vertical/angular velocity and weighted-pose
+penalties. Upright reward is 2 and action-rate penalty is -0.01. This is a
+versioned curriculum bundle, not a single-axis causal ablation against the smoke.
+
+Observations add pelvis-local velocity to the original explicit root-height,
+ball-state, encoder, gravity, gyro and contact-snapshot inputs: **130 dimensions**.
+These are privileged simulation measurements, not a vision-only policy or a
+validated hardware tactile interface. PPO starts at Gaussian standard deviation
+0.2 with entropy coefficient 0 and native KL-stop target 0.02; variance remains
+learned. Actor/critic networks stay 64-64 and actions remain 29 joint offsets.
+
+Two fresh seed-1 runs each collected exactly **48,000 transitions** (500 updates,
+four environments, 24 steps/update): **96,000 total**. Right training took 27.36 s
+at 1,838 transitions/s; left took 26.27 s at 1,916 transitions/s. Python native
+worker sizing and Torch/BLAS thread caps were two. Each checkpoint was evaluated
+on both hands with zero control and deterministic actor means, seeds 4101-4104,
+without dropping falls. All **32 declared evaluation rows** are retained; seeds
+repeat deterministic initial conditions and are not independent robustness trials.
+
+| Checkpoint | Matched-hand PPO falls / duration | Opposite-hand PPO falls / duration |
+| --- | --- | --- |
+| Right-trained, 48k | 4/4, 1.26 s | 4/4, 1.23 s |
+| Left-trained, 48k | 4/4, 1.11 s | 4/4, 1.10 s |
+
+Zero control falls at 1.39 s in every row. Neither policy passed three seconds,
+so the predeclared conditional ten-second stress evaluation was **not run**.
+This budget did not produce learned stable stance or learned cricket; it does
+not establish that the balance curriculum is exhausted. No showcase is claimed.
+Before a larger run, investigate policy-update diagnostics and failure trajectories
+rather than infer improvement from shaped training return alone.
+
+[Right evidence](g1_cricket_results/balance_v1/right/evaluation.json) and
+[left evidence](g1_cricket_results/balance_v1/left/evaluation.json) include checkpoint,
+resolved-config and source hashes, actual transition counts, root-height and
+drift measurements, joint-limit excess and every evaluation result. Each run
+retains only its final `model_499.pt`, config, summary, evaluation and exported
+scalar diagnostics. All iteration-indexed scalar histories are in `training_scalars.csv`
+(redundant wall-time-indexed `/time` series are omitted);
+`training_diagnostics.json` gives finite checks, extrema and final values. The
+native logger did **not** emit KL or clip-fraction series, so the configured KL
+stop cannot be presented as measured update quality. Earlier smoke evidence
+remains a frozen record at its recorded source hashes.
+
+With the same runtime and CPU environment variables above, run each hand
+sequentially (these commands retrain, not resume):
+
+```sh
+for hand in right left; do
+  uv run python -m unilab.scripts.train_rsl_rl \
+    task=g1_cricket_balance_v1/mujoco env.handedness=$hand \
+    training.log_dir=g1_cricket_results/balance_v1/$hand
+  uv run python scripts/evaluate_g1_cricket_smoke.py --scope balance-v1 \
+    --run-dir g1_cricket_results/balance_v1/$hand
+  uv run python scripts/retain_g1_training_diagnostics.py \
+    g1_cricket_results/balance_v1/$hand
+done
+```

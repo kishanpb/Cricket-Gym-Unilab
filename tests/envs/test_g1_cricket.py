@@ -17,12 +17,10 @@ ROOT = Path(__file__).resolve().parents[2]
 ROBOT = ROOT / "src/unilab/assets/robots/g1/g1.xml"
 
 
-def make_env(handedness: str):
+def make_env(handedness: str, task: str = "g1_cricket_batting/mujoco"):
     registry.ensure_registries()
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
-        owner = compose(
-            "config", overrides=["task=g1_cricket_batting/mujoco", f"env.handedness={handedness}"]
-        )
+        owner = compose("config", overrides=[f"task={task}", f"env.handedness={handedness}"])
     override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
     override["auto_reset"] = False
     return registry.make(
@@ -103,3 +101,17 @@ def test_invalid_hand_rejected_before_materialization(tmp_path):
     with pytest.raises(ValueError, match="handedness must be right or left"):
         build_scene(ROBOT, tmp_path / "invalid.xml", "both")
     assert not (tmp_path / "invalid.xml").exists()
+
+
+@pytest.mark.parametrize("handedness", ["right", "left"])
+def test_balance_v1_native_reward_and_observation_contract(handedness):
+    env = make_env(handedness, "g1_cricket_balance_v1/mujoco")
+    try:
+        obs, _ = env.reset(seed=4)
+        assert obs["obs"].shape == (2, 130)
+        assert env.max_episode_length == 300
+        state = env.step(np.zeros((2, 29), dtype=np.float32))
+        assert np.isfinite(state.reward).all()
+        assert np.isfinite(state.obs["obs"]).all()
+    finally:
+        env.close()
