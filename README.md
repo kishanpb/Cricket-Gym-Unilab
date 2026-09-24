@@ -29,32 +29,21 @@ sensor-timing limits. These are simulated contact loads, not hardware taxels. Th
 next extension is learned cricket on the repository's Unitree G1 model; the current
 videos are not G1 demonstrations.
 
-**G1 work in progress:** [native foundation, PPO experiments and external locomotion transfer](G1_CRICKET.md).
-The first learned arm residual increases blade contact but fails every qualified
-shot; its complete negative evaluation and simulated contact-force evidence are retained.
-The corrected wrist mount completes all 24 ten-second prior stance trials;
-this is not yet locally learned cricket or a new showcase video.
-Earlier locally trained PPO checkpoints still fail through falls or incidental
-bat contact; their full negative results remain available.
-The experimental [native mjbatch executor](G1_CRICKET.md#experimental-native-mjbatch-execution)
-reproduces all 192 frozen-policy trials, including contact-force evidence, exactly.
-This verifies execution parity, not a successful cricket policy or a new video.
-The [161-motion scripted diagnostic](G1_CRICKET.md#bounded-reversal-diagnostic)
-finds a forward strike, but rejects it at the finer timestep for excessive
-bat-ball overlap. Subsequent command refinements still fail validation; the
-[wrist-pitch audit](G1_CRICKET.md#wrist-pitch-and-motor-saturation) explains an
-identical-motion torque plateau. The subsequent
-[elbow test](G1_CRICKET.md#elbow-motion-with-motor-telemetry) changes actual motion
-but does not produce a validated shot. An
-[isolated contact-model study](G1_CRICKET.md#isolated-compliance-study) now exposes
-the overlap-versus-force tradeoff and required finer timesteps. The subsequent
-[32-case robot transfer](G1_CRICKET.md#contact-model-transfer-to-g1) retains exact
-MuJoCo/native-mjbatch parity, but its narrow speed pass fails at the finer timestep.
-The 2 ms contact model is opt-in; historical tasks and checkpoints are unchanged.
-An [imitation-initialized PPO run](G1_CRICKET.md#imitation-initialization-and-bounded-ppo)
-has now completed 24,576 transitions on that model, retaining both BC-only and
-final PPO checkpoints. Its full 576-case evaluation is pending; training reward
-is not a qualified strike, and no learned G1 showcase is claimed.
+**Unitree G1 research:** [setup, experiments and complete results](G1_CRICKET.md).
+A locally fitted bat-arm actor now continues with 24,576 PPO transitions around
+an explicitly frozen external locomotion prior and a rigid wrist bat. The
+[576-row evaluation](G1_CRICKET.md#imitation-initialization-and-bounded-ppo)
+matches exactly across MuJoCo and native mjbatch. BC qualifies on 2/24 right-hand
+development contexts; PPO completes all 24 with blade contact and no guard
+violations, but all fall below the strict forward-speed target. Left-hand use is
+untrained transfer and fails. Simulated contact loads are not hardware calibration.
+Learned bowling and a robust both-hand G1 showcase remain unfinished; the earlier
+highlights above are preserved, and historical task/checkpoint results remain
+available in the research log.
+
+[G1 development video with force/touch overlays](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)
+and [six-view contact sheet](g1_cricket_results/bc_v1/learned_development_contact_sheet.png):
+fixed contexts including failures, not an advertising reel or learned bowling.
 
 ---
 

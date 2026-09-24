@@ -360,12 +360,40 @@ closed before portable scalar verification and removal of redundant events and
 intermediate checkpoints. The logger's unrelated installed-checkout diff is also
 discarded; the experiment's 105 source/input pins remain authoritative.
 
-**The 576-case closed-loop evaluation is pending.** It compares zero, BC-only
-and final PPO across both hands, all three lanes, eight reused development seeds,
-both fine timesteps and both executors. Left-hand use is untrained transfer.
-Existing contact, penetration, speed, stability and actuator gates remain in
-force, with full executor parity and fixture-load resolution checks. No successful
-G1 batting, learned bowling, held-out generalization or new video is claimed.
+The [completed 576-row evaluation](g1_cricket_results/bc_v1/evaluation.json)
+retains every zero/BC/PPO context across both hands, all three lanes, eight reused
+development seeds, two timesteps and two executors. All 115 source/input hashes
+verify. All 144 four-way comparisons have exact executor outcome/impact equality;
+six fail a timestep-resolution check and none fail fixture-load resolution.
+These are reused development contexts, not held-out generalization.
+
+Each row below has 24 contexts. Completion and blade-contact counts are identical
+at both timesteps and in both executors; executor copies are not extra samples.
+
+| Hand / controller | Complete episodes | Blade contact | Shot passes, 62.5 / 31.25 us | Qualified across all four checks |
+| --- | ---: | ---: | ---: | ---: |
+| Right / zero | 24/24 | 8/24 | 0 / 0 | 0/24 |
+| Right / BC | 18/24 | 24/24 | 2 / 4 | 2/24 |
+| Right / PPO | 24/24 | 24/24 | 0 / 0 | 0/24 |
+| Left / zero | 24/24 | 8/24 | 0 / 0 | 0/24 |
+| Left / BC transfer | 3/24 | 1/24 | 0 / 0 | 0/24 |
+| Left / PPO transfer | 3/24 | 1/24 | 0 / 0 | 0/24 |
+
+BC's two qualified contexts are central-lane seeds 4303 and 4305. Their coarse
+outgoing speeds are 1.008442 and 1.000203 m/s, so the second pass has very little
+margin above the unchanged strict >1 m/s threshold. This is narrow learned
+development evidence, not a robust policy or a reason to select those clips.
+BC has guard contact in 8/24 right-hand contexts and six early terminations.
+
+PPO removes those right-hand guard failures: all 24 episodes finish with blade
+contact and otherwise pass the physical gates, but every one fails forward speed.
+At 31.25 us its first-separation speed spans 0.605781-0.858866 m/s and maximum
+blade penetration is 3.269857 mm. Peak wrist-fixture force/torque over that pool
+are 207.54 N / 56.32 N m, explicitly uncalibrated simulation loads. PPO improves
+contact/stability relative to BC while losing its two qualified shots; no final
+PPO promotion is claimed. Both untrained left transfers have guard contact in
+all 24 contexts, with 21 early terminations. Learned left-hand control and bowling
+remain unfinished.
 
 The local runner now hard-stops on nonfinite control/observation/reward/physics
 before framework reward sanitization, without changing historical framework code.
@@ -373,6 +401,46 @@ Tests cover actual short PPO execution and actor-only checkpoint reload, preserv
 of critic/noise/optimizer during imitation, physical-provenance rejection,
 complete context pairing, fine-step failure, fixture-load disagreement and complete
 scalar retention. This is experimental branch evidence, not full repository CI.
+
+#### Fixed Development Video Protocol
+
+The separate [diagnostic renderer](scripts/render_g1_cricket_bc.py) requires the
+completed 576-row evaluation and reproduces six predeclared final-PPO contexts:
+seed 4301, both hands and all three lanes, through native mjbatch at 31.25 us.
+Failures and early terminations stay in the reel. It checks the complete replay
+result against each retained trial, not only its return or episode duration.
+The shared UniLab task uses the 0.70 kg wrist fixture; this is not a transfer into
+the standalone mjbatch example's different 1.12 kg bat model.
+
+Every frame covers 10 ms of simulated time, played at 50 fps for true 0.5x motion.
+Contact overlays aggregate all 320 physics substeps in that interval: geometric
+touch occupancy, positive-normal-load occupancy, peak summed normal force, peak
+summed shear magnitudes, signed world-frame impulse on the ball, and wrist-fixture
+force/torque peaks. The overlay displays impulse magnitude; the manifest retains
+its vector. These are simulated, uncalibrated signals, not hardware taxels.
+A separate render model/data cannot change the evaluated rollout.
+The episode normal maximum stays visible after impact without implying current
+touch. The retrospective episode first-exit velocity is labeled separately from
+current ball velocity: a later bounce cannot substitute for the gated first exit.
+
+The renderer retains frame-level telemetry and media/checkpoint hashes, checks
+the full video decode, and labels right-trained control versus untrained left
+transfer. Its output is a development diagnostic, not a showcase or learned
+bowling claim. The retained [16.08-second video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4),
+[contact sheet](g1_cricket_results/bc_v1/learned_development_contact_sheet.png) and
+[frame-level manifest](g1_cricket_results/bc_v1/learned_development_media.json)
+verify all six complete replay outcomes and all 804 decoded frames. Visual review
+covers the initial, impact/midpoint and terminal poses of every clip. The fixed
+view prioritizes robot/contact visibility; the outgoing ball can leave it late
+in a rollout. Nonblank frames are not evidence of a successful cricket shot.
+
+```sh
+PYTHONPATH=src:scripts uv run --no-sync python scripts/render_g1_cricket_bc.py
+```
+
+The renderer refuses to overwrite retained media. The focused BC/media test
+suite passes 25 tests, including peak-history reset and missing first-exit labels;
+the two existing RSL-RL warnings infer critic observations from policy observations.
 
 ## Learned Arm Residual: First Interception Experiment
 
