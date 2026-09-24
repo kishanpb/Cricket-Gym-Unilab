@@ -2,6 +2,20 @@
 
 ## Ballistic COM Repair Comparison
 
+Full-COM weighted IK (`dc1ad3e7`, `running_ballistic_com_v2`) brings each aerial
+force component below 0.09 N, with no unexpected intersections, arm error below
+5.49 mm and foot error 2.043 mm. Five/right and four/left IK frames still hit the
+iteration limit. Both physical PD runs fall at 0.68 s with hand/thigh contact and
+up to 0.090 rad joint excursion, before release. This is not qualified bowling.
+
+The solver repair in `running_ballistic_com_v3` keeps those exact COM/limb
+targets, but analytically eliminates root translation rather than fitting three
+extra coordinates with a large COM penalty. Only the original 29 joints remain
+optimization variables; original joint bounds, continuity, objective weights,
+iteration budget and physical controller remain fixed. Record optimizer effort
+and every geometry/physical failure for both hands. Exact COM projection is
+offline reference construction only, never a simulation action or root force.
+
 The vertical-only candidate (`c6f348f8`, `running_ballistic_com_v1`) reduces
 inferred aerial vertical support from 393.6-475.5 N to below 0.10 N, but leaves
 115.6-204.1 N of forward residual. All 136 poses per hand have no unexpected

@@ -157,7 +157,7 @@ def test_com_retarget_accounts_for_held_ball_and_preserves_model(hand, tmp_path)
     for time, pose in zip(times, result["qpos"], strict=False):
         data.qpos[:] = pose
         mujoco.mj_forward(model, data)
-        np.testing.assert_allclose(data.subtree_com[0], target(time), atol=1e-5)
+        np.testing.assert_allclose(data.subtree_com[0], target(time), atol=1e-12, rtol=0)
         assert abs(pose[1] - (0.7 if hand == "right" else -0.7)) < 0.01
         wrist = data.body(f"{hand}_wrist_yaw_link")
         held = wrist.xpos + wrist.xmat.reshape(3, 3) @ [0.15, 0.06 if hand == "left" else -0.06, 0]

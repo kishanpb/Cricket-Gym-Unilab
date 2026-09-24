@@ -161,8 +161,6 @@ def retarget_running_delivery(model, times, hand, *, com_target=None, lane_offse
     lower, upper = model.jnt_range[joints].T.copy()
     lower[[3, 9]] = 0.12
     previous = np.clip(SDK_DEFAULT, lower + 0.03, upper - 0.03)
-    if com_target is not None:
-        previous = np.r_[previous, target.root(0)]
     mujoco.mj_forward(model, data)
     arms = {}
     feet = [model.body(f"{side}_ankle_roll_link").id for side in ("left", "right")]
@@ -196,10 +194,19 @@ def retarget_running_delivery(model, times, hand, *, com_target=None, lane_offse
         arm_targets = {side: target.arm(side, time) for side in arms}
 
         def residual(q):
-            data.qpos[addresses] = q[:29]
+            data.qpos[addresses] = q
             if com_target is not None:
-                data.qpos[:3] = q[-3:]
+                data.qpos[:3] = target.root(time)
             mujoco.mj_kinematics(model, data)
+            if com_target is not None:
+                # Eliminate offline root translation using the exact held-ball COM.
+                held = data.xpos[wrist_id] + data.xmat[wrist_id].reshape(3, 3) @ holder_offset
+                center = (
+                    model.body_mass @ data.xipos
+                    + model.body_mass[ball_body] * (held - data.xipos[ball_body])
+                ) / model.body_mass.sum()
+                data.qpos[:3] += com_target(time) - center
+                mujoco.mj_kinematics(model, data)
             result = [
                 50 * (data.xpos[feet] - foot_targets).ravel(),
                 3 * Rotation.from_matrix(data.xmat[feet].reshape(2, 3, 3)).as_rotvec().ravel(),
@@ -227,24 +234,11 @@ def retarget_running_delivery(model, times, hand, *, com_target=None, lane_offse
                     ]
                 )
             )
-            if com_target is not None:
-                # Include the held ball at the wrist, not its previous IK-frame pose.
-                held = data.xpos[wrist_id] + data.xmat[wrist_id].reshape(3, 3) @ holder_offset
-                center = (
-                    model.body_mass @ data.xipos
-                    + model.body_mass[ball_body] * (held - data.xipos[ball_body])
-                ) / model.body_mass.sum()
-                result.append(1000 * (center - com_target(time)))
             return np.concatenate(result)
 
         lo, hi = lower + 0.03, upper - 0.03
-        if com_target is not None:
-            root = target.root(time)
-            lo = np.r_[lo, root[0] - 0.25, root[1] - 0.15, 0.6]
-            hi = np.r_[hi, root[0] + 0.25, root[1] + 0.15, 0.85]
         if frame:
-            speed = np.r_[np.full(29, 12), np.full(3, 3)] if com_target is not None else 12
-            step = speed * (time - times[frame - 1])
+            step = 12 * (time - times[frame - 1])
             lo, hi = np.maximum(lo, previous - step), np.minimum(hi, previous + step)
         solved = least_squares(
             residual,
@@ -282,6 +276,8 @@ def retarget_running_delivery(model, times, hand, *, com_target=None, lane_offse
             {
                 "time_s": float(time),
                 "optimizer_success": bool(solved.success),
+                "optimizer_evaluations": int(solved.nfev),
+                "optimizer_optimality": float(solved.optimality),
                 "arm_segment_error_m": float(max(arm_error)),
                 "foot_error_m": float(np.linalg.norm(data.xpos[feet] - foot_targets, axis=1).max()),
                 "minimum_tracked_clearance_m": min(
