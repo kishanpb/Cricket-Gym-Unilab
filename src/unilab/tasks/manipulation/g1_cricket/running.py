@@ -7,6 +7,7 @@ from scipy.optimize import least_squares
 from scipy.spatial.transform import Rotation
 
 from .prior import SDK_DEFAULT, SDK_JOINTS
+from .running_momentum import HeldBallMomentum
 
 GATHER_TIME = 1.20
 RELEASE_TIME = 1.82
@@ -151,9 +152,16 @@ class RunningDeliveryTargets:
         return upper, lower, np.column_stack((lower, y, np.cross(lower, y)))
 
 
-def retarget_running_delivery(model, times, hand, *, com_target=None, lane_offset=0.0):
+def retarget_running_delivery(
+    model, times, hand, *, com_target=None, lane_offset=0.0, conserve_momentum=False
+):
     """Solve original G1 joints offline; do not use this loop as a physics rollout."""
     target = RunningDeliveryTargets(hand, lane_offset)
+    if conserve_momentum and com_target is None:
+        raise ValueError("momentum-conserving rotation requires a COM target")
+    momentum = HeldBallMomentum(model, hand) if conserve_momentum else None
+    was_flying, desired_momentum, omega = False, None, np.zeros(3)
+    recovery, landing_rotation = None, None
     data = mujoco.MjData(model)
     mujoco.mj_resetDataKeyframe(model, data, 0)
     joints = np.array([model.joint(name).id for name in SDK_JOINTS])
@@ -188,13 +196,37 @@ def retarget_running_delivery(model, times, hand, *, com_target=None, lane_offse
     holder_offset = np.array([0.15, 0.06 if hand == "left" else -0.06, 0])
     poses, errors = [], []
     for frame, time in enumerate(times):
+        dt = float(time - times[frame - 1]) if frame else 0.0
+        flying = bool(
+            conserve_momentum
+            and frame
+            and time <= GATHER_TIME + 1e-12
+            and (time - dt / 2) % 0.3 > 0.22
+        )
+        if flying and not was_flying:
+            desired_momentum = momentum.measure(poses[-2], poses[-1], dt)
+        if was_flying and not flying:
+            landing = float(times[frame - 1])
+            landing_rotation = Rotation.from_quat(poses[-1][[4, 5, 6, 3]])
+            recovery = CubicHermiteSpline(
+                [landing, landing + 0.22],
+                [np.zeros(3), landing_rotation.inv().as_rotvec()],
+                [omega, np.zeros(3)],
+            )
+        root_quaternion = np.array([1.0, 0, 0, 0])
+        if recovery is not None and time < recovery.x[-1]:
+            root_quaternion = (landing_rotation * Rotation.from_rotvec(recovery(time))).as_quat()[
+                [3, 0, 1, 2]
+            ]
         data.qpos[:3] = target.root(float(time))
-        data.qpos[3:7] = [1, 0, 0, 0]
+        data.qpos[3:7] = root_quaternion
         foot_targets = np.array([target.foot(side, time) for side in ("left", "right")])
         arm_targets = {side: target.arm(side, time) for side in arms}
 
         def residual(q):
             data.qpos[addresses] = q
+            if flying:
+                data.qpos[3:7] = momentum.advance(poses[-1], q, desired_momentum, dt)[0]
             if com_target is not None:
                 data.qpos[:3] = target.root(time)
             mujoco.mj_kinematics(model, data)
@@ -256,6 +288,13 @@ def retarget_running_delivery(model, times, hand, *, com_target=None, lane_offse
         )
         data.qpos[ball_qa + 3 : ball_qa + 7] = data.xquat[wrist_id]
         mujoco.mj_forward(model, data)
+        momentum_error = None
+        if flying:
+            _, omega = momentum.advance(poses[-1], solved.x, desired_momentum, dt)
+            momentum_error = float(
+                np.linalg.norm(momentum.measure(poses[-1], data.qpos, dt) - desired_momentum)
+            )
+        was_flying = flying
         unexpected = []
         for c in data.contact:
             names = {model.geom(int(g)).name for g in c.geom}
@@ -278,6 +317,8 @@ def retarget_running_delivery(model, times, hand, *, com_target=None, lane_offse
                 "optimizer_success": bool(solved.success),
                 "optimizer_evaluations": int(solved.nfev),
                 "optimizer_optimality": float(solved.optimality),
+                "flight_momentum_error_nms": momentum_error,
+                "root_rotation_rad": float(Rotation.from_quat(data.qpos[[4, 5, 6, 3]]).magnitude()),
                 "arm_segment_error_m": float(max(arm_error)),
                 "foot_error_m": float(np.linalg.norm(data.xpos[feet] - foot_targets, axis=1).max()),
                 "minimum_tracked_clearance_m": min(

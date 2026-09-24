@@ -1,5 +1,41 @@
 # Whole-Body Running Delivery Reference
 
+## Airborne Rotation Repair
+
+The [fixed-curve refinement](../g1_cricket_results/running_ballistic_com_v3/reference_rotation_refinement.json)
+(`0bf43b25`) retains both hands, four flight centers, six torque intervals from
+20 ms to 0.625 ms, and both 0.1/0.01 ms velocity differences: 96 rows. Joint and
+orientation splines preserve the original knots, with the same ballistic COM
+and held ball. Finest pitch residuals remain 93.94-97.41 Nm in the first three
+flights and 48.93-48.96 Nm in the fourth, with over 11 mm sampled foot clearance
+and no sampled world contact. This confirms a defect of the reconstructed
+reference curve, not a measured torque, new IK solution or physical rollout.
+
+The next fixed comparison changes only offline root-orientation construction.
+Native angular-momentum and wrist Jacobians include the mechanically held ball.
+During each declared flight interval, an implicit-midpoint solve chooses root
+angular velocity to preserve the preceding takeoff momentum while the original
+29 joints solve the unchanged foot and arm targets. The same exact COM path
+is retained. Stance uses a smooth relative-rotation recovery to level orientation
+with matched landing angular velocity; no root forces/torques or pose overwrites
+are added to the actual motor-only PD run. Original joint limits, force caps,
+phase timings and full delivery structure remain unchanged.
+
+Run both complete 136-frame references and unchanged PD baselines, retaining all
+failed frames and episodes, in `g1_cricket_results/running_momentum_v1`:
+
+```sh
+PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
+  --python ../unilab_submission_checkout/.venv/bin/python \
+  python scripts/retarget_g1_cricket_running.py \
+  g1_cricket_results/running_momentum_v1 --render --lane-offset 0.20 \
+  --ballistic-parent g1_cricket_results/running_front_raise_v1 --conserve-momentum
+```
+
+Check discrete momentum residuals and independently refined derivatives,
+geometry/foot/arm errors, continuity and actual physics. Momentum-conserving
+target construction alone cannot qualify a running teacher or bowling showcase.
+
 ## Ballistic COM Repair Comparison
 
 Latest complete pair: [exact-COM results](../g1_cricket_results/running_ballistic_com_v3/evaluation.json),

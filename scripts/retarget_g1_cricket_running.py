@@ -88,7 +88,7 @@ def render_review(output):
     sheet.save(output / "running_motion_review.png")
 
 
-def run(hand, output, render, *, ballistic_parent=None, lane_offset=0.0):
+def run(hand, output, render, *, ballistic_parent=None, lane_offset=0.0, conserve_momentum=False):
     with TemporaryDirectory(prefix="g1-running-") as temporary:
         scene = Path(temporary) / "scene.xml"
         G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(ROBOT, scene)
@@ -111,7 +111,12 @@ def run(hand, output, render, *, ballistic_parent=None, lane_offset=0.0):
             centers[:, 1] += lane_offset * (1 if hand == "right" else -1)
             com_target = BallisticRunupCOM(times, centers, -model.opt.gravity[2])
         reference = retarget_running_delivery(
-            model, times, hand, com_target=com_target, lane_offset=lane_offset
+            model,
+            times,
+            hand,
+            com_target=com_target,
+            lane_offset=lane_offset,
+            conserve_momentum=conserve_momentum,
         )
         poses = reference["qpos"]
         velocity = velocity_reference(model, poses, 0.02)
@@ -240,6 +245,7 @@ if __name__ == "__main__":
     parser.add_argument("--render", action="store_true")
     parser.add_argument("--ballistic-parent", type=Path)
     parser.add_argument("--lane-offset", type=float, default=0.0)
+    parser.add_argument("--conserve-momentum", action="store_true")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     inputs = [Path(__file__), ROBOT, ROBOT.parent / "scene_flat.xml"]
@@ -255,6 +261,7 @@ if __name__ == "__main__":
             args.render,
             ballistic_parent=args.ballistic_parent,
             lane_offset=args.lane_offset,
+            conserve_momentum=args.conserve_momentum,
         )
         for hand in ("right", "left")
     ]
@@ -268,6 +275,7 @@ if __name__ == "__main__":
         "mujoco_version": mujoco.__version__,
         "ik_direction": "forward",
         "ballistic_runup_com": args.ballistic_parent is not None,
+        "momentum_conserving_runup": args.conserve_momentum,
         "outward_lane_offset_m": args.lane_offset,
         "input_sha256": hashes,
         "rows": rows,
