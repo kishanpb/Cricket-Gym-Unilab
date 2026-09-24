@@ -1,0 +1,85 @@
+# @package _global_
+training:
+  task_name: G1CricketBatting
+  sim_backend: mujoco
+  device: cpu
+  no_play: true
+env:
+  locomotion_prior: true
+  handedness: none
+  seed: 1
+  scene:
+    model_file: src/unilab/assets/robots/g1/g1.xml
+    default_keyframe_name: cricket_stand
+    entities:
+      robot:
+        root_body_name: pelvis
+        joint_names: &joints
+          [left_hip_pitch_joint, left_hip_roll_joint, left_hip_yaw_joint,
+           left_knee_joint, left_ankle_pitch_joint, left_ankle_roll_joint,
+           right_hip_pitch_joint, right_hip_roll_joint, right_hip_yaw_joint,
+           right_knee_joint, right_ankle_pitch_joint, right_ankle_roll_joint,
+           waist_yaw_joint, waist_roll_joint, waist_pitch_joint,
+           left_shoulder_pitch_joint, left_shoulder_roll_joint, left_shoulder_yaw_joint,
+           left_elbow_joint, left_wrist_roll_joint, left_wrist_pitch_joint, left_wrist_yaw_joint,
+           right_shoulder_pitch_joint, right_shoulder_roll_joint, right_shoulder_yaw_joint,
+           right_elbow_joint, right_wrist_roll_joint, right_wrist_pitch_joint, right_wrist_yaw_joint]
+        actuator_names: *joints
+        body_names: [pelvis]
+      ball:
+        root_body_name: cricket_ball
+        body_names: [cricket_ball]
+  sim_dt: 0.002
+  ctrl_dt: 0.02
+  max_episode_seconds: 10.0
+  post_step_forward_sensor: false
+  auto_reset: false
+  observations:
+    policy:
+      history_length: 5
+      terms:
+        gyro:
+          func: unilab.envs.mdp.builtin_sensor
+          params: {sensor_name: pelvis_gyro}
+          scale: 0.2
+        gravity:
+          func: unilab.tasks.manipulation.g1_cricket.task.BodyFrameGravity
+          params: {sensor_name: pelvis_world_quat}
+        command:
+          func: unilab.tasks.manipulation.g1_cricket.prior.zero_command
+        joint_pos:
+          func: unilab.tasks.manipulation.g1_cricket.prior.joint_position_policy_order
+        joint_vel:
+          func: unilab.tasks.manipulation.g1_cricket.prior.joint_velocity_policy_order
+          scale: 0.05
+        last_action:
+          func: unilab.tasks.manipulation.g1_cricket.prior.last_action_policy_order
+  actions:
+    joint_pos:
+      _target_: unilab.envs.mdp.JointPositionActionCfg
+      entity_name: robot
+      actuator_names: [".*"]
+      scale: 0.25
+      use_default_offset: true
+      clip: null
+  events:
+    reset_scene:
+      func: unilab.envs.mdp.reset_scene_to_default
+      mode: reset
+    reset_jitter:
+      func: unilab.tasks.manipulation.g1_cricket.prior.reset_jitter
+      mode: reset
+  terminations:
+    time_out:
+      func: unilab.envs.mdp.time_out
+      time_out: true
+    fallen:
+      func: unilab.tasks.manipulation.g1_cricket.task.fallen
+    invalid_contact:
+      func: unilab.tasks.manipulation.g1_cricket.prior.PriorContactGuard
+  policy_observation_group: policy
+  critic_observation_group: null
+reward:
+  upright:
+    func: unilab.tasks.manipulation.g1_cricket.task.upright
+    weight: 1.0

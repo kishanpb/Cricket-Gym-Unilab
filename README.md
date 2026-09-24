@@ -29,9 +29,11 @@ sensor-timing limits. These are simulated contact loads, not hardware taxels. Th
 next extension is learned cricket on the repository's Unitree G1 model; the current
 videos are not G1 demonstrations.
 
-**G1 work in progress:** [native foundation and bounded PPO experiments](G1_CRICKET.md).
-Policies still fail the stance gate through falls or incidental bat contact;
-this is not learned cricket or a new showcase.
+**G1 work in progress:** [native foundation, PPO experiments and external locomotion transfer](G1_CRICKET.md).
+The corrected wrist mount completes all 24 ten-second prior stance trials;
+this is not yet locally learned cricket or a new showcase video.
+Earlier locally trained PPO checkpoints still fail through falls or incidental
+bat contact; their full negative results remain available.
 
 ---
 

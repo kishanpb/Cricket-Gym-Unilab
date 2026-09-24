@@ -1,0 +1,7 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_prior_v1/mujoco
+  - _self_
+
+env:
+  prior_bat_mount: forward_down

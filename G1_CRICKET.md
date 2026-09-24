@@ -23,41 +23,79 @@ incoming ball velocity are reset conditions; no robot root/joint pose is
 overwritten during a policy step. The incoming ball is a bowling-machine
 curriculum, not learned bowling.
 
-## External Prior Integration Plan
+## External Locomotion Prior: Native Transfer
 
-The parallel mjbatch development branch now has a
-[complete 48-row locomotion transfer audit](https://github.com/kishanpb/mjbatch/blob/codex/g1-cricket/examples/cricket_g1_results/unitree_prior/evaluation.json)
-using the official Unitree RL Lab 29-DoF velocity prior. This is **not a UniLab
-result** and not locally learned cricket. Native integration is the next bounded
-step; do not reinterpret existing 130-input cricket checkpoints as this prior.
+A separate native owner now evaluates the official Unitree RL Lab 29-DoF
+velocity policy. This is **externally trained locomotion, not locally learned
+cricket**. It does not reuse or reinterpret the earlier 130-input PPO checkpoints.
 
 The external contract is pinned to Unitree RL Lab commit
 `4960b84732b0c2ec593dccbfe963fda1bcd7b1e3`, paired velocity/v0 `policy.onnx` and
-`deploy.yaml`. The adapter needs 480 values: six terms with five oldest-first
+`deploy.yaml`. The adapter uses 480 values: six terms with five oldest-first
 history frames, initialized by repeating the first observation. The terms are
 pelvis angular velocity (scale 0.2), pelvis-frame unit gravity, velocity command,
 policy-order joint position offsets, joint velocity (scale 0.05), and raw previous
-policy actions. The deployed primary IMU is the pelvis, not the current cricket
-torso sensor. Native history supports the required term-major ordering.
+policy actions. The deployed primary IMU is the pelvis, not the earlier cricket
+torso sensor. The native history manager provides term-major ordering.
 
 Native actuator order is left leg, right leg, waist, left arm, right arm; the
-policy uses an interleaved order. Use the explicit `joint_ids_map` permutation,
-official joint defaults, 20 ms control and official SDK-order PD gains. All 29
-native gain pairs differ from this deployment contract. These controller changes
-must be versioned, not described as unchanged controls. The current global
-`[-1, 1]` clip bounds processed targets, not raw policy output, and is incompatible.
-Use a task-owned named position-target action with no such clip, through public
-entity APIs; do not reinterpret position actuators as torque motors.
+policy uses an interleaved order. The adapter applies the verified `joint_ids_map`,
+official joint defaults, 20 ms control, 2 ms physics and official SDK-order PD
+gains. All 29 gain pairs change; original force limits, inertias and joint limits
+remain intact. The owner disables the earlier processed-target `[-1, 1]` clip.
+Position-target actions use public entity APIs, not torque-motor substitution.
+The construction-time keyframe sets both qpos and ctrl to the official defaults,
+with root height 0.80 m. There is no root support or step-time pose overwrite.
 
-Cold-path geometry inspection found 26.2 mm of foot penetration when applying
-the imported default pose at the existing 0.758 m root height. A separately
-calibrated keyframe must update both qpos and ctrl; setting only reset qpos leaves
-default-relative observations inconsistent. An inspected height of 0.785202 m
-gives 1 mm clearance, to be rechecked for the final no-bat/fixture scene.
-First validate a no-bat zero-command rollout without root support, then both
-fixtures, contacts and limits. Native transient-contact snapshot limitations
-below still apply. No external checkpoint is redistributed or native prior
-success claimed by this plan.
+Each version retains **48 episodes**: no bat/right bat/left bat, constant targets
+and imported policy, all seeds 4201-4208, a ten-second horizon and uniform
+joint-reset jitter of +/-0.005 rad. The ball is stationary; there is no ball
+delivery, batting reward, learned swing or bowling in this probe. Contact guards
+cover bat/ground/wicket/robot and non-foot robot/ground plus all robot/wicket
+contacts, including feet. Contact presence fails even with zero reported force.
+
+| Version | Prior: no bat | Prior: right bat | Prior: left bat | Constant targets |
+| --- | --- | --- | --- | --- |
+| v1, legacy mount | 8/8 finish | 5/8 finish; 3 wicket contacts | 8/8 finish | 24/24 fall |
+| v2, forward/down mount | 8/8 finish | 8/8 finish | 8/8 finish | 8 no-bat falls; 16 bat/ground contacts |
+
+[v1 complete evidence](g1_cricket_results/unitree_prior/evaluation.json) retains
+right-hand failures at 1.54, 1.64 and 1.14 s for seeds 4205, 4206 and 4207.
+The legacy blade points backward toward the wicket. **v2 changes only the fixed
+bat orientation**: its blade points 45 degrees forward/down at the default pose.
+It preserves the same fixture mass, grip position, policy, seeds and guards;
+no-bat rows reproduce exactly across versions. This is a mechanical mounting
+correction, not an improvement obtained through training.
+
+[v2 complete evidence](g1_cricket_results/unitree_prior_v2/evaluation.json) has
+all 24 imported-policy episodes reaching ten seconds, minimum pelvis height
+0.78536 m, maximum XY drift 0.01818 m and no observed joint-limit excess or
+guarded contact at control snapshots. Maximum sampled actuator force is 54.52%
+of its limit. **These 20 ms samples can miss brief impacts and force peaks**;
+they do not establish all-substep contact clearance, impact calibration or
+hardware safety. Different robot assets, fixtures and solvers also preclude
+claiming numerical parity with the parallel mjbatch implementation.
+
+![Native G1 stance transfer, first declared seed, all three fixtures](g1_cricket_results/unitree_prior_v2/stance_diagnostic.png)
+
+The diagnostic uses the first declared seed, 4201, at 0/2/5/10 seconds; every
+numeric episode remains in the reports. This is not an advertising video or a
+ready-to-strike two-handed grip. Full physics-rate contact validation and locally
+learned cricket control are the next gates.
+
+The evaluator verifies SHA-256 hashes for both upstream assets before inference
+and records local source, native robot XML and runtime versions. External weights
+and deployment config remain in a local cache, not this repository: the pinned
+upstream tree lacks a root LICENSE despite its README license badge, so checkpoint
+redistribution has not been cleared. With separately obtained matching upstream
+assets and ONNX Runtime installed, use the CPU environment variables below:
+
+```sh
+uv run python scripts/evaluate_g1_cricket_prior.py --assets <local-asset-directory> \
+  --version v1 --output g1_cricket_results/unitree_prior/evaluation.json
+uv run python scripts/evaluate_g1_cricket_prior.py --assets <local-asset-directory> \
+  --version v2 --output g1_cricket_results/unitree_prior_v2/evaluation.json
+```
 
 ## Signals
 
@@ -66,20 +104,24 @@ records, both feet's full collision-body support records, and bat-fixture force/
 Contact records use MuJoCo contact-frame forces in N and torques in Nm; world
 positions, normals and tangents are also retained. Fixture wrenches are in the
 attachment-site frame and include rigid-body inertial/gravitational loads;
-they are not finger pressure or hardware tactile data. Policy observations
-include geometry-level simulated touch flags, normal/shear loads scaled by
+they are not finger pressure or hardware tactile data. The earlier cricket
+policy observations include geometry-level simulated touch flags, normal/shear loads scaled by
 100 N, and fixture wrench components scaled by 100 (N or Nm respectively).
+The imported locomotion policy retains its original encoder/IMU inputs;
+its contact sensors are evaluation guards, not extra network inputs.
 
 These are **end-of-control-step sensor snapshots** from the native backend,
 with `post_step_forward_sensor=false`. They are not time-aligned final-pose
 force solves, all-substep force peaks or integrated impulses. Decimation is
-five physics steps per policy step. A public post-substep backend contract is
+five physics steps per policy step in the earlier cricket owners and ten in
+the external-prior owners. A public post-substep backend contract is
 needed before making transient impact-load claims. Contact slot overflow
 raises an error rather than silently truncating evidence.
 
 ## Incomplete
 
-This is a construction/reset/control foundation, not a trained cricket result.
+This is a control foundation with a narrow external locomotion transfer result,
+not a locally trained cricket result.
 The current upright/action-rate reward is only a curriculum diagnostic, not
 a validated batting objective. Ball-strike attribution, hit quality and
 cricket legality gates, impact convergence, long-horizon stability, trained

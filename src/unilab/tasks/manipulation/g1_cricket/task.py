@@ -34,6 +34,8 @@ if TYPE_CHECKING:
 class G1CricketCfg(ManagerBasedRlEnvCfg):
     handedness: str = "right"
     bat_guard_sensor_names: tuple[str, ...] = ()
+    locomotion_prior: bool = False
+    prior_bat_mount: str = "legacy"
 
 
 class G1CricketEnv(ManagerBasedRlEnv):
@@ -55,7 +57,14 @@ def make_g1_cricket_env(
     directory = TemporaryDirectory(prefix="unilab-g1-cricket-")
     try:
         scene_file = Path(directory.name) / "cricket.xml"
-        guard_names = build_scene(Path(cfg.scene.model_file), scene_file, cfg.handedness)
+        if cfg.locomotion_prior:
+            from .prior import build_prior_scene
+
+            guard_names = build_prior_scene(
+                Path(cfg.scene.model_file), scene_file, cfg.handedness, cfg.prior_bat_mount
+            )
+        else:
+            guard_names = build_scene(Path(cfg.scene.model_file), scene_file, cfg.handedness)
         scene = replace(cfg.scene, model_file=str(scene_file))
         cfg = replace(cfg, scene=scene, bat_guard_sensor_names=guard_names)
         base_name, body_state = _resolve_backend_entity_contract(cfg)
