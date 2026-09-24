@@ -42,9 +42,10 @@ This verifies execution parity, not a successful cricket policy or a new video.
 The [161-motion scripted diagnostic](G1_CRICKET.md#bounded-reversal-diagnostic)
 finds a forward strike, but rejects it at the finer timestep for excessive
 bat-ball overlap. Subsequent command refinements still fail validation; the
-[wrist-pitch audit](G1_CRICKET.md#wrist-pitch-and-motor-saturation) explains why
-different wrist targets can produce identical motion at the motor's torque limit.
-No validated learned G1 showcase is claimed.
+[wrist-pitch audit](G1_CRICKET.md#wrist-pitch-and-motor-saturation) explains an
+identical-motion torque plateau. The subsequent
+[elbow test](G1_CRICKET.md#elbow-motion-with-motor-telemetry) changes actual motion
+but does not produce a validated shot. No learned G1 showcase is claimed.
 
 ---
 

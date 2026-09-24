@@ -185,6 +185,53 @@ uncalibrated simulation diagnostics, not new learning or a showcase. Further
 motion search should account for the weak wrist through proximal-arm motion,
 not infer wrist controllability from target changes or increase hardware limits.
 
+### Elbow Motion With Motor Telemetry
+
+The [fixed elbow contract](docs/g1_cricket_elbow_v1.md) changes only channel 3
+during ticks 10-19, testing four scales in both executors at both timesteps.
+The [complete report](g1_cricket_results/elbow_v1/evaluation.json) retains all
+16 full two-second trials. The four parent baselines and all eight executor
+pairs match exactly, including impact evidence and achieved motor traces.
+
+| Elbow scale | Coarse exit vx | Coarse penetration | Fine exit vx | Fine penetration |
+| --- | ---: | ---: | ---: | ---: |
+| 1 | 1.028620 m/s | 5.953697 mm | 1.066471 m/s | 6.620823 mm |
+| 0.75 | 1.010858 m/s | 6.497762 mm | 0.999878 m/s | 6.298167 mm |
+| 0.5 | 0.964222 m/s | 6.023618 mm | 0.977664 m/s | 6.254677 mm |
+| 0 | 0.910326 m/s | 5.805542 mm | 0.947774 m/s | 6.465175 mm |
+
+Only the two coarse parent rows pass; **zero scales qualify across contexts**.
+Scale 0.5 passes the numerical comparison but fails the physical shot gates.
+There are no new contacts/limits/stability failures: attenuation trades away
+speed without bringing fine-step penetration below 6 mm.
+
+The elbow actually responds. At the fine timestep, its forward-phase minimum
+angle moves from 0.959749 rad at scale 1 to 1.118130 rad at scale 0. The parent
+saturates negatively for only 4/1,600 forward-phase solves; all three attenuated
+candidates have zero saturated solves in that phase. The first-contact normal
+z increases from 0.271933 to 0.290913, while its vertical closing-speed
+contribution becomes more negative (-1.071596 to -1.150823 m/s). Thus the
+reset-time orientation intuition did not predict a beneficial coupled impact.
+This is not the earlier wrist saturation plateau or a proof that batting is
+impossible.
+
+The collector verifies named direct-joint transmission and unit gear before
+reporting joint angle, angular velocity and torque. It checks applied torque
+against the unchanged +/-25 N m elbow limit at all 192,000 physics solves,
+retaining 1,600 control-interval summaries. Maximum reconstruction error is
+7.11e-15 N m; state/sensor replay errors are zero. All 81 source/input hashes
+verify, and 68 focused tests pass, including 11 new command/motor-trace tests.
+No policy, motor, reward, contact or prior change was made.
+
+Further small joint-target sweeps are not supported by these results. Before
+more training, a separate isolated compliance sensitivity study should test
+whether a shorter contact time constant improves numerical behavior, with
+force, impulse, momentum, duration, rebound and resolution checks. This changes
+the model, not the policy, and cannot be called learned improvement. MuJoCo's
+time constant affects stiffness and damping together; it is not a measured
+cricket restitution coefficient. [Solver parameters](https://mujoco.readthedocs.io/en/stable/modeling.html#solver-parameters).
+The current task remains unchanged, uncalibrated and without a new showcase.
+
 With the documented external prior and runtime installed, the focused verification is:
 
 ```sh
