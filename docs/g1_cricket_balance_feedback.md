@@ -242,3 +242,14 @@ failed episodes, no training or adaptive extension. Root gain zero must exactly
 match the retained waist-gain-1 traces. Keep all nine feasibility gates, complete
 traces and all failures in `bimanual_root_tracking_v1`. This experiment addresses
 the drift induced by the waist correction; it is not a running-bowling result.
+
+All 20 episodes complete. Root gain zero exactly reproduces the preceding
+waist-gain-1 traces. Positive gains have no hard-stop excess or unexpected
+loaded contacts and pass the other physical checks, but every episode still
+fails the unchanged bat-path gate. At gain 4, right/left PPO peak bat error is
+0.12687 / 0.13353 m, root error 0.02677 / 0.02904 m and return 17.58115 /
+17.43830. Reference-only bat errors are 0.13779 / 0.13763 m. All 63 input pins
+per report were verified against source commit `a80e6657` before further edits.
+The complete comparison remains in `bimanual_root_tracking_v1`; it does not
+qualify a new policy. Next is the separately declared
+[soft-toss contact diagnostic](g1_cricket_bimanual_contact.md), not more training.

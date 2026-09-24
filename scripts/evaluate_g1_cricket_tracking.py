@@ -35,10 +35,13 @@ def reference_bat_positions(model, poses):
 class TrackingReplay:
     """Measure solve-phase loads while independently replaying each held control."""
 
-    def __init__(self, env):
+    def __init__(self, env, *, ball_contact=False):
         self.model = env.get_playback_model()
         self.data = mujoco.MjData(self.model)
         self.hand = env.cfg.handedness
+        self.ball_contact = ball_contact
+        self.blade_loaded = False
+        self.first_separation = None
         self.sensors = env.scene.bind_sensor_data(
             tuple(self.model.sensor(i).name for i in range(self.model.nsensor))
         )
@@ -65,6 +68,7 @@ class TrackingReplay:
         joint_excess = {}
         wrench = np.empty(6)
         minimum_height = float(data.qpos[2])
+        ball_contacts = {}
         for _ in range(env.cfg.sim_substeps):
             mujoco.mj_step(model, data)
             minimum_height = min(minimum_height, float(data.qpos[2]))
@@ -95,10 +99,32 @@ class TrackingReplay:
             }
             for key, value in values.items():
                 peaks[key] = max(peaks[key], value)
+            loaded_pairs = set()
+            blade_loaded = False
             for i, contact in enumerate(data.contact):
                 if contact.efc_address < 0:
                     continue
                 names = {model.geom(int(g)).name for g in contact.geom}
+                if self.ball_contact and "ball_geom" in names:
+                    pair = "/".join(sorted(names))
+                    stats = ball_contacts.setdefault(
+                        pair,
+                        dict.fromkeys(
+                            ("duration_s", "peak_force_n", "normal_impulse_ns", "penetration_m"),
+                            0.0,
+                        ),
+                    )
+                    stats["penetration_m"] = max(stats["penetration_m"], float(-contact.dist))
+                    mujoco.mj_contactForce(model, data, i, wrench)
+                    stats["peak_force_n"] = max(
+                        stats["peak_force_n"], float(np.linalg.norm(wrench[:3]))
+                    )
+                    stats["normal_impulse_ns"] += max(0.0, float(wrench[0])) * model.opt.timestep
+                    if wrench[0] > 0:
+                        loaded_pairs.add(pair)
+                        blade_loaded |= "bat_blade" in names
+                    if names == {"ball_geom", "bat_blade"}:
+                        continue
                 if "pitch" in names and ("ball_geom" in names or any("foot" in n for n in names)):
                     continue
                 mujoco.mj_contactForce(model, data, i, wrench)
@@ -111,6 +137,16 @@ class TrackingReplay:
                 peaks["unexpected_penetration_m"] = max(
                     peaks["unexpected_penetration_m"], float(-contact.dist)
                 )
+            for pair in loaded_pairs:
+                ball_contacts[pair]["duration_s"] += model.opt.timestep
+            if self.ball_contact:
+                if self.blade_loaded and not blade_loaded and self.first_separation is None:
+                    address = model.joint("ball_free").dofadr[0]
+                    self.first_separation = {
+                        "time_s": float(data.time),
+                        "velocity_m_s": data.qvel[address : address + 3].tolist(),
+                    }
+                self.blade_loaded = blade_loaded
         expected = np.empty_like(initial, dtype=np.float64)
         mujoco.mj_getState(model, data, expected, mujoco.mjtState.mjSTATE_FULLPHYSICS)
         actual = env.get_physics_state_snapshot()[0]
@@ -123,13 +159,17 @@ class TrackingReplay:
             or not np.isfinite(data.sensordata).all()
         ):
             raise RuntimeError("invalid physics in tracking replay")
-        return {
+        result = {
             "substeps": env.cfg.sim_substeps,
             "peaks": peaks,
             "unexpected_contacts": sorted(contacts),
             "minimum_pelvis_height_m": minimum_height,
             "joint_limit_excess_by_name_rad": joint_excess,
         }
+        if self.ball_contact:
+            result["ball_contacts"] = ball_contacts
+            result["first_force_free_blade_exit"] = self.first_separation
+        return result
 
 
 def visual_model(scene, physics):
@@ -152,12 +192,21 @@ def visual_model(scene, physics):
 
 
 def evaluate(
-    directory, render=False, *, output=None, waist_tracking_gain=None, root_position_gain=None
+    directory,
+    render=False,
+    *,
+    output=None,
+    waist_tracking_gain=None,
+    root_position_gain=None,
+    contact_dt=None,
+    soft_toss=False,
 ):
-    if (waist_tracking_gain is not None or root_position_gain is not None) and (
-        output is None or output.resolve() == directory.resolve()
-    ):
+    if (
+        waist_tracking_gain is not None or root_position_gain is not None or contact_dt is not None
+    ) and (output is None or output.resolve() == directory.resolve()):
         raise ValueError("controller variants require a separate output directory")
+    if soft_toss and contact_dt is None:
+        raise ValueError("soft toss requires the fine-resolution contact model")
     saved = json.loads((directory / "run_config.json").read_text())
     summary = json.loads((directory / "run_summary.json").read_text())
     checkpoint = Path(summary["last_checkpoint"])
@@ -169,6 +218,20 @@ def evaluate(
     if root_position_gain is not None:
         owner.env.actions.reference.root_position_gain = root_position_gain
         evaluation_overrides["root_position_gain"] = root_position_gain
+    if contact_dt is not None:
+        owner.env.sim_dt = contact_dt
+        evaluation_overrides.update(contact_dt=contact_dt, soft_toss=soft_toss)
+        if soft_toss:
+            owner.env.scene.entities.ball = {
+                "root_body_name": "cricket_ball",
+                "body_names": ["cricket_ball"],
+            }
+            owner.env.events = {
+                "soft_toss": {
+                    "func": "unilab.tasks.manipulation.g1_cricket.bimanual_contact.ResetSoftToss",
+                    "mode": "reset",
+                }
+            }
     if output is not None:
         output.mkdir(parents=True, exist_ok=False)
     else:
@@ -197,7 +260,10 @@ def evaluate(
     override["auto_reset"] = False
     registry.ensure_registries()
     env = registry.make(
-        "G1CricketBimanualTracking", num_envs=1, sim_backend="mujoco", env_cfg_override=override
+        "G1CricketBimanualContact" if contact_dt is not None else "G1CricketBimanualTracking",
+        num_envs=1,
+        sim_backend="mujoco",
+        env_cfg_override=override,
     )
     rows = []
     try:
@@ -218,7 +284,6 @@ def evaluate(
         )
         policy = runner.get_inference_policy(device="cpu")
         model = env.get_playback_model()
-        replay = TrackingReplay(env)
         bat_reference = None
         if "reference_file" in owner.env.actions.reference:
             with np.load(ROOT / owner.env.actions.reference.reference_file) as reference:
@@ -236,6 +301,7 @@ def evaluate(
         camera.distance, camera.azimuth, camera.elevation = 2.7, -65 if hand == "right" else 65, -12
         for controller in ("reference_only", "ppo"):
             env.reset(seed=1)
+            replay = TrackingReplay(env, ball_contact=contact_dt is not None)
             trace, frames = [], []
             renderer = mujoco.Renderer(display, height=540, width=960) if render else None
             total_reward = 0.0
@@ -303,6 +369,11 @@ def evaluate(
                         trace[-1]["root_translation_error_m"] = float(
                             np.linalg.norm(data.qpos[:3] - root_reference[index])
                         )
+                    if contact_dt is not None:
+                        ball_joint = model.joint("ball_free")
+                        qa, va = int(ball_joint.qposadr[0]), int(ball_joint.dofadr[0])
+                        trace[-1]["ball_position_m"] = data.qpos[qa : qa + 3].tolist()
+                        trace[-1]["ball_velocity_m_s"] = data.qvel[va : va + 3].tolist()
                     if renderer is not None:
                         mujoco.mj_setState(
                             display, display_data, physical, mujoco.mjtState.mjSTATE_FULLPHYSICS
@@ -315,12 +386,14 @@ def evaluate(
                         font = ImageFont.load_default(size=18)
                         draw.text(
                             (12, 8),
-                            f"G1 {hand} | {controller} | whole-body two-hand dry swing | t={data.time:.2f}s",
+                            f"G1 {hand} | {controller} | two-hand {'soft toss' if soft_toss else 'dry swing'} | t={data.time:.2f}s",
                             font=font,
                         )
                         draw.text(
                             (12, 34),
-                            "Development episode, no ball-hit claim | mechanical grips | 0.5x",
+                            "Frozen dry-swing actor, no ball observation | mechanical grips | 0.5x"
+                            if soft_toss
+                            else "Development episode, no ball-hit claim | mechanical grips | 0.5x",
                             font=font,
                         )
                         frames.append(np.asarray(frame))
@@ -348,7 +421,7 @@ def evaluate(
                         (12, 80),
                         "FAIL: " + ", ".join(row["terminal_terms"])
                         if failed
-                        else "Complete dry-swing clip; not a ball-hit qualification",
+                        else "Complete diagnostic; not a qualified cricket policy",
                         font=ImageFont.load_default(size=19),
                         fill="red" if failed else "white",
                     )
@@ -366,7 +439,9 @@ def evaluate(
     finally:
         env.close()
     report = {
-        "scope": "deterministic_development_dry_swing_not_held_out_cricket",
+        "scope": "frozen_dry_swing_actor_soft_toss_not_learned_interception"
+        if soft_toss
+        else "deterministic_development_dry_swing_not_held_out_cricket",
         "checkpoint_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
         "evaluation_overrides": evaluation_overrides,
         "mujoco_version": mujoco.__version__,
@@ -391,6 +466,8 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path)
     parser.add_argument("--waist-tracking-gain", type=float)
     parser.add_argument("--root-position-gain", type=float)
+    parser.add_argument("--contact-dt", type=float)
+    parser.add_argument("--soft-toss", action="store_true")
     args = parser.parse_args()
     evaluate(
         args.directory,
@@ -398,4 +475,6 @@ if __name__ == "__main__":
         output=args.output,
         waist_tracking_gain=args.waist_tracking_gain,
         root_position_gain=args.root_position_gain,
+        contact_dt=args.contact_dt,
+        soft_toss=args.soft_toss,
     )
