@@ -442,6 +442,51 @@ The renderer refuses to overwrite retained media. The focused BC/media test
 suite passes 25 tests, including peak-history reset and missing first-exit labels;
 the two existing RSL-RL warnings infer critic observations from policy observations.
 
+## Bowling Release Foundation
+
+The [ball-holder builder](src/unilab/tasks/manipulation/g1_cricket/holder.py)
+places the 0.156 kg free-joint ball beside either G1 rubber hand using that
+wrist's keyframe forward kinematics. It preserves the existing prior scene's
+robot inertias, joints, actuator settings and collisions, removes the batting
+fixture, and adds one declared
+finite-compliance wrist/ball weld. This is a holder approximation, not finger
+control or a learned grasp. This scene uses a 0.25 ms physics step and 4 ms
+weld compliance; a moving-wrist test verifies nonzero load before release.
+Both reset poses clear all colliding geometry by
+more than 3 mm; the palm site itself would overlap the fixed hand capsule.
+
+The experimental public `env.equality_constraints` capability now persists
+activation across control intervals in official MuJoCo Rollout and native
+Batch. Release changes only activation, never ball position or velocity.
+Partial state resets restore only the selected environments' model defaults.
+Constraint activation is separate from FULLPHYSICS and must be retained as a
+replay input; the native low-level recorder requires it on every interval.
+
+Tests exercise actual left/right G1 release trajectories, exact native Batch
+state/sensor parity, continuous release, gravity-only flight and zero released
+ball constraint force. Translated toy-holder tests additionally check controls,
+external wrenches, initially inactive constraints, observer on/off and selective
+resets. This is not a trained bowling task, legal delivery, sustained run-up or
+new showcase. The policy release latch, bowling observation/reward contract and
+full stability/contact/crease evaluation still need implementation.
+Reset alignment is verified only at the nominal keyframe. Future randomized
+joint resets must realign the ball to the randomized wrist during reset before
+activating the holder; step-time pose writes remain prohibited. Dedicated
+holder-force/tactile telemetry is also unfinished.
+
+Validation: 163 focused UniLab tests pass across release, existing backend/env
+behavior, prior/mjbatch execution, BC/media paths and documentation; two existing RSL-RL warnings
+infer critic observations from policy observations. The companion native recorder
+and Batch tests pass 47 cases. Both G1 reset poses were rendered and inspected;
+the ball holder is an abstract constraint beside the fixed rubber hand, not an
+articulated gripper. This is not full repository CI or a long-horizon skill test.
+
+The completed batting evaluation/video remain frozen at source revision
+`7f936c78b9e0d882087be6deedadba4525bd7224`; their hashes do not imply that these
+new adapter changes have been evaluated across the same 576 trials.
+Reproduce that frozen experiment with that UniLab checkout and companion mjbatch
+`29ab5c5b1695ab7e0f4e63c59a4daa6be095237a`, not the new release-capable adapters.
+
 ## Learned Arm Residual: First Interception Experiment
 
 Native CPU PPO now learns seven bounded bat-arm corrections around the frozen

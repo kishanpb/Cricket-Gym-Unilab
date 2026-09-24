@@ -45,6 +45,11 @@ available in the research log.
 and [six-view contact sheet](g1_cricket_results/bc_v1/learned_development_contact_sheet.png):
 fixed contexts including failures, not an advertising reel or learned bowling.
 
+The [bowling release foundation](G1_CRICKET.md#bowling-release-foundation)
+now tests both G1 wrists with a declared compliant ball holder and continuous
+release in both executors. This is mechanics infrastructure, not learned grasping
+or a trained bowling demonstration.
+
 ---
 
 <h3 align="center">

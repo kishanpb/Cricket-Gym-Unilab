@@ -89,6 +89,8 @@ uv run scripts/generate_support_matrix.py --write
 | PPO (torch) | `g1_cricket_balance_v2` (g1 cricket balance v2) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_balance_v3` (g1 cricket balance v3) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_batting` (g1 cricket batting) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_bc_v1` (g1 cricket bc v1) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_compliance_v2` (g1 cricket compliance v2) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_impact_events_v1` (g1 cricket impact events v1) | Configured | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_impact_v1` (g1 cricket impact v1) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_prior_v1` (g1 cricket prior v1) | Tested | - | - | - | - | - | - | - |
@@ -96,6 +98,8 @@ uv run scripts/generate_support_matrix.py --write
 | PPO (torch) | `g1_cricket_residual_v1` (g1 cricket residual v1) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_residual_v2` (g1 cricket residual v2) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_cricket_residual_v3` (g1 cricket residual v3) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_swing_v1` (g1 cricket swing v1) | Tested | - | - | - | - | - | - | - |
+| PPO (torch) | `g1_cricket_tanh_v1` (g1 cricket tanh v1) | Tested | - | - | - | - | - | - | - |
 | PPO (torch) | `g1_motion_tracking_deploy` (g1 motion tracking deploy) | Tested | - | Tested | - | - | - | - | - |
 | PPO (torch) | `go1_joystick_rough` (go1 joystick rough) | Tested | - | Tested | - | - | - | - | - |
 | PPO (torch) | `go2_footstand` (go2 footstand) | Tested | - | Tested | - | - | - | - | - |

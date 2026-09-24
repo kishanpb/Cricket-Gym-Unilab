@@ -12,13 +12,15 @@ import numpy as np
 from mujoco.rollout import Rollout
 from unisim.backend.mujoco.backend import MuJoCoBackend
 
+from unilab.base.backend_constraints import EqualityConstraintBackend
 from unilab.base.backend_substeps import SubstepObservationBackend, SubstepObserver
 
 if TYPE_CHECKING:
     from mjbatch.held_control import HeldControlRollout
+    from unisim.dr.types import ResetRandomizationPayload
 
 
-class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend):
+class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend, EqualityConstraintBackend):
     _observer: SubstepObserver | None = None
     _recorder: Rollout | HeldControlRollout | None = None
 
@@ -39,6 +41,10 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend):
             raise ValueError("substep observation requires solved sensors and unpinned workers")
         super().materialize()
         assert self._pool is not None
+        models = self._pool.get_all_models()
+        self._equality_names = tuple(models[0].eq(i).name for i in range(models[0].neq))
+        self._equality_default = np.array([m.eq_active0 for m in models], dtype=bool)
+        self._equality_active = self._equality_default.copy()
         workspace_model = max(self._pool.get_all_models(), key=lambda model: model.nbvh)
         if self.substep_engine == "mjbatch":
             from mjbatch.held_control import HeldControlRollout
@@ -49,6 +55,33 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend):
         else:
             self._recorder = Rollout(nthread=self._n_threads)
         self._record_data = [mujoco.MjData(workspace_model) for _ in range(self._n_threads)]
+
+    def get_equality_names(self) -> tuple[str, ...]:
+        return self._equality_names
+
+    def get_equality_active(self) -> np.ndarray:
+        return self._equality_active.copy()
+
+    def set_equality_active(self, env_indices: np.ndarray, active: np.ndarray) -> None:
+        if active.dtype != np.bool_ or active.shape != (
+            len(env_indices),
+            len(self._equality_names),
+        ):
+            raise ValueError(
+                "equality activation must be a boolean (selected envs, constraints) array"
+            )
+        self._equality_active[env_indices] = active
+
+    def set_state(
+        self,
+        env_indices: np.ndarray,
+        qpos: np.ndarray,
+        qvel: np.ndarray,
+        randomization: ResetRandomizationPayload | None = None,
+    ) -> dict | None:
+        result = super().set_state(env_indices, qpos, qvel, randomization=randomization)
+        self._equality_active[env_indices] = self._equality_default[env_indices]
+        return cast(dict | None, result)
 
     def set_substep_observer(
         self, sensor_names: Sequence[str], root_body_name: str, observer: SubstepObserver
@@ -69,7 +102,7 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend):
         super().set_pre_step_control(fn)
 
     def step(self, ctrl: np.ndarray, nsteps: int = 1) -> dict | None:
-        if self._observer is None and self.substep_engine == "rollout":
+        if self._observer is None and self.substep_engine == "rollout" and not self._equality_names:
             return cast(dict | None, super().step(ctrl, nsteps))
         assert self._pool is not None and self._recorder is not None
         start = time.perf_counter()
@@ -83,6 +116,13 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend):
                 (self._num_envs, nsteps, self._pending_xfrc_applied.shape[-1]),
             )
             control = np.concatenate((control, wrench), axis=-1)
+        if self._equality_names:
+            spec |= int(mujoco.mjtState.mjSTATE_EQ_ACTIVE)
+            active = np.broadcast_to(
+                self._equality_active[:, None, :],
+                (self._num_envs, nsteps, len(self._equality_names)),
+            )
+            control = np.concatenate((control, active), axis=-1)
         prepared = time.perf_counter()
         states, sensors = self._recorder.rollout(
             self._pool.get_all_models(),

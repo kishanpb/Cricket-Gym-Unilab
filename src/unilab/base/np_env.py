@@ -17,6 +17,7 @@ from unisim.backend.base import (
     SimBackend,
 )
 
+from unilab.base.backend_constraints import EqualityConstraintBackend
 from unilab.base.backend_substeps import SubstepObservationBackend, SubstepObserver
 from unilab.base.base import ABEnv, EnvCfg, EnvPlayCapabilities
 from unilab.base.cpu_runtime import apply_env_cpu_runtime
@@ -352,6 +353,13 @@ class NpEnv(ABEnv):
         if not isinstance(self._backend, SubstepObservationBackend):
             raise NotImplementedError("backend does not support substep observation")
         self._backend.set_substep_observer(sensor_names, root_body_name, observer)
+
+    @property
+    def equality_constraints(self) -> EqualityConstraintBackend:
+        """Experimental persistent constraint activation capability (ADR-0011)."""
+        if not isinstance(self._backend, EqualityConstraintBackend):
+            raise NotImplementedError("backend does not support equality activation")
+        return self._backend
 
     def _collect_reset_backend_timing_ms(self) -> dict[str, float]:
         """Backend-sourced reset sub-timings for the last reset call.
