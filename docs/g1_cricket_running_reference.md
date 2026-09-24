@@ -99,3 +99,15 @@ fixed-frame review remains, and v2 retains all four videos and tracking exports.
 Next work must resolve the shoulder
 return path and dynamically feasible foot support before running-delivery RL
 or a bowling showcase can be accepted.
+
+## Reverse Continuation Comparison
+
+One bounded comparison keeps the v2 targets, constraints, weights, motor gains
+and physical baseline unchanged, but solves the IK frames backward from the
+recovery pose. The initial default seed is therefore attached to recovery
+instead of approach. Outputs are restored to increasing physical time before
+velocity construction or simulation. The same 12 rad/s continuity bound applies
+in either solve direction. This tests whether the forward warm start trapped
+the shoulder in a poor solution branch; it cannot itself establish balance.
+Run both full hands once with `--reverse-ik --render` into
+`g1_cricket_results/running_reference_reverse_v1`, and retain all errors/falls.

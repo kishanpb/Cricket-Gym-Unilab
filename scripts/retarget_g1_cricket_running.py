@@ -84,7 +84,7 @@ def render_review(output):
     sheet.save(output / "running_motion_review.png")
 
 
-def run(hand, output, render):
+def run(hand, output, render, reverse_ik=False):
     with TemporaryDirectory(prefix="g1-running-") as temporary:
         scene = Path(temporary) / "scene.xml"
         G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(ROBOT, scene)
@@ -92,7 +92,7 @@ def run(hand, output, render):
         model.opt.timestep = 0.0000625
         model.vis.global_.offwidth, model.vis.global_.offheight = 960, 540
         times = np.arange(136) * 0.02
-        reference = retarget_running_delivery(model, times, hand)
+        reference = retarget_running_delivery(model, times, hand, reverse=reverse_ik)
         poses = reference["qpos"]
         velocity = velocity_reference(model, poses, 0.02)
         np.savez_compressed(
@@ -218,12 +218,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path)
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--reverse-ik", action="store_true")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     inputs = [Path(__file__), ROBOT, ROBOT.parent / "scene_flat.xml"]
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
     hashes = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
-    rows = [run(hand, args.output, args.render) for hand in ("right", "left")]
+    rows = [run(hand, args.output, args.render, args.reverse_ik) for hand in ("right", "left")]
     if any(
         hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != digest
         for name, digest in hashes.items()
@@ -232,6 +233,7 @@ if __name__ == "__main__":
     result = {
         "scope": "offline_running_reference_and_PD_feasibility_not_learned_bowling",
         "mujoco_version": mujoco.__version__,
+        "ik_direction": "reverse" if args.reverse_ik else "forward",
         "input_sha256": hashes,
         "rows": rows,
     }

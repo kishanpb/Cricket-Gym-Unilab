@@ -83,7 +83,8 @@ def test_arm_targets_are_continuous_at_gather(side):
 
 
 @pytest.mark.parametrize("hand", ["right", "left"])
-def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, tmp_path):
+@pytest.mark.parametrize("reverse", [False, True])
+def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, reverse, tmp_path):
     scene = tmp_path / "scene.xml"
     G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(
         ROOT / "src/unilab/assets/robots/g1/g1.xml", scene
@@ -94,7 +95,9 @@ def test_retarget_preserves_robot_and_exports_full_body_velocity(hand, tmp_path)
         for name in ("body_pos", "body_mass", "body_inertia", "jnt_range", "actuator_forcerange")
     }
     times = np.arange(4) * 0.02
-    reference = retarget_running_delivery(model, times, hand)
+    reference = retarget_running_delivery(model, times, hand, reverse=reverse)
+    np.testing.assert_array_equal(reference["times"], times)
+    assert [error["time_s"] for error in reference["errors"]] == times.tolist()
     poses = reference["qpos"]
     assert poses.shape == (4, model.nq)
     joints = np.array([model.joint(n).id for n in SDK_JOINTS])

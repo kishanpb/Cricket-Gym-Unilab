@@ -112,7 +112,7 @@ class RunningDeliveryTargets:
         return upper, lower, np.column_stack((lower, y, np.cross(lower, y)))
 
 
-def retarget_running_delivery(model, times, hand):
+def retarget_running_delivery(model, times, hand, *, reverse=False):
     """Solve original G1 joints offline; do not use this loop as a physics rollout."""
     target = RunningDeliveryTargets(hand)
     data = mujoco.MjData(model)
@@ -147,7 +147,8 @@ def retarget_running_delivery(model, times, hand):
     wrist_id = model.body(f"{hand}_wrist_yaw_link").id
     holder_offset = np.array([0.15, 0.06 if hand == "left" else -0.06, 0])
     poses, errors = [], []
-    for frame, time in enumerate(times):
+    ordered_times = np.asarray(times)[::-1] if reverse else np.asarray(times)
+    for frame, time in enumerate(ordered_times):
         data.qpos[:3] = target.root(float(time))
         data.qpos[3:7] = [1, 0, 0, 0]
         foot_targets = np.array([target.foot(side, time) for side in ("left", "right")])
@@ -187,7 +188,7 @@ def retarget_running_delivery(model, times, hand):
 
         lo, hi = lower + 0.03, upper - 0.03
         if frame:
-            step = 12 * (time - times[frame - 1])
+            step = 12 * abs(time - ordered_times[frame - 1])
             lo, hi = np.maximum(lo, previous - step), np.minimum(hi, previous + step)
         solved = least_squares(
             residual,
@@ -233,4 +234,7 @@ def retarget_running_delivery(model, times, hand):
                 "unexpected_penetrations": unexpected,
             }
         )
+    if reverse:
+        poses.reverse()
+        errors.reverse()
     return {"times": np.asarray(times), "qpos": np.asarray(poses), "errors": errors}
