@@ -66,6 +66,23 @@ uv run python -m unilab.scripts.train_rsl_rl task=g1_cricket_residual_v1/mujoco 
 uv run python scripts/evaluate_g1_cricket_residual.py
 ```
 
+### Reward-only v2: Rejected
+
+The [v2 contract](docs/g1_cricket_residual_v2.md) changes only the batting reward
+to score forward velocity after first sampled separation. A fresh run uses the
+same seed, 199,680-transition budget and complete 96-row development pool.
+[All v2 outcomes](g1_cricket_results/residual_v2/evaluation.json) show **zero blade
+contacts and zero valid shots** for either hand. Right-hand PPO stays upright
+but avoids the ball; every left-hand transfer ends early on bat/left-hip contact.
+All zero-residual physics and gate outcomes exactly reproduce v1, so no apparent
+gain can come from altered collisions, seeds or thresholds. The negative
+separation reward created an incentive to avoid contact; it is not promoted.
+Both final checkpoints and full scalar traces remain available for diagnosis.
+
+The next reward design should remove that avoidance incentive while still
+favoring forward exits over weak touches, without weakening the success gate.
+No version here is ready for a learned-cricket showcase.
+
 ## External Locomotion Prior: Native Transfer
 
 A separate native owner now evaluates the official Unitree RL Lab 29-DoF
