@@ -1,5 +1,7 @@
 """Soft toss is reset-only; the two-hand robot retains its original limits."""
 
+import subprocess
+import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -16,6 +18,19 @@ from unilab.base.scene import SceneCfg
 from unilab.tasks.manipulation.g1_cricket.bimanual_contact import G1BimanualContactCfg
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def test_contact_task_registered_in_fresh_process():
+    subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "from unilab.base import registry; registry.ensure_registries(); "
+            "assert registry.contains('G1CricketBimanualContact')",
+        ],
+        check=True,
+        cwd=ROOT,
+    )
 
 
 def test_contact_model_rejects_coarse_physics():

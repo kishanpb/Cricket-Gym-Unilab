@@ -2,6 +2,7 @@
 
 from unilab.base import registry
 
+from .bimanual_contact import G1BimanualContactCfg
 from .impact import G1CricketImpactCfg
 from .task import G1CricketCfg, make_g1_cricket_env
 from .tracking import G1BimanualTrackingCfg
@@ -12,5 +13,8 @@ registry.register_env_config("G1CricketImpact", G1CricketImpactCfg)
 registry.register_env("G1CricketImpact", make_g1_cricket_env, sim_backend="mujoco")
 registry.register_env_config("G1CricketBimanualTracking", G1BimanualTrackingCfg)
 registry.register_env("G1CricketBimanualTracking", make_g1_cricket_env, sim_backend="mujoco")
+
+registry.register_env_config("G1CricketBimanualContact", G1BimanualContactCfg)
+registry.register_env("G1CricketBimanualContact", make_g1_cricket_env, sim_backend="mujoco")
 
 __all__ = ["G1CricketCfg", "make_g1_cricket_env"]

@@ -5,11 +5,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from unilab.base import registry
-
 from .impact import add_blade_pair
 from .pitch_contact import add_pitch_pair
-from .task import make_g1_cricket_env
 from .tracking import G1BimanualTrackingCfg
 
 
@@ -39,7 +36,3 @@ class ResetSoftToss:
         states[:, 3:7] = [1, 0, 0, 0]
         states[:, 7:] = [-2.8, 0, 6.5, 0, 0, 0]
         self.ball.write_root_state_to_sim(states, env_ids=env_ids)
-
-
-registry.register_env_config("G1CricketBimanualContact", G1BimanualContactCfg)
-registry.register_env("G1CricketBimanualContact", make_g1_cricket_env, sim_backend="mujoco")
