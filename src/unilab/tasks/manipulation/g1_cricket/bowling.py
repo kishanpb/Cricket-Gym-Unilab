@@ -238,13 +238,22 @@ class BowlingObservation:
 
 
 def bowling_reward(env):
+    return _bowling_reward(env, ball_position_gate=True)
+
+
+def bowling_release_reward_v2(env):
+    """Release shaping without a ball-position proxy for foot legality."""
+    return _bowling_reward(env, ball_position_gate=False)
+
+
+def _bowling_reward(env, *, ball_position_gate):
     term = env.action_manager.get_term("residual")
     robot = env.scene["robot"]
     wrist = robot.data.body_link_pos_w[:, 1 if env.cfg.handedness == "left" else 2]
     height = np.clip((term.release_position[:, 2] - 0.9) / 0.4, 0, 1)
     speed = np.clip(term.release_velocity[:, 0], 0, 12) / 6
     lateral = np.exp(-np.square(term.release_velocity[:, 1] / 2))
-    before_crease = term.release_position[:, 0] < 0
+    before_crease = term.release_position[:, 0] < 0 if ball_position_gate else 1.0
     bonus = term.just_released * 10 * height * speed * lateral * before_crease / env.step_dt
     approach = np.exp(-np.square((wrist[:, 2] - 1.3) / 0.25)) * ~term.released
     tracking = 0.5 * np.exp(-np.square((robot.data.root_link_lin_vel_w[:, 0] - 0.4) / 0.3))

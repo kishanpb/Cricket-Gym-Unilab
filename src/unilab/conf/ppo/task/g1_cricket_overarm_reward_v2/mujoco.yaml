@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_overarm_guard_v1/mujoco
+  - _self_
+
+reward:
+  bowling:
+    func: unilab.tasks.manipulation.g1_cricket.bowling.bowling_release_reward_v2

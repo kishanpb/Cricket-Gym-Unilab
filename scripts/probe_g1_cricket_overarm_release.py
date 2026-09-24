@@ -81,12 +81,12 @@ def release_attribution(result):
     return result
 
 
-def release_trial(env, candidate):
+def release_trial(env, candidate, *, replay_factory=DeliveryReplay):
     env.reset(seed=PLAN["seed"])
     term = env.action_manager.get_term("residual")
     neutral = env.scene["robot"].data.default_joint_pos[0, term.arm_ids].copy()
     limits = term.joint_limits[term.arm_ids]
-    replay, events, audit = DeliveryReplay(env), DeliveryEvents(PLAN["hand"]), GuardAudit(env)
+    replay, events, audit = replay_factory(env), DeliveryEvents(PLAN["hand"]), GuardAudit(env)
     m, pose = replay.model, replay.pose
     arm_qadr = replay.joint_qadr[term.arm_ids]
     arm_vadr = m.jnt_dofadr[replay.joints[term.arm_ids]]

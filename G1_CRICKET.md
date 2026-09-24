@@ -703,7 +703,50 @@ warning) and 47 native Batch tests; these are local checks, not upstream CI.
 The next experiment needs a materially different, physically bounded wind-up or
 coordinated arm trajectory, not more late-release timing trials on this failed
 shoulder-only drive. Keep the original hardware limits, full gates and all failures;
-repair the signed extension audit before training a variable-elbow controller.
+use the additional signed extension audit below before training a variable-elbow controller.
+
+### Signed Elbow And Release Reward
+
+The [signed audit contract](docs/g1_cricket_signed_release_v1.md) closes the
+unsigned angle's fold through straight. It measures the oriented angle around
+the actual G1 elbow hinge, using a proximal landmark rigidly attached to its
+parent link, and unwraps successive samples. An upstream shoulder-roll landmark
+would incorrectly mix shoulder yaw with elbow extension; randomized root and
+all-shoulder poses verify the corrected signed angle minus joint position is
+constant across the entire original elbow range for both hands (1e-12 tolerance).
+This is robot hinge geometry, not calibrated human anatomy or umpiring certification.
+
+The [complete six-row replay](g1_cricket_results/overarm_release_v1/signed_elbow_audit.json)
+preserves every legacy physical outcome and full control trace exactly, with
+unchanged controls, old reward and full horizon. Signed extension from first
+upward shoulder-level crossing through release is **0.882-1.838 degrees**;
+none adds a >15-degree failure. All existing speed/flight/other failures remain:
+**zero qualified deliveries**. Samples use matching solved-state positions/axes;
+release uses the actual integrated pre-release pose. The audit cannot clear old
+failures and never writes running physics state. It is episode-local.
+
+The old reward suppresses release bonuses whenever the **ball**, rather than
+the feet, is beyond the bowler's popping crease. All six foot/stride-legal
+release states have ball x>0, so their old release bonuses are zero. New owner
+`g1_cricket_overarm_reward_v2/{mujoco,mjbatch}` removes only that reward proxy;
+the old owner, robot, motor limits, observations, actions and evaluation gates
+remain unchanged. Foot faults must still fail independent evaluation. This
+reward is release shaping, not a declaration of legality.
+
+The integrated release-component values under the new formula would be
+[2.54339, 2.20371, 0, 2.29920, 1.07445, 0] in the fixed six-case order. These are
+counterfactual reward components from retained raw states, **not** new returns,
+training improvements or faster ball dynamics. New-owner CPU PPO smoke checks
+perform eight actual transitions per hand, update finite actors and preserve
+122-observation/8-action interfaces; no skill checkpoint or video is retained.
+64 focused UniLab tests and 47 native Batch tests pass locally, with the existing
+RSL-RL observation warning; upstream CI and showcase readiness are not claimed.
+
+Next, optimize coordinated shoulder control with the full signed gate, then
+bootstrap and evaluate learned control with the corrected reward. The failed
+single-shoulder trajectories are development evidence, not successful bowling
+teachers. Both hands, full flight, paired timestep/executor checks and learned
+batting/bowling showcase videos remain unfinished.
 
 The completed batting evaluation/video remain frozen at source revision
 `7f936c78b9e0d882087be6deedadba4525bd7224`; their hashes do not imply that these

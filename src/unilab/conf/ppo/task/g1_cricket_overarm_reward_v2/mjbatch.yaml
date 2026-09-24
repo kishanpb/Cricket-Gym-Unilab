@@ -1,0 +1,7 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_overarm_reward_v2/mujoco
+  - _self_
+
+env:
+  mujoco_substep_engine: mjbatch
