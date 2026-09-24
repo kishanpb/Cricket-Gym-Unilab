@@ -80,8 +80,8 @@ claiming numerical parity with the parallel mjbatch implementation.
 
 The diagnostic uses the first declared seed, 4201, at 0/2/5/10 seconds; every
 numeric episode remains in the reports. This is not an advertising video or a
-ready-to-strike two-handed grip. Full physics-rate contact validation and locally
-learned cricket control are the next gates.
+ready-to-strike two-handed grip. Locally learned cricket control and impact
+convergence remain required.
 
 The evaluator verifies SHA-256 hashes for both upstream assets before inference
 and records local source, native robot XML and runtime versions. External weights
@@ -95,6 +95,44 @@ uv run python scripts/evaluate_g1_cricket_prior.py --assets <local-asset-directo
   --version v1 --output g1_cricket_results/unitree_prior/evaluation.json
 uv run python scripts/evaluate_g1_cricket_prior.py --assets <local-asset-directory> \
   --version v2 --output g1_cricket_results/unitree_prior_v2/evaluation.json
+```
+
+### Physics-rate stance audit
+
+The [complete interval replay](g1_cricket_results/unitree_prior_v2/substep_audit.json)
+checks **132,790 physics steps across all 48 v2 episodes**, including every failed
+control. All 13,279 native interval endpoints and named contact/actuator-force
+sensor values match an independent serial MuJoCo replay exactly after the native
+float32 cast. Every final native pose, duration and outcome also exactly matches
+the published v2 report; the audit does not modify the native rollout.
+
+All 24 imported-policy episodes pass the stronger ten-second stance gate:
+no guarded contacts, falls or joint/actuator-limit violations at any replayed
+physics step. Minimum pelvis height is 0.78493 m, maximum XY drift 0.01818 m,
+and minimum pelvis upright-axis z component 0.99917. The actual sampled actuator
+peak is **59.43% of its limit**, higher than the 54.52% seen at policy instants.
+The 16 bat-bearing constant-target controls first touch the pitch at
+0.928-0.974 s; all eight no-bat controls fall. No failures are dropped.
+
+The replay starts each 20 ms interval from the public native FULLPHYSICS
+snapshot and uses the executed position targets for ten serial 2 ms steps.
+Its cold model reproduces the native MjSpec serialization/discard-visuals path
+and configured timestep. It fails if any endpoint or named sensor disagrees;
+contact-presence comparison is exact, including zero-force contacts. The serial
+data is separate from the native environment, with no native pose writes.
+Ten separate native 2 ms calls were rejected as an audit method: extra float32
+state roundtrips change that numerical trajectory.
+
+This is solver-step coverage, not continuous collision detection, calibrated
+hardware forces, timestep-converged impact loads or a trained cricket result.
+Contact loads belong to the solver evaluation preceding each returned integrated
+state. The original training observations remain 20 ms snapshots; this offline
+replay does not add a native post-substep hook or change their timing.
+
+```sh
+uv run python scripts/audit_g1_cricket_prior_substeps.py \
+  --assets <local-asset-directory> \
+  --output g1_cricket_results/unitree_prior_v2/substep_audit.json
 ```
 
 ## Signals
