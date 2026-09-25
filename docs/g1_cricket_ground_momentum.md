@@ -167,10 +167,84 @@ subsample exactly to all 136 control knots. All 37 generator fingerprints and
 38 fingerprints for each audit verify; baseline audit fingerprints verify
 against source `71a2d8af`. All 109 focused tests pass with warnings as errors.
 
-The next repair must account for whole-body joint accelerations and explicit
-hand-thigh clearance, not merely add more wrist smoothing. Full native
-contact consistency and complete physical delivery qualification are still
-required before training or showcasing this running reference.
+## Rejected Whole-Body Smoothing
+
+Source `251b15df` extends the offline retargeter with opt-in acceleration
+regularization for all 29 joints and additional hand/thigh and shoulder/torso
+clearance pairs. The full `running_body_smooth_v1` trial uses weight `0.0002`
+and `--limb-clearance`, with no separate wrist penalty. The global penalty
+starts after the first interval; it does not regularize the initial velocity.
+This is a sequential frame-local objective, not trajectory optimization with
+future contact constraints. Defaults, robot limits and physical PD are unchanged.
+
+The candidate is rejected. Despite successful IK solver termination, each
+reference has 131 intersection frames, with peak penetration 109.88/right and
+109.58/left mm. Foot errors reach 65.32/65.20 mm and arm errors 119.61/119.52 mm.
+Both physical episodes fall, at 0.72/0.74 s, with joint excursions and body
+contacts; neither releases. At the finer inverse-audit resolution only 37/119
+samples per hand admit ideal original motor caps, and only 5/119 admit bounded
+commands. Neither smoothness nor a few extra milliseconds before falling is
+a skill improvement.
+
+All [reference and physical results](../g1_cricket_results/running_body_smooth_v1/evaluation.json),
+[476 inverse-audit rows, compressed JSON](../g1_cricket_results/running_body_smooth_v1/inverse_dynamics_audit.json.gz)
+and [motion review](../g1_cricket_results/running_body_smooth_v1/running_motion_review.png)
+remain. All 347 rendered frames decoded nonblank before redundant MP4s were
+removed along with unused tracking exports; complete poses remain reproducible.
+The 37 generator and 38 audit
+input hashes verify, and dense/control subsampling is exact.
+
+## Audited Curve Versus Controller State
+
+The inverse audit differentiates a reconstructed curve; the original controller
+uses stored forward differences. They are not interchangeable force estimates.
+Source `5802a219` adds an opt-in `--compare-curve` evaluation using both versions
+of the wrist-smoothed reference, with both absolute and reference-relative
+root damping, for **eight complete episodes**. This includes the reconstructed
+initial position and velocity, still with 20 ms held motor commands and the
+same model, joint ranges, force caps and contact physics. It does not apply
+inverse forces or claim continuous tracking. The default path is unchanged.
+
+The first three reconstructed poses match stored poses within 1.8e-15, but
+initial joint velocities differ by up to 5.85/right and 5.89/left rad/s.
+The discrepancy at the next 5 ms knot is 2.96/2.97 rad/s. Full startup vectors
+are retained alongside all outcomes, not only the worst component.
+
+| Reference and damping | Fall right/left (s) | First joint-stop crossing right/left (s) |
+| --- | --- | --- |
+| Saved, absolute | 0.70/0.68 | 0.18525/0.18494 |
+| Saved, relative | 0.68/0.70 | 0.18306/0.18294 |
+| Curve, absolute | 0.68/0.66 | 0.01706/0.01706 |
+| Curve, relative | 0.72/0.64 | 0.01700/0.01700 |
+
+Every episode fails before release with hand/hip/thigh/wrist contacts. Saved
+absolute controls reproduce the parent poses bit-for-bit. Curve initialization
+makes ankle-limit crossings much earlier, so derivative alignment alone is
+not a repair and is not promoted. The remaining problem requires a feasible
+initial stance and contact transitions, not further blind smoothing or an
+unchanged PPO run. The earlier action sequence remains the presentation target.
+
+![Complete relative-damping failures for both reference definitions](../g1_cricket_results/running_curve_velocity_v1/physical_comparison_review.png)
+
+The [eight-row evaluation](../g1_cricket_results/running_curve_velocity_v1/evaluation.json)
+retains all 87,360 physical substeps, complete poses, both reference definitions
+and four relative-damping diagnostic videos. All 141 frames decode nonblank;
+the review was inspected and all 43 input hashes verify. The latest 81 focused
+running, dynamics, tracking and bimanual tests pass with warnings as errors;
+Ruff and diff checks pass. Neither candidate changes trained actors, supplies
+a qualified bowling video, or establishes independent Menagerie learning.
+
+```sh
+PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
+  --python ../unilab_submission_checkout/.venv/bin/python \
+  python scripts/evaluate_g1_cricket_running_velocity.py \
+  g1_cricket_results/running_wrist_smooth_v1 \
+  g1_cricket_results/running_curve_velocity_v1 --compare-curve --render
+```
+
+Use a fresh output directory when reproducing; existing evidence is never
+overwritten. Full physical delivery qualification is still required before
+training against this reference or calling a video a learned bowling showcase.
 
 ## Construction
 
