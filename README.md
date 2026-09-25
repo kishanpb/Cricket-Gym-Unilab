@@ -71,6 +71,11 @@ remain available; neither input is a regulation-speed delivery.
 **Running bowling is unfinished.** Both-hand references preserve the full
 approach, gather, overarm delivery and recovery, but physical controllers and
 the [PPO pilot](docs/g1_cricket_running_tracking.md) still fall before release.
+The new [measured approach study and both-hand videos](docs/g1_cricket_approach_teacher.md#complete-results)
+use the external Unitree locomotion prior: all eight trials travel 2.82-2.85 m
+and stop upright, but all fail foot-slip checks and some drift sideways.
+Actual states and motor commands are retained for whole-body learning;
+these are carry-only diagnostics, not locally learned running deliveries.
 The latest [planted-foot reference and joint-tracking comparison](docs/g1_cricket_ground_momentum.md#foreaft-pendulum-comparison)
 removes audited reference self-intersections and passes sampled support bounds,
 but every physical trial still falls before release. Stronger tracking gains

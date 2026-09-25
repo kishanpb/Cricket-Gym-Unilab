@@ -76,3 +76,73 @@ PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run python scripts/evaluate_g1_crick
 
 Passing this approach study would yield teacher data, not a finished bowling
 video, independently trained Menagerie policy or hardware demonstration.
+
+## Complete Results
+
+Source `6bbd8bd34eebcf77a6298f1b1b989f3ba6dc578e`; the
+[complete report and traces](../g1_cricket_results/approach_teacher_v1/summary.json)
+retain all eight outcomes. All finish eight seconds, register six landings per
+foot, and pass initial/final settling, height/orientation, original joint/motor
+limits, holder, penetration, contact, corridor and wicket-side checks.
+**None qualifies:** every case fails the 0.2 m/s loaded-contact slip bound.
+
+| Hand | Seed | Physics (us) | Travel (m) | Lateral drift (m) | Peak slip (m/s) | Maximum stance slip (m) |
+| --- | --- | --- | --- | --- | --- | --- |
+| Right | 5301 | 62.5 | 2.842813 | 0.137710 | 2.256278 | 0.029274 |
+| Right | 5301 | 31.25 | 2.838926 | 0.153229 | 2.277514 | 0.030575 |
+| Right | 5302 | 62.5 | 2.850108 | 0.137935 | 2.295869 | 0.029905 |
+| Right | 5302 | 31.25 | 2.844369 | 0.140389 | 2.289119 | 0.029197 |
+| Left | 5301 | 62.5 | 2.827117 | 0.250024 | 2.547817 | 0.030654 |
+| Left | 5301 | 31.25 | 2.823627 | 0.245505 | 2.539272 | 0.030502 |
+| Left | 5302 | 62.5 | 2.827646 | 0.251992 | 2.537859 | 0.032916 |
+| Left | 5302 | 31.25 | 2.825143 | 0.257863 | 2.542415 | 0.032689 |
+
+All left cases and right/5301/31.25 us also fail the unchanged 0.15 m drift
+and 0.03 m stance-slip bounds. Three of four resolution comparisons pass;
+right/5301 fails because those two gate outcomes change with timestep.
+This is not a converged, accepted approach teacher.
+
+Independent replay of the right/5301/62.5 us peak at about 3.6671 s confirms
+2.2563 m/s contact-point slip with 162.066 N normal and 97.239 N tangential
+load, at the original 0.6 friction limit. The interval endpoint matches exactly:
+the slip is physical motion against saturated friction, not an ankle-position
+proxy or timing artifact. No friction or acceptance thresholds were changed.
+
+All 1,536,000 native substeps pass exact endpoint/sensor replay. All 84 input
+hashes, recorder hash and 20 artifact hashes verify. Each trace retains 401
+states and 400 controls, finite native velocities and full substep telemetry;
+157 focused tests pass with warnings as errors. No local policy was trained
+in this experiment, and no upstream PR or social publication was made.
+
+## Whole-Body Transfer
+
+The next controller should apply the recorded 29 motor targets plus bounded
+learned residuals, without the current running tracker's additional gravity,
+velocity, ankle, waist or root-position corrections. The prior sometimes
+requests ankle targets outside the joint position range while actual joints
+remain within limits; adding target clipping would change the replay and must
+be evaluated as a separate controller change. Original motor force caps remain.
+
+Initialize both robot and held ball from the measured pose and velocity,
+including compliant holder displacement. Preserve velocity coordinate frames;
+do not reconstruct an ideal rigid wrist attachment or clip measured reset poses.
+There are 401 states but only 400 executed commands: the terminal state is not
+a valid command-sampling start. Verify zero-residual replay before local PPO.
+The gather must start from a moving approach state with continuous position
+and velocity, not by joining the stopped tail to the old delivery reference.
+Approach slip failures remain failures throughout transfer and learning.
+
+## Diagnostic Videos
+
+[Right-hand approach](../g1_cricket_results/approach_teacher_v1/right_approach.mp4)
+and [left-hand approach](../g1_cricket_results/approach_teacher_v1/left_approach.mp4)
+retain the predeclared seed 5301 finer-grid trajectories, including failures.
+Each has 401 nonblank 960 x 540 frames at 25 fps, showing eight simulated
+seconds at half speed. These are recorded native states, not offline targets.
+The ball stays in a mechanical holder; no gather or release occurs.
+
+The inspected contact sheets sample frames 0, 100, 150, 200, 300 and 400
+(simulation times 0, 2, 3, 4, 6 and 8 s), without outcome-based selection:
+
+![Right-hand approach](../g1_cricket_results/approach_teacher_v1/right_approach_contact_sheet.png)
+![Left-hand approach](../g1_cricket_results/approach_teacher_v1/left_approach_contact_sheet.png)
