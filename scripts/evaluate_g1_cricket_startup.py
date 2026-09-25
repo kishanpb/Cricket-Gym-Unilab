@@ -52,10 +52,13 @@ def replay_startup(
     first_step=False,
     support_only_balance=False,
     controller=None,
+    env_driver=None,
 ):
     data = mujoco.MjData(model)
     data.qpos[:] = reference["qpos"][0]
     data.qvel[:] = reference["qvel"][0]
+    if env_driver is not None:
+        env_driver.initialize(model, data)
     mujoco.mj_forward(model, data)
     joints = [model.joint(name).id for name in SDK_JOINTS]
     qa, va = model.jnt_qposadr[joints], model.jnt_dofadr[joints]
@@ -82,20 +85,25 @@ def replay_startup(
     force = np.empty(6)
     substeps = round(0.02 / model.opt.timestep)
     for tick in range(len(reference["times"]) - 1):
-        control, correction = running_control(
-            model,
-            data,
-            reference["qpos"][tick],
-            reference["qvel"][tick],
-            qa,
-            va,
-        )
-        if support_only_balance and reference["support_loads"][tick, swing] == 0:
-            control[6 * swing + 4] -= correction[1]
-            control[6 * swing + 5] -= correction[0]
-        control += (reference["torque"][tick] - data.qfrc_bias[va]) / model.actuator_gainprm[:, 0]
-        if controller is not None:
-            control = controller(data, reference["qpos"][tick], reference["qvel"][tick])
+        if env_driver is not None:
+            control = env_driver.begin(model, data)
+        else:
+            control, correction = running_control(
+                model,
+                data,
+                reference["qpos"][tick],
+                reference["qvel"][tick],
+                qa,
+                va,
+            )
+            if support_only_balance and reference["support_loads"][tick, swing] == 0:
+                control[6 * swing + 4] -= correction[1]
+                control[6 * swing + 5] -= correction[0]
+            control += (reference["torque"][tick] - data.qfrc_bias[va]) / model.actuator_gainprm[
+                :, 0
+            ]
+            if controller is not None:
+                control = controller(data, reference["qpos"][tick], reference["qvel"][tick])
         data.ctrl[:] = np.clip(control, limits[:, 0], limits[:, 1])
         for _ in range(substeps):
             mujoco.mj_step(model, data)
@@ -161,7 +169,9 @@ def replay_startup(
                 raise RuntimeError("invalid native startup physics")
         poses.append(data.qpos.copy())
         velocities.append(data.qvel.copy())
-        if data.qpos[2] < 0.48:
+        if env_driver is not None:
+            env_driver.finish(model, data)
+        if data.qpos[2] < 0.48 or (env_driver is not None and env_driver.done):
             break
     steps = np.asarray(steps)
     values = dict(zip(STEP_COLUMNS if first_step else COLUMNS, steps.T, strict=True))

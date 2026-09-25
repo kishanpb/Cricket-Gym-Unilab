@@ -81,7 +81,15 @@ def running_control(
     return control, correction
 
 
-def render_poses(model, poses, hand, path, label):
+def render_poses(
+    model,
+    poses,
+    hand,
+    path,
+    label,
+    *,
+    subtitle="Development only | mechanical ball holder | 0.5x | not a learned rollout",
+):
     data = mujoco.MjData(model)
     camera = mujoco.MjvCamera()
     camera.distance, camera.azimuth, camera.elevation = 4.2, -90 if hand == "right" else 90, -8
@@ -102,7 +110,7 @@ def render_poses(model, poses, hand, path, label):
                 )
                 draw.text(
                     (12, 35),
-                    "Development only | mechanical ball holder | 0.5x | not a learned rollout",
+                    subtitle,
                     font=ImageFont.load_default(size=16),
                 )
                 writer.append_data(np.asarray(frame))

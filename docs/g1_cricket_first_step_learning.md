@@ -25,6 +25,9 @@ Both environments start from rest without reset perturbations. Actions only
 change motor targets; no live root/joint state writes, external support force,
 modified geometry, relaxed joint limits or higher motor caps are permitted.
 The full-running configuration retains its existing bias and 1.82 s release.
+The inherited trainer randomizes initial episode timeout counters, not motion
+start frames or robot states; these initial partial horizons are not evaluation
+evidence. Deterministic evaluation resets both counters and motion to zero.
 
 ```sh
 PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
@@ -46,3 +49,17 @@ Require exact native endpoint/sensor replay and the unchanged first-step
 settling, lift/landing, foot-path, contact, holder, motor and joint gates.
 No selected interval, good training return or isolated landing qualifies a
 run-up or cricket delivery. Do not advertise the intermediate videos.
+
+```sh
+PYTHONPATH=src:scripts OMP_NUM_THREADS=2 python \
+  scripts/evaluate_g1_cricket_first_step.py \
+  g1_cricket_results/first_step_tracking_v1/ppo_right --render
+```
+
+Use `ppo_left` for the other run. The evaluator applies the same
+`replay_startup` telemetry and gates used for the parent controller comparison.
+At each interval it copies the live environment's pre-step state into a
+separate native replay model, applies the actual motor commands, collects every
+physics substep, and requires byte-equal endpoint/sensor values in the
+environment's storage dtype. It never writes the replay state into the live
+environment. Reports retain all actions, motor commands and full physics states.

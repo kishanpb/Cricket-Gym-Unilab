@@ -1,7 +1,9 @@
 from pathlib import Path
 
+import mujoco
 import numpy as np
 import pytest
+from evaluate_g1_cricket_first_step import FirstStepReplay
 from g1_cricket_delivery_trial import DeliveryEvents, DeliveryReplay
 from hydra import compose, initialize_config_dir
 
@@ -74,3 +76,20 @@ def test_motor_step_has_exact_native_replay_and_observed_foot_loads(env, monkeyp
     assert not env.action_manager.get_term("reference").released.any()
     np.testing.assert_array_equal(replay.data.xfrc_applied, 0)
     np.testing.assert_array_equal(replay.data.qfrc_applied, 0)
+
+
+def test_first_step_driver_compares_full_native_state_and_sensors(env):
+    driver = FirstStepReplay(env, lambda: np.zeros((2, 29), dtype=np.float32))
+    model = env.get_playback_model()
+    data = mujoco.MjData(model)
+    driver.initialize(model, data)
+    data.ctrl[:] = driver.begin(model, data)
+    for _ in range(env.cfg.sim_substeps):
+        mujoco.mj_step(model, data)
+    driver.finish(model, data)
+    assert len(driver.states) == 2
+    assert len(driver.controls) == len(driver.actions) == 1
+    assert not driver.done
+    data.qpos[0] += 0.001
+    with pytest.raises(AssertionError):
+        driver.finish(model, data)
