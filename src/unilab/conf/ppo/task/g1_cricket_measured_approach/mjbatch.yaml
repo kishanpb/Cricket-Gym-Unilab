@@ -1,0 +1,54 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_bimanual_tracking/mujoco
+  - _self_
+
+training:
+  task_name: G1CricketApproach
+algo:
+  max_iterations: 256
+  save_interval: 256
+  policy:
+    init_noise_std: 0.1
+env:
+  sim_dt: 0.0000625
+  max_episode_seconds: 8.0
+  mujoco_substep_engine: mjbatch
+  mujoco_observe_substeps: true
+  mujoco_compact_substeps: true
+  scene:
+    entities:
+      ball:
+        root_body_name: cricket_ball
+        body_names: [cricket_ball]
+  actions:
+    reference:
+      _target_: unilab.tasks.manipulation.g1_cricket.approach_tracking.MeasuredApproachActionCfg
+      scale: 0.1
+  commands:
+    motion:
+      _target_: unilab.tasks.manipulation.g1_cricket.approach_tracking.MeasuredApproachCommandCfg
+      reference_file: g1_cricket_results/approach_teacher_v1/${env.handedness}_5301_fine.npz
+      params:
+        motion_file: g1_cricket_results/approach_teacher_v1/${env.handedness}_5301_fine_tracking.npz
+        sampling_mode: uniform
+  observations:
+    actor:
+      terms:
+        contact:
+          func: unilab.tasks.manipulation.g1_cricket.running_task.running_contact_observation
+        phase:
+          func: unilab.tasks.manipulation.g1_cricket.approach_tracking.measured_phase
+    critic:
+      terms:
+        contact:
+          func: unilab.tasks.manipulation.g1_cricket.running_task.running_contact_observation
+        phase:
+          func: unilab.tasks.manipulation.g1_cricket.approach_tracking.measured_phase
+  terminations:
+    fallen:
+      func: unilab.tasks.manipulation.g1_cricket.task.fallen
+    clip_end:
+      func: unilab.tasks.manipulation.g1_cricket.approach_tracking.measured_clip_end
+      params: {}
+      time_out: true
