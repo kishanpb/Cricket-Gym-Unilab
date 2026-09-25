@@ -162,6 +162,8 @@ def retarget_running_delivery(
     conserve_momentum=False,
     momentum_target=None,
     wrist_acceleration_weight=0.0,
+    joint_acceleration_weight=0.0,
+    limb_clearance=False,
 ):
     """Solve original G1 joints offline; do not use this loop as a physics rollout."""
     target = RunningDeliveryTargets(hand, lane_offset)
@@ -171,6 +173,8 @@ def retarget_running_delivery(
         raise ValueError("a momentum target requires momentum-conserving rotation")
     if not np.isfinite(wrist_acceleration_weight) or wrist_acceleration_weight < 0:
         raise ValueError("wrist acceleration weight must be finite and nonnegative")
+    if not np.isfinite(joint_acceleration_weight) or joint_acceleration_weight < 0:
+        raise ValueError("joint acceleration weight must be finite and nonnegative")
     momentum = HeldBallMomentum(model, hand) if conserve_momentum else None
     was_tracking, desired_momentum, omega = False, None, np.zeros(3)
     recovery, landing_rotation = None, None
@@ -203,6 +207,16 @@ def retarget_running_delivery(
         for side in ("left", "right")
         for part in ("wrist", "hand")
     ]
+    if limb_clearance:
+        pairs += [
+            (model.geom(f"{side}_{part}_collision").id, model.geom(f"{side}_thigh_collision").id)
+            for side in ("left", "right")
+            for part in ("wrist", "hand")
+        ]
+        pairs += [
+            (model.geom(f"{side}_shoulder_yaw_collision").id, model.geom("torso_collision").id)
+            for side in ("left", "right")
+        ]
     ball_joint = model.joint("ball_free")
     ball_qa = int(ball_joint.qposadr[0])
     ball_body = model.body("cricket_ball").id
@@ -264,9 +278,12 @@ def retarget_running_delivery(
                 0.1 * (q - previous),
                 np.array([0.1, 2, 2]) * (q[12:15] - [0, 0, target.lean(time)]),
             ]
-            if frame and wrist_acceleration_weight:
+            if (frame and wrist_acceleration_weight) or (frame > 1 and joint_acceleration_weight):
                 acceleration = ((q - previous) / dt - previous_velocity) / dt
-                result.append(wrist_acceleration_weight * acceleration[wrists])
+                if wrist_acceleration_weight:
+                    result.append(wrist_acceleration_weight * acceleration[wrists])
+                if frame > 1 and joint_acceleration_weight:
+                    result.append(joint_acceleration_weight * acceleration)
             for side, (ids, lengths) in arms.items():
                 up, down, rotation = arm_targets[side]
                 shoulder, elbow, wrist = data.xpos[ids]

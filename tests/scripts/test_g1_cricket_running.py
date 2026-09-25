@@ -44,6 +44,47 @@ def test_wrist_temporal_regularization_reduces_acceleration_without_model_edits(
         retarget_running_delivery(model, times, hand, wrist_acceleration_weight=-1)
 
 
+@pytest.mark.parametrize("hand", ["right", "left"])
+def test_whole_body_smoothing_and_clearance_preserve_limits(hand, tmp_path, monkeypatch):
+    scene = tmp_path / "scene.xml"
+    G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(
+        ROOT / "src/unilab/assets/robots/g1/g1.xml", scene
+    )
+    model = mujoco.MjModel.from_xml_path(str(scene))
+    original = {
+        name: getattr(model, name).copy()
+        for name in ("body_mass", "body_inertia", "jnt_range", "actuator_forcerange")
+    }
+    times = np.arange(9) * 0.005
+    addresses = [model.joint(n).qposadr[0] for n in SDK_JOINTS]
+    baseline = retarget_running_delivery(model, times, hand)
+    pairs = set()
+    distance = mujoco.mj_geomDistance
+
+    def record_pair(model, data, a, b, *args):
+        pairs.add((model.geom(a).name, model.geom(b).name))
+        return distance(model, data, a, b, *args)
+
+    monkeypatch.setattr(mujoco, "mj_geomDistance", record_pair)
+    candidate = retarget_running_delivery(
+        model, times, hand, joint_acceleration_weight=0.0002, limb_clearance=True
+    )
+    energies = []
+    for reference in (baseline, candidate):
+        velocity = np.diff(reference["qpos"][:, addresses], axis=0) / 0.005
+        acceleration = np.diff(np.vstack((np.zeros(29), velocity)), axis=0) / 0.005
+        energies.append(np.square(acceleration).sum())
+    assert energies[1] < energies[0]
+    for side in ("left", "right"):
+        assert (f"{side}_hand_collision", f"{side}_thigh_collision") in pairs
+        assert (f"{side}_wrist_collision", f"{side}_thigh_collision") in pairs
+        assert (f"{side}_shoulder_yaw_collision", "torso_collision") in pairs
+    for name, value in original.items():
+        np.testing.assert_array_equal(getattr(model, name), value)
+    with pytest.raises(ValueError, match="finite and nonnegative"):
+        retarget_running_delivery(model, times, hand, joint_acceleration_weight=float("nan"))
+
+
 def test_review_includes_terminal_failure_frames(monkeypatch, tmp_path):
     selected = {}
 
