@@ -40,14 +40,15 @@ both three-second reference-controlled swings without falls or unintended
 contacts. Complete controller and PPO diagnostic videos, including failures,
 retain substep force, grip, joint-limit and bat-path measurements; they are not
 advertising clips or evidence of learned ball hitting.
-The [latest two-hand G1 video](g1_cricket_results/bimanual_soft_toss_v1/two_hand_ppo_soft_toss.mp4)
-now shows real simulated bat-ball contact and upright recovery in both stances,
-at 0.5x. These are frozen dry-swing PPO actors with bounded waist/ankle feedback,
-mechanical grips and no ball observation, not learned interception.
-The [complete 16-episode contact study](docs/g1_cricket_bimanual_contact.md) has no
-joint-stop or unintended-contact violations and keeps ball penetration below
-6 mm. Bat-path accuracy and one reference-control pitch-force resolution check
-still fail; no final G1 advertising reel or running-bowling result is claimed.
+The [latest two-hand G1 video](g1_cricket_results/bimanual_bounced_delivery_v1/two_hand_ppo_bounced_delivery.mp4)
+shows a one-bounce incoming delivery, two-handed hit and upright recovery in
+both stances at 0.5x. These are frozen dry-swing PPO actors with mechanical
+grips and no ball observation, not learned interception. The
+[complete eight-episode study](docs/g1_cricket_bounced_delivery.md) retains every
+reference/PPO outcome: all finish and hit, but bat-path accuracy and pitch-force
+resolution checks still fail. No final advertising reel is claimed.
+The earlier [soft-toss video and contact study](docs/g1_cricket_bimanual_contact.md)
+remain available; neither input is a regulation-speed delivery.
 **Running bowling is unfinished.** Both-hand references preserve the full
 approach, gather, overarm delivery and recovery, but physical controllers and
 the [PPO pilot](docs/g1_cricket_running_tracking.md) still fall before release.

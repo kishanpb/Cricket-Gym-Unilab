@@ -76,3 +76,53 @@ fine runs. Summarize with `scripts/report_g1_cricket_bounced_delivery.py`.
 Compare every matched resolution pair under the existing force, penetration
 and exit-velocity tolerances. Neither a nominal hit nor a rendered video clears
 failed physical/tracking gates or the separate unfinished running-bowling goal.
+
+## Complete Results
+
+Source `b070b49f635a4b1896736fe46a4b68a4013c2fae`. All eight episodes finish
+150 controls / three physical seconds. Every row has exactly one completed
+pitch bounce before loaded blade contact, negative incoming x velocity and
+forward first-exit vx above 1 m/s. Both frozen PPO actors and both reference
+controls hit; this does not establish a learned interception improvement.
+
+All rows pass pelvis height, grip, original joint/motor limits, unintended
+contacts, root tracking and joint tracking. All fail the unchanged 0.08 m
+bat-path gate. The complete 576,000 physical substeps are audited with exact
+independent native endpoint and sensor replay. All 74 source/input hashes plus
+the recorder hash per evaluation verify. No task parameters changed during
+these eight evaluations.
+
+Finest-resolution results, with zero residual retained alongside PPO:
+
+| Hand / control | Exit vx (m/s) | Blade peak force (N) | Blade penetration (mm) | Peak bat-path error (m) |
+| --- | ---: | ---: | ---: | ---: |
+| Right reference | 2.6031 | 647.90 | 4.090 | 0.13699 |
+| Right PPO | 2.2022 | 587.39 | 3.724 | 0.12848 |
+| Left reference | 2.5997 | 646.79 | 4.065 | 0.13659 |
+| Left PPO | 2.2971 | 613.97 | 3.855 | 0.13718 |
+
+Every ball-contact penetration remains below 6 mm. All four resolution pairs
+fail the pitch peak-force check: 1453.72 N versus 1378.99 N, a 5.4195% difference
+against the 5% bound. Right reference also fails blade-penetration convergence
+(3.787 versus 4.090 mm). All other paired checks pass. These failures are not
+waived because the ball is hit or the clip looks plausible. The ball-only
+rebound-height discrepancy above remains visible as additional evidence.
+
+The [complete eight-row report](../g1_cricket_results/bimanual_bounced_delivery_v1/summary.json)
+retains all four resolution comparisons and links all evaluation evidence by
+hash. The [two-hand slow-motion video](../g1_cricket_results/bimanual_bounced_delivery_v1/two_hand_ppo_bounced_delivery.mp4)
+contains both complete final-actor episodes at 0.5x, right then left: 350 frames
+at 25 fps, including terminal labels. It is a development diagnostic, not a
+qualified advertising reel. Full zero-residual videos remain for
+[right](../g1_cricket_results/bimanual_bounced_delivery_v1/right_fine/reference_only_diagnostic.mp4)
+and [left](../g1_cricket_results/bimanual_bounced_delivery_v1/left_fine/reference_only_diagnostic.mp4).
+All 1,050 original/combined video frames decode nonblank at 960 x 540, and the
+[fixed-time review sheet](../g1_cricket_results/bimanual_bounced_delivery_v1/bounced_delivery_contact_sheet.png)
+was inspected. Redundant individual PPO clips were removed after combining;
+the evaluation commands reproduce them before `--media` assembly.
+
+All 103 focused tests pass with warnings as errors, including reset-only ball
+state, native replay, contact ordering, preserved tracking/contact gates and
+both timestep-specific ball-only fixtures. No new actor training, independently
+learned Menagerie policy, running-bowling result, upstream PR or social launch
+is part of this comparison.
