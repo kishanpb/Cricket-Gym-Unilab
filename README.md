@@ -48,33 +48,15 @@ The [complete 16-episode contact study](docs/g1_cricket_bimanual_contact.md) has
 joint-stop or unintended-contact violations and keeps ball penetration below
 6 mm. Bat-path accuracy and one reference-control pitch-force resolution check
 still fail; no final G1 advertising reel or running-bowling result is claimed.
-The [whole-body running-delivery reference](docs/g1_cricket_running_reference.md)
-now follows the earlier approach/gather/overarm/recovery structure in both hands.
-Its offline targets are not learned motion: physical PD baselines fall before
-delivery. A G1-adapted front raise now keeps arm tracking within 5.25 mm with
-no audited intersections across both complete references; dynamic balance is
-still unfinished.
-The [native whole-body running PPO pilot](docs/g1_cricket_running_tracking.md)
-now trains all 29 joints with simulated holder-load/contact observations.
-Moving the reference lane outward lets frozen right/left policies reach 0.66 /
-0.72 s, but both still stop before release; complete diagnostic videos and both
-reference controls are retained. The [COM and airborne rotation repair](docs/g1_cricket_running_reference.md#airborne-rotation-repair)
-now accounts for the held ball's momentum and improves both-hand foot geometry.
-Its complete physical PD trials still fall before release: the stance ankle
-already crosses its joint stop before takeoff. A [substep stance comparison](docs/g1_cricket_running_stance.md)
-rules out disabling ankle balance, which makes both failures earlier and worse.
-The subsequent [whole-body contact-control comparisons](docs/g1_cricket_contact_control.md)
-delay some joint violations but still fall before release; foot tracking alone
-does not solve multi-step balance or leg collisions.
-The [native 120 ms preview experiment](docs/g1_cricket_preview_control.md)
-avoids joint-limit crossings in both fixed episodes, but still falls at
-0.86/1.04 s with unwanted arm/body contacts, before either delivery.
-The [support-wrench audit and lateral weight-shift repair](docs/g1_cricket_running_support.md)
-identify an inconsistent lateral COM target, but forward support and physical
-balance remain unresolved; the repaired reference is not a bowling result.
-Full reference/physics videos
-remain development diagnostics, not the requested bowling showcase; no new PPO
-was trained on them.
+**Running bowling is unfinished.** Both-hand references preserve the full
+approach, gather, overarm delivery and recovery, but physical controllers and
+the [PPO pilot](docs/g1_cricket_running_tracking.md) still fall before release.
+The latest [support-wrench audit and lateral weight-shift repair](docs/g1_cricket_running_support.md)
+correct part of the reference's balance mismatch; forward support and actual
+stability remain unresolved. Full reference and failed physical videos are
+development diagnostics, not learned bowling showcases. The research log
+retains the earlier [contact-control](docs/g1_cricket_contact_control.md) and
+[physics-preview](docs/g1_cricket_preview_control.md) comparisons.
 
 Earlier one-arm contact experiments and failed bowling trials remain in the
 research log, including [force/touch diagnostic video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)
