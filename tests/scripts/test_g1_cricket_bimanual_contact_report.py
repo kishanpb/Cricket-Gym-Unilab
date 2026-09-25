@@ -11,6 +11,7 @@ import pytest
 from evaluate_g1_cricket_tracking import BallContactSequence
 from report_g1_cricket_bimanual_contact import compare_resolution, summarize_row
 from report_g1_cricket_bounced_delivery import build_report, summarize_bounced_row
+from report_g1_cricket_motor_lead import build_report as build_motor_lead_report
 
 
 @pytest.fixture
@@ -56,6 +57,62 @@ def test_bat_accuracy_gate_not_removed_by_contact(row):
     result = summarize_row(row)
     assert all(result["contact_checks"].values())
     assert not result["all_checks_pass"]
+
+
+def test_motor_lead_report_keeps_every_case_and_rejects_one_failed_candidate(row, tmp_path):
+    runtime_hash = hashlib.sha256(Path(mjbatch.held_control.__file__).read_bytes()).hexdigest()
+    sequence = BallContactSequence()
+    position = np.array([0.8, 0, 0.036])
+    down, up = np.array([-3, 0, -6]), np.array([-2.3, 0, 3])
+    sequence.update(1.0, position, down, down, True, False)
+    sequence.update(1.02, position, up, up, False, False)
+    sequence.update(1.4, position, down, up, False, True)
+    row["trace"][0]["substep_audit"]["ball_contact_sequence"] = sequence.snapshot()
+    for lead in (0, 1):
+        for resolution, dt in (("fine", 0.00003125), ("finest", 0.000015625)):
+            for hand in ("right", "left"):
+                directory = tmp_path / f"lead{lead}_{hand}_{resolution}"
+                directory.mkdir()
+                rows = []
+                for controller in ("reference_only", "ppo"):
+                    candidate = deepcopy(row)
+                    candidate.update(hand=hand, controller=controller)
+                    candidate["trace"][0]["bat_tracking_error_m"] = 0.09 if lead == 0 else 0.07
+                    rows.append(candidate)
+                report = {
+                    "evaluation_overrides": {
+                        "waist_tracking_gain": 1,
+                        "root_position_gain": 4,
+                        "lookahead_frames": lead,
+                        "contact_dt": dt,
+                        "soft_toss": False,
+                        "bounced_delivery": True,
+                        "compact_substeps": True,
+                    },
+                    "input_sha256": {},
+                    "runtime_source_sha256": {"mjbatch.held_control": runtime_hash},
+                    "rows": rows,
+                }
+                path = directory / "evaluation.json"
+                path.write_text(json.dumps(report))
+    result = build_motor_lead_report(tmp_path)
+    assert len(result["rows"]) == 16
+    assert len(result["timing_comparisons"]) == len(result["resolution_comparisons"]) == 8
+    assert result["candidate_qualifies"]
+    assert all(
+        pair["peak_bat_error_change_m"] == pytest.approx(-0.02)
+        for pair in result["timing_comparisons"]
+    )
+    report["rows"][1]["trace"][0]["bat_tracking_error_m"] = 0.081
+    path.write_text(json.dumps(report))
+    assert not build_motor_lead_report(tmp_path)["candidate_qualifies"]
+    report["evaluation_overrides"]["lookahead_frames"] = 0
+    path.write_text(json.dumps(report))
+    with pytest.raises(ValueError, match="protocol"):
+        build_motor_lead_report(tmp_path)
+    path.unlink()
+    with pytest.raises(FileNotFoundError):
+        build_motor_lead_report(tmp_path)
 
 
 def test_completion_uses_all_150_controls_not_float32_clock(row):

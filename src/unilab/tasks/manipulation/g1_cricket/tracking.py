@@ -80,6 +80,7 @@ class CricketReferenceAction(ActionTerm):
 @dataclass(kw_only=True)
 class SupportedCricketReferenceActionCfg(CricketReferenceActionCfg):
     reference_file: str
+    lookahead_frames: int = 0
 
     def build(self, env):
         return SupportedCricketReferenceAction(self, env)
@@ -87,6 +88,8 @@ class SupportedCricketReferenceActionCfg(CricketReferenceActionCfg):
 
 class SupportedCricketReferenceAction(CricketReferenceAction):
     def __init__(self, cfg, env):
+        if type(cfg.lookahead_frames) is not int or cfg.lookahead_frames < 0:
+            raise ValueError("lookahead_frames must be a nonnegative integer")
         super().__init__(cfg, env)
         model = env.get_playback_model()
         joints = np.array([model.joint(name).id for name in SDK_JOINTS])
@@ -116,9 +119,17 @@ class SupportedCricketReferenceAction(CricketReferenceAction):
         )
 
     def _reference_with_feedforward(self, actions):
-        super().process_actions(actions)
-        self.target += self.velocity_gain * self.command.joint_vel
-        self.target += self.gravity_offset[self.command.time_steps]
+        frames = self.command.time_steps
+        if self.cfg.lookahead_frames:
+            frames = np.minimum(frames + self.cfg.lookahead_frames, len(self.gravity_offset) - 1)
+            motion = self.command.motion.get_motion_at_frame(frames)
+            self._raw[:] = actions
+            self.target[:] = motion.joint_pos + self.cfg.scale * np.clip(actions, -1, 1)
+            self.target += self.velocity_gain * motion.joint_vel
+        else:
+            super().process_actions(actions)
+            self.target += self.velocity_gain * self.command.joint_vel
+        self.target += self.gravity_offset[frames]
 
     def process_actions(self, actions):
         self._reference_with_feedforward(actions)

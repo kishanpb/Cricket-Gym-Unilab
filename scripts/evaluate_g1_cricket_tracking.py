@@ -251,13 +251,17 @@ def evaluate(
     output=None,
     waist_tracking_gain=None,
     root_position_gain=None,
+    lookahead_frames=None,
     contact_dt=None,
     soft_toss=False,
     bounced_delivery=False,
     compact_substeps=False,
 ):
     if (
-        waist_tracking_gain is not None or root_position_gain is not None or contact_dt is not None
+        waist_tracking_gain is not None
+        or root_position_gain is not None
+        or lookahead_frames is not None
+        or contact_dt is not None
     ) and (output is None or output.resolve() == directory.resolve()):
         raise ValueError("controller variants require a separate output directory")
     if soft_toss and bounced_delivery:
@@ -282,6 +286,10 @@ def evaluate(
     if root_position_gain is not None:
         owner.env.actions.reference.root_position_gain = root_position_gain
         evaluation_overrides["root_position_gain"] = root_position_gain
+    if lookahead_frames is not None:
+        OmegaConf.set_struct(owner, False)
+        owner.env.actions.reference.lookahead_frames = lookahead_frames
+        evaluation_overrides["lookahead_frames"] = lookahead_frames
     if contact_dt is not None:
         owner.env.sim_dt = contact_dt
         evaluation_overrides.update(contact_dt=contact_dt, soft_toss=soft_toss)
@@ -551,6 +559,7 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path)
     parser.add_argument("--waist-tracking-gain", type=float)
     parser.add_argument("--root-position-gain", type=float)
+    parser.add_argument("--lookahead-frames", type=int)
     parser.add_argument("--contact-dt", type=float)
     parser.add_argument("--soft-toss", action="store_true")
     parser.add_argument("--bounced-delivery", action="store_true")
@@ -562,6 +571,7 @@ if __name__ == "__main__":
         output=args.output,
         waist_tracking_gain=args.waist_tracking_gain,
         root_position_gain=args.root_position_gain,
+        lookahead_frames=args.lookahead_frames,
         contact_dt=args.contact_dt,
         soft_toss=args.soft_toss,
         bounced_delivery=args.bounced_delivery,
