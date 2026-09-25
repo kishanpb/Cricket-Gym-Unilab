@@ -18,11 +18,17 @@ class SubstepForwardExitReward(SeparationReward):
         self.pending[ids] = False
         self.separation_velocity[ids] = 0
 
-    def observe(self, sensors, integrated_velocity):
-        count = sensors.reshape(*sensors.shape[:2], 4, 17)[..., 0]
-        if np.any(count > 4):
+    def contact_rows(self, sensors):
+        rows = sensors.reshape(*sensors.shape[:2], 4, 17)
+        if np.any(rows[..., 0] > 4):
             raise RuntimeError("G1 cricket contact sensor capacity exceeded")
-        touching = (count > 0).any(axis=-1)
+        return rows
+
+    def touching(self, sensors):
+        return (self.contact_rows(sensors)[..., 0] > 0).any(axis=-1)
+
+    def observe(self, sensors, integrated_velocity):
+        touching = self.touching(sensors)
         seen = np.maximum.accumulate(touching, axis=1) | self.hit_seen[:, None]
         separated = seen & ~touching & ~(self.scored | self.pending)[:, None]
         fresh = separated.any(axis=1)

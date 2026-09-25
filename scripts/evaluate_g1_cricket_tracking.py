@@ -17,6 +17,7 @@ from uni_rl.algos.rsl_rl import RslRlVecEnvWrapper, normalize_ppo_train_cfg
 
 from unilab.base import registry
 from unilab.base.config_adapter import BackendAdapter
+from unilab.tasks.manipulation.g1_cricket.batting_learning import reference_bat_positions
 from unilab.training import algo_config_dict
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,16 +55,6 @@ class BallContactSequence:
             "pitch_events": [dict(event) for event in self.pitch_events],
             "first_blade_contact": self.first_blade_contact,
         }
-
-
-def reference_bat_positions(model, poses):
-    data = mujoco.MjData(model)
-    positions = []
-    for pose in poses:
-        data.qpos[:] = pose
-        mujoco.mj_forward(model, data)
-        positions.append(data.site("bat_center").xpos.copy())
-    return np.asarray(positions)
 
 
 class TrackingReplay:
@@ -274,6 +265,9 @@ def evaluate(
     summary = json.loads((directory / "run_summary.json").read_text())
     checkpoint = Path(summary["last_checkpoint"])
     owner = OmegaConf.create(saved["config"])
+    learned_batting = owner.training.task_name == "G1CricketBimanualLearning"
+    if learned_batting and (not bounced_delivery or contact_dt is None):
+        raise ValueError("batting learning evaluation requires bounced delivery and contact_dt")
     evaluation_overrides = {}
     if compact_substeps:
         OmegaConf.set_struct(owner, False)
@@ -344,7 +338,11 @@ def evaluate(
     override["auto_reset"] = False
     registry.ensure_registries()
     env = registry.make(
-        "G1CricketBimanualContact" if contact_dt is not None else "G1CricketBimanualTracking",
+        "G1CricketBimanualLearning"
+        if learned_batting
+        else "G1CricketBimanualContact"
+        if contact_dt is not None
+        else "G1CricketBimanualTracking",
         num_envs=1,
         sim_backend="mujoco",
         env_cfg_override=override,
@@ -476,7 +474,9 @@ def evaluate(
                         )
                         draw.text(
                             (12, 34),
-                            "Frozen dry-swing actor, no ball observation | mechanical grips | 0.5x"
+                            "Ball/contact-observed PPO task, fixed feed | mechanical grips | 0.5x"
+                            if learned_batting
+                            else "Frozen dry-swing actor, no ball observation | mechanical grips | 0.5x"
                             if soft_toss or bounced_delivery
                             else "Development episode, no ball-hit claim | mechanical grips | 0.5x",
                             font=font,
@@ -524,7 +524,9 @@ def evaluate(
     finally:
         env.close()
     report = {
-        "scope": "frozen_dry_swing_actor_bounced_delivery_not_learned_interception"
+        "scope": "ball_contact_observed_ppo_nominal_bounced_delivery_not_held_out"
+        if learned_batting
+        else "frozen_dry_swing_actor_bounced_delivery_not_learned_interception"
         if bounced_delivery
         else "frozen_dry_swing_actor_soft_toss_not_learned_interception"
         if soft_toss

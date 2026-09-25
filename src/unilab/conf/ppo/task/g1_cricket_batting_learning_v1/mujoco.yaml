@@ -1,0 +1,57 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_balanced_tracking/mujoco
+  - _self_
+
+training:
+  task_name: G1CricketBimanualLearning
+algo:
+  num_envs: 8
+  max_iterations: 256
+  save_interval: 256
+  policy:
+    init_noise_std: 0.08
+env:
+  sim_dt: 0.00003125
+  mujoco_observe_substeps: true
+  actions:
+    reference:
+      scale: 0.05
+      waist_tracking_gain: 1.0
+      root_position_gain: 4.0
+      lookahead_frames: 0
+  scene:
+    entities:
+      ball:
+        root_body_name: cricket_ball
+        body_names: [cricket_ball]
+  events:
+    incoming_delivery:
+      func: unilab.tasks.manipulation.g1_cricket.bimanual_contact.ResetBouncedDelivery
+      mode: reset
+  observations:
+    actor:
+      terms:
+        ball: &ball_obs
+          func: unilab.tasks.manipulation.g1_cricket.task.BallObservation
+        contact: &contact_obs
+          func: unilab.tasks.manipulation.g1_cricket.task.ContactObservation
+        bat_error: &bat_obs
+          func: unilab.tasks.manipulation.g1_cricket.batting_learning.BatReferenceObservation
+          params:
+            reference_file: ${env.actions.reference.reference_file}
+    critic:
+      terms:
+        ball: *ball_obs
+        contact: *contact_obs
+        bat_error: *bat_obs
+reward:
+  bat_tracking:
+    func: unilab.tasks.manipulation.g1_cricket.batting_learning.BatTrackingReward
+    weight: 2.0
+    params:
+      reference_file: ${env.actions.reference.reference_file}
+      std: 0.08
+  loaded_exit:
+    func: unilab.tasks.manipulation.g1_cricket.batting_learning.LoadedForwardExitReward
+    weight: 1.0

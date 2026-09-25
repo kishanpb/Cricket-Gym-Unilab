@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_batting_learning_v1/mujoco
+  - _self_
+
+env:
+  mujoco_substep_engine: mjbatch
+  mujoco_group_identical_models: true
+  mujoco_compact_substeps: true

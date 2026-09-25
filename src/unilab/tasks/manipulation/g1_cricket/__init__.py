@@ -17,4 +17,7 @@ registry.register_env("G1CricketBimanualTracking", make_g1_cricket_env, sim_back
 registry.register_env_config("G1CricketBimanualContact", G1BimanualContactCfg)
 registry.register_env("G1CricketBimanualContact", make_g1_cricket_env, sim_backend="mujoco")
 
+registry.register_env_config("G1CricketBimanualLearning", G1BimanualContactCfg)
+registry.register_env("G1CricketBimanualLearning", make_g1_cricket_env, sim_backend="mujoco")
+
 __all__ = ["G1CricketCfg", "make_g1_cricket_env"]
