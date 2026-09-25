@@ -76,6 +76,11 @@ use the external Unitree locomotion prior: all eight trials travel 2.82-2.85 m
 and stop upright, but all fail foot-slip checks and some drift sideways.
 Actual states and motor commands are retained for whole-body learning;
 these are carry-only diagnostics, not locally learned running deliveries.
+The [measured-command PPO follow-up](docs/g1_cricket_measured_approach.md#complete-ppo-results)
+verifies exact command transfer, then trains both 29-joint actors for 49,152
+transitions each. All eight evaluations are retained: PPO loses balance at
+2.76 s right and 2.18 s left, and fixed reference commands are timestep-sensitive.
+Both uncut failed videos are available; neither is promoted as bowling.
 The latest [planted-foot reference and joint-tracking comparison](docs/g1_cricket_ground_momentum.md#foreaft-pendulum-comparison)
 removes audited reference self-intersections and passes sampled support bounds,
 but every physical trial still falls before release. Stronger tracking gains

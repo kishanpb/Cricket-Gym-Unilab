@@ -1,0 +1,385 @@
+{
+  "scope": "native iteration-indexed scalars; redundant wall-time-indexed /time series omitted; no reconstructed KL or clip-fraction estimates",
+  "kl_series_available": false,
+  "clip_fraction_series_available": false,
+  "scalar_tags": {
+    "Episode_Reward/action_rate_l2": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": -0.019322093576192856,
+      "maximum": -0.008103596977889538,
+      "final": -0.019322093576192856
+    },
+    "Episode_Reward/joint_limit": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": -1.6594305634498596e-05,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "Episode_Reward/lane": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.026316165924072266,
+      "maximum": 0.24839210510253906,
+      "final": 0.13092847168445587
+    },
+    "Episode_Reward/loaded_slip": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": -0.07992531359195709,
+      "maximum": -4.3811592149722856e-06,
+      "final": -0.05135861784219742
+    },
+    "Episode_Reward/motion_body_ang_vel": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.07818969339132309,
+      "maximum": 0.22577404975891113,
+      "final": 0.19977453351020813
+    },
+    "Episode_Reward/motion_body_lin_vel": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.07815107703208923,
+      "maximum": 0.22018557786941528,
+      "final": 0.18702435493469238
+    },
+    "Episode_Reward/motion_body_ori": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.07870349287986755,
+      "maximum": 0.21786025166511536,
+      "final": 0.18366585671901703
+    },
+    "Episode_Reward/motion_body_pos": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.09016519039869308,
+      "maximum": 0.2358197122812271,
+      "final": 0.213380828499794
+    },
+    "Episode_Reward/motion_global_root_ori": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.03817896172404289,
+      "maximum": 0.10753022134304047,
+      "final": 0.08663970232009888
+    },
+    "Episode_Reward/motion_global_root_pos": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.04474513605237007,
+      "maximum": 0.11248771101236343,
+      "final": 0.0960967093706131
+    },
+    "Episode_Reward/motion_joint_pos": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.09032797068357468,
+      "maximum": 0.24101504683494568,
+      "final": 0.22140976786613464
+    },
+    "Episode_Reward/motion_joint_vel": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "Episode_Termination/anchor_ori": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "Episode_Termination/anchor_pos": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.6666666865348816,
+      "final": 0.25
+    },
+    "Episode_Termination/clip_end": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "final": 0.0
+    },
+    "Episode_Termination/ee_body_pos": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.6666666865348816,
+      "final": 0.25
+    },
+    "Episode_Termination/fallen": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "final": 1.0
+    },
+    "Episode_Termination/incidental_bat_support": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "Episode_Termination/time_out": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "Loss/entropy": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -25.661073684692383,
+      "maximum": -23.898784637451172,
+      "final": -23.898784637451172
+    },
+    "Loss/learning_rate": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 1.1561020073713735e-05,
+      "maximum": 5.852766480529681e-05,
+      "final": 2.60122942563612e-05
+    },
+    "Loss/surrogate": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -0.06623674184083939,
+      "maximum": 0.07424846291542053,
+      "final": -0.047169577330350876
+    },
+    "Loss/value": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.12360876798629761,
+      "maximum": 7.9333038330078125,
+      "final": 0.5162947773933411
+    },
+    "Metrics/motion/error_anchor_ang_vel": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.3394778370857239,
+      "maximum": 3.3693408966064453,
+      "final": 2.203575372695923
+    },
+    "Metrics/motion/error_anchor_lin_vel": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.1921689361333847,
+      "maximum": 2.0182595252990723,
+      "final": 2.0182595252990723
+    },
+    "Metrics/motion/error_anchor_pos": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.06996048986911774,
+      "maximum": 0.6072891354560852,
+      "final": 0.6072891354560852
+    },
+    "Metrics/motion/error_anchor_rot": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.11877474188804626,
+      "maximum": 0.9478090405464172,
+      "final": 0.8913377523422241
+    },
+    "Metrics/motion/error_body_ang_vel": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.26780691742897034,
+      "maximum": 3.623258590698242,
+      "final": 2.672968626022339
+    },
+    "Metrics/motion/error_body_lin_vel": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.1554431915283203,
+      "maximum": 1.7264537811279297,
+      "final": 1.7264537811279297
+    },
+    "Metrics/motion/error_body_pos": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.02807704545557499,
+      "maximum": 0.3339335322380066,
+      "final": 0.32672667503356934
+    },
+    "Metrics/motion/error_body_rot": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.08942992240190506,
+      "maximum": 0.8701874017715454,
+      "final": 0.8216667175292969
+    },
+    "Metrics/motion/error_joint_pos": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.12914380431175232,
+      "maximum": 0.6266209483146667,
+      "final": 0.4151545763015747
+    },
+    "Metrics/motion/error_joint_vel": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.6054069995880127,
+      "maximum": 6.852501392364502,
+      "final": 3.4806556701660156
+    },
+    "Metrics/motion/sampling_entropy": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 1.0,
+      "maximum": 1.0,
+      "final": 1.0
+    },
+    "Metrics/motion/sampling_top1_bin": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.5,
+      "maximum": 0.5,
+      "final": 0.5
+    },
+    "Metrics/motion/sampling_top1_prob": {
+      "count": 23,
+      "all_finite": true,
+      "minimum": 0.1111111119389534,
+      "maximum": 0.111111119389534,
+      "final": 0.1111111119389534
+    },
+    "Perf/collection_time": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 6.03424596786499,
+      "maximum": 8.026456832885742,
+      "final": 7.153063774108887
+    },
+    "Perf/learning_time": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.015926122665405273,
+      "maximum": 0.048066139221191406,
+      "final": 0.016520023345947266
+    },
+    "Perf/total_fps": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 23.0,
+      "maximum": 31.0,
+      "final": 26.0
+    },
+    "Policy/mean_std": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.09993653744459152,
+      "maximum": 0.10630986094474792,
+      "final": 0.10630986094474792
+    },
+    "Train/mean_episode_length": {
+      "count": 254,
+      "all_finite": true,
+      "minimum": 66.33333587646484,
+      "maximum": 84.69000244140625,
+      "final": 81.88999938964844
+    },
+    "Train/mean_reward": {
+      "count": 254,
+      "all_finite": true,
+      "minimum": 7.408868789672852,
+      "maximum": 9.570588111877441,
+      "final": 9.148514747619629
+    },
+    "reward/action_rate_l2": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -0.08481071144342422,
+      "maximum": -0.05878186598420143,
+      "final": -0.07451250404119492
+    },
+    "reward/joint_limit": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -0.0002526205498725176,
+      "maximum": 0.0,
+      "final": 0.0
+    },
+    "reward/lane": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.19241131842136383,
+      "maximum": 0.9609537124633789,
+      "final": 0.37068238854408264
+    },
+    "reward/loaded_slip": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": -0.656846821308136,
+      "maximum": -0.006739835720509291,
+      "final": -0.09226370602846146
+    },
+    "reward/motion_body_ang_vel": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.7738034129142761,
+      "maximum": 0.98972088098526,
+      "final": 0.9428518414497375
+    },
+    "reward/motion_body_lin_vel": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.6593855023384094,
+      "maximum": 0.9926998019218445,
+      "final": 0.9425557255744934
+    },
+    "reward/motion_body_ori": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.6277741193771362,
+      "maximum": 0.9949677586555481,
+      "final": 0.9455710053443909
+    },
+    "reward/motion_body_pos": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.8465743064880371,
+      "maximum": 0.9978094100952148,
+      "final": 0.9754818081855774
+    },
+    "reward/motion_global_root_ori": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.27855169773101807,
+      "maximum": 0.4983271062374115,
+      "final": 0.46945443749427795
+    },
+    "reward/motion_global_root_pos": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.34027573466300964,
+      "maximum": 0.49927449226379395,
+      "final": 0.48078858852386475
+    },
+    "reward/motion_joint_pos": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.879309356212616,
+      "maximum": 0.9959344863891602,
+      "final": 0.9786712527275085
+    },
+    "reward/motion_joint_vel": {
+      "count": 256,
+      "all_finite": true,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "final": 0.0
+    }
+  }
+}

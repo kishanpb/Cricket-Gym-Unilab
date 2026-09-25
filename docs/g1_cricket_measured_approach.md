@@ -53,9 +53,9 @@ reports exact equality separately from numeric error, and never clears the
 source's slip/drift failures. It does not perform an independent new contact
 audit or demonstrate that an open-loop target sequence is a learned policy.
 
-Before PPO, add learning signals for the failed contact slip and lane tracking,
-with explicit sensor timing. Existing motion imitation alone would reward
-following the sideways-drifting teacher. A training return cannot clear the
+The PPO pilot below adds contact-slip and lane-tracking signals with explicit
+sensor timing. Motion imitation alone would reward following the sideways-drifting
+teacher. A training return cannot clear the
 unchanged physical gates; final actors must undergo complete from-rest,
 both-hand, two-resolution evaluation, including failed outcomes.
 The subsequent moving gather, legal overarm delivery and recovery must be
@@ -68,7 +68,8 @@ retains all eight hand/seed/timestep cases. Each executes exactly 400 intervals
 and truncates without a fall. Every recorded native state, all executed motor
 targets and interval peak holder loads match the source exactly, including
 the terminal state: maximum qpos and qvel error are both zero in every case.
-All 57 recorded input hashes and eight output hashes verify. This establishes
+All 57 recorded input hashes verify against source commit
+`06acc0f671977115813b2341744bfe7765c56a74`; eight output hashes verify. This establishes
 command-preserving transfer only; all source slip/drift failures remain.
 
 ## Contact-Aware PPO Protocol
@@ -109,3 +110,69 @@ PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run python \
 ```
 
 Repeat with `left` and `ppo_left`; do not tune the budget or gates after results.
+
+## Complete PPO Results
+
+**Rejected: neither final actor qualifies.** Both independent runs completed
+49,152 transitions, with 256 iterations and 54 finite scalar series retained
+per hand. Final checkpoints are finite; no checkpoint selection was used.
+Training source is `91c55476d99c868ac659f34db2c5fee293a9df04`.
+The left run records a dirty tree from generated/untracked work; task sources
+were held fixed during both runs. Training took 1,801.9 s right and 1,778.9 s left.
+
+The [complete report](../g1_cricket_results/approach_learning_v1/summary.json)
+retains every reference/PPO, hand and timestep outcome. All start from frame zero
+with seed 1; this is a fixed-feed development comparison, not generalization.
+Here both timesteps execute the **same 62.5-us teacher commands**, unlike the
+earlier exact-replay test that uses each timestep's own recorded commands.
+
+| Hand | Controller | Physics dt (us) | Duration (s) | Forward travel (m) | Peak loaded slip (m/s) |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Right | Zero residual | 62.5 | 8.00 | 2.8428 | 2.2563 |
+| Right | Zero residual | 31.25 | 4.46 | 1.8542 | 2.1872 |
+| Right | Final PPO | 62.5 | 2.76 | 1.1916 | 2.3725 |
+| Right | Final PPO | 31.25 | 2.76 | 1.1893 | 2.3711 |
+| Left | Zero residual | 62.5 | 8.00 | 2.8271 | 2.5478 |
+| Left | Zero residual | 31.25 | 4.14 | 2.4261 | 2.8311 |
+| Left | Final PPO | 62.5 | 2.18 | -0.4269 | 2.7661 |
+| Left | Final PPO | 31.25 | 2.18 | -0.4260 | 2.7623 |
+
+Both PPO actors lose balance before cruise/recovery; the left actor moves
+backward and also fails initial settling and repeated steps. All eight outcomes
+fail the unchanged 0.2 m/s loaded-slip threshold. The reference completes at its
+original timestep but loses balance when the same open-loop commands are reused
+at the finer timestep. Both reference resolution comparisons fail; both PPO
+comparisons agree on the failures, not on successful locomotion.
+
+All 768,320 audited substeps retain exact native endpoint/sensor replay.
+Contact-slip reward measurements agree with independent native contact-point
+velocity to at most 4.45e-16 mean-square error. The evaluator verifies 100 input
+hashes plus its runtime source hash; the final package verifies 23 artifact hashes.
+PPO qualification is independent of baseline qualification, and numerical/replay
+errors remain explicit failed rows with partial traces, never silently discarded.
+
+The full, predeclared finer-grid outcomes are
+[right](../g1_cricket_results/approach_learning_v1/evaluation/right_ppo_approach.mp4)
+and [left](../g1_cricket_results/approach_learning_v1/evaluation/left_ppo_approach.mp4).
+All 139/110 frames decode nonblank at 960x540, 25 fps and 0.5x physical speed.
+Fixed-time contact sheets include the terminal failure and were inspected.
+These are failed approach diagnostics, **not running-bowling highlights**.
+
+```sh
+PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run python \
+  scripts/evaluate_g1_cricket_approach_learning.py \
+  g1_cricket_results/approach_learning_v1 --render
+PYTHONPATH=src:scripts uv run python scripts/report_g1_cricket_approach_learning.py \
+  g1_cricket_results/approach_learning_v1
+```
+
+The evaluator requires a new `evaluation` directory and does not overwrite a
+completed comparison. Retained scalars replace redundant TensorBoard events;
+initial checkpoints and unrelated installed-runtime diff snapshots were removed.
+
+Next, restore state-feedback stability before another PPO run or a moving gather:
+the nominal motor tape itself is timestep-sensitive. A bounded feedback controller
+must complete both-hand, two-resolution approaches with the original gates before
+adding continuous gather, legal overarm release and recovery. Increasing training
+budget, changing friction, or splicing a delivery onto a stopped pose is not the
+conclusion supported by this pilot.
