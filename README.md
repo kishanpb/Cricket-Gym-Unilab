@@ -67,6 +67,9 @@ right PPO delays instability, left PPO regresses, and neither passes the step ga
 The [uniform-start training comparison](docs/g1_cricket_first_step_uniform.md)
 improves left-hand landing but regresses the right hand; all eight from-rest
 evaluations still fail. Neither result is a running-bowling highlight.
+The [world-frame foot-reward trial](docs/g1_cricket_first_step_foot_reward.md)
+regresses both hands and is not promoted; full traces and failed videos remain
+available for diagnosis, not as qualified highlights.
 Full reference and failed physical videos are
 development diagnostics, not learned bowling showcases. The research log
 retains the earlier [contact-control](docs/g1_cricket_contact_control.md) and

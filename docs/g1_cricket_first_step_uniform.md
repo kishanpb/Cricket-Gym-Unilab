@@ -90,6 +90,11 @@ events and unrelated installed-runtime diffs were removed after validation.
 
 ## Next Comparison
 
+The proposed comparison below is now
+[implemented and evaluated](g1_cricket_first_step_foot_reward.md): both hands
+regress and neither passes. The original uniform-start results above remain
+unchanged.
+
 Do not extend the same runs unchanged. The current whole-body position reward
 uses a 0.3 m scale and reference-relative body positions, while qualification
 requires world-frame foot-path error at most 0.02 m and planted-foot motion at
@@ -101,8 +106,8 @@ body origins as the existing foot-target audit: weight 1 and exponential
 squared-error scale 0.02 m, with maximum position error across both feet.
 Keep uniform sampling,
 all other rewards, reference, observations, residual scale, robot and budget
-fixed; train both hands from scratch. This is a proposed reward-axis experiment,
-not implemented or computed here. Keep every from-rest evaluation and the full
+fixed; train both hands from scratch. This was the predeclared reward-axis
+experiment; the linked follow-up retains every result. Keep every from-rest evaluation and the full
 physical gates unchanged; reward improvement cannot qualify a step, run-up,
 delivery or showcase. Ball-aware batting, repeated strides, delivery/recovery
 and independent Menagerie-model learning remain unfinished.
