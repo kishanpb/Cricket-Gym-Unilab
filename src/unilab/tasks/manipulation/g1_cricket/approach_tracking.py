@@ -105,6 +105,8 @@ class MeasuredApproachActionCfg(CricketReferenceActionCfg):
 
 
 class MeasuredApproachAction(CricketReferenceAction):
+    sensor_names = HOLDER_SENSORS
+
     def __init__(self, cfg, env):
         super().__init__(cfg, env)
         self.released = np.zeros(env.num_envs, dtype=bool)
@@ -112,7 +114,7 @@ class MeasuredApproachAction(CricketReferenceAction):
         self.impulse_world = np.zeros((env.num_envs, 3))
         self.touch_fraction = np.zeros(env.num_envs)
         self.constraints = env.equality_constraints
-        env.set_substep_observer(HOLDER_SENSORS, "cricket_ball", self.observe)
+        env.set_substep_observer(self.sensor_names, "cricket_ball", self.observe)
 
     @property
     def processed_action(self):

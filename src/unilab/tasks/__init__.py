@@ -20,6 +20,7 @@ __unilab_registry_modules__ = (
     "unilab.tasks.manipulation.g1_cricket.delivery",
     "unilab.tasks.manipulation.g1_cricket.pitch_contact",
     "unilab.tasks.manipulation.g1_cricket.approach",
+    "unilab.tasks.manipulation.g1_cricket.approach_learning",
     "unilab.tasks.manipulation.g1_cricket.impedance",
     "unilab.tasks.motion_tracking.g1",
     "unilab.tasks.motion_tracking.x2",

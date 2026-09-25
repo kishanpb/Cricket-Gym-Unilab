@@ -70,3 +70,42 @@ targets and interval peak holder loads match the source exactly, including
 the terminal state: maximum qpos and qvel error are both zero in every case.
 All 57 recorded input hashes and eight output hashes verify. This establishes
 command-preserving transfer only; all source slip/drift failures remain.
+
+## Contact-Aware PPO Protocol
+
+`task=g1_cricket_approach_learning/mjbatch` adds only foot-frame sensors and
+learning terms to the measured-command task. Sensor additions do not alter
+robot geometry, gains, motor limits, collision parameters or holder compliance.
+Each foot's solved-frame origin, linear velocity and angular velocity share
+the contact sensor's substep. Contact-point velocity is
+`v_origin + omega x (contact_position - origin)`; remove its normal component
+and include contacts with normal load above 1 N. Per-foot maximum contact
+speed is squared and averaged over every equal-duration physics substep.
+The reward subtracts five times the sum of these two mean-squared speeds.
+An additional unit-weight lane reward is `exp(-(lateral_error / 0.1 m)^2)`
+against the initial lane, not the drifting reference. Other rewards remain.
+These integrated learning costs do not replace peak-speed or stance-slip gates.
+
+The actor/critic additionally observe per-foot RMS slip, average normal load
+and lane error. Native replay tests compare the contact-point speed at every
+substep of frame 183 for both hands, including the measured peak-sliding phase;
+sensor timing is not approximated with integrated-end entity velocities.
+
+Train fresh right/left PPO actors independently with seed 1, eight CPU
+environments, 256 updates and 24 steps/update (49,152 transitions per hand).
+Uniform starts use the fixed seed-5301/62.5-us teacher for the corresponding
+hand. Retain final actors without checkpoint selection. Evaluate zero residual
+and each final actor from frame zero at 62.5 and 31.25 us, all eight outcomes.
+The identical teacher commands remain fixed at both evaluation timesteps.
+Use the original complete approach gates and independent native contact replay;
+render both finer-grid PPO outcomes including any failures. No running-delivery
+or local-learning success claim follows from the teacher replay above.
+
+```sh
+PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run python \
+  src/unilab/scripts/train_rsl_rl.py \
+  task=g1_cricket_approach_learning/mjbatch env.handedness=right \
+  training.log_dir=g1_cricket_results/approach_learning_v1/ppo_right
+```
+
+Repeat with `left` and `ppo_left`; do not tune the budget or gates after results.

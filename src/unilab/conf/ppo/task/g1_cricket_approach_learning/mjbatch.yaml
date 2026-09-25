@@ -1,0 +1,27 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_measured_approach/mjbatch
+  - _self_
+
+training:
+  task_name: G1CricketApproachLearning
+env:
+  actions:
+    reference:
+      _target_: unilab.tasks.manipulation.g1_cricket.approach_learning.ApproachLearningActionCfg
+  observations:
+    actor:
+      terms:
+        gait:
+          func: unilab.tasks.manipulation.g1_cricket.approach_learning.gait_observation
+    critic:
+      terms:
+        gait:
+          func: unilab.tasks.manipulation.g1_cricket.approach_learning.gait_observation
+reward:
+  loaded_slip:
+    func: unilab.tasks.manipulation.g1_cricket.approach_learning.loaded_slip_cost
+    weight: -5.0
+  lane:
+    func: unilab.tasks.manipulation.g1_cricket.approach_learning.lane_tracking
+    weight: 1.0
