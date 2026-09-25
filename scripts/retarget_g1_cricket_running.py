@@ -43,11 +43,27 @@ def velocity_reference(model, poses, dt):
 
 
 def running_control(
-    model, data, target, velocity, qa, va, *, balance_gain=4.0, track_root_velocity=False
+    model,
+    data,
+    target,
+    velocity,
+    qa,
+    va,
+    *,
+    balance_gain=4.0,
+    track_root_velocity=False,
+    joint_tracking_gain=1.0,
 ):
     kp = model.actuator_gainprm[:, 0]
     control = target[qa] - model.actuator_biasprm[:, 2] / kp * velocity[va]
     control += data.qfrc_bias[va] / kp
+    control += (joint_tracking_gain - 1) * (target[qa] - data.qpos[qa])
+    control -= (
+        model.actuator_biasprm[:, 2]
+        / kp
+        * (np.sqrt(joint_tracking_gain) - 1)
+        * (velocity[va] - data.qvel[va])
+    )
     correction = ankle_balance(
         target[3:7],
         data.qpos[3:7],

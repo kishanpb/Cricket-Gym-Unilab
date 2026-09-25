@@ -1,6 +1,7 @@
 import mujoco
 import numpy as np
 from evaluate_g1_cricket_running_velocity import sample_curve_reference
+from retarget_g1_cricket_running import running_control
 from scipy.spatial.transform import Rotation
 
 from unilab.tasks.manipulation.g1_cricket.tracking import ankle_balance
@@ -55,3 +56,27 @@ def test_curve_initial_velocity_and_first_intervals_follow_positions():
     np.testing.assert_allclose(sampled["qvel"][:, 0], 0.4 + 60 * times, atol=1e-12)
     forward_velocity = np.array([(curve(t + 0.005) - curve(t))[0] / 0.005 for t in times])
     np.testing.assert_allclose(forward_velocity - sampled["qvel"][:, 0], 0.15, atol=1e-12)
+
+
+def test_joint_gain_changes_position_and_velocity_feedback_not_model():
+    model = SimpleNamespace(
+        actuator_gainprm=np.zeros((29, 10)), actuator_biasprm=np.zeros((29, 10))
+    )
+    model.actuator_gainprm[:, 0] = 20
+    model.actuator_biasprm[:, 2] = -2
+    data = SimpleNamespace(qpos=np.zeros(43), qvel=np.zeros(41), qfrc_bias=np.zeros(41))
+    data.qpos[3] = 1
+    qa, va = np.arange(7, 36), np.arange(6, 35)
+    target, velocity = data.qpos.copy(), data.qvel.copy()
+    target[qa], velocity[va] = np.linspace(-0.2, 0.2, 29), np.linspace(-0.5, 0.5, 29)
+    data.qvel[va] = -velocity[va]
+    original = (model.actuator_gainprm.copy(), model.actuator_biasprm.copy())
+    base, _ = running_control(model, data, target, velocity, qa, va)
+    stronger, _ = running_control(model, data, target, velocity, qa, va, joint_tracking_gain=4)
+    expected_delta = 3 * (target[qa] - data.qpos[qa]) + 0.1 * (velocity[va] - data.qvel[va])
+    np.testing.assert_allclose(stronger - base, expected_delta, atol=1e-15)
+    np.testing.assert_array_equal(model.actuator_gainprm, original[0])
+    np.testing.assert_array_equal(model.actuator_biasprm, original[1])
+
+
+from types import SimpleNamespace

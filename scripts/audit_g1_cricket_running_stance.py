@@ -30,7 +30,14 @@ def foot_loads(model, data):
 
 
 def replay(
-    model, reference, gain, *, controller=None, controller_substeps=320, track_root_velocity=False
+    model,
+    reference,
+    gain,
+    *,
+    controller=None,
+    controller_substeps=320,
+    track_root_velocity=False,
+    joint_tracking_gain=1.0,
 ):
     times, poses, velocity = reference["times"], reference["qpos"], reference["qvel"]
     np.testing.assert_allclose(np.diff(times), 0.02, atol=1e-15)
@@ -60,6 +67,7 @@ def replay(
             va,
             balance_gain=gain,
             track_root_velocity=track_root_velocity,
+            joint_tracking_gain=joint_tracking_gain,
         )
         if times[tick] >= RELEASE_TIME:
             data.eq_active[holder] = False

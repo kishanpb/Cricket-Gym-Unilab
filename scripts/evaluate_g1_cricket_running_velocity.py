@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+from itertools import product
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -35,7 +36,12 @@ def main():
     parser.add_argument("output", type=Path)
     parser.add_argument("--render", action="store_true")
     parser.add_argument("--compare-curve", action="store_true")
+    parser.add_argument("--joint-gains", type=float, nargs="+", default=[1.0])
     args = parser.parse_args()
+    if any(not np.isfinite(gain) or gain <= 0 for gain in args.joint_gains):
+        parser.error("joint gains must be finite and positive")
+    if len(set(args.joint_gains)) != len(args.joint_gains):
+        parser.error("joint gains must be distinct")
     args.output.mkdir(parents=True, exist_ok=False)
     inputs = [
         Path(__file__),
@@ -97,22 +103,35 @@ def main():
             variants["curve"] = sample_curve_reference(model, curve, variants["saved"]["times"])
             np.savez_compressed(args.output / f"{hand}_curve_reference.npz", **variants["curve"])
         for kind, reference in variants.items():
-            for relative in (False, True):
-                summary, steps, poses = replay(model, reference, 4, track_root_velocity=relative)
-                summary.update(hand=hand, reference_kind=kind, track_root_velocity=relative)
+            for relative, joint_gain in product((False, True), args.joint_gains):
+                summary, steps, poses = replay(
+                    model,
+                    reference,
+                    4,
+                    track_root_velocity=relative,
+                    joint_tracking_gain=joint_gain,
+                )
+                summary.update(
+                    hand=hand,
+                    reference_kind=kind,
+                    track_root_velocity=relative,
+                    joint_tracking_gain=joint_gain,
+                )
                 summary["max_joint_limit_excess_rad"] = float(
                     steps[:, COLUMNS.index("maximum_joint_limit_excess")].max()
                 )
                 summary["peak_motor_fraction"] = float(
                     steps[:, COLUMNS.index("motor_force_fraction")].max()
                 )
-                if not relative and kind == "saved":
+                if not relative and kind == "saved" and joint_gain == 1:
                     with np.load(args.reference / f"{hand}_physical.npz") as baseline:
                         np.testing.assert_array_equal(poses, baseline["qpos"])
                     summary["parent_poses_identical"] = True
                 name = f"{hand}_{'relative' if relative else 'absolute'}"
                 if args.compare_curve:
                     name = f"{name}_{kind}"
+                if args.joint_gains != [1.0]:
+                    name = f"{name}_gain{joint_gain:g}"
                 np.savez_compressed(args.output / f"{name}.npz", steps=steps, qpos=poses)
                 if args.render and relative:
                     render_poses(
@@ -135,6 +154,8 @@ def main():
                 "scope": "fixed_reference_native_PD_rate_comparison_not_learned_bowling",
                 "mujoco_version": mujoco.__version__,
                 "control_period_s": 0.02,
+                "joint_gains": args.joint_gains,
+                "joint_damping_rule": "original damping multiplied by sqrt(joint_tracking_gain), via bounded position commands; model gains and motor caps unchanged",
                 "columns": COLUMNS,
                 "input_sha256": hashes,
                 "rows": rows,
