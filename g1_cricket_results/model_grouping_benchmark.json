@@ -1,0 +1,353 @@
+{
+  "scope": "two-model complete frozen replay and eight-model CPU held-control timing; not end-to-end training",
+  "python_version": "3.13.13",
+  "machine": "arm64",
+  "mujoco_version": "3.11.0",
+  "input_sha256": {
+    "scripts/benchmark_g1_cricket_model_grouping.py": "8dad903aad66adaf6617a6163f17d3d1687834038b482dc1b7b04a6a988edfd8",
+    "src/unilab/base/mujoco_substeps.py": "1acbe828b438f8fbdf556def98bf91b2c49e916a985072e8c3ff5a69df1a8be7",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_right/run_config.json": "f05dc97d78df8b2db6ddd76f67057b2564bdf7565b86050afb02af3290239644",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_right/evaluation/reference_only_62.5us.npz": "47201300947f91eb458bb2514126b3b8ff9915b416f139d8388c19e835c644f4",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_right/evaluation/ppo_62.5us.npz": "2efa6417c2f48451189b113cc57ed6725b77231761af515e23dd31be0bf1e4a7",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_right/evaluation/reference_only_31.25us.npz": "def5e9a5d7816766053dc66191624c9ee3fc785281a08bae278c4c20193dea94",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_right/evaluation/ppo_31.25us.npz": "d93e3a7d82a98b22e48652486961eaaa55258beacfe415ae04e115481e1e722f",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_left/run_config.json": "124fcf7e4c5e99d03d0d770555c355a76299e139a1318ca4b6097c65e42235a0",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_left/evaluation/reference_only_62.5us.npz": "e2d9ee8a3a0aa7998a52ab43e68183071bda3f0206d910e7783b78cc19c3ff27",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_left/evaluation/ppo_62.5us.npz": "1d3431aa541de50ee69ebbfdfb4bd6041a19b7554553a44d1dbdf47cbb2cbff5",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_left/evaluation/reference_only_31.25us.npz": "8c160036447f518be5e3ea61ec4b936baa494b7b8cddfdc827f26341ff1f726e",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_left/evaluation/ppo_31.25us.npz": "293f17bad96e013099c1a0fb4e6395bacc62cd32eaf8c38f0cf914ded6293653"
+  },
+  "held_control_sha256": "a7d10e2a3e2fbeab39f40cd9284d2ea815d9fa07d0b6f9e9c0c4858c7982505b",
+  "protocol": "two warm-ups per mode; six samples per mode in alternating order; eight evenly spaced intervals per trace; eight threads for both modes; setup and parity excluded from timing",
+  "rows": [
+    {
+      "hand": "right",
+      "controller": "reference_only",
+      "physics_dt_s": 6.25e-05,
+      "model_sha256": "0e22e3f2d71d5ebdac12903a2629f352e780d5eae6b0674f1bf248334b4fdd3a",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 335,
+      "complete_physical_substeps": 107200,
+      "exact_official_all_substep_state_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        47,
+        95,
+        143,
+        190,
+        238,
+        286,
+        334
+      ],
+      "identity_seconds": [
+        0.31766337528824806,
+        0.3382367920130491,
+        0.32215708401054144,
+        0.35404600016772747,
+        0.3757825419306755,
+        0.34439062513411045
+      ],
+      "compiled_seconds": [
+        0.15542825032025576,
+        0.19213408324867487,
+        0.1564469998702407,
+        0.17184349987655878,
+        0.15660683438181877,
+        0.1806994592770934
+      ],
+      "median_speedup": 2.078327667677654
+    },
+    {
+      "hand": "right",
+      "controller": "ppo",
+      "physics_dt_s": 6.25e-05,
+      "model_sha256": "0e22e3f2d71d5ebdac12903a2629f352e780d5eae6b0674f1bf248334b4fdd3a",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 276,
+      "complete_physical_substeps": 88320,
+      "exact_official_all_substep_state_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        39,
+        78,
+        117,
+        157,
+        196,
+        235,
+        275
+      ],
+      "identity_seconds": [
+        0.3111360827460885,
+        0.31562754046171904,
+        0.31754712481051683,
+        0.3078735414892435,
+        0.30944887455552816,
+        0.31431195978075266
+      ],
+      "compiled_seconds": [
+        0.15139612462371588,
+        0.15196054242551327,
+        0.15531808324158192,
+        0.15137041732668877,
+        0.15263479109853506,
+        0.14854695834219456
+      ],
+      "median_speedup": 2.0617580243434785
+    },
+    {
+      "hand": "right",
+      "controller": "reference_only",
+      "physics_dt_s": 3.125e-05,
+      "model_sha256": "f5cb8bffa0eaf12271d70100b44753f69c1ef1ea37eb3eff2c3c8f5bde54a1e6",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 335,
+      "complete_physical_substeps": 214400,
+      "exact_official_all_substep_state_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        47,
+        95,
+        143,
+        190,
+        238,
+        286,
+        334
+      ],
+      "identity_seconds": [
+        1.0508496668189764,
+        1.0452003329992294,
+        1.0309801250696182,
+        1.0121562089771032,
+        1.0287123331800103,
+        1.0460608322173357
+      ],
+      "compiled_seconds": [
+        0.6734567927196622,
+        0.6847700839862227,
+        0.6813712082803249,
+        0.6657461663708091,
+        0.6686297496780753,
+        0.6733255423605442
+      ],
+      "median_speedup": 1.5415857514534468
+    },
+    {
+      "hand": "right",
+      "controller": "ppo",
+      "physics_dt_s": 3.125e-05,
+      "model_sha256": "f5cb8bffa0eaf12271d70100b44753f69c1ef1ea37eb3eff2c3c8f5bde54a1e6",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 276,
+      "complete_physical_substeps": 176640,
+      "exact_official_all_substep_state_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        39,
+        78,
+        117,
+        157,
+        196,
+        235,
+        275
+      ],
+      "identity_seconds": [
+        1.0128003330901265,
+        1.012752041220665,
+        1.0056484583765268,
+        1.0428616246208549,
+        1.01310558244586,
+        1.0680017499253154
+      ],
+      "compiled_seconds": [
+        0.6832304997369647,
+        0.6716540828347206,
+        0.6577957095578313,
+        0.6562589164823294,
+        0.68869683239609,
+        0.7816620413213968
+      ],
+      "median_speedup": 1.4952608816986064
+    },
+    {
+      "hand": "left",
+      "controller": "reference_only",
+      "physics_dt_s": 6.25e-05,
+      "model_sha256": "07342e5c293edb7ac35a6a0af7f35cfc284f8080d57ff40b4ed6d9533476bbbf",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 334,
+      "complete_physical_substeps": 106880,
+      "exact_official_all_substep_state_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        47,
+        95,
+        142,
+        190,
+        237,
+        285,
+        333
+      ],
+      "identity_seconds": [
+        0.32202012464404106,
+        0.3181573748588562,
+        0.31700762547552586,
+        0.32023095805197954,
+        0.31898225005716085,
+        0.31813379283994436
+      ],
+      "compiled_seconds": [
+        0.1552860839292407,
+        0.15574062522500753,
+        0.15332454163581133,
+        0.15472408290952444,
+        0.15416716691106558,
+        0.15432441607117653
+      ],
+      "median_speedup": 2.0616169533824666
+    },
+    {
+      "hand": "left",
+      "controller": "ppo",
+      "physics_dt_s": 6.25e-05,
+      "model_sha256": "07342e5c293edb7ac35a6a0af7f35cfc284f8080d57ff40b4ed6d9533476bbbf",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 271,
+      "complete_physical_substeps": 86720,
+      "exact_official_all_substep_state_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        38,
+        77,
+        115,
+        154,
+        192,
+        231,
+        270
+      ],
+      "identity_seconds": [
+        0.3182084169238806,
+        0.31842354219406843,
+        0.326941916719079,
+        0.32177854143083096,
+        0.3230527499690652,
+        0.31813462544232607
+      ],
+      "compiled_seconds": [
+        0.16398879140615463,
+        0.15313724987208843,
+        0.1624662084504962,
+        0.1586863324046135,
+        0.15766091737896204,
+        0.15434466768056154
+      ],
+      "median_speedup": 2.023732098391513
+    },
+    {
+      "hand": "left",
+      "controller": "reference_only",
+      "physics_dt_s": 3.125e-05,
+      "model_sha256": "aa4d59cdf0031ea9de432a9b5ab1517c341e060b63222e2d0e9fdfa621daa182",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 334,
+      "complete_physical_substeps": 213760,
+      "exact_official_all_substep_state_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        47,
+        95,
+        142,
+        190,
+        237,
+        285,
+        333
+      ],
+      "identity_seconds": [
+        1.0423446660861373,
+        1.093876332975924,
+        1.0879534156993032,
+        1.1011784579604864,
+        1.0798743749037385,
+        1.0703860837966204
+      ],
+      "compiled_seconds": [
+        0.6848644576966763,
+        0.6982156662270427,
+        0.7048516664654016,
+        0.7348667904734612,
+        0.7127130422741175,
+        0.718967916443944
+      ],
+      "median_speedup": 1.5292619640133727
+    },
+    {
+      "hand": "left",
+      "controller": "ppo",
+      "physics_dt_s": 3.125e-05,
+      "model_sha256": "aa4d59cdf0031ea9de432a9b5ab1517c341e060b63222e2d0e9fdfa621daa182",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 271,
+      "complete_physical_substeps": 173440,
+      "exact_official_all_substep_state_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        38,
+        77,
+        115,
+        154,
+        192,
+        231,
+        270
+      ],
+      "identity_seconds": [
+        1.0689687496051192,
+        1.0601842906326056,
+        1.0856699999421835,
+        1.0503632090985775,
+        1.064261875115335,
+        1.0723624164238572
+      ],
+      "compiled_seconds": [
+        0.7149166669696569,
+        0.70299041736871,
+        0.7144931247457862,
+        0.7131016664206982,
+        0.700424499809742,
+        0.7501008743420243
+      ],
+      "median_speedup": 1.4942829981730295
+    }
+  ],
+  "guard": "Runtime parity and local recorder timing only. No changed policy, physical gate, learning gain or qualified cricket video."
+}

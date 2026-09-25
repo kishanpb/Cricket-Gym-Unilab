@@ -14,21 +14,22 @@ from unilab.base.entity import Entity
 ROOT = Path(__file__).resolve().parents[2]
 
 
-@pytest.fixture(params=["right", "left"])
+@pytest.fixture(params=[("right", False), ("left", False), ("right", True), ("left", True)])
 def env(request):
+    hand, grouped = request.param
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
         owner = compose(
             "config",
             overrides=[
                 "task=g1_cricket_first_step_foot_reward/mjbatch",
-                f"env.handedness={request.param}",
+                f"env.handedness={hand}",
             ],
         )
         parent = compose(
             "config",
             overrides=[
                 "task=g1_cricket_first_step_uniform/mjbatch",
-                f"env.handedness={request.param}",
+                f"env.handedness={hand}",
             ],
         )
     candidate = OmegaConf.to_container(owner, resolve=True)
@@ -36,11 +37,13 @@ def env(request):
     assert term["weight"] == 1 and term["params"] == {"std": 0.02}
     assert candidate == OmegaConf.to_container(parent, resolve=True)
     registry.ensure_registries()
+    override = evaluation_override(owner, 0.0000625)
+    override["mujoco_group_identical_models"] = grouped
     instance = registry.make(
         owner.training.task_name,
         num_envs=2,
         sim_backend="mujoco",
-        env_cfg_override=evaluation_override(owner, 0.0000625),
+        env_cfg_override=override,
     )
     try:
         instance.reset(seed=1)

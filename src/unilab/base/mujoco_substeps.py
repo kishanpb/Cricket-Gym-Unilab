@@ -24,10 +24,11 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend, EqualityCon
     _observer: SubstepObserver | None = None
     _recorder: Rollout | HeldControlRollout | None = None
 
-    def __init__(self, *args, substep_engine="rollout", **kwargs):
+    def __init__(self, *args, substep_engine="rollout", group_identical_models=False, **kwargs):
         if substep_engine not in ("rollout", "mjbatch"):
             raise ValueError("unknown substep engine")
         self.substep_engine = substep_engine
+        self.group_identical_models = group_identical_models
         super().__init__(*args, **kwargs)
 
     def get_dr_capabilities(self):
@@ -50,7 +51,9 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend, EqualityCon
             from mjbatch.held_control import HeldControlRollout
 
             self._recorder = HeldControlRollout(
-                self._pool.get_all_models(), num_threads=self._n_threads
+                self._pool.get_all_models(),
+                num_threads=self._n_threads,
+                group_identical_models=self.group_identical_models,
             )
         else:
             self._recorder = Rollout(nthread=self._n_threads)

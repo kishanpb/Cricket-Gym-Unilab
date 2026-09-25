@@ -96,6 +96,10 @@ batting and independently trained Menagerie policies remain unfinished.
 
 ## Runtime Follow-Up
 
+The proposed follow-up below is now [implemented and measured](g1_cricket_cpu_grouping.md),
+with exact full-interval replay and a 1.49-2.08x local recorder speedup.
+It remains opt-in and does not change these failed policy results.
+
 The current CPU recorder groups models by object identity. Inspection of the
 eight-environment owner found eight distinct model objects and eight singleton
 groups, although all eight compiled MJB byte streams were identical (152,565

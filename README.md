@@ -70,6 +70,8 @@ evaluations still fail. Neither result is a running-bowling highlight.
 The [world-frame foot-reward trial](docs/g1_cricket_first_step_foot_reward.md)
 regresses both hands and is not promoted; full traces and failed videos remain
 available for diagnosis, not as qualified highlights.
+An [opt-in CPU recorder improvement](docs/g1_cricket_cpu_grouping.md) preserves
+exact replay and measures 1.49-2.08x recorder speedup, not a policy-quality gain.
 Full reference and failed physical videos are
 development diagnostics, not learned bowling showcases. The research log
 retains the earlier [contact-control](docs/g1_cricket_contact_control.md) and

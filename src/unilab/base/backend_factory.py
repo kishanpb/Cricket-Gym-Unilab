@@ -100,6 +100,8 @@ def env_backend_kwargs(cfg: "EnvCfg") -> dict[str, Any]:
         result["mujoco_observe_substeps"] = True
         if cfg.mujoco_substep_engine != "rollout":
             result["substep_engine"] = cfg.mujoco_substep_engine
+        if cfg.mujoco_group_identical_models:
+            result["group_identical_models"] = True
     return result
 
 

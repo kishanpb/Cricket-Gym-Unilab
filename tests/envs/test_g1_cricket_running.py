@@ -16,18 +16,20 @@ from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
 ROOT = Path(__file__).resolve().parents[2]
 
 
-@pytest.fixture(params=["right", "left"])
+@pytest.fixture(params=[("right", False), ("left", False), ("right", True), ("left", True)])
 def env(request):
+    hand, grouped = request.param
     registry.ensure_registries()
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
         owner = compose(
             "config",
             overrides=[
                 "task=g1_cricket_running_tracking/mjbatch",
-                f"env.handedness={request.param}",
+                f"env.handedness={hand}",
             ],
         )
     override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
+    override["mujoco_group_identical_models"] = grouped
     instance = registry.make(
         owner.training.task_name, num_envs=2, sim_backend="mujoco", env_cfg_override=override
     )

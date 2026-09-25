@@ -129,7 +129,10 @@ def test_factory_is_opt_in_and_rejects_unsupported_combinations(tmp_path):
         backend.cleanup_scene_assets()
 
 
-def test_mjbatch_selection_without_observer_and_reset_model_mutation(tmp_path):
+@pytest.mark.parametrize("group_identical_models", [False, True])
+def test_mjbatch_selection_without_observer_and_reset_model_mutation(
+    tmp_path, group_identical_models
+):
     pytest.importorskip("mjbatch.held_control")
     from mjbatch.held_control import HeldControlRollout
     from unisim.dr.types import ResetRandomizationPayload
@@ -137,6 +140,10 @@ def test_mjbatch_selection_without_observer_and_reset_model_mutation(tmp_path):
     path = tmp_path / "native.xml"
     path.write_text(XML)
     cfg = EnvCfg(scene=SceneCfg(model_file=str(path)), adaptive_chunk_size=False)
+    cfg.mujoco_group_identical_models = group_identical_models
+    if group_identical_models:
+        with pytest.raises(ValueError, match="grouping requires mjbatch"):
+            cfg.validate()
     cfg.mujoco_substep_engine = "wrong"
     with pytest.raises(ValueError, match="mujoco_substep_engine"):
         cfg.validate()
@@ -146,15 +153,16 @@ def test_mjbatch_selection_without_observer_and_reset_model_mutation(tmp_path):
     cfg.mujoco_observe_substeps = True
     cfg.validate()
     backends = [
-        MuJoCoBackend(cfg.scene, 1, 0.00025, adaptive_chunk_size=False),
-        create_backend("mujoco", cfg.scene, 1, 0.00025, **env_backend_kwargs(cfg)),
+        MuJoCoBackend(cfg.scene, 3, 0.00025, adaptive_chunk_size=False),
+        create_backend("mujoco", cfg.scene, 3, 0.00025, **env_backend_kwargs(cfg)),
     ]
     try:
         for backend in backends:
             backend.materialize()
         assert isinstance(backends[1]._recorder, HeldControlRollout)
+        assert len(backends[1]._recorder.groups) == (1 if group_identical_models else 3)
         for backend in backends:
-            backend.step(np.empty((1, 0)), 80)
+            backend.step(np.empty((3, 0)), 80)
         np.testing.assert_array_equal(
             backends[0].get_physics_state(), backends[1].get_physics_state()
         )
