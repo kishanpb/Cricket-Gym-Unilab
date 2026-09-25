@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_first_step_uniform/mjbatch
+  - _self_
+
+reward:
+  motion_world_foot_pos:
+    func: unilab.tasks.manipulation.g1_cricket.running_task.RunningFootPositionReward
+    weight: 1.0
+    params:
+      std: 0.02

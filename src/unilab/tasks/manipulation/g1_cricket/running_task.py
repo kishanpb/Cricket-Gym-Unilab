@@ -5,7 +5,11 @@ from dataclasses import dataclass
 import mujoco
 import numpy as np
 
-from unilab.tasks.motion_tracking.common.manager_terms import MotionCommand, MotionCommandCfg
+from unilab.tasks.motion_tracking.common.manager_terms import (
+    MotionCommand,
+    MotionCommandCfg,
+    _positive_std,
+)
 from unilab.utils.rotation import np_quat_apply_batched
 
 from .bowling import HOLDER_SENSORS
@@ -208,3 +212,23 @@ class RunningSupportObservation:
         duration = env.max_episode_length * env.cfg.ctrl_dt
         phase = command.time_steps / command.motion.fps / duration
         return np.concatenate((feet.reshape(env.num_envs, 6), phase[:, None]), axis=1)
+
+
+class RunningFootPositionReward:
+    """World-frame ankle placement against the physical audit's planned targets."""
+
+    def __init__(self, cfg, env):
+        self.command = env.command_manager.get_term("motion")
+        self.feet = [
+            self.command.cfg.body_names.index(f"{side}_ankle_roll_link")
+            for side in ("left", "right")
+        ]
+        reference = env.action_manager.get_term("reference")
+        with np.load(reference.cfg.reference_file) as saved:
+            self.targets = saved["foot_targets"].copy()
+
+    def __call__(self, env, std):
+        scale = _positive_std(std, term_name="running foot position")
+        target = self.targets[self.command.time_steps] + env.scene.env_origins[:, None, :]
+        error = self.command.robot_body_pos_w[:, self.feet] - target
+        return np.exp(-np.square(error).sum(axis=-1).max(axis=-1) / scale**2)
