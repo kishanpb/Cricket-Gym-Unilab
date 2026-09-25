@@ -1,0 +1,7070 @@
+{
+  "passed": false,
+  "failures": [
+    "ball_contact:left_hand_collision",
+    "episode_incomplete",
+    "first_bounce_outside_delivery_zone",
+    "invalid_delivery_stride_order",
+    "no_upward_shoulder_level_crossing",
+    "not_exactly_one_bounce_before_target",
+    "release_forward_speed_not_above_6_m_s",
+    "release_not_overarm",
+    "robot_self_or_wicket_contact",
+    "target_corridor_missed"
+  ],
+  "release": {
+    "time": 4.619996547698975,
+    "position": [
+      -1.3993489742279053,
+      -0.14517544209957123,
+      1.1048001050949097
+    ],
+    "velocity": [
+      0.9922506213188171,
+      0.14089135825634003,
+      2.215489625930786
+    ],
+    "shoulder_z": 1.0620386838847848,
+    "upper_z": -0.1549791491870082,
+    "elbow_angle_rad": 2.7484819236094182,
+    "maximum_elbow_extension_rad": 0.0,
+    "horizontal_time": null,
+    "front_landing": {
+      "time": 4.22809067916874,
+      "bounds": [
+        [
+          -2.1734524301348928,
+          -0.6784113692329271,
+          -5.65240669448807e-06
+        ],
+        [
+          -1.9680589550519714,
+          -0.6043082373544157,
+          0.03365463440527007
+        ]
+      ]
+    },
+    "back_landing": {
+      "time": 4.486152931213408,
+      "bounds": [
+        [
+          -2.055682095811633,
+          -0.4287791837676321,
+          -2.369567363959095e-06
+        ],
+        [
+          -1.8519831148582169,
+          -0.34110950182693694,
+          0.036842148635332264
+        ]
+      ]
+    }
+  },
+  "first_bounce": null,
+  "target_crossing": null,
+  "bounces_before_target": 0,
+  "ball_contact_counts": {
+    "left_hand_collision": 1014
+  },
+  "ball_contact_peak_force_n": {
+    "left_hand_collision": 9.645048772756976
+  },
+  "maximum_ball_penetration_m": 0.003805434881422244,
+  "minimum_pelvis_height_m": 0.7507653174383753,
+  "minimum_pelvis_up": 0.9957544729393598,
+  "maximum_joint_limit_excess_rad": 0.0,
+  "maximum_actuator_limit_fraction": 0.9295829772949219,
+  "peak_holder_force_n": 5.842877282996677,
+  "holder_impulse_world_ns": [
+    0.15479110253639924,
+    0.021979034324332535,
+    7.415879554968031
+  ],
+  "hand": "left",
+  "controller": "live_prior_reference_arms",
+  "simulation_dt": 3.125e-05,
+  "seed": 1,
+  "steps": 268,
+  "trace": [
+    {
+      "time_s": 0.019999999552965164,
+      "pelvis_position_m": [
+        -4.499866008758545,
+        -0.7000059485435486,
+        0.7982635498046875
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 0.7646080213877685,
+      "holder_impulse_world_ns": [
+        0.005557864505255335,
+        -0.0007814600434125048,
+        0.0023166552151904227
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.03999999910593033,
+      "pelvis_position_m": [
+        -4.500316619873047,
+        -0.699974000453949,
+        0.7925907373428345
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 0.7922766423030658,
+      "holder_impulse_world_ns": [
+        -0.0024048934183839212,
+        0.002581909633526098,
+        0.0001339562408615776
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.05999999865889549,
+      "pelvis_position_m": [
+        -4.501069068908691,
+        -0.6998788118362427,
+        0.7855372428894043
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 5.842877282996677,
+      "holder_impulse_world_ns": [
+        -0.0064491858202124185,
+        -0.017728810357037356,
+        0.05608866733587258
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.30307311826091327,
+        0.40119945858440714
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.07999999821186066,
+      "pelvis_position_m": [
+        -4.501035213470459,
+        -0.6999055743217468,
+        0.7853139638900757
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 4.422391875348155,
+      "holder_impulse_world_ns": [
+        0.0035357111469488836,
+        -0.0027538942199564443,
+        0.06216923740797756
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.06553393319497383,
+        0.10363030924675723
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.10000000149011612,
+      "pelvis_position_m": [
+        -4.499769687652588,
+        -0.6999328136444092,
+        0.7869387269020081
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.0892805929432656,
+      "holder_impulse_world_ns": [
+        0.007795024530614329,
+        0.005914448791058106,
+        0.03629708646354636
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.008064814633180135,
+        0.012484560957573056
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.12000000476837158,
+      "pelvis_position_m": [
+        -4.498249053955078,
+        -0.699898898601532,
+        0.7883635759353638
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.603220662347064,
+      "holder_impulse_world_ns": [
+        0.005540865404570821,
+        0.0036827455535463124,
+        0.029177623495170675
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0012697476093039676,
+        0.0016427109614650269
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.14000000059604645,
+      "pelvis_position_m": [
+        -4.497026443481445,
+        -0.6997794508934021,
+        0.7892469167709351
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5648396052197715,
+      "holder_impulse_world_ns": [
+        -0.0008844130276361695,
+        0.0027157416549223093,
+        0.02818734086938066
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0004730763572151645,
+        0.0007394950385073661
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.1599999964237213,
+      "pelvis_position_m": [
+        -4.496089935302734,
+        -0.6996203660964966,
+        0.7897114753723145
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.4469426779417116,
+      "holder_impulse_world_ns": [
+        -0.0027023851624393067,
+        0.0025821018813824348,
+        0.02846623844592715
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0005400543475988716,
+        0.0008884069992122021
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.17999999225139618,
+      "pelvis_position_m": [
+        -4.495251178741455,
+        -0.6994826793670654,
+        0.7899426221847534
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.4968801130353409,
+      "holder_impulse_world_ns": [
+        -0.001669467486755635,
+        0.002087957703687165,
+        0.029710132329105493
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0006014770368770352,
+        0.0009002853561557552
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.19999998807907104,
+      "pelvis_position_m": [
+        -4.494426727294922,
+        -0.6993663907051086,
+        0.7900604009628296
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5970956556970568,
+      "holder_impulse_world_ns": [
+        -0.00012079976923055392,
+        0.002090387501030132,
+        0.031172094326239675
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0006755791417814038,
+        0.000909895189845735
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.2199999839067459,
+      "pelvis_position_m": [
+        -4.493616104125977,
+        -0.699251651763916,
+        0.7901280522346497
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.6890464767518518,
+      "holder_impulse_world_ns": [
+        0.0009088824266295592,
+        0.002490121281936793,
+        0.032291169159622116
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0007279149762166951,
+        0.0009232628327410335
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.23999997973442078,
+      "pelvis_position_m": [
+        -4.492848873138428,
+        -0.699130654335022,
+        0.7901747822761536
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.712879112223929,
+      "holder_impulse_world_ns": [
+        0.0008898129139646425,
+        0.002776133733645088,
+        0.03258092314654333
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0007705152827072575,
+        0.0009272739060390427
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.25999999046325684,
+      "pelvis_position_m": [
+        -4.4921441078186035,
+        -0.6990119814872742,
+        0.7902095913887024
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.6925626294597298,
+      "holder_impulse_world_ns": [
+        0.0006035986664696697,
+        0.0023672204388007025,
+        0.03214312437334815
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008041055930659019,
+        0.0009158486192977355
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.2800000011920929,
+      "pelvis_position_m": [
+        -4.491511344909668,
+        -0.6989086866378784,
+        0.7902351021766663
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.6967016972736992,
+      "holder_impulse_world_ns": [
+        0.0007328624740863732,
+        0.0013669023618033858,
+        0.03171347619529398
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008321449906024675,
+        0.0008960473850123809
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.30000001192092896,
+      "pelvis_position_m": [
+        -4.490952014923096,
+        -0.6988233923912048,
+        0.7902528047561646
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.629583639073228,
+      "holder_impulse_world_ns": [
+        0.0003527610932913455,
+        0.0004429111901015155,
+        0.031202870618722095
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008474514987059661,
+        0.0008785870569513461
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.320000022649765,
+      "pelvis_position_m": [
+        -4.490458011627197,
+        -0.6987546682357788,
+        0.7902644872665405
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5741432417964139,
+      "holder_impulse_world_ns": [
+        -0.00011965331805289782,
+        -0.0003439908734527688,
+        0.03073770527571096
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008548833605373103,
+        0.000865397979852733
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.3400000333786011,
+      "pelvis_position_m": [
+        -4.490021228790283,
+        -0.698697566986084,
+        0.7902714014053345
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.543613782626145,
+      "holder_impulse_world_ns": [
+        -0.0004732912920835801,
+        -0.0008660924834805371,
+        0.030408364718636435
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008595900919398231,
+        0.0008665527109213351
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.36000004410743713,
+      "pelvis_position_m": [
+        -4.4896368980407715,
+        -0.6986486911773682,
+        0.7902747988700867
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5256177365246733,
+      "holder_impulse_world_ns": [
+        -0.0007060611438793816,
+        -0.0011993263076906786,
+        0.03018952224655949
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008622225816445712,
+        0.0008752086095637911
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.3800000548362732,
+      "pelvis_position_m": [
+        -4.489303112030029,
+        -0.6986055374145508,
+        0.7902759909629822
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.514486792333104,
+      "holder_impulse_world_ns": [
+        -0.0008511825117495487,
+        -0.0014099931253015773,
+        0.030046076846799243
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.000864173355025735,
+        0.0008865245202093997
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.40000006556510925,
+      "pelvis_position_m": [
+        -4.489020347595215,
+        -0.6985670328140259,
+        0.7902761101722717
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5070637526778132,
+      "holder_impulse_world_ns": [
+        -0.0009796309577879492,
+        -0.001423880359092027,
+        0.029990959083953213
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008650167509863354,
+        0.0008994715671710657
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.4200000762939453,
+      "pelvis_position_m": [
+        -4.488785743713379,
+        -0.6985333561897278,
+        0.7902759909629822
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.509083604843373,
+      "holder_impulse_world_ns": [
+        -0.001006191904992133,
+        -0.0013217951693418324,
+        0.03001767664553904
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008651435244013673,
+        0.0009126474375993138
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.44000008702278137,
+      "pelvis_position_m": [
+        -4.488595485687256,
+        -0.6985054612159729,
+        0.790276050567627
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.511780356753581,
+      "holder_impulse_world_ns": [
+        -0.0009849422169606707,
+        -0.001141543987073888,
+        0.03007774222153932
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008639768759543412,
+        0.000926936734105535
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.46000009775161743,
+      "pelvis_position_m": [
+        -4.4884467124938965,
+        -0.6984846591949463,
+        0.7902765274047852
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5148308224412306,
+      "holder_impulse_world_ns": [
+        -0.0008935390873097023,
+        -0.0009377304385145983,
+        0.030164465962429148
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008641160278211472,
+        0.0009418347603281444
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.4800001084804535,
+      "pelvis_position_m": [
+        -4.48833703994751,
+        -0.6984721422195435,
+        0.7902774214744568
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5182969145130016,
+      "holder_impulse_world_ns": [
+        -0.0007737439320453745,
+        -0.0007312761312089464,
+        0.030261882966308398
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.000864907903891456,
+        0.0009585536920486578
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.5000001192092896,
+      "pelvis_position_m": [
+        -4.488264083862305,
+        -0.6984673142433167,
+        0.7902788519859314
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5228896451008576,
+      "holder_impulse_world_ns": [
+        -0.000661470707568306,
+        -0.0005195808348448245,
+        0.030365178346323417
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008617980050911274,
+        0.000976910859037495
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.5200001001358032,
+      "pelvis_position_m": [
+        -4.488225936889648,
+        -0.6984701156616211,
+        0.790280818939209
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.52785288098649,
+      "holder_impulse_world_ns": [
+        -0.0005590317190015471,
+        -0.00014083030061740935,
+        0.030531740676240586
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008566973186224992,
+        0.0009959026267577326
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.5400000810623169,
+      "pelvis_position_m": [
+        -4.48822021484375,
+        -0.6984800696372986,
+        0.7902833819389343
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5308035649979959,
+      "holder_impulse_world_ns": [
+        -0.0004902932495694294,
+        -1.4288198932390029e-05,
+        0.030597589359197323
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008513713522253967,
+        0.0010137779123423813
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.5600000619888306,
+      "pelvis_position_m": [
+        -4.48824405670166,
+        -0.6984954476356506,
+        0.7902866005897522
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5321551516469611,
+      "holder_impulse_world_ns": [
+        -0.0004492541881795515,
+        2.8414295526818514e-05,
+        0.030619873360896353
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008486086108757989,
+        0.0010305413954435725
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.5800000429153442,
+      "pelvis_position_m": [
+        -4.48829460144043,
+        -0.6985146403312683,
+        0.790290355682373
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.532194570097928,
+      "holder_impulse_world_ns": [
+        -0.00042913107638272574,
+        4.4490771146304306e-05,
+        0.030621555864515506
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008483680367641304,
+        0.0010459890218594032
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.6000000238418579,
+      "pelvis_position_m": [
+        -4.488368988037109,
+        -0.6985365152359009,
+        0.7902945280075073
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5316015163460148,
+      "holder_impulse_world_ns": [
+        -0.0004205753907828003,
+        4.966474534604409e-05,
+        0.030612359688372854
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008480990314993155,
+        0.0010602743866768697
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.6200000047683716,
+      "pelvis_position_m": [
+        -4.488464832305908,
+        -0.6985602974891663,
+        0.790299117565155
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5305817952124845,
+      "holder_impulse_world_ns": [
+        -0.00041754370424837374,
+        4.9340234459606405e-05,
+        0.030597909728818918
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008472633879641327,
+        0.001073734829230065
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.6399999856948853,
+      "pelvis_position_m": [
+        -4.488578796386719,
+        -0.6985853314399719,
+        0.7903040647506714
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5307174485295085,
+      "holder_impulse_world_ns": [
+        -0.000379916145047022,
+        4.001401141448276e-05,
+        0.03059671445440224
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008458367033007924,
+        0.001086919895120983
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.6599999666213989,
+      "pelvis_position_m": [
+        -4.48870849609375,
+        -0.6986112594604492,
+        0.7903093099594116
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.530950972568115,
+      "holder_impulse_world_ns": [
+        -0.00034069312850525834,
+        3.049962344617091e-05,
+        0.030593572595581892
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008442369218746948,
+        0.0011000101744410194
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.6799999475479126,
+      "pelvis_position_m": [
+        -4.488851547241211,
+        -0.6986377835273743,
+        0.7903147339820862
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5299357614808116,
+      "holder_impulse_world_ns": [
+        -0.0003209708477139845,
+        2.4174383112068754e-05,
+        0.030584844523621854
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.000842576163123058,
+        0.0011128876111871874
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.6999999284744263,
+      "pelvis_position_m": [
+        -4.4890055656433105,
+        -0.6986647248268127,
+        0.7903202772140503
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5295326323099343,
+      "holder_impulse_world_ns": [
+        -0.0003034904269147241,
+        1.872152543190503e-05,
+        0.030580456760975684
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.000840725642744833,
+        0.001125502392756485
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.7199999094009399,
+      "pelvis_position_m": [
+        -4.489168643951416,
+        -0.6986919045448303,
+        0.7903258800506592
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5293420247293141,
+      "holder_impulse_world_ns": [
+        -0.00028222670479533045,
+        1.4059788476566689e-05,
+        0.030580148164627678
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008387169145915202,
+        0.0011378478272559922
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.7399998903274536,
+      "pelvis_position_m": [
+        -4.489338397979736,
+        -0.6987192034721375,
+        0.7903314828872681
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5295087231361186,
+      "holder_impulse_world_ns": [
+        -0.00025787812305134473,
+        1.0212086945804377e-05,
+        0.030581943025856064
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008366860472791037,
+        0.0011498881091926648
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.7599998712539673,
+      "pelvis_position_m": [
+        -4.489513397216797,
+        -0.6987465023994446,
+        0.7903370261192322
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.529618791691517,
+      "holder_impulse_world_ns": [
+        -0.00022953051491422428,
+        7.386248861495261e-06,
+        0.030584217546267622
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008347364001761972,
+        0.0011633795028365016
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.779999852180481,
+      "pelvis_position_m": [
+        -4.489692211151123,
+        -0.6987736821174622,
+        0.7903425097465515
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5300772629044592,
+      "holder_impulse_world_ns": [
+        -0.00015340125995454718,
+        5.4326496099865886e-06,
+        0.030591565299303094
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008328949638440202,
+        0.0011777842918529353
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.7999998331069946,
+      "pelvis_position_m": [
+        -4.489873886108398,
+        -0.6988007426261902,
+        0.7903479337692261
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.530109870360242,
+      "holder_impulse_world_ns": [
+        -8.194893081653226e-05,
+        1.313979925808763e-06,
+        0.030597276547199938
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008320977324140095,
+        0.0011894659288813614
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.8199998140335083,
+      "pelvis_position_m": [
+        -4.490056991577148,
+        -0.6988277435302734,
+        0.7903532981872559
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5299541329418127,
+      "holder_impulse_world_ns": [
+        -5.217669057258232e-05,
+        -1.3086061381484877e-06,
+        0.030595761175584574
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008314526231637733,
+        0.0011999101690266353
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.839999794960022,
+      "pelvis_position_m": [
+        -4.490240573883057,
+        -0.6988545656204224,
+        0.7903585433959961
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5297825265597595,
+      "holder_impulse_world_ns": [
+        -3.389224580161114e-05,
+        -2.5060051555395176e-06,
+        0.03059251041272393
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008303913531542997,
+        0.0012095439814925712
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.8599997758865356,
+      "pelvis_position_m": [
+        -4.490423679351807,
+        -0.698881208896637,
+        0.7903637290000916
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.52967957074538,
+      "holder_impulse_world_ns": [
+        -2.2420419339720326e-05,
+        -2.9041353253999524e-06,
+        0.03059015131830865
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008291486141145536,
+        0.0012185416797928618
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.8799997568130493,
+      "pelvis_position_m": [
+        -4.490605354309082,
+        -0.6989075541496277,
+        0.7903687953948975
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.529681020133388,
+      "holder_impulse_world_ns": [
+        -1.416060124118388e-05,
+        -3.210902112963576e-06,
+        0.030589560061026415
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008278782783797985,
+        0.0012269728146035478
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.899999737739563,
+      "pelvis_position_m": [
+        -4.490784645080566,
+        -0.6989336013793945,
+        0.790373682975769
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.52978331139212,
+      "holder_impulse_world_ns": [
+        -6.94625928550733e-06,
+        -3.3963522952235037e-06,
+        0.030591081238327177
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008266700163417805,
+        0.00123487742610272
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.9199997186660767,
+      "pelvis_position_m": [
+        -4.490961074829102,
+        -0.6989593505859375,
+        0.7903784513473511
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5299372160738618,
+      "holder_impulse_world_ns": [
+        -1.028770742437922e-06,
+        -3.3053017817075477e-06,
+        0.030593954939010855
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008255690577659924,
+        0.0012427054851959591
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.9399996995925903,
+      "pelvis_position_m": [
+        -4.491133689880371,
+        -0.6989847421646118,
+        0.7903830409049988
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5299996519984334,
+      "holder_impulse_world_ns": [
+        3.960719564589821e-06,
+        -3.6197123268385015e-06,
+        0.030596430251988417
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008247859602892489,
+        0.001250059559247057
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.959999680519104,
+      "pelvis_position_m": [
+        -4.491302490234375,
+        -0.6990097761154175,
+        0.7903874516487122
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.530033349743173,
+      "holder_impulse_world_ns": [
+        9.580055812493619e-06,
+        -3.970213684722918e-06,
+        0.030597565153857958
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008241225712161524,
+        0.001256791879993187
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.9799996614456177,
+      "pelvis_position_m": [
+        -4.491466522216797,
+        -0.6990343928337097,
+        0.7903916835784912
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5299720779513417,
+      "holder_impulse_world_ns": [
+        1.2070062490720728e-05,
+        -4.0911556364593395e-06,
+        0.0305974624427756
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008234565497007975,
+        0.0012629659019542086
+      ],
+      "released": false
+    },
+    {
+      "time_s": 0.9999996423721313,
+      "pelvis_position_m": [
+        -4.491625785827637,
+        -0.6990585923194885,
+        0.7903957366943359
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5298845724246497,
+      "holder_impulse_world_ns": [
+        1.6878148076195843e-05,
+        -4.121878565415687e-06,
+        0.030595974861798048
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008228582072250185,
+        0.001268633073524252
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.019999623298645,
+      "pelvis_position_m": [
+        -4.491779804229736,
+        -0.6990823149681091,
+        0.7903996109962463
+      ],
+      "command_m_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.529749304920165,
+      "holder_impulse_world_ns": [
+        1.949374251040393e-05,
+        -4.167206101775487e-06,
+        0.03059367810188633
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008223690885582418,
+        0.0012737944655715604
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.0399996042251587,
+      "pelvis_position_m": [
+        -4.491925239562988,
+        -0.6991055607795715,
+        0.7904030680656433
+      ],
+      "command_m_s": [
+        0.020000000000000018,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5298858732975105,
+      "holder_impulse_world_ns": [
+        5.1886651109662806e-05,
+        5.084524915472223e-06,
+        0.03059469189954862
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008219713075296054,
+        0.001289953005133727
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.0599995851516724,
+      "pelvis_position_m": [
+        -4.492053985595703,
+        -0.6991279125213623,
+        0.7904056310653687
+      ],
+      "command_m_s": [
+        0.040000000000000036,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5303980662885108,
+      "holder_impulse_world_ns": [
+        7.104062760035371e-05,
+        2.7587059370389927e-05,
+        0.030593355725992855
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008205132542185353,
+        0.0013246428193683085
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.079999566078186,
+      "pelvis_position_m": [
+        -4.4921555519104,
+        -0.699149489402771,
+        0.7904059886932373
+      ],
+      "command_m_s": [
+        0.06000000000000005,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5305796324187566,
+      "holder_impulse_world_ns": [
+        9.013029115182078e-05,
+        2.7613316028757283e-05,
+        0.030569414139314532
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008164666082823813,
+        0.0013793615537290992
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.0999995470046997,
+      "pelvis_position_m": [
+        -4.492218971252441,
+        -0.699171781539917,
+        0.7904024720191956
+      ],
+      "command_m_s": [
+        0.08000000000000007,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5295141619478871,
+      "holder_impulse_world_ns": [
+        0.0001206934967548906,
+        -2.6537394698390433e-05,
+        0.030502415118760055
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008119800293667408,
+        0.0014466529943362812
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.1199995279312134,
+      "pelvis_position_m": [
+        -4.492233753204346,
+        -0.6991955637931824,
+        0.790393054485321
+      ],
+      "command_m_s": [
+        0.10000000000000009,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.528543705876949,
+      "holder_impulse_world_ns": [
+        0.0001477752980016774,
+        -5.553492068822217e-05,
+        0.03047863231393411
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.000802929637550475,
+        0.0015281608909949564
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.139999508857727,
+      "pelvis_position_m": [
+        -4.492188453674316,
+        -0.6992179155349731,
+        0.7903746962547302
+      ],
+      "command_m_s": [
+        0.1200000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5311155266370382,
+      "holder_impulse_world_ns": [
+        0.00020123016928561043,
+        -1.762664769680234e-05,
+        0.030499039066468746
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008012476520111116,
+        0.001633726779273778
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.1599994897842407,
+      "pelvis_position_m": [
+        -4.492067813873291,
+        -0.6992301344871521,
+        0.790343165397644
+      ],
+      "command_m_s": [
+        0.14000000000000012,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.52203230398826,
+      "holder_impulse_world_ns": [
+        0.00028482213401958027,
+        -0.0005530023107378365,
+        0.030206919311127227
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008018642562162067,
+        0.0017546882451772137
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.1799994707107544,
+      "pelvis_position_m": [
+        -4.491854190826416,
+        -0.6992238163948059,
+        0.7902944684028625
+      ],
+      "command_m_s": [
+        0.15999999999999992,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5171303688642648,
+      "holder_impulse_world_ns": [
+        0.00031767126166912875,
+        -0.0007983927858450651,
+        0.029969578273279115
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0008019180834294389,
+        0.0018574053475622387
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.199999451637268,
+      "pelvis_position_m": [
+        -4.491530418395996,
+        -0.6991927027702332,
+        0.7902259230613708
+      ],
+      "command_m_s": [
+        0.17999999999999994,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.513007632841724,
+      "holder_impulse_world_ns": [
+        0.00015259717990682815,
+        -0.0009255578672113586,
+        0.029851102031651873
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0007991477831999848,
+        0.001921862804654992
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.2199994325637817,
+      "pelvis_position_m": [
+        -4.491088390350342,
+        -0.6991314888000488,
+        0.7901356220245361
+      ],
+      "command_m_s": [
+        0.19999999999999996,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5144200861281802,
+      "holder_impulse_world_ns": [
+        4.730933381202678e-05,
+        -0.0009786773621997126,
+        0.02976572409554771
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0007798176232526658,
+        0.0019608623638599928
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.2399994134902954,
+      "pelvis_position_m": [
+        -4.490524768829346,
+        -0.6990357041358948,
+        0.7900226712226868
+      ],
+      "command_m_s": [
+        0.21999999999999997,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5172918228643921,
+      "holder_impulse_world_ns": [
+        -2.6930523468430516e-05,
+        -0.0009522023010563972,
+        0.02971537849666609
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0007383032841785477,
+        0.0019846397640526916
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.259999394416809,
+      "pelvis_position_m": [
+        -4.489833831787109,
+        -0.6989008784294128,
+        0.7898866534233093
+      ],
+      "command_m_s": [
+        0.24,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5198979517335987,
+      "holder_impulse_world_ns": [
+        -0.00016052898431165535,
+        -0.0008723816512015184,
+        0.029654545890543185
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0007049418522060564,
+        0.001985937224484048
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.2799993753433228,
+      "pelvis_position_m": [
+        -4.489004135131836,
+        -0.6987164616584778,
+        0.7897255420684814
+      ],
+      "command_m_s": [
+        0.26,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5213648289034571,
+      "holder_impulse_world_ns": [
+        -0.0004067384672007361,
+        -0.000745645482072159,
+        0.029579459125007045
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0006778955965835718,
+        0.001992978423919042
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.2999993562698364,
+      "pelvis_position_m": [
+        -4.4880194664001465,
+        -0.6984661817550659,
+        0.7895352840423584
+      ],
+      "command_m_s": [
+        0.28,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.522336752218942,
+      "holder_impulse_world_ns": [
+        -0.0006543417942412056,
+        -0.0005962483686435765,
+        0.029482844034768963
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0006320680294521696,
+        0.0020109251619327665
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.31999933719635,
+      "pelvis_position_m": [
+        -4.486861228942871,
+        -0.6981351375579834,
+        0.7893120050430298
+      ],
+      "command_m_s": [
+        0.30000000000000004,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5240076445181199,
+      "holder_impulse_world_ns": [
+        -0.0007902969031307389,
+        -0.0004972848563228867,
+        0.02936590242834794
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0005871352244004521,
+        0.002055183124733433
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.3399993181228638,
+      "pelvis_position_m": [
+        -4.485507011413574,
+        -0.6977137327194214,
+        0.7890534400939941
+      ],
+      "command_m_s": [
+        0.32000000000000006,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5267797843362576,
+      "holder_impulse_world_ns": [
+        -0.000636211492832031,
+        -0.00046389255906261926,
+        0.029276796831179213
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0005686281908752358,
+        0.002115856278824864
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.3599992990493774,
+      "pelvis_position_m": [
+        -4.483932018280029,
+        -0.6971961855888367,
+        0.7887563109397888
+      ],
+      "command_m_s": [
+        0.3400000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5202280512737367,
+      "holder_impulse_world_ns": [
+        -0.00023121309535632185,
+        -0.00045576709364429576,
+        0.02919879303417134
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0005679881866956559,
+        0.002199775395960729
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.3799992799758911,
+      "pelvis_position_m": [
+        -4.48211145401001,
+        -0.6965819597244263,
+        0.7884132862091064
+      ],
+      "command_m_s": [
+        0.3600000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5123119414806048,
+      "holder_impulse_world_ns": [
+        0.0002520634343107502,
+        -0.000500002338863751,
+        0.029063591668705632
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0006202451635625584,
+        0.0023142107565319583
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.3999992609024048,
+      "pelvis_position_m": [
+        -4.480019569396973,
+        -0.6958736777305603,
+        0.7880127429962158
+      ],
+      "command_m_s": [
+        0.3800000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.505149597840815,
+      "holder_impulse_world_ns": [
+        0.0006610598592109893,
+        -0.0005063345468681895,
+        0.028893332222872912
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0007796775270740552,
+        0.002573023484254035
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.4199992418289185,
+      "pelvis_position_m": [
+        -4.477626323699951,
+        -0.6950757503509521,
+        0.7875421643257141
+      ],
+      "command_m_s": [
+        0.40000000000000013,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.499998966472963,
+      "holder_impulse_world_ns": [
+        0.0009146148876065806,
+        -0.0003791038879452885,
+        0.02873046790340753
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0009063951706664454,
+        0.003176480980049428
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.4399992227554321,
+      "pelvis_position_m": [
+        -4.474885940551758,
+        -0.6941814422607422,
+        0.7870239019393921
+      ],
+      "command_m_s": [
+        0.41999999999999993,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.4934432396430353,
+      "holder_impulse_world_ns": [
+        0.0011422683911025257,
+        -0.00027022643604847726,
+        0.028821930760258112
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.000976810189968085,
+        0.0041551859397755304
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.4599992036819458,
+      "pelvis_position_m": [
+        -4.471741676330566,
+        -0.6931766271591187,
+        0.7865080833435059
+      ],
+      "command_m_s": [
+        0.43999999999999995,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.489859811748352,
+      "holder_impulse_world_ns": [
+        0.0014366897208351597,
+        -0.00022830508326429072,
+        0.029012319503256334
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0009971426683285083,
+        0.004720495064823134
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.4799991846084595,
+      "pelvis_position_m": [
+        -4.468151569366455,
+        -0.6920621991157532,
+        0.7860221266746521
+      ],
+      "command_m_s": [
+        0.45999999999999996,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.466489237710442,
+      "holder_impulse_world_ns": [
+        0.0020017972457358015,
+        -0.00027681110239769814,
+        0.02856626200771555
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0010507890192061025,
+        0.005291038504053746
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.4999991655349731,
+      "pelvis_position_m": [
+        -4.464105129241943,
+        -0.6908489465713501,
+        0.7855345606803894
+      ],
+      "command_m_s": [
+        0.48,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.4620481987064835,
+      "holder_impulse_world_ns": [
+        0.0029204010209175606,
+        -0.000122328103983861,
+        0.028416125584291067
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0010618855959008946,
+        0.00560552315830606
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.5199991464614868,
+      "pelvis_position_m": [
+        -4.45961332321167,
+        -0.6895723342895508,
+        0.7849887013435364
+      ],
+      "command_m_s": [
+        0.5,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.494953301958837,
+      "holder_impulse_world_ns": [
+        0.003890112867748001,
+        0.0005043010902304326,
+        0.02883542011145974
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0021810337583419103,
+        0.005316631776767317
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.5399991273880005,
+      "pelvis_position_m": [
+        -4.45466947555542,
+        -0.6883130073547363,
+        0.7843294739723206
+      ],
+      "command_m_s": [
+        0.52,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5640177284629262,
+      "holder_impulse_world_ns": [
+        0.005210441320841807,
+        0.001827805890781694,
+        0.029952410417621367
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.00419406064389054,
+        0.004178148071744967
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.5599991083145142,
+      "pelvis_position_m": [
+        -4.449278831481934,
+        -0.687236487865448,
+        0.7835012078285217
+      ],
+      "command_m_s": [
+        0.54,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.6570104670999564,
+      "holder_impulse_world_ns": [
+        0.007325782353318887,
+        0.0029462035035383058,
+        0.031428158610580174
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.008511972549169095,
+        0.0030205783463112257
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.5799990892410278,
+      "pelvis_position_m": [
+        -4.443617343902588,
+        -0.6865754127502441,
+        0.7825019955635071
+      ],
+      "command_m_s": [
+        0.56,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.203216962631694,
+      "holder_impulse_world_ns": [
+        0.012452877828554752,
+        1.3791435455899977e-05,
+        0.03449295195410608
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0095759836536442,
+        0.045644648218779664
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.5999990701675415,
+      "pelvis_position_m": [
+        -4.4377760887146,
+        -0.6864209771156311,
+        0.7817820310592651
+      ],
+      "command_m_s": [
+        0.5800000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.9820307018290704,
+      "holder_impulse_world_ns": [
+        0.01899365593981047,
+        -0.000872384246782981,
+        0.04319633642030132
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.011061341340359973,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.6199990510940552,
+      "pelvis_position_m": [
+        -4.431204319000244,
+        -0.686888575553894,
+        0.7816756963729858
+      ],
+      "command_m_s": [
+        0.6000000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.482746356335275,
+      "holder_impulse_world_ns": [
+        0.026417042956154577,
+        -0.0049919488805167484,
+        0.0394230763964121
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.012121509523224393,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.6399990320205688,
+      "pelvis_position_m": [
+        -4.423555374145508,
+        -0.6879345178604126,
+        0.7819122672080994
+      ],
+      "command_m_s": [
+        0.6200000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.8864301184348022,
+      "holder_impulse_world_ns": [
+        0.032211823821211225,
+        -0.009100712024652702,
+        0.03534348221343426
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.012955895618500728,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.6599990129470825,
+      "pelvis_position_m": [
+        -4.415005683898926,
+        -0.689405620098114,
+        0.7821120023727417
+      ],
+      "command_m_s": [
+        0.6400000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.3525650258214066,
+      "holder_impulse_world_ns": [
+        0.030012056456577875,
+        -0.006704438656964931,
+        0.034880099315454494
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.015288161512275177,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.6799989938735962,
+      "pelvis_position_m": [
+        -4.4058661460876465,
+        -0.691190779209137,
+        0.7819656729698181
+      ],
+      "command_m_s": [
+        0.6600000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.5503038682763504,
+      "holder_impulse_world_ns": [
+        0.021300897813492824,
+        -0.004696868770250367,
+        0.03395393963688268
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.013800207321877441,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.6999989748001099,
+      "pelvis_position_m": [
+        -4.396308898925781,
+        -0.6932374238967896,
+        0.7812943458557129
+      ],
+      "command_m_s": [
+        0.6799999999999999,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.101587836662063,
+      "holder_impulse_world_ns": [
+        0.010144865147966824,
+        -0.0013099015072692115,
+        0.03316281228107445
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.010932812467516442,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.7199989557266235,
+      "pelvis_position_m": [
+        -4.386322498321533,
+        -0.6955363154411316,
+        0.7800544500350952
+      ],
+      "command_m_s": [
+        0.7,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.091811869299477,
+      "holder_impulse_world_ns": [
+        -0.001157788332534925,
+        0.0032002110710505826,
+        0.032401066056144526
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.006866257098281541,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.7399989366531372,
+      "pelvis_position_m": [
+        -4.375823497772217,
+        -0.6980827450752258,
+        0.7781491875648499
+      ],
+      "command_m_s": [
+        0.72,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.9220931787485585,
+      "holder_impulse_world_ns": [
+        -0.01023802188305744,
+        0.008202545006322816,
+        0.0302858696857325
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.004740804286415995,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.7599989175796509,
+      "pelvis_position_m": [
+        -4.364739418029785,
+        -0.7009854316711426,
+        0.7753331065177917
+      ],
+      "command_m_s": [
+        0.74,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.8858696377820052,
+      "holder_impulse_world_ns": [
+        -0.014620030802769678,
+        0.01096868536568122,
+        0.026692060608044747
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.012344882466691834,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.7799988985061646,
+      "pelvis_position_m": [
+        -4.353353023529053,
+        -0.7039804458618164,
+        0.7715320587158203
+      ],
+      "command_m_s": [
+        0.76,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.6879322093081432,
+      "holder_impulse_world_ns": [
+        -0.02458433520548718,
+        0.007978703601546037,
+        0.029893244661110242
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.012350580297701278,
+        1.6396014216243413
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.7999988794326782,
+      "pelvis_position_m": [
+        -4.342148303985596,
+        -0.7066565752029419,
+        0.7693727612495422
+      ],
+      "command_m_s": [
+        0.78,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.3024240357717245,
+      "holder_impulse_world_ns": [
+        -0.024687153601905043,
+        -0.0004233059257878369,
+        0.035357049089596346
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.012676731330144016,
+        0.2593216849409467
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.819998860359192,
+      "pelvis_position_m": [
+        -4.330870628356934,
+        -0.709339439868927,
+        0.7696889042854309
+      ],
+      "command_m_s": [
+        0.8,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.036970131515843,
+      "holder_impulse_world_ns": [
+        -0.013597434014182574,
+        -0.002599093120519155,
+        0.03148756893048639
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.031122600898015,
+        0.03347470043943804
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.8399988412857056,
+      "pelvis_position_m": [
+        -4.319364547729492,
+        -0.7115491032600403,
+        0.7711730003356934
+      ],
+      "command_m_s": [
+        0.8200000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.31452635072935,
+      "holder_impulse_world_ns": [
+        -0.006562689676626517,
+        0.004029194330432083,
+        0.03193067149880065
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.020897985176766692,
+        0.008980306524234274
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.8599988222122192,
+      "pelvis_position_m": [
+        -4.307726860046387,
+        -0.7128719091415405,
+        0.7728686332702637
+      ],
+      "command_m_s": [
+        0.8400000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.74613557436445,
+      "holder_impulse_world_ns": [
+        -0.01054520562362097,
+        0.016104622525177994,
+        0.036622711810211456
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.011313538910448236
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.879998803138733,
+      "pelvis_position_m": [
+        -4.295989990234375,
+        -0.7134186029434204,
+        0.7743901610374451
+      ],
+      "command_m_s": [
+        0.8600000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.8277912324629675,
+      "holder_impulse_world_ns": [
+        -0.014809984473673468,
+        0.021299858502988114,
+        0.034397646399451226
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.014455831468810217
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.8999987840652466,
+      "pelvis_position_m": [
+        -4.284176826477051,
+        -0.7135190367698669,
+        0.7754834294319153
+      ],
+      "command_m_s": [
+        0.8800000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.437423791913723,
+      "holder_impulse_world_ns": [
+        -0.014010105988206253,
+        0.013465928886295013,
+        0.026976359814321768
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.03802930199085224
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.9199987649917603,
+      "pelvis_position_m": [
+        -4.272188186645508,
+        -0.7132746577262878,
+        0.776032030582428
+      ],
+      "command_m_s": [
+        0.9000000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.6649544828707545,
+      "holder_impulse_world_ns": [
+        -0.005909049696162909,
+        0.0030276852140001696,
+        0.023012584770992803
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.027870839329231806
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.939998745918274,
+      "pelvis_position_m": [
+        -4.259848594665527,
+        -0.7126520276069641,
+        0.7760593891143799
+      ],
+      "command_m_s": [
+        0.9199999999999999,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.2335214699363368,
+      "holder_impulse_world_ns": [
+        0.003278990710282507,
+        -0.0032904273287622608,
+        0.02200591043429223
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.016622523415709196
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.9599987268447876,
+      "pelvis_position_m": [
+        -4.247077465057373,
+        -0.7115978598594666,
+        0.7756016850471497
+      ],
+      "command_m_s": [
+        0.94,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.2003536323178463,
+      "holder_impulse_world_ns": [
+        0.007693030562620628,
+        -0.006128545418773399,
+        0.020385418391167972
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.008074376873220816
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.9799987077713013,
+      "pelvis_position_m": [
+        -4.233866214752197,
+        -0.710116446018219,
+        0.7747558951377869
+      ],
+      "command_m_s": [
+        0.96,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.2395651897832929,
+      "holder_impulse_world_ns": [
+        0.00816331861630864,
+        -0.007193812208805404,
+        0.019261965820091275
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.015499989977931242
+      ],
+      "released": false
+    },
+    {
+      "time_s": 1.999998688697815,
+      "pelvis_position_m": [
+        -4.2202301025390625,
+        -0.7082016468048096,
+        0.7736069560050964
+      ],
+      "command_m_s": [
+        0.98,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.2356246478784845,
+      "holder_impulse_world_ns": [
+        0.007984963172722627,
+        -0.006544735235817181,
+        0.019245287567523077
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.022263545580652522
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.019998788833618,
+      "pelvis_position_m": [
+        -4.206106185913086,
+        -0.7058990001678467,
+        0.7722259163856506
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.3089043160428715,
+      "holder_impulse_world_ns": [
+        0.00881754313317348,
+        -0.004547796714839262,
+        0.01958375518002889
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.030317854600883924
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.039998769760132,
+      "pelvis_position_m": [
+        -4.1913347244262695,
+        -0.7032985091209412,
+        0.7705724239349365
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.3921231202666342,
+      "holder_impulse_world_ns": [
+        0.012267743542543329,
+        -0.0032603623418382363,
+        0.0188390918578253
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.038945999057544124
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.0599987506866455,
+      "pelvis_position_m": [
+        -4.175792217254639,
+        -0.7003856301307678,
+        0.7682332992553711
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.2377227634933203,
+      "holder_impulse_world_ns": [
+        0.014674198932395258,
+        -0.004245377305262446,
+        0.014510089612106732
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.0458917132426801
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.079998731613159,
+      "pelvis_position_m": [
+        -4.1598968505859375,
+        -0.697307288646698,
+        0.7652084231376648
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.026938597013704,
+      "holder_impulse_world_ns": [
+        0.019233050743885507,
+        -0.008022115814144606,
+        0.027086442521280573
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        1.8801827641655573,
+        0.04225291578499611
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.099998712539673,
+      "pelvis_position_m": [
+        -4.1445417404174805,
+        -0.6937912702560425,
+        0.7629033327102661
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.215731942612198,
+      "holder_impulse_world_ns": [
+        0.017584568088707245,
+        0.004579542481311078,
+        0.06017825658902491
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.288569111628714,
+        0.0259452827393155
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.1199986934661865,
+      "pelvis_position_m": [
+        -4.129751682281494,
+        -0.690273642539978,
+        0.7623924612998962
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.8617904543699253,
+      "holder_impulse_world_ns": [
+        0.007869111874877209,
+        0.009437034387572131,
+        0.060666682211277356
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.09123960787181426,
+        0.05673552379415319
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.1399986743927,
+      "pelvis_position_m": [
+        -4.114940643310547,
+        -0.6872408390045166,
+        0.7633668780326843
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.8050527534789325,
+      "holder_impulse_world_ns": [
+        -0.005338569514920836,
+        0.008493118656954983,
+        0.04613750718766888
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.017794687924731222,
+        0.07106487994392263
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.159998655319214,
+      "pelvis_position_m": [
+        -4.099874019622803,
+        -0.6847464442253113,
+        0.7649235129356384
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.0407499938433613,
+      "holder_impulse_world_ns": [
+        -0.012645408436294935,
+        0.001821015645991562,
+        0.03663146751329439
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.012061113419608303,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.1799986362457275,
+      "pelvis_position_m": [
+        -4.084794044494629,
+        -0.6827095150947571,
+        0.766742467880249
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.7248835355791106,
+      "holder_impulse_world_ns": [
+        -0.010143045859148405,
+        -0.003542868523914018,
+        0.03140522078795036
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.015497217071129233,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.199998617172241,
+      "pelvis_position_m": [
+        -4.06976318359375,
+        -0.6811255216598511,
+        0.7686892151832581
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5055302961278167,
+      "holder_impulse_world_ns": [
+        -0.005657141270765894,
+        -0.006475564340472654,
+        0.028206797482702335
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.029359864759732183,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.219998598098755,
+      "pelvis_position_m": [
+        -4.054708003997803,
+        -0.67998868227005,
+        0.7706031203269958
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.6550282797719862,
+      "holder_impulse_world_ns": [
+        0.00041443708665023655,
+        -0.008055213065094937,
+        0.028578131258576105
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.02378561340246314,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.2399985790252686,
+      "pelvis_position_m": [
+        -4.039535999298096,
+        -0.6792000532150269,
+        0.7723080515861511
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.8054533165213438,
+      "holder_impulse_world_ns": [
+        0.0037049965896780125,
+        -0.007913364339480138,
+        0.028387291908868257
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.017287373408359452,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.2599985599517822,
+      "pelvis_position_m": [
+        -4.0241780281066895,
+        -0.6787223219871521,
+        0.7737056016921997
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.850064570272283,
+      "holder_impulse_world_ns": [
+        0.006971829706619647,
+        -0.00859499091246831,
+        0.028571826873601342
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.012127235370630127,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.279998540878296,
+      "pelvis_position_m": [
+        -4.008615493774414,
+        -0.6786035895347595,
+        0.77480149269104
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.365106597831631,
+      "holder_impulse_world_ns": [
+        0.01176410965089085,
+        -0.008431887402704287,
+        0.030298540305234857
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.009182782471455757,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.2999985218048096,
+      "pelvis_position_m": [
+        -3.9927926063537598,
+        -0.6788669228553772,
+        0.7756558060646057
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.544196585705807,
+      "holder_impulse_world_ns": [
+        0.013069641047297213,
+        -0.010822239674654103,
+        0.030262967328287812
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.010080838676004695,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.3199985027313232,
+      "pelvis_position_m": [
+        -3.9766669273376465,
+        -0.6795293092727661,
+        0.7762568593025208
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.259791827357315,
+      "holder_impulse_world_ns": [
+        0.013212674562055413,
+        -0.010115631021872956,
+        0.029344483537889397
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.015345220579654253,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.339998483657837,
+      "pelvis_position_m": [
+        -3.9601941108703613,
+        -0.6805892586708069,
+        0.7765395045280457
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.0291578782489106,
+      "holder_impulse_world_ns": [
+        0.011743583100738617,
+        -0.008007112245156501,
+        0.029196729021128503
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.02612268594068092,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.3599984645843506,
+      "pelvis_position_m": [
+        -3.9433062076568604,
+        -0.682025671005249,
+        0.7764691710472107
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.7520032573980318,
+      "holder_impulse_world_ns": [
+        0.009098471433718522,
+        -0.004299675320514247,
+        0.030177679400259613
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.03437763623328135,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.3799984455108643,
+      "pelvis_position_m": [
+        -3.9259440898895264,
+        -0.6837804317474365,
+        0.7759896516799927
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.692803920977851,
+      "holder_impulse_world_ns": [
+        0.004466116283724506,
+        0.0013240382587978404,
+        0.031443046470135703
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.040608972591673564,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.399998426437378,
+      "pelvis_position_m": [
+        -3.9079959392547607,
+        -0.6857321262359619,
+        0.7748713493347168
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.7929249859984273,
+      "holder_impulse_world_ns": [
+        -0.0007722342820418867,
+        0.00820284026723823,
+        0.03294022311960856
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.04064331417748987,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.4199984073638916,
+      "pelvis_position_m": [
+        -3.88981556892395,
+        -0.6877187490463257,
+        0.7719882130622864
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.5051988036757924,
+      "holder_impulse_world_ns": [
+        -0.013797265153823714,
+        0.014519267518575863,
+        0.020499802892508724
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.08734319649627993,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.4399983882904053,
+      "pelvis_position_m": [
+        -3.8721704483032227,
+        -0.6900237202644348,
+        0.7675653696060181
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.2824068413308374,
+      "holder_impulse_world_ns": [
+        -0.03137522010925548,
+        -0.0019440235450451577,
+        0.02245843077480909
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.02552199232300343,
+        1.2537587854640995
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.459998369216919,
+      "pelvis_position_m": [
+        -3.854914665222168,
+        -0.6917554140090942,
+        0.7650405168533325
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.1226241461496023,
+      "holder_impulse_world_ns": [
+        -0.02554993386759741,
+        -0.002171609119130669,
+        0.043102072665229745
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.03426438516878802,
+        0.2735296345527617
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.4799983501434326,
+      "pelvis_position_m": [
+        -3.83756685256958,
+        -0.693000078201294,
+        0.7650330662727356
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.202080671488441,
+      "holder_impulse_world_ns": [
+        -0.006044745754188033,
+        0.008301197434637565,
+        0.03863137798844867
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.04841382381106313,
+        0.0612137371457203
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.4999983310699463,
+      "pelvis_position_m": [
+        -3.8200182914733887,
+        -0.6940219402313232,
+        0.7662108540534973
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.9763577811830513,
+      "holder_impulse_world_ns": [
+        -0.0036193991619955313,
+        0.011163437112967987,
+        0.03693427523853189
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.01488447605071559
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.51999831199646,
+      "pelvis_position_m": [
+        -3.802563190460205,
+        -0.6945518255233765,
+        0.767957866191864
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 4.171768683662762,
+      "holder_impulse_world_ns": [
+        -0.011552280335154421,
+        0.016059530398387752,
+        0.03819580446772067
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.030537141282632338
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.5399982929229736,
+      "pelvis_position_m": [
+        -3.785358428955078,
+        -0.6945586204528809,
+        0.7697808742523193
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.3668124256076557,
+      "holder_impulse_world_ns": [
+        -0.01746675990692264,
+        0.011751597987178944,
+        0.03166303850945835
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.05711331741661892
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.5599982738494873,
+      "pelvis_position_m": [
+        -3.7684104442596436,
+        -0.6941210627555847,
+        0.7713826298713684
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.074932042002906,
+      "holder_impulse_world_ns": [
+        -0.014215612226138473,
+        0.0037802746576458676,
+        0.025608444152947735
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.058895062927727865
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.579998254776001,
+      "pelvis_position_m": [
+        -3.7515006065368652,
+        -0.6932210922241211,
+        0.7726114988327026
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.3225691751689397,
+      "holder_impulse_world_ns": [
+        -0.003148724859720888,
+        -0.001150745071538666,
+        0.02355482470430598
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.054942526576959895
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.5999982357025146,
+      "pelvis_position_m": [
+        -3.7343873977661133,
+        -0.691847026348114,
+        0.7732936143875122
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.2463082977975612,
+      "holder_impulse_world_ns": [
+        0.007453610275408411,
+        -0.001734702996499109,
+        0.02261576321029809
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.04028652440276903
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.6199982166290283,
+      "pelvis_position_m": [
+        -3.716947555541992,
+        -0.6900053024291992,
+        0.7732897400856018
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.323591772877478,
+      "holder_impulse_world_ns": [
+        0.01262501900246535,
+        -0.0013744364924550645,
+        0.021342418098158154
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.02974740914377895
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.639998197555542,
+      "pelvis_position_m": [
+        -3.699214458465576,
+        -0.6877098083496094,
+        0.7725712060928345
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.389027209476546,
+      "holder_impulse_world_ns": [
+        0.014092471828978865,
+        -0.0014737264726425291,
+        0.020933172644469145
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.019082694812521978
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.6599981784820557,
+      "pelvis_position_m": [
+        -3.6812357902526855,
+        -0.6849690079689026,
+        0.7713197469711304
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.447488329742567,
+      "holder_impulse_world_ns": [
+        0.011843112351861166,
+        0.0003225494024470256,
+        0.020813707877268554
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.026785787391650374
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.6799981594085693,
+      "pelvis_position_m": [
+        -3.6629223823547363,
+        -0.6818869113922119,
+        0.769491970539093
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.3519683990937452,
+      "holder_impulse_world_ns": [
+        0.01064281310651407,
+        0.0006970956090993956,
+        0.01883853715667038
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.030915524805674714
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.699998140335083,
+      "pelvis_position_m": [
+        -3.6440508365631104,
+        -0.6785680651664734,
+        0.7669918537139893
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.2905802574366492,
+      "holder_impulse_world_ns": [
+        0.014265308869089957,
+        -0.0011805764589609311,
+        0.014890029358238386
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.027813320072836618
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.7199981212615967,
+      "pelvis_position_m": [
+        -3.6248719692230225,
+        -0.6750079989433289,
+        0.7631422877311707
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 1.8056657341061706,
+      "holder_impulse_world_ns": [
+        0.025286237000331793,
+        -0.0010700167678525613,
+        0.018240830399666376
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        2.5509295356479393,
+        0.06662045289198143
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.7399981021881104,
+      "pelvis_position_m": [
+        -3.606328248977661,
+        -0.6712403297424316,
+        0.7597823143005371
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.4297501049626336,
+      "holder_impulse_world_ns": [
+        0.02623885432552553,
+        0.0033057167202067317,
+        0.05847552705107451
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.7777998641282381,
+        0.02725291939453883
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.759998083114624,
+      "pelvis_position_m": [
+        -3.588463306427002,
+        -0.6677750945091248,
+        0.7590752243995667
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 3.9721077713278454,
+      "holder_impulse_world_ns": [
+        0.012489751211930732,
+        0.005568890569807256,
+        0.06419173625241457
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.14329658868793824,
+        0.057590798561909795
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.7799980640411377,
+      "pelvis_position_m": [
+        -3.570615291595459,
+        -0.6647235155105591,
+        0.7603986263275146
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.9656165987319345,
+      "holder_impulse_world_ns": [
+        -0.005621265048851846,
+        0.005931565724423302,
+        0.04918756750886265
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.020977124117110713,
+        0.0776435821182727
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.7999980449676514,
+      "pelvis_position_m": [
+        -3.552574396133423,
+        -0.6621445417404175,
+        0.7625415921211243
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.2126651926382523,
+      "holder_impulse_world_ns": [
+        -0.01420182516603514,
+        0.0016824219942487624,
+        0.03983645663431945
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.018262001786531833,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.819998025894165,
+      "pelvis_position_m": [
+        -3.53462815284729,
+        -0.6599611043930054,
+        0.7650433778762817
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0,
+      "holder_peak_force_n": 2.0330036778411524,
+      "holder_impulse_world_ns": [
+        -0.015185686350466202,
+        -0.002977556474633597,
+        0.033151493666140036
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.02993670754960523,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.8399980068206787,
+      "pelvis_position_m": [
+        -3.516914129257202,
+        -0.6582079529762268,
+        0.7676778435707092
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0008239123149164914,
+      "holder_peak_force_n": 1.6098275662602943,
+      "holder_impulse_world_ns": [
+        -0.007776563974631039,
+        -0.004819426316717758,
+        0.02878465887137318
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.04130848460684512,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.8599979877471924,
+      "pelvis_position_m": [
+        -3.4993271827697754,
+        -0.656917154788971,
+        0.7702088952064514
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.0032589381436490196,
+      "holder_peak_force_n": 1.5754277742048846,
+      "holder_impulse_world_ns": [
+        -0.00026500779771589306,
+        -0.006705697870342752,
+        0.028115420118014912
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.03699866928625626,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.879997968673706,
+      "pelvis_position_m": [
+        -3.4817397594451904,
+        -0.6560081839561462,
+        0.7723785638809204
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.007249522097550421,
+      "holder_peak_force_n": 1.7034650979805026,
+      "holder_impulse_world_ns": [
+        0.0021485053369523677,
+        -0.007541326256064143,
+        0.026661720489054474
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.03210541506513405,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.8999979496002197,
+      "pelvis_position_m": [
+        -3.4640519618988037,
+        -0.6554101705551147,
+        0.7740601897239685
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.01274010878001071,
+      "holder_peak_force_n": 1.86831232726387,
+      "holder_impulse_world_ns": [
+        0.00627194563123889,
+        -0.009001502723196502,
+        0.027791294231937144
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.021976316057098582,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.9199979305267334,
+      "pelvis_position_m": [
+        -3.446251392364502,
+        -0.655131459236145,
+        0.7752687335014343
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.019675142794419898,
+      "holder_peak_force_n": 2.2281017845002076,
+      "holder_impulse_world_ns": [
+        0.010577831509224495,
+        -0.009135902903574723,
+        0.02887590992694814
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.014511435737607777,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.939997911453247,
+      "pelvis_position_m": [
+        -3.4283082485198975,
+        -0.6551953554153442,
+        0.7760334610939026
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.027999068744167993,
+      "holder_peak_force_n": 2.4587950719012333,
+      "holder_impulse_world_ns": [
+        0.013535499373420676,
+        -0.011444089690470262,
+        0.028193937229673647
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.013275339925127534,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.9599978923797607,
+      "pelvis_position_m": [
+        -3.4101641178131104,
+        -0.6556175351142883,
+        0.7763241529464722
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.03765633123264501,
+      "holder_peak_force_n": 2.035681530420742,
+      "holder_impulse_world_ns": [
+        0.012273133142522688,
+        -0.010163143198874186,
+        0.02735519318212337
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.026527597617268573,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.9799978733062744,
+      "pelvis_position_m": [
+        -3.391719341278076,
+        -0.6563844680786133,
+        0.7760453224182129
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.04859137486324096,
+      "holder_peak_force_n": 1.7090498262537035,
+      "holder_impulse_world_ns": [
+        0.008148083021116283,
+        -0.005912787404577825,
+        0.027293247687618673
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.04611564693443016,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 2.999997854232788,
+      "pelvis_position_m": [
+        -3.372877597808838,
+        -0.6574837565422058,
+        0.7750964164733887
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.06074864423934586,
+      "holder_peak_force_n": 1.627172525090808,
+      "holder_impulse_world_ns": [
+        0.001621813626991879,
+        -0.00014675302418720412,
+        0.029349677564194692
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.04165540853320402,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.0199978351593018,
+      "pelvis_position_m": [
+        -3.3534820079803467,
+        -0.6587938666343689,
+        0.7732303142547607
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.07407258396434972,
+      "holder_peak_force_n": 1.7034524241445557,
+      "holder_impulse_world_ns": [
+        -0.004361236112729545,
+        0.006640289124163042,
+        0.03049008044325998
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.03927184985271484,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.0399978160858154,
+      "pelvis_position_m": [
+        -3.3339290618896484,
+        -0.6603022217750549,
+        0.7693200707435608
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.08850763864164256,
+      "holder_peak_force_n": 2.0234145708810347,
+      "holder_impulse_world_ns": [
+        -0.020996371968676843,
+        0.008807592698803286,
+        0.018371030130659473
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.027979745556647125,
+        1.8752372318605437
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.059997797012329,
+      "pelvis_position_m": [
+        -3.3148655891418457,
+        -0.6618138551712036,
+        0.7650101780891418
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.10399825287461437,
+      "holder_peak_force_n": 3.010151259919954,
+      "holder_impulse_world_ns": [
+        -0.03175235371425796,
+        -0.007853333573584366,
+        0.033377146315846096
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.020986028270130446,
+        1.1740126384494753
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.0799977779388428,
+      "pelvis_position_m": [
+        -3.2962892055511475,
+        -0.6626478433609009,
+        0.7636981010437012
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.12048887126665517,
+      "holder_peak_force_n": 2.96519861251623,
+      "holder_impulse_world_ns": [
+        -0.012553483994303755,
+        -0.0009887872820742677,
+        0.043758791881560344
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.03456072125808141,
+        0.22792958964555016
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.0999977588653564,
+      "pelvis_position_m": [
+        -3.2777857780456543,
+        -0.6632750034332275,
+        0.7645317316055298
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.137923938421155,
+      "holder_peak_force_n": 3.2371569140465626,
+      "holder_impulse_world_ns": [
+        -0.00028480287836944886,
+        0.006453051516039908,
+        0.03537874317716181
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.054478592617878574,
+        0.030622046349182502
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.11999773979187,
+      "pelvis_position_m": [
+        -3.2594642639160156,
+        -0.6635528802871704,
+        0.7662591338157654
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.15624789894150382,
+      "holder_peak_force_n": 3.8720620017027865,
+      "holder_impulse_world_ns": [
+        -0.0006548515033763691,
+        0.009152274129290393,
+        0.03765050719200533
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.33670001447519743,
+        0.02528961188003575
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.139997720718384,
+      "pelvis_position_m": [
+        -3.2414357662200928,
+        -0.6633005142211914,
+        0.7683668732643127
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.1754051974310917,
+      "holder_peak_force_n": 3.323573434270535,
+      "holder_impulse_world_ns": [
+        -0.006157324940971549,
+        0.011062192846406084,
+        0.037054825444138365
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.051255310688789905
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.1599977016448975,
+      "pelvis_position_m": [
+        -3.2238223552703857,
+        -0.6625310182571411,
+        0.7704131007194519
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.19534027849330862,
+      "holder_peak_force_n": 2.439258040389058,
+      "holder_impulse_world_ns": [
+        -0.005603963093275161,
+        0.006013562698651278,
+        0.02944598497520571
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.06251251785612137
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.179997682571411,
+      "pelvis_position_m": [
+        -3.2065112590789795,
+        -0.6613389253616333,
+        0.7721258997917175
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.21599758673154457,
+      "holder_peak_force_n": 1.379331053596755,
+      "holder_impulse_world_ns": [
+        0.0009348891882446257,
+        0.0008037028479985246,
+        0.024876714350855055
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.06303562920908043
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.199997663497925,
+      "pelvis_position_m": [
+        -3.1892271041870117,
+        -0.6597375273704529,
+        0.7733844518661499
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.23732156674918964,
+      "holder_peak_force_n": 1.4625259323231006,
+      "holder_impulse_world_ns": [
+        0.011289845937319895,
+        0.0016219356880989159,
+        0.024928923549324303
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.059276689475155804
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.2199976444244385,
+      "pelvis_position_m": [
+        -3.1717355251312256,
+        -0.6576712131500244,
+        0.7740558981895447
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.25925666314963375,
+      "holder_peak_force_n": 1.7242466997452153,
+      "holder_impulse_world_ns": [
+        0.019280492441894316,
+        0.0015200085071457269,
+        0.02525435638705916
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.03882200173205701
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.239997625350952,
+      "pelvis_position_m": [
+        -3.1539530754089355,
+        -0.655143141746521,
+        0.774086594581604
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.281747320536267,
+      "holder_peak_force_n": 2.025935795414241,
+      "holder_impulse_world_ns": [
+        0.02342262554724235,
+        0.0019090855660942947,
+        0.02603253778475124
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.027575074165579704
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.259997606277466,
+      "pelvis_position_m": [
+        -3.135923147201538,
+        -0.6521679759025574,
+        0.7735256552696228
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.30473798351247927,
+      "holder_peak_force_n": 1.9476849687286422,
+      "holder_impulse_world_ns": [
+        0.020652772433255955,
+        0.002934735956415815,
+        0.025775773663559345
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.014883012119997216
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.2799975872039795,
+      "pelvis_position_m": [
+        -3.117692232131958,
+        -0.6487787365913391,
+        0.7724366188049316
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.3281730966816607,
+      "holder_peak_force_n": 1.78334238999746,
+      "holder_impulse_world_ns": [
+        0.015155316735124711,
+        0.0035307619896022997,
+        0.02484617673216187
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.014853893511372977
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.299997568130493,
+      "pelvis_position_m": [
+        -3.0991804599761963,
+        -0.6450042128562927,
+        0.7709253430366516
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.3519971046472013,
+      "holder_peak_force_n": 1.6069069690413782,
+      "holder_impulse_world_ns": [
+        0.010964179912351974,
+        0.0028241050431106513,
+        0.022942660707378864
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.03242423554051988
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.319997549057007,
+      "pelvis_position_m": [
+        -3.0801007747650146,
+        -0.6408690214157104,
+        0.7689297795295715
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.376154452012491,
+      "holder_peak_force_n": 1.3779393016937636,
+      "holder_impulse_world_ns": [
+        0.011518562255453536,
+        -0.001679864014262039,
+        0.018738081257769202
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.040482137347374166
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.3399975299835205,
+      "pelvis_position_m": [
+        -3.0604875087738037,
+        -0.6363198161125183,
+        0.7657375931739807
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.4005895833809199,
+      "holder_peak_force_n": 1.3335868178725692,
+      "holder_impulse_world_ns": [
+        0.016588031277668384,
+        -0.001600180606673706,
+        0.01626161442515626
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        2.2016052879046395,
+        0.04239083432735198
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.359997510910034,
+      "pelvis_position_m": [
+        -3.041205644607544,
+        -0.6316154599189758,
+        0.7623019218444824
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.4252469433558779,
+      "holder_peak_force_n": 2.9122823324675817,
+      "holder_impulse_world_ns": [
+        0.009264018334028847,
+        -0.004165757125555683,
+        0.047401770001829185
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        1.388951344484791,
+        0.028548154875613446
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.379997491836548,
+      "pelvis_position_m": [
+        -3.0225632190704346,
+        -0.6272037029266357,
+        0.7611915469169617
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.4500709765407551,
+      "holder_peak_force_n": 3.731260523611356,
+      "holder_impulse_world_ns": [
+        -0.006952914690209237,
+        0.0019537798680398623,
+        0.06970463778382308
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.21108472119287416,
+        0.04783430855484754
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.3999974727630615,
+      "pelvis_position_m": [
+        -3.0043087005615234,
+        -0.6231487989425659,
+        0.7625184059143066
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.4750061275389415,
+      "holder_peak_force_n": 3.4276935432170257,
+      "holder_impulse_world_ns": [
+        -0.01975380215935642,
+        0.007880666496459339,
+        0.05546230962867058
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.03359220330494707,
+        0.09618505373641326
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.419997453689575,
+      "pelvis_position_m": [
+        -2.9860663414001465,
+        -0.6195195913314819,
+        0.764820396900177
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.4999968409538271,
+      "holder_peak_force_n": 2.647247076885448,
+      "holder_impulse_world_ns": [
+        -0.020477679900574152,
+        0.008080391537956408,
+        0.03972931821079873
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.036833753891282434,
+        0.05547366166831413
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.439997434616089,
+      "pelvis_position_m": [
+        -2.9679949283599854,
+        -0.6162024736404419,
+        0.7673700451850891
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.524987561388802,
+      "holder_peak_force_n": 1.9840406427275878,
+      "holder_impulse_world_ns": [
+        -0.01924191215813644,
+        0.00209447835316069,
+        0.033085611369543
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.07183209652059099,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.4599974155426025,
+      "pelvis_position_m": [
+        -2.950171947479248,
+        -0.6131666898727417,
+        0.7700852155685425
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.5499227334472561,
+      "holder_peak_force_n": 1.5869178837989335,
+      "holder_impulse_world_ns": [
+        -0.011682640806431801,
+        -0.001482437530533029,
+        0.02674058363772497
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.08365660502275066,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.479997396469116,
+      "pelvis_position_m": [
+        -2.932523012161255,
+        -0.6106074452400208,
+        0.7728046774864197
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.5747468017325794,
+      "holder_peak_force_n": 1.6295320760236103,
+      "holder_impulse_world_ns": [
+        -0.005917726008112941,
+        -0.003777043877053585,
+        0.02820379293062074
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.055749851502725656,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.49999737739563,
+      "pelvis_position_m": [
+        -2.914947032928467,
+        -0.6084313988685608,
+        0.7752168774604797
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.599404210848162,
+      "holder_peak_force_n": 1.6952981846016404,
+      "holder_impulse_world_ns": [
+        -0.00320989165828769,
+        -0.003515732628648548,
+        0.027884417306556466
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.050833135832678206,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.5199973583221436,
+      "pelvis_position_m": [
+        -2.8973121643066406,
+        -0.6066038012504578,
+        0.7771032452583313
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.6238394053973937,
+      "holder_peak_force_n": 1.6454419967728082,
+      "holder_impulse_world_ns": [
+        -0.0016410125966320017,
+        -0.0038730574910694443,
+        0.02779247605098271
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.03625593298590199,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.5399973392486572,
+      "pelvis_position_m": [
+        -2.879551410675049,
+        -0.6050876975059509,
+        0.7784210443496704
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.6479968299836648,
+      "holder_peak_force_n": 1.6501833509025976,
+      "holder_impulse_world_ns": [
+        -0.0005891982493120375,
+        -0.005184807356523462,
+        0.02767372714222333
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0331982576979368,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.559997320175171,
+      "pelvis_position_m": [
+        -2.8616151809692383,
+        -0.603888750076294,
+        0.7791388630867004
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.6718209292103653,
+      "holder_peak_force_n": 1.5695531696514375,
+      "holder_impulse_world_ns": [
+        0.0002173478588464629,
+        -0.0059286908757626424,
+        0.025885558512128565
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.02363327929616395,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.5799973011016846,
+      "pelvis_position_m": [
+        -2.8434340953826904,
+        -0.6030197143554688,
+        0.7791995406150818
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.695256147680885,
+      "holder_peak_force_n": 1.5325362337749289,
+      "holder_impulse_world_ns": [
+        -0.00031069150141763586,
+        -0.00582164305680856,
+        0.02390825430504296
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.015112006577987122,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.5999972820281982,
+      "pelvis_position_m": [
+        -2.824892044067383,
+        -0.60246342420578,
+        0.7786282896995544
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.718246929998614,
+      "holder_peak_force_n": 1.5655107648428357,
+      "holder_impulse_world_ns": [
+        -0.0009375751226270297,
+        -0.0050045756971139384,
+        0.025243546721817334
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0177772189219328,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.619997262954712,
+      "pelvis_position_m": [
+        -2.805722713470459,
+        -0.6022351980209351,
+        0.7774977684020996
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.7407377207669422,
+      "holder_peak_force_n": 1.7564304509981206,
+      "holder_impulse_world_ns": [
+        -0.001602545828918917,
+        -0.0023977873487206823,
+        0.029974739144279634
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.02717846053585089,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.6399972438812256,
+      "pelvis_position_m": [
+        -2.7859063148498535,
+        -0.6023969054222107,
+        0.7751723527908325
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.7626729645892599,
+      "holder_peak_force_n": 1.8563842763522944,
+      "holder_impulse_world_ns": [
+        -0.0034579521039563425,
+        0.0016223077776429582,
+        0.0280388914099228
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.07134191699860498,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.6599972248077393,
+      "pelvis_position_m": [
+        -2.7658045291900635,
+        -0.6033704280853271,
+        0.7708941102027893
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.783997106068957,
+      "holder_peak_force_n": 1.727679903280613,
+      "holder_impulse_world_ns": [
+        -0.01407699592997778,
+        -0.004477898872186749,
+        0.019864621862510867
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.016909919558194358,
+        1.7631343831141457
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.679997205734253,
+      "pelvis_position_m": [
+        -2.745685577392578,
+        -0.6040308475494385,
+        0.766671895980835
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.8046545898094233,
+      "holder_peak_force_n": 2.761961124254027,
+      "holder_impulse_world_ns": [
+        -0.016986035428327842,
+        -0.023144670588934633,
+        0.034027109750464385
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.01237398185952079,
+        1.3104874612025035
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.6999971866607666,
+      "pelvis_position_m": [
+        -2.726396322250366,
+        -0.6037111878395081,
+        0.7658205032348633
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.8245898604140491,
+      "holder_peak_force_n": 2.6885250193779915,
+      "holder_impulse_world_ns": [
+        0.014491556538440241,
+        -0.022989074620279847,
+        0.038260973117251074
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.035511226717729244,
+        0.21645708233567493
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.7199971675872803,
+      "pelvis_position_m": [
+        -2.7077269554138184,
+        -0.6033689975738525,
+        0.7671210169792175
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.8437473624862243,
+      "holder_peak_force_n": 2.802119922449065,
+      "holder_impulse_world_ns": [
+        0.030356586780991224,
+        -0.013559614863802555,
+        0.037395541816167784
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.057978036396274024,
+        0.05428388798856499
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.739997148513794,
+      "pelvis_position_m": [
+        -2.6893467903137207,
+        -0.6030808687210083,
+        0.7693048119544983
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.8620715406293388,
+      "holder_peak_force_n": 3.1690278177169877,
+      "holder_impulse_world_ns": [
+        0.031594482464090044,
+        -0.000942296512669055,
+        0.04531713252934636
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.15955238605226768
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.7599971294403076,
+      "pelvis_position_m": [
+        -2.6712071895599365,
+        -0.6027004718780518,
+        0.7718690633773804
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.8795068394467828,
+      "holder_peak_force_n": 3.482454176364567,
+      "holder_impulse_world_ns": [
+        0.026791573011329957,
+        0.011706665354895169,
+        0.05241268254270586
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.1851855632322243
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.7799971103668213,
+      "pelvis_position_m": [
+        -2.653392791748047,
+        -0.6020804047584534,
+        0.7743740677833557
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.8959977035419461,
+      "holder_peak_force_n": 3.478737405298626,
+      "holder_impulse_world_ns": [
+        0.0202250275416472,
+        0.016072941134725367,
+        0.05362475637396912
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.1358230324754104
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.799997091293335,
+      "pelvis_position_m": [
+        -2.6358864307403564,
+        -0.6009909510612488,
+        0.7765693068504333
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.911488577518219,
+      "holder_peak_force_n": 3.356518632480244,
+      "holder_impulse_world_ns": [
+        0.020726183787180812,
+        0.004559459266028365,
+        0.05170673037690208
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.11683747110301305
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.8199970722198486,
+      "pelvis_position_m": [
+        -2.6184823513031006,
+        -0.5992995500564575,
+        0.7783067226409912
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.9259239059789912,
+      "holder_peak_force_n": 3.024188108271389,
+      "holder_impulse_world_ns": [
+        0.01720149979195755,
+        0.0008259045296597523,
+        0.04995243102851901
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.10112379856511639
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.8399970531463623,
+      "pelvis_position_m": [
+        -2.6009521484375,
+        -0.5969520211219788,
+        0.7795127630233765
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.9392481335276529,
+      "holder_peak_force_n": 2.8391323220334,
+      "holder_impulse_world_ns": [
+        0.013543082636977597,
+        0.004329508325789095,
+        0.048659097473174616
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.050542945315247834
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.859997034072876,
+      "pelvis_position_m": [
+        -2.5831878185272217,
+        -0.5939384698867798,
+        0.7801311016082764
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.9514057047675942,
+      "holder_peak_force_n": 2.5950692927457926,
+      "holder_impulse_world_ns": [
+        0.006428587329596013,
+        0.010508553932403535,
+        0.04595208890370533
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.0330098060203436
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.8799970149993896,
+      "pelvis_position_m": [
+        -2.5652050971984863,
+        -0.590225100517273,
+        0.7801676988601685
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.9623410643022049,
+      "holder_peak_force_n": 2.319732719132184,
+      "holder_impulse_world_ns": [
+        -0.001218996496480484,
+        0.01255003965232791,
+        0.03917589321518992
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.02031758741200794
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.8999969959259033,
+      "pelvis_position_m": [
+        -2.5471019744873047,
+        -0.5858542919158936,
+        0.7796611785888672
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.9719986567348752,
+      "holder_peak_force_n": 1.8451637923161732,
+      "holder_impulse_world_ns": [
+        -0.006575107542942066,
+        0.008424690719617612,
+        0.02897281952959668
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.029601179285349468
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.919996976852417,
+      "pelvis_position_m": [
+        -2.528903007507324,
+        -0.5808631181716919,
+        0.778685986995697
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.9803229266689948,
+      "holder_peak_force_n": 1.2151165685729235,
+      "holder_impulse_world_ns": [
+        -0.008444846722951465,
+        0.0017798093557738247,
+        0.01942353645091986
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.04746803557077408
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.9399969577789307,
+      "pelvis_position_m": [
+        -2.5105881690979004,
+        -0.5754092931747437,
+        0.777024507522583
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.987258318707954,
+      "holder_peak_force_n": 0.9194096722339542,
+      "holder_impulse_world_ns": [
+        -0.0065364924901215515,
+        -0.0013322643201900707,
+        0.01163471754641054
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.10909654021004829
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.9599969387054443,
+      "pelvis_position_m": [
+        -2.4923489093780518,
+        -0.5698384642601013,
+        0.7738633751869202
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.9927492774551429,
+      "holder_peak_force_n": 1.2352074417532306,
+      "holder_impulse_world_ns": [
+        -0.0058373133195101165,
+        -0.0044827823424894025,
+        0.012178224544991685
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        1.9431194794009712,
+        0.25601640687179317
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.979996919631958,
+      "pelvis_position_m": [
+        -2.4749104976654053,
+        -0.5652958154678345,
+        0.7716767191886902
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.9967402475139511,
+      "holder_peak_force_n": 2.190481363440881,
+      "holder_impulse_world_ns": [
+        -0.031220815979561764,
+        -0.004339730492121273,
+        0.02088134429379269
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        1.4268595277130238,
+        0.037402998211239546
+      ],
+      "released": false
+    },
+    {
+      "time_s": 3.9999969005584717,
+      "pelvis_position_m": [
+        -2.458651542663574,
+        -0.5608855485916138,
+        0.772440493106842
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.9991756734877689,
+      "holder_peak_force_n": 3.130489496087814,
+      "holder_impulse_world_ns": [
+        -0.03233909797292584,
+        0.010598645488839306,
+        0.04649206442085704
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.17780322853350555,
+        0.13566514497339988
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.0199971199035645,
+      "pelvis_position_m": [
+        -2.442502975463867,
+        -0.5569420456886292,
+        0.7747915387153625
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 0.9999999999799865,
+      "holder_peak_force_n": 3.4452168719725655,
+      "holder_impulse_world_ns": [
+        -0.021424952790942933,
+        0.019534358005928967,
+        0.056914283780413716
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.062060991348830676,
+        0.18392469971582007
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.039997100830078,
+      "pelvis_position_m": [
+        -2.4257476329803467,
+        -0.5538453459739685,
+        0.7772836685180664
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 3.22921756897715,
+      "holder_impulse_world_ns": [
+        -0.010449440290192373,
+        0.015568115485554396,
+        0.04696844881901803
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.4234775186800634,
+        0.1122885170261199
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.059997081756592,
+      "pelvis_position_m": [
+        -2.4084131717681885,
+        -0.5515708923339844,
+        0.7797684073448181
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 2.235253211193224,
+      "holder_impulse_world_ns": [
+        -0.008429362835120552,
+        0.0035530661498473686,
+        0.030208126044784095
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.2342738450090053,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.0799970626831055,
+      "pelvis_position_m": [
+        -2.3903706073760986,
+        -0.5498335957527161,
+        0.7824931144714355
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 1.3713569910313461,
+      "holder_impulse_world_ns": [
+        -0.003764403819269305,
+        -0.00658441087993079,
+        0.021186233967798576
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.1927118005835512,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.099997043609619,
+      "pelvis_position_m": [
+        -2.3713581562042236,
+        -0.5483835339546204,
+        0.7849254608154297
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 1.4470925544957922,
+      "holder_impulse_world_ns": [
+        -0.00364513773020826,
+        -0.009634423720588262,
+        0.019142930009716643
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.15025049337862043,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.119997024536133,
+      "pelvis_position_m": [
+        -2.351547956466675,
+        -0.5470621585845947,
+        0.7863197326660156
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 1.1667148462305963,
+      "holder_impulse_world_ns": [
+        -0.005236364886379838,
+        -0.008451742422614393,
+        0.013181146891642534
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.16729970831824378,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.1399970054626465,
+      "pelvis_position_m": [
+        -2.3311386108398438,
+        -0.5459076762199402,
+        0.7862641215324402
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.8115646801504212,
+      "holder_impulse_world_ns": [
+        -0.007487084697287794,
+        -0.0042786037082773315,
+        0.005165912616882722
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.16637241564017702,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.15999698638916,
+      "pelvis_position_m": [
+        -2.310316324234009,
+        -0.5448689460754395,
+        0.7845994830131531
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.8422389085774271,
+      "holder_impulse_world_ns": [
+        -0.0090238605661358,
+        0.0007401499749261937,
+        -0.001210498056316299
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.06053640997877472,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.179996967315674,
+      "pelvis_position_m": [
+        -2.289203405380249,
+        -0.5439552664756775,
+        0.7814601063728333
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.8134202152310887,
+      "holder_impulse_world_ns": [
+        -0.008967989572264416,
+        0.004525913265740563,
+        -0.0008462801681131294
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.01599804733423325,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.1999969482421875,
+      "pelvis_position_m": [
+        -2.2676782608032227,
+        -0.5432752370834351,
+        0.7767524123191833
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.8843530007818686,
+      "holder_impulse_world_ns": [
+        -0.01102401018008234,
+        0.009178373947058425,
+        0.0026926825292942973
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.12580508735043866,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.219996929168701,
+      "pelvis_position_m": [
+        -2.245575189590454,
+        -0.5430791974067688,
+        0.7705827355384827
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 1.3403327147243407,
+      "holder_impulse_world_ns": [
+        -0.014516732512863837,
+        0.013590112939739173,
+        0.011203807424847561
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.08324050489610042,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.239996910095215,
+      "pelvis_position_m": [
+        -2.223127603530884,
+        -0.5435512065887451,
+        0.762992262840271
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 1.672991752104415,
+      "holder_impulse_world_ns": [
+        -0.017241259260484164,
+        0.017189053338999404,
+        0.013386559877760131
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.013081850826697161,
+        2.7925265607530405
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.2599968910217285,
+      "pelvis_position_m": [
+        -2.2015321254730225,
+        -0.5436777472496033,
+        0.7578677535057068
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 1.298571450778521,
+      "holder_impulse_world_ns": [
+        0.0012013498130198962,
+        0.00840483611683553,
+        0.011720938290241036
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.019951931150846706,
+        1.0722721945394091
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.279996871948242,
+      "pelvis_position_m": [
+        -2.182098865509033,
+        -0.5440912842750549,
+        0.7569690346717834
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 1.771806831926498,
+      "holder_impulse_world_ns": [
+        0.016738054135040877,
+        -0.005578674503634472,
+        0.019451869593196267
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.021946635015038962,
+        0.13696149990803305
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.299996852874756,
+      "pelvis_position_m": [
+        -2.1647071838378906,
+        -0.5446640253067017,
+        0.7586646676063538
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 1.3963432634448807,
+      "holder_impulse_world_ns": [
+        0.01185843816638734,
+        -0.008257585832771204,
+        0.021601151566900435
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.016472237536017294,
+        0.08054742498154326
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.3199968338012695,
+      "pelvis_position_m": [
+        -2.148784875869751,
+        -0.544856607913971,
+        0.7617936730384827
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 1.4990149279378027,
+      "holder_impulse_world_ns": [
+        -0.00029717449514805026,
+        0.0014659846548461346,
+        0.02725192150236676
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.046473766447173506
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.339996814727783,
+      "pelvis_position_m": [
+        -2.133343458175659,
+        -0.5447258949279785,
+        0.7656702399253845
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 1.9610474628950312,
+      "holder_impulse_world_ns": [
+        -0.0072093164316176395,
+        0.003930291949295316,
+        0.03515363335435426
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.03961353589369288
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.359996795654297,
+      "pelvis_position_m": [
+        -2.117854595184326,
+        -0.5442610383033752,
+        0.7696869969367981
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 2.5139307462236555,
+      "holder_impulse_world_ns": [
+        -0.005687771942654733,
+        0.0034591676015000906,
+        0.04154678341618497
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.0614524766974815
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.3799967765808105,
+      "pelvis_position_m": [
+        -2.102100372314453,
+        -0.5432946085929871,
+        0.773420512676239
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 2.702669168899648,
+      "holder_impulse_world_ns": [
+        -0.0009989281163618577,
+        0.003553665354959743,
+        0.04527544080608471
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.047445107846562556
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.399996757507324,
+      "pelvis_position_m": [
+        -2.085963249206543,
+        -0.5418413877487183,
+        0.7765442132949829
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 2.629836644695686,
+      "holder_impulse_world_ns": [
+        0.004475007917310823,
+        0.0013148258070053698,
+        0.04501976770801996
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.04726875004451426
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.419996738433838,
+      "pelvis_position_m": [
+        -2.0693604946136475,
+        -0.5399049520492554,
+        0.7788830399513245
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 2.7610283476354236,
+      "holder_impulse_world_ns": [
+        0.009492162963308994,
+        -0.0017006659379821553,
+        0.04286131675761445
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.030209343038060724
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.439996719360352,
+      "pelvis_position_m": [
+        -2.052215814590454,
+        -0.5374610424041748,
+        0.7805237174034119
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 2.6334433622357616,
+      "holder_impulse_world_ns": [
+        0.013021771036753583,
+        -0.0036107019010734108,
+        0.04109945984298739
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.015691858443212376
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.459996700286865,
+      "pelvis_position_m": [
+        -2.0344269275665283,
+        -0.534481406211853,
+        0.7814517617225647
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 2.731402027569232,
+      "holder_impulse_world_ns": [
+        0.015091795736126278,
+        -0.004784324866945985,
+        0.040051510894352306
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.011568761663006976
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.479996681213379,
+      "pelvis_position_m": [
+        -2.0157878398895264,
+        -0.5309672951698303,
+        0.781480610370636
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 2.843519239803108,
+      "holder_impulse_world_ns": [
+        0.01641274440968554,
+        -0.006152241912649439,
+        0.04241194951953262
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.010814522698863155
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.499996662139893,
+      "pelvis_position_m": [
+        -1.9962493181228638,
+        -0.5272937417030334,
+        0.7801792621612549
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 3.437431705662688,
+      "holder_impulse_world_ns": [
+        0.019684661986693806,
+        -0.009781898439615837,
+        0.05150619314671616
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        2.1939696243574427,
+        0.02399114828739943
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.519996643066406,
+      "pelvis_position_m": [
+        -1.976288080215454,
+        -0.5243445038795471,
+        0.7786222696304321
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 5.188310515347318,
+      "holder_impulse_world_ns": [
+        0.017501177205852553,
+        -0.015437307916278497,
+        0.06503152145012762
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.778421687427632,
+        0.021369706410472616
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.53999662399292,
+      "pelvis_position_m": [
+        -1.9576694965362549,
+        -0.5222382545471191,
+        0.7793090343475342
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 4.600109014866703,
+      "holder_impulse_world_ns": [
+        -0.0019005790791449897,
+        -0.006465526753495898,
+        0.0821228582810697
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.12530668341141923,
+        0.16406588369714337
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.559996604919434,
+      "pelvis_position_m": [
+        -1.940316915512085,
+        -0.5202176570892334,
+        0.7815439105033875
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 5.8060690416502965,
+      "holder_impulse_world_ns": [
+        -0.013480332737757422,
+        0.006012727612616498,
+        0.09434352956404675
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.05052955251743965,
+        0.28434649274040164
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.579996585845947,
+      "pelvis_position_m": [
+        -1.9233149290084839,
+        -0.5183538794517517,
+        0.7839218974113464
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 5.783453369053907,
+      "holder_impulse_world_ns": [
+        -0.015161081958852516,
+        0.011901427937028109,
+        0.09218949205825887
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.20538350603747715,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.599996566772461,
+      "pelvis_position_m": [
+        -1.9062424898147583,
+        -0.5163359045982361,
+        0.7862700819969177
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 4.996919819291215,
+      "holder_impulse_world_ns": [
+        -0.01361250992733192,
+        0.0008520174606646687,
+        0.08195467851456677
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.20969976175426483,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.619996547698975,
+      "pelvis_position_m": [
+        -1.889061689376831,
+        -0.513579249382019,
+        0.7884238362312317
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 4.3895975533265466,
+      "holder_impulse_world_ns": [
+        -0.011746025997662113,
+        -0.020077963497271752,
+        0.07466544404206787
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.18060974289040418,
+        0.0
+      ],
+      "released": false
+    },
+    {
+      "time_s": 4.639996528625488,
+      "pelvis_position_m": [
+        -1.8710856437683105,
+        -0.5096069574356079,
+        0.7895604372024536
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.24741322171344582,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.659996509552002,
+      "pelvis_position_m": [
+        -1.8517645597457886,
+        -0.504264771938324,
+        0.7889224290847778
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.30877025914620543,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.679996490478516,
+      "pelvis_position_m": [
+        -1.8310920000076294,
+        -0.49760743975639343,
+        0.7860119938850403
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.05547294454804368,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.699996471405029,
+      "pelvis_position_m": [
+        -1.8091286420822144,
+        -0.49007144570350647,
+        0.7809733748435974
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.05545883437081787,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.719996452331543,
+      "pelvis_position_m": [
+        -1.7858370542526245,
+        -0.48251718282699585,
+        0.7741912603378296
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.05039869572326319,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.739996433258057,
+      "pelvis_position_m": [
+        -1.7612615823745728,
+        -0.47572511434555054,
+        0.7657817006111145
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.042993363447596446,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.75999641418457,
+      "pelvis_position_m": [
+        -1.73624849319458,
+        -0.4699113667011261,
+        0.7566656470298767
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.017841233171671,
+        2.71877077129314
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.779996395111084,
+      "pelvis_position_m": [
+        -1.7131537199020386,
+        -0.463947057723999,
+        0.7514201998710632
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.02316768197103332,
+        0.47960298564522197
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.799996376037598,
+      "pelvis_position_m": [
+        -1.6935358047485352,
+        -0.45919448137283325,
+        0.7512300610542297
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.017290726983269535,
+        0.06912357443103954
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.819996356964111,
+      "pelvis_position_m": [
+        -1.6770590543746948,
+        -0.45551151037216187,
+        0.7547357678413391
+      ],
+      "command_m_s": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.06947624294345224
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.839996337890625,
+      "pelvis_position_m": [
+        -1.6623122692108154,
+        -0.45189446210861206,
+        0.7603892683982849
+      ],
+      "command_m_s": [
+        0.9799999999999995,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.14451818764992924
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.859996318817139,
+      "pelvis_position_m": [
+        -1.647887945175171,
+        -0.4479779303073883,
+        0.7667708992958069
+      ],
+      "command_m_s": [
+        0.96,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.1918885941661268
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.879996299743652,
+      "pelvis_position_m": [
+        -1.6329100131988525,
+        -0.4435731768608093,
+        0.7726646065711975
+      ],
+      "command_m_s": [
+        0.9399999999999995,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.21347530639156836
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.899996280670166,
+      "pelvis_position_m": [
+        -1.6171869039535522,
+        -0.43844375014305115,
+        0.7770305871963501
+      ],
+      "command_m_s": [
+        0.9199999999999999,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.22777902008638076
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.91999626159668,
+      "pelvis_position_m": [
+        -1.6008288860321045,
+        -0.43249863386154175,
+        0.7792158126831055
+      ],
+      "command_m_s": [
+        0.8999999999999995,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.22048180150641264
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.939996242523193,
+      "pelvis_position_m": [
+        -1.5839362144470215,
+        -0.42577117681503296,
+        0.7791836261749268
+      ],
+      "command_m_s": [
+        0.8799999999999999,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.14952791351290898
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.959996223449707,
+      "pelvis_position_m": [
+        -1.5665137767791748,
+        -0.41842782497406006,
+        0.7772244811058044
+      ],
+      "command_m_s": [
+        0.8599999999999994,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.07290599841790558
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.979996204376221,
+      "pelvis_position_m": [
+        -1.5484304428100586,
+        -0.4106038212776184,
+        0.7737925052642822
+      ],
+      "command_m_s": [
+        0.8399999999999999,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.023797870749204763
+      ],
+      "released": true
+    },
+    {
+      "time_s": 4.999996185302734,
+      "pelvis_position_m": [
+        -1.5295389890670776,
+        -0.40218043327331543,
+        0.7694889307022095
+      ],
+      "command_m_s": [
+        0.8199999999999994,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.0,
+        0.008690931058261853
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.019996166229248,
+      "pelvis_position_m": [
+        -1.5103462934494019,
+        -0.39414674043655396,
+        0.7651363015174866
+      ],
+      "command_m_s": [
+        0.7999999999999998,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        2.881849972640223,
+        0.009268948070789658
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.039996147155762,
+      "pelvis_position_m": [
+        -1.493476152420044,
+        -0.3870888650417328,
+        0.7647346258163452
+      ],
+      "command_m_s": [
+        0.7799999999999994,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.47540889408999726,
+        0.3035922333105527
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.059996128082275,
+      "pelvis_position_m": [
+        -1.478810429573059,
+        -0.380494624376297,
+        0.7681535482406616
+      ],
+      "command_m_s": [
+        0.7599999999999998,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.06269657870788281,
+        0.5904131464840989
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.079996109008789,
+      "pelvis_position_m": [
+        -1.4645886421203613,
+        -0.37494656443595886,
+        0.7735397815704346
+      ],
+      "command_m_s": [
+        0.7399999999999993,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.031367263349369005,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.099996089935303,
+      "pelvis_position_m": [
+        -1.450130820274353,
+        -0.36987408995628357,
+        0.7792316675186157
+      ],
+      "command_m_s": [
+        0.7199999999999998,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.6375,
+      "loaded_foot_peak_slip_m_s": [
+        0.0637290212858278,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.119996070861816,
+      "pelvis_position_m": [
+        -1.4353609085083008,
+        -0.3648008108139038,
+        0.78433758020401
+      ],
+      "command_m_s": [
+        0.6999999999999993,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.946875,
+      "loaded_foot_peak_slip_m_s": [
+        0.2169144016874418,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.13999605178833,
+      "pelvis_position_m": [
+        -1.4200721979141235,
+        -0.3597027361392975,
+        0.7887983918190002
+      ],
+      "command_m_s": [
+        0.6799999999999997,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.07194515631749542,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.159996032714844,
+      "pelvis_position_m": [
+        -1.404158592224121,
+        -0.35418346524238586,
+        0.7920703887939453
+      ],
+      "command_m_s": [
+        0.6600000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.2383768840197149,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.179996013641357,
+      "pelvis_position_m": [
+        -1.3879188299179077,
+        -0.34838002920150757,
+        0.7942284345626831
+      ],
+      "command_m_s": [
+        0.6399999999999997,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.16097507864448227,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.199995994567871,
+      "pelvis_position_m": [
+        -1.3714599609375,
+        -0.3423057496547699,
+        0.7951854467391968
+      ],
+      "command_m_s": [
+        0.6200000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.13295425741943134,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.219995975494385,
+      "pelvis_position_m": [
+        -1.3548698425292969,
+        -0.33612942695617676,
+        0.7950550317764282
+      ],
+      "command_m_s": [
+        0.5999999999999996,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.07083563572038117,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.239995956420898,
+      "pelvis_position_m": [
+        -1.3380922079086304,
+        -0.33003848791122437,
+        0.7936621308326721
+      ],
+      "command_m_s": [
+        0.5800000000000001,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.09693129096262408,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.259995937347412,
+      "pelvis_position_m": [
+        -1.3209952116012573,
+        -0.3243591785430908,
+        0.7912946343421936
+      ],
+      "command_m_s": [
+        0.5599999999999996,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.09176499770096112,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.279995918273926,
+      "pelvis_position_m": [
+        -1.303466558456421,
+        -0.31924837827682495,
+        0.7881713509559631
+      ],
+      "command_m_s": [
+        0.54,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.020985373256072755,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.2999958992004395,
+      "pelvis_position_m": [
+        -1.285559058189392,
+        -0.3147524297237396,
+        0.7843078970909119
+      ],
+      "command_m_s": [
+        0.5199999999999996,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.015652498608560324,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.319995880126953,
+      "pelvis_position_m": [
+        -1.2675670385360718,
+        -0.3108808994293213,
+        0.7796126008033752
+      ],
+      "command_m_s": [
+        0.5,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.023285815862441273,
+        0.0
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.339995861053467,
+      "pelvis_position_m": [
+        -1.2497254610061646,
+        -0.3076170086860657,
+        0.7742852568626404
+      ],
+      "command_m_s": [
+        0.47999999999999954,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.02329959977219248,
+        1.3650962905745585
+      ],
+      "released": true
+    },
+    {
+      "time_s": 5.3599958419799805,
+      "pelvis_position_m": [
+        -1.2331033945083618,
+        -0.30549851059913635,
+        0.7705358266830444
+      ],
+      "command_m_s": [
+        0.45999999999999996,
+        0.0,
+        0.0
+      ],
+      "arm_reference_weight": 1.0,
+      "holder_peak_force_n": 0.0,
+      "holder_impulse_world_ns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "hand_touch_fraction": 0.0,
+      "loaded_foot_peak_slip_m_s": [
+        0.031466839380901876,
+        0.8366135338188891
+      ],
+      "released": true
+    }
+  ],
+  "exact_endpoint_and_sensor_replay": true,
+  "approach_distance_m": 3.266896605491638,
+  "maximum_lateral_drift_m": 0.3945014774799347,
+  "maximum_loaded_foot_slip_m_s": [
+    2.881849972640223,
+    2.7925265607530405
+  ],
+  "termination_flags": {
+    "time_out": false,
+    "fallen": false,
+    "invalid_contact": true
+  }
+}

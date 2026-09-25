@@ -1,5 +1,7 @@
+import json
 from pathlib import Path
 
+import evaluate_g1_cricket_moving_delivery as evaluation
 import numpy as np
 import pytest
 from g1_cricket_delivery_trial import DeliveryEvents, DeliveryReplay
@@ -95,3 +97,26 @@ def test_release_interval_matches_native_integration(hand):
         assert not env.equality_constraints.get_equality_active()[0, 0]
     finally:
         env.close()
+
+
+@pytest.mark.parametrize("velocity_feedforward", [False, True])
+def test_evaluator_keeps_complete_bilateral_resolution_pool(
+    tmp_path, monkeypatch, velocity_feedforward
+):
+    calls = []
+
+    def case(owner, hand, dt, output, render):
+        assert owner.env.actions.residual.arm_velocity_feedforward == velocity_feedforward
+        calls.append((hand, dt))
+        return dict(hand=hand, simulation_dt=dt, passed=False, failures=["no_release"])
+
+    monkeypatch.setattr(evaluation, "evaluate_case", case)
+    output = tmp_path / "evaluation"
+    evaluation.main(output, False, velocity_feedforward)
+    summary = json.loads((output / "summary.json").read_text())
+    assert calls == [(hand, dt) for hand in ("right", "left") for dt in (0.0000625, 0.00003125)]
+    assert len(summary["rows"]) == 4
+    assert all(not row["passed"] for row in summary["rows"])
+    assert not summary["qualified_showcase"]
+    with pytest.raises(FileExistsError):
+        evaluation.main(output, False, velocity_feedforward)

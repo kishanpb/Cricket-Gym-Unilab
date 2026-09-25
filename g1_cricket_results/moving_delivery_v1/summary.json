@@ -1,0 +1,876 @@
+{
+  "scope": "Continuous physics from rest through attempted delivery and recovery; no trained cricket policy or qualified showcase claim",
+  "source_commit": "4e921b841634c5f3771eba68019d9f433284ac3b",
+  "config": {
+    "algo": {
+      "algo": "ppo",
+      "algo_log_name": "rsl_rl_ppo",
+      "seed": 1,
+      "num_envs": 8,
+      "num_steps_per_env": 24,
+      "max_iterations": 256,
+      "save_interval": 256,
+      "empirical_normalization": false,
+      "runner_class_name": "OnPolicyRunner",
+      "obs_groups": {
+        "default": [
+          "policy"
+        ],
+        "actor": [
+          "policy"
+        ],
+        "critic": [
+          "policy"
+        ]
+      },
+      "experiment_name": "test",
+      "run_name": "",
+      "resume": false,
+      "load_run": "-1",
+      "checkpoint": -1,
+      "resume_path": null,
+      "policy": {
+        "init_noise_std": 0.2,
+        "actor_hidden_dims": [
+          64,
+          64
+        ],
+        "critic_hidden_dims": [
+          64,
+          64
+        ],
+        "activation": "elu",
+        "class_name": "ActorCritic"
+      },
+      "algorithm": {
+        "class_name": "uni_rl.algos.rsl_rl_ppo:FinalObservationAwarePPO",
+        "value_loss_coef": 1.0,
+        "use_clipped_value_loss": true,
+        "clip_param": 0.2,
+        "entropy_coef": 0.0,
+        "num_learning_epochs": 5,
+        "num_mini_batches": 2,
+        "learning_rate": 0.0001,
+        "schedule": "adaptive",
+        "gamma": 0.99,
+        "lam": 0.95,
+        "desired_kl": 0.01,
+        "target_kl_stop": 0.02,
+        "max_grad_norm": 1.0,
+        "adaptive_kl_beta": 0.9,
+        "adaptive_lr_growth": 1.1,
+        "adaptive_lr_decay": 1.2,
+        "adaptive_lr_update_interval": 5,
+        "metrics_interval": 8,
+        "finite_check_interval": 8,
+        "enable_compile": false,
+        "warmup_strict_iters": 10,
+        "warmup_metrics_interval": 2,
+        "warmup_finite_check_interval": 2,
+        "disable_finite_checks": false
+      },
+      "actor": {
+        "class_name": "unilab.tasks.manipulation.g1_cricket.feedback_policy.ZeroResidualModel",
+        "hidden_dims": [
+          128,
+          128
+        ],
+        "activation": "elu",
+        "obs_normalization": false,
+        "distribution_cfg": {
+          "class_name": "rsl_rl.modules.distribution.GaussianDistribution",
+          "init_std": 0.02,
+          "std_type": "scalar"
+        }
+      },
+      "critic": {
+        "class_name": "rsl_rl.models.MLPModel",
+        "hidden_dims": [
+          128,
+          128
+        ],
+        "activation": "elu",
+        "obs_normalization": false
+      }
+    },
+    "training": {
+      "task_name": "G1CricketApproachLearning",
+      "devices": null,
+      "dp_collector_cpu_ids": null,
+      "device": "cpu",
+      "logger": "tensorboard",
+      "wandb_project": "unilab",
+      "wandb_entity": null,
+      "wandb_group": null,
+      "wandb_job_type": null,
+      "wandb_name": null,
+      "wandb_tags": [],
+      "wandb_notes": null,
+      "wandb_mode": null,
+      "sim_backend": "mujoco",
+      "nan_guard": {
+        "enabled": true,
+        "buffer_size": 100,
+        "max_envs_to_dump": 5,
+        "output_dir": null
+      },
+      "play_only": false,
+      "no_play": true,
+      "sim2sim_strict": true,
+      "play_render_mode": "auto",
+      "play_env_num": 16,
+      "render_spacing": 1.0,
+      "play_steps": 200,
+      "cam_distance": 6.0,
+      "cam_elevation": -20.0,
+      "cam_azimuth": 90.0,
+      "cam_lookat": null,
+      "cam_tracking": false,
+      "cam_tracking_env_idx": 0,
+      "cam_tracking_extra_envs": 2,
+      "log_root": null,
+      "num_timesteps": null,
+      "log_dir": null
+    },
+    "interactive": {
+      "action_mode": "zero",
+      "policy_obs_mode": "auto",
+      "show_target_bodies": false,
+      "show_reward_debug": false,
+      "target_show_axes": false,
+      "target_body_names": "",
+      "target_max_bodies": 0,
+      "target_marker_radius": 0.02,
+      "target_axis_length": 0.08,
+      "target_marker_alpha": 0.75,
+      "reward_debug_show_velocity": false,
+      "reward_debug_lin_vel_scale": 0.08,
+      "reward_debug_ang_vel_scale": 0.05,
+      "reward_debug_show_connectors": false,
+      "reward_debug_show_global_anchor": false,
+      "camera_follow_body": true,
+      "camera_focus_body_name": "",
+      "camera_height_offset": 0.15,
+      "camera_distance": null,
+      "camera_elevation": null,
+      "camera_azimuth": null,
+      "use_env_visual_model": true,
+      "speed": 1.0,
+      "start_paused": false,
+      "keyboard": false,
+      "keyboard_step_lin": 0.1,
+      "keyboard_step_ang": 0.2
+    },
+    "viser": {
+      "port": 8080,
+      "env_idx": 0,
+      "display_mode": "all",
+      "max_envs": 16
+    },
+    "env": {
+      "post_step_forward_sensor": false,
+      "adaptive_chunk_size": false,
+      "chunk_size": null,
+      "locomotion_prior": true,
+      "handedness": "right",
+      "seed": 1,
+      "scene": {
+        "model_file": "src/unilab/assets/robots/g1/g1.xml",
+        "default_keyframe_name": "cricket_stand",
+        "entities": {
+          "robot": {
+            "root_body_name": "pelvis",
+            "joint_names": [
+              "left_hip_pitch_joint",
+              "left_hip_roll_joint",
+              "left_hip_yaw_joint",
+              "left_knee_joint",
+              "left_ankle_pitch_joint",
+              "left_ankle_roll_joint",
+              "right_hip_pitch_joint",
+              "right_hip_roll_joint",
+              "right_hip_yaw_joint",
+              "right_knee_joint",
+              "right_ankle_pitch_joint",
+              "right_ankle_roll_joint",
+              "waist_yaw_joint",
+              "waist_roll_joint",
+              "waist_pitch_joint",
+              "left_shoulder_pitch_joint",
+              "left_shoulder_roll_joint",
+              "left_shoulder_yaw_joint",
+              "left_elbow_joint",
+              "left_wrist_roll_joint",
+              "left_wrist_pitch_joint",
+              "left_wrist_yaw_joint",
+              "right_shoulder_pitch_joint",
+              "right_shoulder_roll_joint",
+              "right_shoulder_yaw_joint",
+              "right_elbow_joint",
+              "right_wrist_roll_joint",
+              "right_wrist_pitch_joint",
+              "right_wrist_yaw_joint"
+            ],
+            "actuator_names": [
+              "left_hip_pitch_joint",
+              "left_hip_roll_joint",
+              "left_hip_yaw_joint",
+              "left_knee_joint",
+              "left_ankle_pitch_joint",
+              "left_ankle_roll_joint",
+              "right_hip_pitch_joint",
+              "right_hip_roll_joint",
+              "right_hip_yaw_joint",
+              "right_knee_joint",
+              "right_ankle_pitch_joint",
+              "right_ankle_roll_joint",
+              "waist_yaw_joint",
+              "waist_roll_joint",
+              "waist_pitch_joint",
+              "left_shoulder_pitch_joint",
+              "left_shoulder_roll_joint",
+              "left_shoulder_yaw_joint",
+              "left_elbow_joint",
+              "left_wrist_roll_joint",
+              "left_wrist_pitch_joint",
+              "left_wrist_yaw_joint",
+              "right_shoulder_pitch_joint",
+              "right_shoulder_roll_joint",
+              "right_shoulder_yaw_joint",
+              "right_elbow_joint",
+              "right_wrist_roll_joint",
+              "right_wrist_pitch_joint",
+              "right_wrist_yaw_joint"
+            ],
+            "body_names": [
+              "pelvis",
+              "left_wrist_yaw_link",
+              "right_wrist_yaw_link"
+            ]
+          },
+          "ball": {
+            "root_body_name": "cricket_ball",
+            "body_names": [
+              "cricket_ball"
+            ]
+          }
+        }
+      },
+      "sim_dt": 6.25e-05,
+      "ctrl_dt": 0.02,
+      "max_episode_seconds": 8.0,
+      "auto_reset": false,
+      "observations": {
+        "policy": {
+          "history_length": 5,
+          "terms": {
+            "gyro": {
+              "func": "unilab.envs.mdp.builtin_sensor",
+              "params": {
+                "sensor_name": "pelvis_gyro"
+              },
+              "scale": 0.2
+            },
+            "gravity": {
+              "func": "unilab.tasks.manipulation.g1_cricket.task.BodyFrameGravity",
+              "params": {
+                "sensor_name": "pelvis_world_quat"
+              }
+            },
+            "command": {
+              "func": "unilab.tasks.manipulation.g1_cricket.moving_delivery.moving_command"
+            },
+            "joint_pos": {
+              "func": "unilab.tasks.manipulation.g1_cricket.prior.joint_position_policy_order"
+            },
+            "joint_vel": {
+              "func": "unilab.tasks.manipulation.g1_cricket.prior.joint_velocity_policy_order",
+              "scale": 0.05
+            },
+            "last_action": {
+              "func": "unilab.tasks.manipulation.g1_cricket.residual.last_baseline_action"
+            }
+          }
+        },
+        "bowling": {
+          "history_length": 0,
+          "terms": {
+            "state": {
+              "func": "unilab.tasks.manipulation.g1_cricket.bowling.BowlingObservation"
+            },
+            "gait": {
+              "func": "unilab.tasks.manipulation.g1_cricket.approach_feedback.gait_observation"
+            }
+          }
+        }
+      },
+      "actions": {
+        "joint_pos": null,
+        "residual": {
+          "_target_": "unilab.tasks.manipulation.g1_cricket.moving_delivery.MovingDeliveryActionCfg",
+          "entity_name": "robot",
+          "asset_directory": "~/Library/Caches/unitree_rl_lab/4960b84732b0c2ec593dccbfe963fda1bcd7b1e3",
+          "scale": 0.1,
+          "reference_directory": "g1_cricket_results/running_fore_aft_support_v1"
+        }
+      },
+      "events": {
+        "reset_scene": {
+          "func": "unilab.envs.mdp.reset_scene_to_default",
+          "mode": "reset"
+        },
+        "reset_jitter": null,
+        "reset_bowler": {
+          "func": "unilab.tasks.manipulation.g1_cricket.bowling.ResetBowler",
+          "mode": "reset"
+        }
+      },
+      "terminations": {
+        "time_out": {
+          "func": "unilab.envs.mdp.time_out",
+          "time_out": true
+        },
+        "fallen": {
+          "func": "unilab.tasks.manipulation.g1_cricket.task.fallen"
+        },
+        "invalid_contact": {
+          "func": "unilab.tasks.manipulation.g1_cricket.prior.PriorContactGuard"
+        }
+      },
+      "policy_observation_group": "bowling",
+      "critic_observation_group": null,
+      "mujoco_observe_substeps": true,
+      "mujoco_substep_engine": "mjbatch",
+      "mujoco_compact_substeps": true
+    },
+    "reward": {
+      "upright": {
+        "func": "unilab.tasks.manipulation.g1_cricket.task.upright",
+        "weight": 1.0
+      },
+      "bowling": null,
+      "failure": {
+        "func": "unilab.tasks.manipulation.g1_cricket.residual.failure_penalty",
+        "weight": -5.0
+      },
+      "action_rate": {
+        "func": "unilab.envs.mdp.action_rate_l2",
+        "weight": -0.01
+      },
+      "loaded_slip": {
+        "func": "unilab.tasks.manipulation.g1_cricket.approach_feedback.loaded_slip_cost",
+        "weight": -5.0
+      },
+      "lane": {
+        "func": "unilab.tasks.manipulation.g1_cricket.approach_feedback.lane_tracking",
+        "weight": 1.0
+      },
+      "velocity": {
+        "func": "unilab.tasks.manipulation.g1_cricket.approach_feedback.velocity_tracking",
+        "weight": 1.0
+      }
+    }
+  },
+  "input_sha256": {
+    "src/unilab/tasks/manipulation/g1_cricket/__init__.py": "44e0129972b3576f523bc3625f5b5299ba241f8fec2bd1740662b0061f316c3a",
+    "src/unilab/tasks/manipulation/g1_cricket/approach.py": "1d1918af4ab9ea7f80a28b6b20251fa8caeac4ee054b0d45fa58c60f0365199d",
+    "src/unilab/tasks/manipulation/g1_cricket/approach_feedback.py": "e16a57e6a0493dce78238e99ac7bcccd312fb4a0fa5ecc7c6ad8b3b621d0dc8e",
+    "src/unilab/tasks/manipulation/g1_cricket/approach_lane.py": "46d28f26007a60e2842a6430099662fb7725c6cdf0e2c2e1fa2cbe1feaa66f86",
+    "src/unilab/tasks/manipulation/g1_cricket/approach_learning.py": "261bfe8f0c0d0acff6c7e32e8309449cddf526eb23338afa57027928c8c1f786",
+    "src/unilab/tasks/manipulation/g1_cricket/approach_peak_slip.py": "63ebdb2d3f45538527f8c2ececec29faade1aad4887e162692adc3102c30d4dd",
+    "src/unilab/tasks/manipulation/g1_cricket/approach_tracking.py": "249bb5f4bb16b278775efd39afc76cd724f46049fa52f0d177d1d90121053b72",
+    "src/unilab/tasks/manipulation/g1_cricket/arm_geometry.py": "47aced740d3bbf992edfcc65ec5d37aa6c0e11c32f7cb3786349db8c07ed4352",
+    "src/unilab/tasks/manipulation/g1_cricket/batting_dynamics.py": "3acefab339b9981e8971ba0c953da208d83981b708b1279e702a9cc73520b073",
+    "src/unilab/tasks/manipulation/g1_cricket/batting_learning.py": "f12921082b3836c2d32c32540361f884b9ef58fa57b3838bdb8d68f08b52683f",
+    "src/unilab/tasks/manipulation/g1_cricket/batting_projection.py": "284221424d177f16ded70ff3998ee9f12ca7d82ea3606b44f35ce4f5f6638692",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual.py": "57ad5803011b869536153465b7212b5a4a4d8fb7a91f54d8c8d38f1aa4a84282",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual_contact.py": "59d1f61f5e29a8b0968f1d2db3809fc2526885ee8ba690d214df83188b141b4b",
+    "src/unilab/tasks/manipulation/g1_cricket/bowling.py": "65da1d7a0a4f4cf16160bb7669344509a082d895abfb28f63c8f703fd3411da6",
+    "src/unilab/tasks/manipulation/g1_cricket/compliance_v2.py": "e0c0def29df2caa4ef23cb46f318669b46b9942e82c939ea810dee46a0ae7005",
+    "src/unilab/tasks/manipulation/g1_cricket/contact_control.py": "7c0bb7d6099184e28854e3bb9c27f4aa094ff1d92c80154f5b9bf861ac81a53c",
+    "src/unilab/tasks/manipulation/g1_cricket/delivery.py": "a1a82ea56f4bb0add72b4a3fe96a603e5378c749f7871cac246be4566f1e1a46",
+    "src/unilab/tasks/manipulation/g1_cricket/feedback_policy.py": "47bd16f133b3ec2e6b028d2e74e39d4458a5a6fc97f348d0d51a4fb5952e8b7f",
+    "src/unilab/tasks/manipulation/g1_cricket/forward_exit_reward.py": "113a460361bb64db6be5b58974c42de96f978e0405df8dad4617e5d45ae66e6c",
+    "src/unilab/tasks/manipulation/g1_cricket/holder.py": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "c4cdf46ea64515324292cfe2947be8164c5de4925f67c6763e459fe2632a3a17",
+    "src/unilab/tasks/manipulation/g1_cricket/impedance.py": "7c51705a9ab41d93e587f65ec3faba11f990b5cf257068756cc6ecfed7b5486d",
+    "src/unilab/tasks/manipulation/g1_cricket/inertial_feedforward.py": "d9c7e3b8b3021518813e37e4cdd3b017bd8d1fbf2f75658169a85f6916b00dab",
+    "src/unilab/tasks/manipulation/g1_cricket/moving_delivery.py": "6108be9b68a6f3b30a224b3652fa5a3eed7985cb9b2c9205ba76410c24dd62b6",
+    "src/unilab/tasks/manipulation/g1_cricket/overarm.py": "06ac693650070e4434056da3f52f87dc64bd581453ba2efcff198d255fa44add",
+    "src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py": "304bffb9013bfec2d8ac57d805f2ce8156421b8024bda316f373f856fa61830f",
+    "src/unilab/tasks/manipulation/g1_cricket/preview_control.py": "05b320a5aade40d14e906c1e00bca1de83df6de6b70b7b085d965c7c5a69e44e",
+    "src/unilab/tasks/manipulation/g1_cricket/prior.py": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739",
+    "src/unilab/tasks/manipulation/g1_cricket/reference_dynamics.py": "da2e2c66400d7b462620058dd9ca349251cde68a4385df58cb9d41e27fcc5d12",
+    "src/unilab/tasks/manipulation/g1_cricket/residual.py": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c",
+    "src/unilab/tasks/manipulation/g1_cricket/running.py": "f0f6fba1a11fe4e3f340c11e7c3ff06c21bf5f88da6656b7f0695932c6025821",
+    "src/unilab/tasks/manipulation/g1_cricket/running_ground_momentum.py": "e358a992dade030f3d08300144f984dfc6dcadb49520e82b79c4a7cc2ec1c8c4",
+    "src/unilab/tasks/manipulation/g1_cricket/running_momentum.py": "6e421bc7b1350aec8648b0a0b76cdbab613802425e15a145fd24bfffbd64eb40",
+    "src/unilab/tasks/manipulation/g1_cricket/running_startup.py": "82e0bf231b09e3adffe905c2d4283d3fd67f143f3d17e8f8443ee30be7357e1e",
+    "src/unilab/tasks/manipulation/g1_cricket/running_support.py": "1fb9b89464839d9ac24fd7d43ee3db67e2cba2a11f9457b86f2e9483fbb61aa9",
+    "src/unilab/tasks/manipulation/g1_cricket/running_task.py": "f79d43323d026adac0fffe2460afaa99fd17a71841ddfe02931c4fdffff22b55",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/tasks/manipulation/g1_cricket/separation_reward.py": "e10c9a7918f67f8621d2e00af12729e31c389b1f8f7c288d90de77fcfff12994",
+    "src/unilab/tasks/manipulation/g1_cricket/substep_reward.py": "12acdcb731e713b9f3b422d88d04209f63d3e4fcf1bab43562102e9c530d0a97",
+    "src/unilab/tasks/manipulation/g1_cricket/swing_reward.py": "08696424ea2556348e067c40e5c3bb9286b5caa9f89bd25add868ab87081a0a9",
+    "src/unilab/tasks/manipulation/g1_cricket/tanh_residual.py": "904a8dde165f872b200ef824466d38834e4b3d177882e7d01561995596466fa0",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb",
+    "src/unilab/tasks/manipulation/g1_cricket/tracking.py": "d1e903324177aeebefeba1f3253423fbe79d00b48c69e44dc3c9de00a93ab75a",
+    "scripts/evaluate_g1_cricket_moving_delivery.py": "f60e1a91ea675d7291ca2e3a53f1f54f8912a9d0d191d649eb30315460cc2692",
+    "scripts/evaluate_g1_cricket_running.py": "5b0fb15a9c1fe27bd2b8ea601dbde916f5c31a2dfaea75eed900015b99680e38",
+    "scripts/g1_cricket_delivery_trial.py": "ec3c9b467226ec5c850978bc335d1ee9fb5e66372983bca86b2f295d66326b5d",
+    "g1_cricket_results/running_fore_aft_support_v1/right_dense_reference.npz": "5ebb46f5c20a7f7f84c94c5f33d89646c5e494dcc819c271bf5b234f9e630b59",
+    "g1_cricket_results/running_fore_aft_support_v1/left_dense_reference.npz": "fa7ab38108fd2005dc3b65ea54b4a577d2872b717f0bebe37acca3eeb081deca"
+  },
+  "external_asset_sha256": {
+    "policy.onnx": "610c27e463a8f666aa50a06346678c00b4df3859f10b54bcc1f817c28251406f",
+    "deploy.yaml": "64b04c0596a7010f39f8ac6e9ec46dc750141063cdcf2d42c83ecc444e57bc63"
+  },
+  "rows": [
+    {
+      "passed": false,
+      "failures": [
+        "ball_contact:right_hand_collision",
+        "ball_penetration_above_6_mm",
+        "episode_incomplete",
+        "first_bounce_outside_delivery_zone",
+        "joint_limit",
+        "no_upward_shoulder_level_crossing",
+        "not_exactly_one_bounce_before_target",
+        "pelvis_orientation",
+        "release_forward_speed_not_above_6_m_s",
+        "release_not_overarm",
+        "robot_self_or_wicket_contact",
+        "target_corridor_missed"
+      ],
+      "release": {
+        "time": 4.619996547698975,
+        "position": [
+          -1.373720407485962,
+          0.5827455520629883,
+          1.150770902633667
+        ],
+        "velocity": [
+          0.7587888240814209,
+          0.4979022443294525,
+          2.4559128284454346
+        ],
+        "shoulder_z": 1.0898971018764239,
+        "upper_z": -0.11469873976884422,
+        "elbow_angle_rad": 2.74690125885577,
+        "maximum_elbow_extension_rad": 0.0,
+        "horizontal_time": null,
+        "front_landing": {
+          "time": 4.534871643066477,
+          "bounds": [
+            [
+              -1.990414077186382,
+              0.8968824720846508,
+              -2.4388023331457613e-05
+            ],
+            [
+              -1.7846309745181554,
+              0.9718763908800019,
+              0.026184351381304736
+            ]
+          ]
+        },
+        "back_landing": {
+          "time": 4.252059410095272,
+          "bounds": [
+            [
+              -2.0932701336405706,
+              0.6076614638113615,
+              -2.9818309985651763e-05
+            ],
+            [
+              -1.8875425999505342,
+              0.6801456800289184,
+              0.031132246505366445
+            ]
+          ]
+        }
+      },
+      "first_bounce": {
+        "time": 5.763932960510273,
+        "position": [
+          -0.6139254928343011,
+          1.2814906740710121,
+          0.03585466126498221
+        ]
+      },
+      "target_crossing": null,
+      "bounces_before_target": 10,
+      "ball_contact_counts": {
+        "right_hand_collision": 3296,
+        "pitch": 5648
+      },
+      "ball_contact_peak_force_n": {
+        "right_hand_collision": 26.655747977510543,
+        "pitch": 907.6751475631102
+      },
+      "maximum_ball_penetration_m": 0.016774174607387893,
+      "minimum_pelvis_height_m": 0.5713794662172953,
+      "minimum_pelvis_up": 0.6348031683954272,
+      "maximum_joint_limit_excess_rad": 0.06764987488075813,
+      "maximum_actuator_limit_fraction": 1.0,
+      "peak_holder_force_n": 6.115846241211443,
+      "holder_impulse_world_ns": [
+        0.11837111140728326,
+        0.07767273621309519,
+        7.453385592182416
+      ],
+      "hand": "right",
+      "controller": "live_prior_reference_arms",
+      "simulation_dt": 6.25e-05,
+      "seed": 1,
+      "steps": 339,
+      "exact_endpoint_and_sensor_replay": true,
+      "approach_distance_m": 5.159207701683044,
+      "maximum_lateral_drift_m": 1.1144846081733704,
+      "maximum_loaded_foot_slip_m_s": [
+        6.434660415038637,
+        4.419969388140987
+      ],
+      "termination_flags": {
+        "time_out": false,
+        "fallen": true,
+        "invalid_contact": false
+      },
+      "directory": "right_fine"
+    },
+    {
+      "passed": false,
+      "failures": [
+        "ball_contact:right_hand_collision",
+        "ball_penetration_above_6_mm",
+        "episode_incomplete",
+        "first_bounce_outside_delivery_zone",
+        "joint_limit",
+        "no_upward_shoulder_level_crossing",
+        "not_exactly_one_bounce_before_target",
+        "pelvis_orientation",
+        "release_forward_speed_not_above_6_m_s",
+        "release_not_overarm",
+        "robot_self_or_wicket_contact",
+        "target_corridor_missed"
+      ],
+      "release": {
+        "time": 4.619996547698975,
+        "position": [
+          -1.3765872716903687,
+          0.5935356020927429,
+          1.1504607200622559
+        ],
+        "velocity": [
+          0.7654899954795837,
+          0.5087025761604309,
+          2.4589271545410156
+        ],
+        "shoulder_z": 1.089781227612346,
+        "upper_z": -0.11500073593851896,
+        "elbow_angle_rad": 2.7469680881749223,
+        "maximum_elbow_extension_rad": 0.0,
+        "horizontal_time": null,
+        "front_landing": {
+          "time": 4.53552789306648,
+          "bounds": [
+            [
+              -1.9951986415409375,
+              0.905327808892195,
+              -1.688924251945067e-05
+            ],
+            [
+              -1.7894599828228879,
+              0.98055755687119,
+              0.026339554828727532
+            ]
+          ]
+        },
+        "back_landing": {
+          "time": 4.2537469100952805,
+          "bounds": [
+            [
+              -2.094674508005861,
+              0.6143793770892957,
+              -1.5544302462785868e-05
+            ],
+            [
+              -1.888942901660709,
+              0.6867203651937271,
+              0.03120001275937953
+            ]
+          ]
+        }
+      },
+      "first_bounce": {
+        "time": 5.6213080940246645,
+        "position": [
+          -0.7134828835353244,
+          1.103823804654179,
+          0.035916777252130515
+        ]
+      },
+      "target_crossing": null,
+      "bounces_before_target": 10,
+      "ball_contact_counts": {
+        "right_hand_collision": 3480,
+        "pitch": 7170
+      },
+      "ball_contact_peak_force_n": {
+        "right_hand_collision": 26.081489505576194,
+        "pitch": 939.3968578726958
+      },
+      "maximum_ball_penetration_m": 0.016642905369446105,
+      "minimum_pelvis_height_m": 0.5485993336776527,
+      "minimum_pelvis_up": 0.5927973609332624,
+      "maximum_joint_limit_excess_rad": 0.0991668090286777,
+      "maximum_actuator_limit_fraction": 1.0,
+      "peak_holder_force_n": 6.107506034588009,
+      "holder_impulse_world_ns": [
+        0.11941640821928359,
+        0.07935760954535405,
+        7.45385582729018
+      ],
+      "hand": "right",
+      "controller": "live_prior_reference_arms",
+      "simulation_dt": 3.125e-05,
+      "seed": 1,
+      "steps": 327,
+      "exact_endpoint_and_sensor_replay": true,
+      "approach_distance_m": 4.9575477838516235,
+      "maximum_lateral_drift_m": 0.9206773638725281,
+      "maximum_loaded_foot_slip_m_s": [
+        7.747639781965756,
+        6.1410827377712724
+      ],
+      "termination_flags": {
+        "time_out": false,
+        "fallen": true,
+        "invalid_contact": false
+      },
+      "directory": "right_finest"
+    },
+    {
+      "passed": false,
+      "failures": [
+        "ball_contact:left_hand_collision",
+        "episode_incomplete",
+        "first_bounce_outside_delivery_zone",
+        "invalid_delivery_stride_order",
+        "no_upward_shoulder_level_crossing",
+        "not_exactly_one_bounce_before_target",
+        "release_forward_speed_not_above_6_m_s",
+        "release_not_overarm",
+        "robot_self_or_wicket_contact",
+        "target_corridor_missed"
+      ],
+      "release": {
+        "time": 4.619996547698975,
+        "position": [
+          -1.4112141132354736,
+          -0.12404357641935349,
+          1.1033042669296265
+        ],
+        "velocity": [
+          1.000154972076416,
+          0.14845266938209534,
+          2.2213687896728516
+        ],
+        "shoulder_z": 1.061393704378865,
+        "upper_z": -0.15649199454814028,
+        "elbow_angle_rad": 2.7486435461967877,
+        "maximum_elbow_extension_rad": 0.0,
+        "horizontal_time": null,
+        "front_landing": {
+          "time": 4.22612192916873,
+          "bounds": [
+            [
+              -2.169856303761064,
+              -0.6723555760523063,
+              -2.5591219578141415e-05
+            ],
+            [
+              -1.964716003928539,
+              -0.595801645198962,
+              0.03328696619720804
+            ]
+          ]
+        },
+        "back_landing": {
+          "time": 4.487121681213413,
+          "bounds": [
+            [
+              -2.067086730248462,
+              -0.4240656212351306,
+              -2.2927218198426184e-05
+            ],
+            [
+              -1.8641094751072371,
+              -0.33199801276102353,
+              0.036205274089204195
+            ]
+          ]
+        }
+      },
+      "first_bounce": null,
+      "target_crossing": null,
+      "bounces_before_target": 0,
+      "ball_contact_counts": {
+        "left_hand_collision": 575
+      },
+      "ball_contact_peak_force_n": {
+        "left_hand_collision": 10.259004456309857
+      },
+      "maximum_ball_penetration_m": 0.004314110795862476,
+      "minimum_pelvis_height_m": 0.7500348794251739,
+      "minimum_pelvis_up": 0.9958653328134047,
+      "maximum_joint_limit_excess_rad": 0.0,
+      "maximum_actuator_limit_fraction": 0.9342941284179688,
+      "peak_holder_force_n": 5.8478580260030855,
+      "holder_impulse_world_ns": [
+        0.15602413146014374,
+        0.023158609270555356,
+        7.416796739818676
+      ],
+      "hand": "left",
+      "controller": "live_prior_reference_arms",
+      "simulation_dt": 6.25e-05,
+      "seed": 1,
+      "steps": 266,
+      "exact_endpoint_and_sensor_replay": true,
+      "approach_distance_m": 3.2261492013931274,
+      "maximum_lateral_drift_m": 0.41104599833488464,
+      "maximum_loaded_foot_slip_m_s": [
+        2.9136793865291124,
+        2.8433587971821086
+      ],
+      "termination_flags": {
+        "time_out": false,
+        "fallen": false,
+        "invalid_contact": true
+      },
+      "directory": "left_fine"
+    },
+    {
+      "passed": false,
+      "failures": [
+        "ball_contact:left_hand_collision",
+        "episode_incomplete",
+        "first_bounce_outside_delivery_zone",
+        "invalid_delivery_stride_order",
+        "no_upward_shoulder_level_crossing",
+        "not_exactly_one_bounce_before_target",
+        "release_forward_speed_not_above_6_m_s",
+        "release_not_overarm",
+        "robot_self_or_wicket_contact",
+        "target_corridor_missed"
+      ],
+      "release": {
+        "time": 4.619996547698975,
+        "position": [
+          -1.3993489742279053,
+          -0.14517544209957123,
+          1.1048001050949097
+        ],
+        "velocity": [
+          0.9922506213188171,
+          0.14089135825634003,
+          2.215489625930786
+        ],
+        "shoulder_z": 1.0620386838847848,
+        "upper_z": -0.1549791491870082,
+        "elbow_angle_rad": 2.7484819236094182,
+        "maximum_elbow_extension_rad": 0.0,
+        "horizontal_time": null,
+        "front_landing": {
+          "time": 4.22809067916874,
+          "bounds": [
+            [
+              -2.1734524301348928,
+              -0.6784113692329271,
+              -5.65240669448807e-06
+            ],
+            [
+              -1.9680589550519714,
+              -0.6043082373544157,
+              0.03365463440527007
+            ]
+          ]
+        },
+        "back_landing": {
+          "time": 4.486152931213408,
+          "bounds": [
+            [
+              -2.055682095811633,
+              -0.4287791837676321,
+              -2.369567363959095e-06
+            ],
+            [
+              -1.8519831148582169,
+              -0.34110950182693694,
+              0.036842148635332264
+            ]
+          ]
+        }
+      },
+      "first_bounce": null,
+      "target_crossing": null,
+      "bounces_before_target": 0,
+      "ball_contact_counts": {
+        "left_hand_collision": 1014
+      },
+      "ball_contact_peak_force_n": {
+        "left_hand_collision": 9.645048772756976
+      },
+      "maximum_ball_penetration_m": 0.003805434881422244,
+      "minimum_pelvis_height_m": 0.7507653174383753,
+      "minimum_pelvis_up": 0.9957544729393598,
+      "maximum_joint_limit_excess_rad": 0.0,
+      "maximum_actuator_limit_fraction": 0.9295829772949219,
+      "peak_holder_force_n": 5.842877282996677,
+      "holder_impulse_world_ns": [
+        0.15479110253639924,
+        0.021979034324332535,
+        7.415879554968031
+      ],
+      "hand": "left",
+      "controller": "live_prior_reference_arms",
+      "simulation_dt": 3.125e-05,
+      "seed": 1,
+      "steps": 268,
+      "exact_endpoint_and_sensor_replay": true,
+      "approach_distance_m": 3.266896605491638,
+      "maximum_lateral_drift_m": 0.3945014774799347,
+      "maximum_loaded_foot_slip_m_s": [
+        2.881849972640223,
+        2.7925265607530405
+      ],
+      "termination_flags": {
+        "time_out": false,
+        "fallen": false,
+        "invalid_contact": true
+      },
+      "directory": "left_finest"
+    }
+  ],
+  "artifact_sha256": {
+    "left_fine/evaluation.json": "8c0537befad93fbdfffb59be90515c8599cfd0027989e87c639383637ca14940",
+    "left_fine/live_prior_reference_arms.mp4": "a2e414b1a13df419ae388f524f2cef968a7f83d039e1fb509ef180032f6e5bea",
+    "left_fine/live_prior_reference_arms_review.png": "194e2d13b0d2d4dd9a89fae80298c603144d7a4f0778d5a69349a8d97a975cc5",
+    "left_fine/trace.npz": "4359fdd3c9b9d9a45fd31d43952f1ed69c82503a862b978168782dca1a1b0d96",
+    "left_finest/evaluation.json": "a6a1b18ff2ba7475c1dd6de7727deff423f223b1c8f05ee95cff12d07d8b8404",
+    "left_finest/live_prior_reference_arms.mp4": "7a6059cd72c686a1755bd3c2b71e4f21959e8e5469b6ef02ae70f655419522a1",
+    "left_finest/live_prior_reference_arms_review.png": "7afa468ce62519f728abcb2580776f576cf7e3975eb732695c5fbea441872014",
+    "left_finest/trace.npz": "b9092a2fe2984f8ee4cd7bdcdca43f53434481c50d574ed5a9434ad80c1e68ed",
+    "right_fine/evaluation.json": "1b176d6da9428d947e44481e1462882caab49d3b5b78530996b75fff0ee8f365",
+    "right_fine/live_prior_reference_arms.mp4": "d03b919ce1c5a5d554f8c370d14de434e5e73ba0395c8605df563032b041b51f",
+    "right_fine/live_prior_reference_arms_review.png": "9d66de3b288328041956a30707e1e598278d5c6f15d9eed7be7462b93534177d",
+    "right_fine/trace.npz": "3e379f68efcbcdde3c4ece8a45792695f3219211e154e013d879af3afb5c3916",
+    "right_finest/evaluation.json": "2295b6c7c50547f82b7a4f3b1dd25081901bc4f070efd8b1843e8dae38925230",
+    "right_finest/live_prior_reference_arms.mp4": "99220444917c143cd4ce8fa759f66f308f181b6f3aeecfdf1c0e2785d4d84e71",
+    "right_finest/live_prior_reference_arms_review.png": "c8ed65f961285fe23d68c8429fec927883f782a2d6b7c16611f0db23985d121c",
+    "right_finest/trace.npz": "108c778925414f29b3f0ec2e09f1f464f7b5e27723e020f0b28d054dc00dd99a"
+  },
+  "qualified_showcase": false,
+  "guard": "Scheduled arm motion and release over an external learned locomotion prior, not locally learned running bowling. Every failed and early-terminated rollout is retained."
+}

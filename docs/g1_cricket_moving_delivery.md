@@ -45,3 +45,74 @@ env PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
 ```
 
 Use a fresh output directory; the command refuses to overwrite an experiment.
+
+## Baseline Results
+
+Source `4e921b84` reaches the scheduled physical release in all four cases,
+but none passes. Right-hand recovery falls; left-hand recovery ends on an
+unintended contact. The arm never reaches the upward shoulder-level crossing
+before release, and forward ball speed stays below the unchanged 6 m/s gate.
+
+| Hand | Physics step (us) | Episode end (s) | Release speed forward (m/s) | Peak loaded-foot slip (m/s) |
+| --- | ---: | ---: | ---: | ---: |
+| Right | 62.5 | 6.78 | 0.759 | 6.435 |
+| Right | 31.25 | 6.54 | 0.765 | 7.748 |
+| Left | 62.5 | 5.32 | 1.000 | 2.914 |
+| Left | 31.25 | 5.36 | 0.992 | 2.882 |
+
+These are measured failures, not a visible policy improvement. Right-hand
+ball penetration reaches 16.6-16.8 mm and joint limits are exceeded; both hands
+contact the ball with the hand collision geometry after release. The left
+delivery stride is also out of order. All failed checks remain in the
+[complete baseline report](../g1_cricket_results/moving_delivery_v1/summary.json).
+
+Baseline finest-step videos: [right](../g1_cricket_results/moving_delivery_v1/right_finest/live_prior_reference_arms.mp4)
+and [left](../g1_cricket_results/moving_delivery_v1/left_finest/live_prior_reference_arms.mp4).
+The coarse-step videos and complete state/control traces are retained alongside
+them; this is no timestep-convergence claim.
+
+## Arm Servo Follow-Up
+
+The next fixed comparison changes only arm velocity feedforward. Add
+`--arm-velocity-feedforward` and use `g1_cricket_results/moving_delivery_velocity_v1`
+as a fresh output directory. Desired arm velocity is multiplied by the
+unchanged native motor damping/stiffness ratio and added to position targets,
+which remain clipped to original joint ranges. Motor forces remain capped.
+This compensates velocity damping; it does not increase motor authority or
+turn the reference into a learned policy. Release timing, forward command,
+physics, seed, four-case pool and all gates remain unchanged.
+
+Source `e1be14f3` clears the overarm position and upward-crossing checks in all
+four cases, and removes the baseline's post-release ball/hand contacts. Both
+right-hand episodes finish eight seconds upright. Neither hand delivers a
+valid ball: forward velocity is negative, and left recovery contacts the
+bowler's wicket at 5.20 s. Terminal geometry inspection identifies the right
+foot against `bowler_wicket_0`; the episode is not continued through it.
+
+| Hand | Physics step (us) | Episode end (s) | Release speed forward (m/s) | Peak joint excess (rad) |
+| --- | ---: | ---: | ---: | ---: |
+| Right | 62.5 | 8.00 | -0.416 | 0.0551 |
+| Right | 31.25 | 8.00 | -0.427 | 0.0364 |
+| Left | 62.5 | 5.20 | -0.055 | 0.0000 |
+| Left | 31.25 | 5.20 | -0.043 | 0.0000 |
+
+Right recovery remains timestep-sensitive: total forward travel is 6.01 versus
+4.57 m, and lateral drift is 39.9 versus 29.8 cm. Left drift is 60.6-61.0 cm;
+its delivery footfalls remain in the wrong order. Peak loaded-foot slip remains
+4.49-5.43 m/s. This improves a component of the motion, not the whole task.
+
+[Complete follow-up report](../g1_cricket_results/moving_delivery_velocity_v1/summary.json)
+and full finest-step videos: [right](../g1_cricket_results/moving_delivery_velocity_v1/right_finest/live_prior_reference_arms.mp4),
+[left](../g1_cricket_results/moving_delivery_velocity_v1/left_finest/live_prior_reference_arms.mp4).
+All eight baseline/candidate outcomes, four videos per controller, native state
+and target traces, and 32 output fingerprints are retained. Both 48-entry
+input manifests verify against their frozen source commits. All 2,528 video
+frames decode nonblank at 960x540/25fps, and the motion review sheets were
+inspected. The independent replay covers 1,208,000 physics substeps exactly.
+43 distinct focused tests pass, including prior-preservation, release-state,
+bilateral-resolution-pool and overwrite-refusal checks.
+
+Next work must coordinate forward-swing release with the real arm state and
+keep the moving robot clear of the wicket through recovery. The original
+motor/joint limits and complete-episode gate stay in force. This is shared
+UniLab G1 work on native CPU Batch, not independently trained Menagerie G1.

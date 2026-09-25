@@ -68,7 +68,12 @@ reduces bat-path error but still fails the unchanged accuracy gate across
 both hands; all 24 episodes and contact checks are retained.
 The earlier [soft-toss video and contact study](docs/g1_cricket_bimanual_contact.md)
 remain available; neither input is a regulation-speed delivery.
-**Running bowling is unfinished.** Both-hand references preserve the full
+**Running bowling is unfinished.** The [continuous moving-delivery prototype and videos](docs/g1_cricket_moving_delivery.md#arm-servo-follow-up)
+now reach overarm releases in both hands with live body feedback; right-hand
+recovery stays upright. Backward ball velocity, left-foot wicket contact and
+right joint-limit violations still block qualification. All eight outcomes
+are retained; reference arm motion is not a locally learned cricket policy.
+Earlier both-hand references preserve the full
 approach, gather, overarm delivery and recovery, but physical controllers and
 the [PPO pilot](docs/g1_cricket_running_tracking.md) still fall before release.
 The new [measured approach study and both-hand videos](docs/g1_cricket_approach_teacher.md#complete-results)
