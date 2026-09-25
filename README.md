@@ -50,6 +50,10 @@ control also hits; this is not evidence of robust learned interception.
 The [reference-closure study](docs/g1_cricket_projected_batting.md) separates
 grip/foot inconsistencies from inverse-dynamics loads while preserving the
 complete bat trajectory; geometric closure alone does not qualify a video.
+The [bounded motor-inertia comparison](docs/g1_cricket_inertial_feedforward.md#complete-results)
+reduces finest PPO swing error from 14.78 to 9.72 cm right and 13.55 to 8.69 cm
+left. All 16 outcomes preserve contact/stability checks, but still fail the
+8 cm tracking limit; this remains an opt-in frozen-controller experiment.
 The earlier [frozen-actor two-hand G1 video](g1_cricket_results/bimanual_bounced_delivery_v1/two_hand_ppo_bounced_delivery.mp4)
 shows a one-bounce incoming delivery, two-handed hit and upright recovery in
 both stances at 0.5x. These are frozen dry-swing PPO actors with mechanical
