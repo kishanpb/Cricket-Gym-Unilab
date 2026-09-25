@@ -49,6 +49,9 @@ reference/PPO outcome: all finish and hit, but bat-path accuracy still fails.
 A [third physics resolution](docs/g1_cricket_bounced_delivery.md#refinement-results)
 passes the finer contact comparisons while retaining the original coarse-grid
 failures. This does not clear tracking or qualify a final advertising reel.
+The [motor-timing comparison](docs/g1_cricket_motor_lead.md#complete-results)
+reduces bat-path error but still fails the unchanged accuracy gate across
+both hands; all 24 episodes and contact checks are retained.
 The earlier [soft-toss video and contact study](docs/g1_cricket_bimanual_contact.md)
 remain available; neither input is a regulation-speed delivery.
 **Running bowling is unfinished.** Both-hand references preserve the full

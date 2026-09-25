@@ -76,3 +76,50 @@ same canonical report and qualify each candidate separately. No two-frame or
 larger-lead sweep, checkpoint selection or threshold change is authorized by
 this protocol. The reproduction command above includes this continuation;
 `--candidate-frames 1` reports just the initial comparison.
+
+## Complete Results
+
+All **24 episodes** complete three seconds and hit after exactly one incoming
+bounce. All pass pelvis-height, grip, original joint/motor limits,
+unintended-contact, root/joint tracking, forward-exit and penetration checks.
+Every episode still fails the unchanged 0.08 m maximum bat-path error bound.
+All twelve adjacent-resolution comparisons pass force, penetration and exit
+velocity checks. These are uncalibrated simulated contact loads, not hardware
+validation or a robustness claim beyond this nominal feed.
+
+Maximum bat-path error at 15.625 microseconds:
+
+| Lead | Right reference | Right PPO | Left reference | Left PPO |
+| --- | ---: | ---: | ---: | ---: |
+| 0 ms | 0.13689 m | 0.12840 m | 0.13654 m | 0.13707 m |
+| 20 ms | 0.11271 m | 0.10173 m | 0.11251 m | 0.10785 m |
+| 60 ms | 0.08861 m | 0.09785 m | 0.08861 m | 0.09421 m |
+
+The larger lead reduces follow-through lag but moves the right-hand maximum
+to downswing, around 1.34-1.36 s. It is not uniformly better motion tracking:
+finest PPO returns fall from 17.5801/17.4397 (right/left, zero lead) to
+17.2753/17.1396 (60 ms). Finest outgoing vx remains positive at 2.1387/2.0714
+m/s for the latter PPO pair. No successful row is selected to override the
+failed complete-candidate qualification.
+
+The [canonical report](../g1_cricket_results/bimanual_motor_lead_v1/summary.json)
+retains all outcomes, twelve resolution comparisons and sixteen paired timing
+comparisons. Its twelve input evaluations contain **3,456,000** audited
+physical substeps with exact native endpoint/sensor replay. All 74 input
+hashes and the native recorder hash per evaluation verify. The eight zero-lead
+episode rows exactly reproduce the earlier retained reports; old files are
+unchanged. No training, checkpoint search, new video, threshold relaxation or
+policy promotion follows from this experiment. The default lead stays zero.
+
+This closes the two declared constant-lead candidates as complete solutions.
+The next learning task needs explicit bat-state tracking and ball observations,
+with full both-hand contact/physical evaluation, rather than another blind
+constant-lead sweep. Running approach, legal bowling release/recovery and
+qualified humanoid advertising videos remain unfinished.
+
+Validation: 119 focused environment, control, contact-report, native substep
+and constraint tests pass with warnings treated as errors. Tests cover zero
+lead compatibility, coherent position/velocity/gravity advance, unchanged
+measurement phase, clip-end clamping, invalid leads, distinct candidate pools,
+missing cases and a failed single row blocking its entire candidate. Report
+reproduction, Ruff formatting/lint and diff hygiene also pass.

@@ -111,7 +111,7 @@ def test_root_feedback_uses_reference_axes_and_velocity_damping():
         np.testing.assert_array_equal(root_position_balance(quaternion, position, velocity, 0), 0)
 
 
-@pytest.mark.parametrize("lead", [0, 1])
+@pytest.mark.parametrize("lead", [0, 1, 3])
 def test_motor_lookahead_keeps_measurement_phase_and_clamps_at_clip_end(lead):
     position = np.arange(12, dtype=np.float32).reshape(4, 3)
     velocity = position / 10
