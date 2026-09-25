@@ -68,7 +68,7 @@ def test_motor_lead_report_keeps_every_case_and_rejects_one_failed_candidate(row
     sequence.update(1.02, position, up, up, False, False)
     sequence.update(1.4, position, down, up, False, True)
     row["trace"][0]["substep_audit"]["ball_contact_sequence"] = sequence.snapshot()
-    for lead in (0, 1):
+    for lead in (0, 1, 3):
         for resolution, dt in (("fine", 0.00003125), ("finest", 0.000015625)):
             for hand in ("right", "left"):
                 directory = tmp_path / f"lead{lead}_{hand}_{resolution}"
@@ -96,16 +96,17 @@ def test_motor_lead_report_keeps_every_case_and_rejects_one_failed_candidate(row
                 path = directory / "evaluation.json"
                 path.write_text(json.dumps(report))
     result = build_motor_lead_report(tmp_path)
-    assert len(result["rows"]) == 16
-    assert len(result["timing_comparisons"]) == len(result["resolution_comparisons"]) == 8
-    assert result["candidate_qualifies"]
+    assert len(result["rows"]) == 24
+    assert len(result["timing_comparisons"]) == 16
+    assert len(result["resolution_comparisons"]) == 12
+    assert result["candidate_qualification"] == {"1": True, "3": True}
     assert all(
         pair["peak_bat_error_change_m"] == pytest.approx(-0.02)
         for pair in result["timing_comparisons"]
     )
     report["rows"][1]["trace"][0]["bat_tracking_error_m"] = 0.081
     path.write_text(json.dumps(report))
-    assert not build_motor_lead_report(tmp_path)["candidate_qualifies"]
+    assert build_motor_lead_report(tmp_path)["candidate_qualification"] == {"1": True, "3": False}
     report["evaluation_overrides"]["lookahead_frames"] = 0
     path.write_text(json.dumps(report))
     with pytest.raises(ValueError, match="protocol"):
@@ -113,6 +114,12 @@ def test_motor_lead_report_keeps_every_case_and_rejects_one_failed_candidate(row
     path.unlink()
     with pytest.raises(FileNotFoundError):
         build_motor_lead_report(tmp_path)
+
+
+@pytest.mark.parametrize("frames", [(), (0,), (-1,), (1, 1), (1.5,), (True,)])
+def test_motor_lead_report_rejects_invalid_candidate_pool(tmp_path, frames):
+    with pytest.raises(ValueError, match="distinct positive integers"):
+        build_motor_lead_report(tmp_path, candidate_frames=frames)
 
 
 def test_completion_uses_all_150_controls_not_float32_clock(row):

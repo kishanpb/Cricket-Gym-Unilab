@@ -35,7 +35,7 @@ for the paired comparison rather than silently changing old hashes.
 From the repository root with its CPU environment and native mjbatch recorder:
 
 ```sh
-for lead in 0 1; do
+for lead in 0 1 3; do
   for hand in right left; do
     for resolution in fine finest; do
       dt=0.00003125
@@ -55,3 +55,24 @@ PYTHONPATH=src:scripts uv run python scripts/report_g1_cricket_motor_lead.py \
 No new video is required to interpret a failed tracking comparison. Preserve
 the existing one-bounce video and inspect newly rendered full episodes before
 making any improved-motion or showcase claim.
+
+## One-Frame Result and Bounded Continuation
+
+All sixteen declared episodes completed. The fresh zero-lead traces reproduce
+all eight retained baseline episode rows exactly. All eight timestep pairs
+pass the unchanged contact-resolution checks. Every one-frame episode still
+fails only bat tracking: finest reference/PPO maxima are 0.11271/0.10173 m
+for right and 0.11251/0.10785 m for left. A completed one-bounce hit alone does
+not clear the 0.08 m gate.
+
+The baseline peak occurs in follow-through at 1.64-1.66 s. Projecting its
+position error onto the instantaneous reference tangent suggests about
+77-79 ms lag, with another 0.048-0.071 m orthogonal error; this local projection
+is a diagnostic, not a prediction or qualification result. The measured
+one-frame improvement motivates one further candidate at **three frames
+(60 ms)**. Append eight episodes, both hands/controllers at both resolutions,
+with no other change. Retain the complete zero/one-frame comparison in the
+same canonical report and qualify each candidate separately. No two-frame or
+larger-lead sweep, checkpoint selection or threshold change is authorized by
+this protocol. The reproduction command above includes this continuation;
+`--candidate-frames 1` reports just the initial comparison.
