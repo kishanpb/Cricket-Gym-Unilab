@@ -13,13 +13,17 @@ from .prior import SDK_JOINTS
 from .task import G1CricketCfg
 
 
-def ankle_balance(reference_quaternion, quaternion, angular_velocity, gain):
+def ankle_balance(
+    reference_quaternion, quaternion, angular_velocity, gain, reference_angular_velocity=None
+):
     tilt = np.empty(3)
     mujoco.mju_subQuat(tilt, quaternion, reference_quaternion)
     reference_rotation, rotation = np.empty(9), np.empty(9)
     mujoco.mju_quat2Mat(reference_rotation, reference_quaternion)
     mujoco.mju_quat2Mat(rotation, quaternion)
     velocity = reference_rotation.reshape(3, 3).T @ rotation.reshape(3, 3) @ angular_velocity
+    if reference_angular_velocity is not None:
+        velocity -= reference_angular_velocity
     return np.clip(gain * (0.7 * tilt[:2] + 0.1 * velocity[:2]), -0.3, 0.3)
 
 

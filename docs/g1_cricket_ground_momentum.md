@@ -52,3 +52,20 @@ PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
 Then run `scripts/audit_g1_cricket_running_support.py` on the output directory.
 Existing output directories are not overwritten. Passing an offline momentum
 check cannot qualify a physical bowling delivery or authorize showcase claims.
+
+## Reference Angular Rate
+
+The existing ankle balance term damps absolute angular velocity. At the exact
+initial dense target, intended pitch rate is about 3.58 rad/s, yet this term
+adds its maximum 0.3 rad ankle correction. An opt-in comparison instead
+subtracts desired angular velocity after expressing both rates in the reference
+body frame. An exactly tracked rotating target then has zero rate error.
+The default controller and existing learned-policy behavior remain unchanged.
+
+`scripts/evaluate_g1_cricket_running_velocity.py` compares both settings for
+both hands against the frozen dense reference, retaining all substep records.
+The absolute-rate controls must reproduce the saved parent poses bit-for-bit.
+Only relative-rate videos are newly rendered; parent baseline videos remain
+in the reference directory. Use reference directory
+`g1_cricket_results/running_ground_momentum_v2` and a fresh output directory
+`g1_cricket_results/running_velocity_v1`, with `--render`.

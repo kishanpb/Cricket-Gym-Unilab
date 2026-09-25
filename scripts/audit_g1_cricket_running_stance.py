@@ -29,7 +29,9 @@ def foot_loads(model, data):
     return loads
 
 
-def replay(model, reference, gain, *, controller=None, controller_substeps=320):
+def replay(
+    model, reference, gain, *, controller=None, controller_substeps=320, track_root_velocity=False
+):
     times, poses, velocity = reference["times"], reference["qpos"], reference["qvel"]
     np.testing.assert_allclose(np.diff(times), 0.02, atol=1e-15)
     substeps = round(0.02 / model.opt.timestep)
@@ -50,7 +52,14 @@ def replay(model, reference, gain, *, controller=None, controller_substeps=320):
     wrench = np.empty(6)
     for tick in range(len(times) - 1):
         control, correction = running_control(
-            model, data, poses[tick], velocity[tick], qa, va, balance_gain=gain
+            model,
+            data,
+            poses[tick],
+            velocity[tick],
+            qa,
+            va,
+            balance_gain=gain,
+            track_root_velocity=track_root_velocity,
         )
         if times[tick] >= RELEASE_TIME:
             data.eq_active[holder] = False
