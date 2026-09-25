@@ -16,9 +16,15 @@ from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
 ROOT = Path(__file__).resolve().parents[2]
 
 
-@pytest.fixture(params=[("right", False), ("left", False), ("right", True), ("left", True)])
+@pytest.fixture(
+    params=[
+        (hand, grouped, compact)
+        for hand in ("right", "left")
+        for grouped, compact in ((False, False), (True, False), (True, True))
+    ]
+)
 def env(request):
-    hand, grouped = request.param
+    hand, grouped, compact = request.param
     registry.ensure_registries()
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
         owner = compose(
@@ -30,6 +36,7 @@ def env(request):
         )
     override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
     override["mujoco_group_identical_models"] = grouped
+    override["mujoco_compact_substeps"] = compact
     instance = registry.make(
         owner.training.task_name, num_envs=2, sim_backend="mujoco", env_cfg_override=override
     )

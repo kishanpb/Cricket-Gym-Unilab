@@ -24,11 +24,21 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend, EqualityCon
     _observer: SubstepObserver | None = None
     _recorder: Rollout | HeldControlRollout | None = None
 
-    def __init__(self, *args, substep_engine="rollout", group_identical_models=False, **kwargs):
+    def __init__(
+        self,
+        *args,
+        substep_engine="rollout",
+        group_identical_models=False,
+        compact_substeps=False,
+        **kwargs,
+    ):
         if substep_engine not in ("rollout", "mjbatch"):
             raise ValueError("unknown substep engine")
         self.substep_engine = substep_engine
         self.group_identical_models = group_identical_models
+        if compact_substeps and substep_engine != "mjbatch":
+            raise ValueError("compact substeps require mjbatch")
+        self.compact_substeps = compact_substeps
         super().__init__(*args, **kwargs)
 
     def get_dr_capabilities(self):
@@ -127,6 +137,11 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend, EqualityCon
             )
             control = np.concatenate((control, active), axis=-1)
         prepared = time.perf_counter()
+        options = {}
+        if self.compact_substeps:
+            options["sensor_indices"] = (
+                self._observe_sensors if self._observer is not None else np.empty(0, dtype=int)
+            )
         states, sensors = self._recorder.rollout(
             self._pool.get_all_models(),
             self._record_data,
@@ -135,14 +150,20 @@ class SubstepMuJoCoBackend(MuJoCoBackend, SubstepObservationBackend, EqualityCon
             control_spec=spec,
             nstep=nsteps,
             chunk_size=self._chunk_size,
+            **options,
         )
         simulated = time.perf_counter()
         if pending:
             self._pending_xfrc_applied.fill(0)
         self._physics_state[:] = states[:, -1]
-        self._sensor_data[:] = sensors[:, -1]
+        if self.compact_substeps:
+            self._sensor_data[:] = cast("HeldControlRollout", self._recorder).final_sensors
+        else:
+            self._sensor_data[:] = sensors[:, -1]
         if self._observer is not None:
-            observed_sensors = sensors[:, :, self._observe_sensors]
+            observed_sensors = (
+                sensors if self.compact_substeps else sensors[:, :, self._observe_sensors]
+            )
             observed_velocity = states[:, :, self._observe_velocity]
             observed_sensors.setflags(write=False)
             observed_velocity.setflags(write=False)

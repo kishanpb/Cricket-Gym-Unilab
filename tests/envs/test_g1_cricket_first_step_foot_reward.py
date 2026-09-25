@@ -14,9 +14,15 @@ from unilab.base.entity import Entity
 ROOT = Path(__file__).resolve().parents[2]
 
 
-@pytest.fixture(params=[("right", False), ("left", False), ("right", True), ("left", True)])
+@pytest.fixture(
+    params=[
+        (hand, grouped, compact)
+        for hand in ("right", "left")
+        for grouped, compact in ((False, False), (True, False), (True, True))
+    ]
+)
 def env(request):
-    hand, grouped = request.param
+    hand, grouped, compact = request.param
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
         owner = compose(
             "config",
@@ -39,6 +45,7 @@ def env(request):
     registry.ensure_registries()
     override = evaluation_override(owner, 0.0000625)
     override["mujoco_group_identical_models"] = grouped
+    override["mujoco_compact_substeps"] = compact
     instance = registry.make(
         owner.training.task_name,
         num_envs=2,

@@ -10,10 +10,12 @@ from unilab.base.np_env import NpEnv
 from unilab.base.scene import SceneCfg
 
 
-@pytest.mark.parametrize("engine", ["rollout", "mjbatch"])
+@pytest.mark.parametrize(
+    "engine,compact", [("rollout", False), ("mjbatch", False), ("mjbatch", True)]
+)
 @pytest.mark.parametrize("side", [-1, 1])
 @pytest.mark.parametrize("observe", [False, True])
-def test_release_and_partial_reset_match_direct_physics(tmp_path, engine, side, observe):
+def test_release_and_partial_reset_match_direct_physics(tmp_path, engine, compact, side, observe):
     if engine == "mjbatch":
         pytest.importorskip("mjbatch.held_control")
     path = tmp_path / "holder.xml"
@@ -42,6 +44,7 @@ def test_release_and_partial_reset_match_direct_physics(tmp_path, engine, side, 
         0.001,
         adaptive_chunk_size=False,
         substep_engine=engine,
+        compact_substeps=compact,
     )
     backend.materialize()
     assert isinstance(backend, EqualityConstraintBackend)

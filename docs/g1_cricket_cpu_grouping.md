@@ -1,4 +1,4 @@
-# G1 CPU Recorder Grouping
+# G1 CPU Recorder
 
 The cricket owner supplied distinct model objects with identical compiled
 content. The native recorder consequently used separate singleton batches.
@@ -79,3 +79,78 @@ batting swing, plus a running bowler, legal release and recovery, in both hands.
 The current lofted soft toss is not the requested incoming one-bounce delivery.
 Neither that diagnostic nor a quiet hold or single step qualifies the final
 showcase. This opt-in enables further CPU learning work without changing physics.
+
+## Compact Sensor Recording
+
+`HeldControlRollout.rollout(..., sensor_indices=columns)` optionally records
+only the requested sensor columns at each substep. `columns` must be a
+one-dimensional integer array; order and duplicates are preserved, and an empty
+integer array is supported. The default `None` still records all channels.
+Every physical sensor is computed regardless of selection. All FULLPHYSICS
+states remain recorded at native precision, and `final_sensors` exposes every
+sensor channel at the final substep. This cache is cleared before each call,
+including failed calls, and on close. No stale or partial cache is returned.
+Recorder source: mjbatch `91422674cb73328c6ba0c1b2d65749fcebcdf5f4`.
+
+The UniLab opt-in is `env.mujoco_compact_substeps`, default false. It requires
+the mjbatch substep engine, records the registered observer's channels, and
+retains the complete final sensor cache used by task observations and rewards.
+Without an observer, it records no intermediate sensor columns. State and
+root-velocity trajectories, read-only observer inputs, held wrenches, releases,
+partial resets and failure handling retain their existing contracts. Enable
+grouping and compact recording together on an owner without those YAML keys:
+
+```sh
++env.mujoco_group_identical_models=true +env.mujoco_compact_substeps=true
+```
+
+The [compact comparison](../g1_cricket_results/compact_substeps_benchmark.json)
+replays the same eight retained cases: 2,432 control intervals and 1,167,360
+unique physical substeps. Both modes use exact-model grouping. Every state,
+every requested substep sensor and the complete final sensor array match
+official MuJoCo rollout exactly; float32 endpoints match the frozen traces.
+The requested `holder_force`, `holder_quat` and `ball_hand` sensors total 75
+columns. Compact mode does not retain all 115,305 channels at every substep.
+The earlier full-recording grouping benchmark above remains unchanged.
+
+Two-copy complete replay bounds verification memory. Eight-copy timings use
+the same fixed eight evenly spaced intervals per trace, two warm-ups per mode,
+six samples per mode, alternating order, and eight requested threads. No
+project training/tests overlapped timing. All samples, including the slower
+left-PPO full-recording sample, remain in the report. Platform and exclusions
+are the same as the grouping study; this compares recorder calls, not complete
+PPO training or evaluation.
+
+| Hand | Control | Step (microseconds) | Grouped full median (s) | Grouped compact median (s) | Ratio |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Right | Reference | 62.5 | 0.1547 | 0.0870 | 1.779 |
+| Right | PPO | 62.5 | 0.1503 | 0.0870 | 1.729 |
+| Right | Reference | 31.25 | 0.6852 | 0.1751 | 3.914 |
+| Right | PPO | 31.25 | 0.6963 | 0.1751 | 3.977 |
+| Left | Reference | 62.5 | 0.1574 | 0.0902 | 1.744 |
+| Left | PPO | 62.5 | 0.1566 | 0.0905 | 1.730 |
+| Left | Reference | 31.25 | 0.6850 | 0.1752 | 3.910 |
+| Left | PPO | 31.25 | 0.7313 | 0.1789 | 4.089 |
+
+At 62.5 microseconds, an eight-row, 320-substep sensor trajectory falls from
+2,361,446,400 bytes to 1,536,000 bytes, plus a 7,379,520-byte complete final
+sensor cache in either mode. At 31.25 microseconds the trajectories double;
+the final cache does not. These are array allocation sizes, not measured total
+RSS: model/data storage, full sensor computation and state trajectories remain.
+The measured incremental recorder speedup is 1.73-4.09x over grouped full
+recording. Do not multiply separate study ratios into an end-to-end claim.
+
+```sh
+PYTHONPATH=src:scripts OMP_NUM_THREADS=2 \
+  python scripts/benchmark_g1_cricket_model_grouping.py \
+  g1_cricket_results/first_step_foot_reward_v1 \
+  g1_cricket_results/compact_substeps_benchmark.json --compact
+```
+
+All 12 input hashes plus the recorder source hash verify. The focused suites
+pass 235 UniLab tests and 89 native Batch/recorder tests with warnings as errors.
+They cover selected/duplicate/empty columns, invalid selections, cleared failure
+caches, native release/reset parity and actual both-handed G1 task behavior.
+Ruff and diff hygiene checks pass; this is not full upstream CI. This runtime change
+does not alter a policy, reward, robot, physical gate or existing failure result,
+and no new video or learned cricket capability is claimed.

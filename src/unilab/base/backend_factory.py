@@ -102,6 +102,8 @@ def env_backend_kwargs(cfg: "EnvCfg") -> dict[str, Any]:
             result["substep_engine"] = cfg.mujoco_substep_engine
         if cfg.mujoco_group_identical_models:
             result["group_identical_models"] = True
+        if cfg.mujoco_compact_substeps:
+            result["compact_substeps"] = True
     return result
 
 

@@ -1,0 +1,455 @@
+{
+  "scope": "two-model complete frozen replay and eight-model CPU held-control timing; not end-to-end training",
+  "python_version": "3.13.13",
+  "machine": "arm64",
+  "mujoco_version": "3.11.0",
+  "compact_comparison": true,
+  "recorded_sensor_names": [
+    "holder_force",
+    "holder_quat",
+    "ball_hand"
+  ],
+  "input_sha256": {
+    "scripts/benchmark_g1_cricket_model_grouping.py": "56fecbb74c7af3e10eef67f22430cd5b77a143cd0eefac274b1e54cf75e083a0",
+    "src/unilab/base/mujoco_substeps.py": "98bc7923ce5e4a977b9b8835514588e02bf0a9030493cba3ce8e1401e0ab7fcf",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_right/run_config.json": "f05dc97d78df8b2db6ddd76f67057b2564bdf7565b86050afb02af3290239644",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_right/evaluation/reference_only_62.5us.npz": "47201300947f91eb458bb2514126b3b8ff9915b416f139d8388c19e835c644f4",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_right/evaluation/ppo_62.5us.npz": "2efa6417c2f48451189b113cc57ed6725b77231761af515e23dd31be0bf1e4a7",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_right/evaluation/reference_only_31.25us.npz": "def5e9a5d7816766053dc66191624c9ee3fc785281a08bae278c4c20193dea94",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_right/evaluation/ppo_31.25us.npz": "d93e3a7d82a98b22e48652486961eaaa55258beacfe415ae04e115481e1e722f",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_left/run_config.json": "124fcf7e4c5e99d03d0d770555c355a76299e139a1318ca4b6097c65e42235a0",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_left/evaluation/reference_only_62.5us.npz": "e2d9ee8a3a0aa7998a52ab43e68183071bda3f0206d910e7783b78cc19c3ff27",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_left/evaluation/ppo_62.5us.npz": "1d3431aa541de50ee69ebbfdfb4bd6041a19b7554553a44d1dbdf47cbb2cbff5",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_left/evaluation/reference_only_31.25us.npz": "8c160036447f518be5e3ea61ec4b936baa494b7b8cddfdc827f26341ff1f726e",
+    "g1_cricket_results/first_step_foot_reward_v1/ppo_left/evaluation/ppo_31.25us.npz": "293f17bad96e013099c1a0fb4e6395bacc62cd32eaf8c38f0cf914ded6293653"
+  },
+  "held_control_sha256": "aa5fee2de8e503b6a1d1fd58e096251c0c368b536f92b800fa303f14cd321689",
+  "protocol": "two warm-ups per mode; six samples per mode in alternating order; eight evenly spaced intervals per trace; eight threads for both modes; setup and parity excluded from timing",
+  "rows": [
+    {
+      "hand": "right",
+      "controller": "reference_only",
+      "physics_dt_s": 6.25e-05,
+      "model_sha256": "0e22e3f2d71d5ebdac12903a2629f352e780d5eae6b0674f1bf248334b4fdd3a",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 335,
+      "complete_physical_substeps": 107200,
+      "exact_official_all_substep_state_sensor_parity": false,
+      "exact_official_recorded_substep_state_sensor_parity": true,
+      "exact_full_final_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        47,
+        95,
+        143,
+        190,
+        238,
+        286,
+        334
+      ],
+      "mode_labels": [
+        "grouped_full",
+        "grouped_compact"
+      ],
+      "seconds": [
+        [
+          0.15465729217976332,
+          0.15477854199707508,
+          0.15429924987256527,
+          0.15760008338838816,
+          0.15352275036275387,
+          0.15526725072413683
+        ],
+        [
+          0.08805504161864519,
+          0.08652554173022509,
+          0.0869351252913475,
+          0.08630583435297012,
+          0.08771416638046503,
+          0.08697224967181683
+        ]
+      ],
+      "recorded_sensor_width": 75,
+      "full_sensor_trajectory_bytes": 2361446400,
+      "compact_sensor_trajectory_bytes": 1536000,
+      "full_final_sensor_bytes": 7379520,
+      "median_speedup": 1.7793140414107258
+    },
+    {
+      "hand": "right",
+      "controller": "ppo",
+      "physics_dt_s": 6.25e-05,
+      "model_sha256": "0e22e3f2d71d5ebdac12903a2629f352e780d5eae6b0674f1bf248334b4fdd3a",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 276,
+      "complete_physical_substeps": 88320,
+      "exact_official_all_substep_state_sensor_parity": false,
+      "exact_official_recorded_substep_state_sensor_parity": true,
+      "exact_full_final_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        39,
+        78,
+        117,
+        157,
+        196,
+        235,
+        275
+      ],
+      "mode_labels": [
+        "grouped_full",
+        "grouped_compact"
+      ],
+      "seconds": [
+        [
+          0.14734116662293673,
+          0.15026012528687716,
+          0.15040266700088978,
+          0.1505496660247445,
+          0.1484880419448018,
+          0.15097158309072256
+        ],
+        [
+          0.08695404138416052,
+          0.08695820812135935,
+          0.08635816723108292,
+          0.08709299936890602,
+          0.08775141648948193,
+          0.0865316241979599
+        ]
+      ],
+      "recorded_sensor_width": 75,
+      "full_sensor_trajectory_bytes": 2361446400,
+      "compact_sensor_trajectory_bytes": 1536000,
+      "full_final_sensor_bytes": 7379520,
+      "median_speedup": 1.7288189483065945
+    },
+    {
+      "hand": "right",
+      "controller": "reference_only",
+      "physics_dt_s": 3.125e-05,
+      "model_sha256": "f5cb8bffa0eaf12271d70100b44753f69c1ef1ea37eb3eff2c3c8f5bde54a1e6",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 335,
+      "complete_physical_substeps": 214400,
+      "exact_official_all_substep_state_sensor_parity": false,
+      "exact_official_recorded_substep_state_sensor_parity": true,
+      "exact_full_final_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        47,
+        95,
+        143,
+        190,
+        238,
+        286,
+        334
+      ],
+      "mode_labels": [
+        "grouped_full",
+        "grouped_compact"
+      ],
+      "seconds": [
+        [
+          0.73031987529248,
+          0.6896332083269954,
+          0.6686419574543834,
+          0.670779500156641,
+          0.688393541611731,
+          0.6820867080241442
+        ],
+        [
+          0.17525516636669636,
+          0.17482362501323223,
+          0.17640324961394072,
+          0.17585166729986668,
+          0.17411516699939966,
+          0.17485641688108444
+        ]
+      ],
+      "recorded_sensor_width": 75,
+      "full_sensor_trajectory_bytes": 4722892800,
+      "compact_sensor_trajectory_bytes": 3072000,
+      "full_final_sensor_bytes": 7379520,
+      "median_speedup": 3.914409905901227
+    },
+    {
+      "hand": "right",
+      "controller": "ppo",
+      "physics_dt_s": 3.125e-05,
+      "model_sha256": "f5cb8bffa0eaf12271d70100b44753f69c1ef1ea37eb3eff2c3c8f5bde54a1e6",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 276,
+      "complete_physical_substeps": 176640,
+      "exact_official_all_substep_state_sensor_parity": false,
+      "exact_official_recorded_substep_state_sensor_parity": true,
+      "exact_full_final_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        39,
+        78,
+        117,
+        157,
+        196,
+        235,
+        275
+      ],
+      "mode_labels": [
+        "grouped_full",
+        "grouped_compact"
+      ],
+      "seconds": [
+        [
+          0.7136012082919478,
+          0.6957561671733856,
+          0.6872212076559663,
+          0.7085348749533296,
+          0.6728023337200284,
+          0.6969341654330492
+        ],
+        [
+          0.1742586251348257,
+          0.17556087486445904,
+          0.17155154142528772,
+          0.17662462498992682,
+          0.17569983284920454,
+          0.17464333306998014
+        ]
+      ],
+      "recorded_sensor_width": 75,
+      "full_sensor_trajectory_bytes": 4722892800,
+      "compact_sensor_trajectory_bytes": 3072000,
+      "full_final_sensor_bytes": 7379520,
+      "median_speedup": 3.9767949700568894
+    },
+    {
+      "hand": "left",
+      "controller": "reference_only",
+      "physics_dt_s": 6.25e-05,
+      "model_sha256": "07342e5c293edb7ac35a6a0af7f35cfc284f8080d57ff40b4ed6d9533476bbbf",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 334,
+      "complete_physical_substeps": 106880,
+      "exact_official_all_substep_state_sensor_parity": false,
+      "exact_official_recorded_substep_state_sensor_parity": true,
+      "exact_full_final_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        47,
+        95,
+        142,
+        190,
+        237,
+        285,
+        333
+      ],
+      "mode_labels": [
+        "grouped_full",
+        "grouped_compact"
+      ],
+      "seconds": [
+        [
+          0.15992975048720837,
+          0.15737333428114653,
+          0.15627579111605883,
+          0.17113274987787008,
+          0.15737241692841053,
+          0.15727233234792948
+        ],
+        [
+          0.09025279246270657,
+          0.09005291573703289,
+          0.0909240422770381,
+          0.09070554096251726,
+          0.09024295955896378,
+          0.08997533284127712
+        ]
+      ],
+      "recorded_sensor_width": 75,
+      "full_sensor_trajectory_bytes": 2361446400,
+      "compact_sensor_trajectory_bytes": 1536000,
+      "full_final_sensor_bytes": 7379520,
+      "median_speedup": 1.7437848131282816
+    },
+    {
+      "hand": "left",
+      "controller": "ppo",
+      "physics_dt_s": 6.25e-05,
+      "model_sha256": "07342e5c293edb7ac35a6a0af7f35cfc284f8080d57ff40b4ed6d9533476bbbf",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 271,
+      "complete_physical_substeps": 86720,
+      "exact_official_all_substep_state_sensor_parity": false,
+      "exact_official_recorded_substep_state_sensor_parity": true,
+      "exact_full_final_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        38,
+        77,
+        115,
+        154,
+        192,
+        231,
+        270
+      ],
+      "mode_labels": [
+        "grouped_full",
+        "grouped_compact"
+      ],
+      "seconds": [
+        [
+          0.1536048324778676,
+          0.1555240834131837,
+          0.15404650010168552,
+          0.29029408283531666,
+          0.15760683454573154,
+          0.16129674948751926
+        ],
+        [
+          0.09033408388495445,
+          0.08998304139822721,
+          0.09045433346182108,
+          0.09177716635167599,
+          0.09056316688656807,
+          0.09441979136317968
+        ]
+      ],
+      "recorded_sensor_width": 75,
+      "full_sensor_trajectory_bytes": 2361446400,
+      "compact_sensor_trajectory_bytes": 1536000,
+      "full_final_sensor_bytes": 7379520,
+      "median_speedup": 1.7298378187537586
+    },
+    {
+      "hand": "left",
+      "controller": "reference_only",
+      "physics_dt_s": 3.125e-05,
+      "model_sha256": "aa4d59cdf0031ea9de432a9b5ab1517c341e060b63222e2d0e9fdfa621daa182",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 334,
+      "complete_physical_substeps": 213760,
+      "exact_official_all_substep_state_sensor_parity": false,
+      "exact_official_recorded_substep_state_sensor_parity": true,
+      "exact_full_final_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        47,
+        95,
+        142,
+        190,
+        237,
+        285,
+        333
+      ],
+      "mode_labels": [
+        "grouped_full",
+        "grouped_compact"
+      ],
+      "seconds": [
+        [
+          0.6921897502616048,
+          0.6846365407109261,
+          0.6798766255378723,
+          0.6854346254840493,
+          0.6686857091262937,
+          0.6884552501142025
+        ],
+        [
+          0.1746158329769969,
+          0.17420783452689648,
+          0.17620095796883106,
+          0.17575274966657162,
+          0.17646049987524748,
+          0.17396270763128996
+        ]
+      ],
+      "recorded_sensor_width": 75,
+      "full_sensor_trajectory_bytes": 4722892800,
+      "compact_sensor_trajectory_bytes": 3072000,
+      "full_final_sensor_bytes": 7379520,
+      "median_speedup": 3.9103710608343976
+    },
+    {
+      "hand": "left",
+      "controller": "ppo",
+      "physics_dt_s": 3.125e-05,
+      "model_sha256": "aa4d59cdf0031ea9de432a9b5ab1517c341e060b63222e2d0e9fdfa621daa182",
+      "model_size_bytes": 152565,
+      "sensor_width": 115305,
+      "full_replay_batch_size": 2,
+      "timed_batch_size": 8,
+      "complete_control_intervals": 271,
+      "complete_physical_substeps": 173440,
+      "exact_official_all_substep_state_sensor_parity": false,
+      "exact_official_recorded_substep_state_sensor_parity": true,
+      "exact_full_final_sensor_parity": true,
+      "exact_frozen_endpoint_parity": true,
+      "selected_interval_indices": [
+        0,
+        38,
+        77,
+        115,
+        154,
+        192,
+        231,
+        270
+      ],
+      "mode_labels": [
+        "grouped_full",
+        "grouped_compact"
+      ],
+      "seconds": [
+        [
+          0.7228024173527956,
+          0.7269812924787402,
+          0.7256823340430856,
+          0.7367062503471971,
+          0.7587367501109838,
+          0.7357169575989246
+        ],
+        [
+          0.1805672086775303,
+          0.17917054239660501,
+          0.17857079207897186,
+          0.17654387466609478,
+          0.1777179166674614,
+          0.18113008327782154
+        ]
+      ],
+      "recorded_sensor_width": 75,
+      "full_sensor_trajectory_bytes": 4722892800,
+      "compact_sensor_trajectory_bytes": 3072000,
+      "full_final_sensor_bytes": 7379520,
+      "median_speedup": 4.088703510378178
+    }
+  ],
+  "guard": "Runtime parity and local recorder timing only. No changed policy, physical gate, learning gain or qualified cricket video."
+}

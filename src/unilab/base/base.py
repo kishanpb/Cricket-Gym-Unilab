@@ -54,6 +54,7 @@ class EnvCfg:
     mujoco_observe_substeps: bool = False
     mujoco_substep_engine: str = "rollout"
     mujoco_group_identical_models: bool = False
+    mujoco_compact_substeps: bool = False
     adaptive_chunk_size: bool = True
     chunk_size: Optional[int] = None
     # Explicit CPU block owned by this env's process (Linux affinity only).
@@ -130,6 +131,8 @@ class EnvCfg:
             raise ValueError("mjbatch requires mujoco_observe_substeps")
         if self.mujoco_group_identical_models and self.mujoco_substep_engine != "mjbatch":
             raise ValueError("identical-model grouping requires mjbatch")
+        if self.mujoco_compact_substeps and self.mujoco_substep_engine != "mjbatch":
+            raise ValueError("compact substeps require mjbatch")
         if (
             isinstance(self.superdex_num_workers, bool)
             or not isinstance(self.superdex_num_workers, int)

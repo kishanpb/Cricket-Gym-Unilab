@@ -72,6 +72,9 @@ regresses both hands and is not promoted; full traces and failed videos remain
 available for diagnosis, not as qualified highlights.
 An [opt-in CPU recorder improvement](docs/g1_cricket_cpu_grouping.md) preserves
 exact replay and measures 1.49-2.08x recorder speedup, not a policy-quality gain.
+Its [compact-recording extension](docs/g1_cricket_cpu_grouping.md#compact-sensor-recording)
+reduces retained sensor arrays and measures a further 1.73-4.09x local recorder
+speedup with unchanged physics; this is not an end-to-end training result.
 Full reference and failed physical videos are
 development diagnostics, not learned bowling showcases. The research log
 retains the earlier [contact-control](docs/g1_cricket_contact_control.md) and

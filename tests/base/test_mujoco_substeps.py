@@ -111,7 +111,14 @@ def test_factory_is_opt_in_and_rejects_unsupported_combinations(tmp_path):
     path.write_text(XML)
     cfg = EnvCfg(scene=SceneCfg(model_file=str(path)), adaptive_chunk_size=False)
     assert "mujoco_observe_substeps" not in env_backend_kwargs(cfg)
+    assert "compact_substeps" not in env_backend_kwargs(cfg)
     cfg.mujoco_observe_substeps = True
+    cfg.mujoco_compact_substeps = True
+    with pytest.raises(ValueError, match="compact substeps require mjbatch"):
+        cfg.validate()
+    with pytest.raises(ValueError, match="compact substeps require mjbatch"):
+        create_backend("mujoco", cfg.scene, 1, 0.00025, **env_backend_kwargs(cfg))
+    cfg.mujoco_compact_substeps = False
     backend = create_backend("mujoco", cfg.scene, 1, 0.00025, **env_backend_kwargs(cfg))
     try:
         assert isinstance(backend, SubstepMuJoCoBackend)
@@ -130,8 +137,9 @@ def test_factory_is_opt_in_and_rejects_unsupported_combinations(tmp_path):
 
 
 @pytest.mark.parametrize("group_identical_models", [False, True])
+@pytest.mark.parametrize("compact", [False, True])
 def test_mjbatch_selection_without_observer_and_reset_model_mutation(
-    tmp_path, group_identical_models
+    tmp_path, group_identical_models, compact
 ):
     pytest.importorskip("mjbatch.held_control")
     from mjbatch.held_control import HeldControlRollout
@@ -151,6 +159,7 @@ def test_mjbatch_selection_without_observer_and_reset_model_mutation(
     with pytest.raises(ValueError, match="requires mujoco_observe_substeps"):
         cfg.validate()
     cfg.mujoco_observe_substeps = True
+    cfg.mujoco_compact_substeps = compact
     cfg.validate()
     backends = [
         MuJoCoBackend(cfg.scene, 3, 0.00025, adaptive_chunk_size=False),

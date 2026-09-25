@@ -16,6 +16,7 @@ from mujoco.rollout import Rollout
 from omegaconf import OmegaConf
 
 from unilab.base import registry
+from unilab.tasks.manipulation.g1_cricket.bowling import HOLDER_SENSORS
 
 
 def held_inputs(model, trace, indices, nstep):
@@ -30,8 +31,11 @@ def held_inputs(model, trace, indices, nstep):
     )
 
 
-def compare(recorder, models, data, initial, control, spec, nstep):
-    return recorder.rollout(models, [data], initial, control, control_spec=spec, nstep=nstep)
+def compare(recorder, models, data, initial, control, spec, nstep, sensor_indices=None):
+    options = {} if sensor_indices is None else {"sensor_indices": sensor_indices}
+    return recorder.rollout(
+        models, [data], initial, control, control_spec=spec, nstep=nstep, **options
+    )
 
 
 def check_arrays(actual, expected):
@@ -42,7 +46,7 @@ def check_arrays(actual, expected):
             assert np.array_equal(observed[row], reference[row])
 
 
-def benchmark(source, output):
+def benchmark(source, output, compact=False):
     registry.ensure_registries()
     hashes, rows = {}, []
     inputs = [Path(__file__), ROOT / "src/unilab/base/mujoco_substeps.py"]
@@ -68,6 +72,17 @@ def benchmark(source, output):
                 mujoco.mj_saveModel(model, buffer=compiled)
                 models = [copy.copy(model) for _ in range(8)]
                 data = mujoco.MjData(model)
+                columns = np.concatenate(
+                    [
+                        np.arange(
+                            model.sensor(name).adr[0],
+                            model.sensor(name).adr[0] + model.sensor(name).dim[0],
+                        )
+                        for name in HOLDER_SENSORS
+                    ]
+                )
+                group_modes = (True, True) if compact else (False, True)
+                sensor_modes = (None, columns) if compact else (None, None)
                 for controller in ("reference_only", "ppo"):
                     path = directory / "evaluation" / f"{controller}_{dt * 1e6:g}us.npz"
                     inputs.append(path)
@@ -89,11 +104,11 @@ def benchmark(source, output):
                         HeldControlRollout(
                             replay_models, num_threads=8, group_identical_models=grouped
                         )
-                        for grouped in (False, True)
+                        for grouped in group_modes
                     ]
                     official = Rollout(nthread=1)
                     try:
-                        assert [len(r.groups) for r in recorders] == [2, 1]
+                        assert [len(r.groups) for r in recorders] == ([1, 1] if compact else [2, 1])
                         for start in range(0, count, 2):
                             indices = np.minimum(np.arange(start, start + 2), count - 1)
                             initial, control, spec = held_inputs(model, trace, indices, nstep)
@@ -104,11 +119,27 @@ def benchmark(source, output):
                                 expected[0][:, -1].astype(trace["state"].dtype),
                                 trace["state"][indices + 1],
                             )
-                            for recorder in recorders:
+                            for recorder, selected_columns in zip(
+                                recorders, sensor_modes, strict=True
+                            ):
                                 actual = compare(
-                                    recorder, replay_models, data, initial, control, spec, nstep
+                                    recorder,
+                                    replay_models,
+                                    data,
+                                    initial,
+                                    control,
+                                    spec,
+                                    nstep,
+                                    selected_columns,
                                 )
-                                check_arrays(actual, expected)
+                                selected = (
+                                    expected
+                                    if selected_columns is None
+                                    else (expected[0], expected[1][:, :, selected_columns])
+                                )
+                                check_arrays(actual, selected)
+                                check_arrays((recorder.final_sensors,), (expected[1][:, -1],))
+                                del selected
                                 del actual
                             del expected
                             if start % 64 == 0:
@@ -120,20 +151,38 @@ def benchmark(source, output):
                             HeldControlRollout(
                                 models, num_threads=8, group_identical_models=grouped
                             )
-                            for grouped in (False, True)
+                            for grouped in group_modes
                         ]
-                        assert [len(r.groups) for r in recorders] == [8, 1]
+                        assert [len(r.groups) for r in recorders] == ([1, 1] if compact else [8, 1])
                         selected = np.linspace(0, count - 1, 8, dtype=int)
                         initial, control, spec = held_inputs(model, trace, selected, nstep)
                         for _ in range(2):
-                            for recorder in recorders:
-                                compare(recorder, models, data, initial, control, spec, nstep)
+                            for recorder, selected_columns in zip(
+                                recorders, sensor_modes, strict=True
+                            ):
+                                compare(
+                                    recorder,
+                                    models,
+                                    data,
+                                    initial,
+                                    control,
+                                    spec,
+                                    nstep,
+                                    selected_columns,
+                                )
                         samples = [[], []]
                         for repetition in range(6):
                             for mode in (0, 1) if repetition % 2 == 0 else (1, 0):
                                 begin = time.perf_counter()
                                 compare(
-                                    recorders[mode], models, data, initial, control, spec, nstep
+                                    recorders[mode],
+                                    models,
+                                    data,
+                                    initial,
+                                    control,
+                                    spec,
+                                    nstep,
+                                    sensor_modes[mode],
                                 )
                                 samples[mode].append(time.perf_counter() - begin)
                         row = dict(
@@ -147,11 +196,29 @@ def benchmark(source, output):
                             timed_batch_size=8,
                             complete_control_intervals=count,
                             complete_physical_substeps=count * nstep,
-                            exact_official_all_substep_state_sensor_parity=True,
+                            exact_official_all_substep_state_sensor_parity=not compact,
+                            exact_official_recorded_substep_state_sensor_parity=True,
+                            exact_full_final_sensor_parity=True,
                             exact_frozen_endpoint_parity=True,
                             selected_interval_indices=selected.tolist(),
-                            identity_seconds=samples[0],
-                            compiled_seconds=samples[1],
+                            mode_labels=["grouped_full", "grouped_compact"]
+                            if compact
+                            else ["identity", "compiled"],
+                            seconds=samples,
+                            recorded_sensor_width=len(columns) if compact else model.nsensordata,
+                            full_sensor_trajectory_bytes=8
+                            * nstep
+                            * model.nsensordata
+                            * np.dtype(mujoco.MJTNUM_DTYPE).itemsize,
+                            compact_sensor_trajectory_bytes=8
+                            * nstep
+                            * len(columns)
+                            * np.dtype(mujoco.MJTNUM_DTYPE).itemsize
+                            if compact
+                            else None,
+                            full_final_sensor_bytes=8
+                            * model.nsensordata
+                            * np.dtype(mujoco.MJTNUM_DTYPE).itemsize,
                             median_speedup=float(np.median(samples[0]) / np.median(samples[1])),
                         )
                         rows.append(row)
@@ -171,6 +238,8 @@ def benchmark(source, output):
         python_version=platform.python_version(),
         machine=platform.machine(),
         mujoco_version=mujoco.__version__,
+        compact_comparison=compact,
+        recorded_sensor_names=list(HOLDER_SENSORS) if compact else "all",
         input_sha256=hashes,
         held_control_sha256=hashlib.sha256(held_path.read_bytes()).hexdigest(),
         protocol="two warm-ups per mode; six samples per mode in alternating order; eight evenly spaced intervals per trace; eight threads for both modes; setup and parity excluded from timing",
@@ -184,5 +253,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--compact", action="store_true")
     args = parser.parse_args()
-    benchmark(args.source, args.output)
+    benchmark(args.source, args.output, args.compact)
