@@ -22,6 +22,28 @@ from unilab.tasks.manipulation.g1_cricket.running import (
 ROOT = Path(__file__).resolve().parents[2]
 
 
+@pytest.mark.parametrize("hand", ["right", "left"])
+def test_wrist_temporal_regularization_reduces_acceleration_without_model_edits(hand, tmp_path):
+    scene = tmp_path / "scene.xml"
+    G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(
+        ROOT / "src/unilab/assets/robots/g1/g1.xml", scene
+    )
+    model = mujoco.MjModel.from_xml_path(str(scene))
+    original = model.actuator_forcerange.copy()
+    times = np.arange(9) * 0.005
+    wrists = [model.joint(n).qposadr[0] for n in SDK_JOINTS if "wrist" in n]
+    energies = []
+    for weight in (0.0, 0.0002):
+        reference = retarget_running_delivery(model, times, hand, wrist_acceleration_weight=weight)
+        velocity = np.diff(reference["qpos"][:, wrists], axis=0) / 0.005
+        acceleration = np.diff(np.vstack((np.zeros(6), velocity)), axis=0) / 0.005
+        energies.append(np.square(acceleration).sum())
+    assert energies[1] < energies[0]
+    np.testing.assert_array_equal(model.actuator_forcerange, original)
+    with pytest.raises(ValueError, match="finite and nonnegative"):
+        retarget_running_delivery(model, times, hand, wrist_acceleration_weight=-1)
+
+
 def test_review_includes_terminal_failure_frames(monkeypatch, tmp_path):
     selected = {}
 

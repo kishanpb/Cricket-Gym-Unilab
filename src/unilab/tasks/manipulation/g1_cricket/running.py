@@ -161,6 +161,7 @@ def retarget_running_delivery(
     lane_offset=0.0,
     conserve_momentum=False,
     momentum_target=None,
+    wrist_acceleration_weight=0.0,
 ):
     """Solve original G1 joints offline; do not use this loop as a physics rollout."""
     target = RunningDeliveryTargets(hand, lane_offset)
@@ -168,6 +169,8 @@ def retarget_running_delivery(
         raise ValueError("momentum-conserving rotation requires a COM target")
     if momentum_target is not None and not conserve_momentum:
         raise ValueError("a momentum target requires momentum-conserving rotation")
+    if not np.isfinite(wrist_acceleration_weight) or wrist_acceleration_weight < 0:
+        raise ValueError("wrist acceleration weight must be finite and nonnegative")
     momentum = HeldBallMomentum(model, hand) if conserve_momentum else None
     was_tracking, desired_momentum, omega = False, None, np.zeros(3)
     recovery, landing_rotation = None, None
@@ -178,6 +181,8 @@ def retarget_running_delivery(
     lower, upper = model.jnt_range[joints].T.copy()
     lower[[3, 9]] = 0.12
     previous = np.clip(SDK_DEFAULT, lower + 0.03, upper - 0.03)
+    previous_velocity = np.zeros(29)
+    wrists = np.flatnonzero(["wrist" in name for name in SDK_JOINTS])
     mujoco.mj_forward(model, data)
     arms = {}
     feet = [model.body(f"{side}_ankle_roll_link").id for side in ("left", "right")]
@@ -259,6 +264,9 @@ def retarget_running_delivery(
                 0.1 * (q - previous),
                 np.array([0.1, 2, 2]) * (q[12:15] - [0, 0, target.lean(time)]),
             ]
+            if frame and wrist_acceleration_weight:
+                acceleration = ((q - previous) / dt - previous_velocity) / dt
+                result.append(wrist_acceleration_weight * acceleration[wrists])
             for side, (ids, lengths) in arms.items():
                 up, down, rotation = arm_targets[side]
                 shoulder, elbow, wrist = data.xpos[ids]
@@ -296,6 +304,8 @@ def retarget_running_delivery(
             gtol=1e-7,
         )
         residual(solved.x)
+        if frame:
+            previous_velocity = (solved.x - previous) / dt
         previous = solved.x.copy()
         data.qpos[ball_qa : ball_qa + 3] = (
             data.xpos[wrist_id] + data.xmat[wrist_id].reshape(3, 3) @ holder_offset

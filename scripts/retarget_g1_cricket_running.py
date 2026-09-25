@@ -125,6 +125,7 @@ def run(
     lateral_support=False,
     ground_momentum_parent=None,
     retarget_substeps=1,
+    wrist_acceleration_weight=0.0,
 ):
     with TemporaryDirectory(prefix="g1-running-") as temporary:
         scene = Path(temporary) / "scene.xml"
@@ -171,6 +172,7 @@ def run(
             lane_offset=lane_offset,
             conserve_momentum=conserve_momentum,
             momentum_target=momentum_target,
+            wrist_acceleration_weight=wrist_acceleration_weight,
         )
         dense_velocity = velocity_reference(model, reference["qpos"], 0.02 / retarget_substeps)
         poses = reference["qpos"][::retarget_substeps]
@@ -305,6 +307,7 @@ if __name__ == "__main__":
     parser.add_argument("--lateral-support", action="store_true")
     parser.add_argument("--ground-momentum-parent", type=Path)
     parser.add_argument("--retarget-substeps", type=int, choices=(1, 4), default=1)
+    parser.add_argument("--wrist-acceleration-weight", type=float, default=0.0)
     args = parser.parse_args()
     if args.lateral_support and args.ballistic_parent is None:
         parser.error("lateral support requires a ballistic parent")
@@ -334,6 +337,7 @@ if __name__ == "__main__":
             lateral_support=args.lateral_support,
             ground_momentum_parent=args.ground_momentum_parent,
             retarget_substeps=args.retarget_substeps,
+            wrist_acceleration_weight=args.wrist_acceleration_weight,
         )
         for hand in ("right", "left")
     ]
@@ -351,6 +355,7 @@ if __name__ == "__main__":
         "lateral_support_com": args.lateral_support,
         "stance_ground_momentum": args.ground_momentum_parent is not None,
         "retarget_substeps": args.retarget_substeps,
+        "wrist_acceleration_weight": args.wrist_acceleration_weight,
         "retarget_period_s": 0.02 / args.retarget_substeps,
         "physical_control_period_s": 0.02,
         "outward_lane_offset_m": args.lane_offset,
