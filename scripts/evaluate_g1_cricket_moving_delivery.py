@@ -87,10 +87,11 @@ def evaluate_case(owner, hand, dt, output, render):
         env.close()
 
 
-def main(output, render):
+def main(output, render, velocity_feedforward=False):
     output.mkdir(exist_ok=False)
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
         owner = compose("config", overrides=["task=g1_cricket_moving_delivery/mjbatch"])
+    owner.env.actions.residual.arm_velocity_feedforward = velocity_feedforward
     inputs = sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
     inputs += [
         Path(__file__),
@@ -135,5 +136,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path)
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--arm-velocity-feedforward", action="store_true")
     args = parser.parse_args()
-    main(args.output, args.render)
+    main(args.output, args.render, args.arm_velocity_feedforward)

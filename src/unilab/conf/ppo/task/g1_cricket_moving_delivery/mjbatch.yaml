@@ -9,6 +9,7 @@ env:
     residual:
       _target_: unilab.tasks.manipulation.g1_cricket.moving_delivery.MovingDeliveryActionCfg
       reference_directory: g1_cricket_results/running_fore_aft_support_v1
+      arm_velocity_feedforward: false
   observations:
     policy:
       terms:

@@ -17,9 +17,10 @@ from unilab.tasks.manipulation.g1_cricket.running import END_TIME, GATHER_TIME, 
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def make_env(hand):
+def make_env(hand, velocity_feedforward=False):
     with initialize_config_dir(config_dir=str(ROOT / "src/unilab/conf/ppo"), version_base="1.3"):
         owner = compose("config", overrides=["task=g1_cricket_moving_delivery/mjbatch"])
+    owner.env.actions.residual.arm_velocity_feedforward = velocity_feedforward
     override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
     override.update(handedness=hand, auto_reset=False)
     return create_env(owner, num_envs=1, env_cfg_override=override)
@@ -33,8 +34,9 @@ def test_continuous_arm_envelope():
 
 
 @pytest.mark.parametrize("hand", ["right", "left"])
-def test_live_prior_targets_and_physical_release(hand, monkeypatch):
-    env = make_env(hand)
+@pytest.mark.parametrize("velocity_feedforward", [False, True])
+def test_live_prior_targets_and_physical_release(hand, velocity_feedforward, monkeypatch):
+    env = make_env(hand, velocity_feedforward)
     try:
         env.reset(seed=1)
 
@@ -54,6 +56,16 @@ def test_live_prior_targets_and_physical_release(hand, monkeypatch):
             sdk[:, POLICY_TO_SDK] = term.baseline_action
             expected = env.scene["robot"].data.default_joint_pos + 0.25 * sdk
             np.testing.assert_array_equal(term.processed_action[:, :15], expected[:, :15])
+            if time == REFERENCE_START + GATHER_TIME:
+                local = time - REFERENCE_START
+                target = term.arm_reference(local)
+                if velocity_feedforward:
+                    target += term.arm_reference(local, nu=1) * term.velocity_lead
+                np.testing.assert_allclose(
+                    term.processed_action[0, 15:],
+                    np.clip(target, term.arm_limits[:, 0], term.arm_limits[:, 1]),
+                    atol=1e-6,
+                )
             assert term.released[0] == (time >= REFERENCE_START + RELEASE_TIME)
             assert env.equality_constraints.get_equality_active()[0, 0] != term.released[0]
             if time == REFERENCE_START + RELEASE_TIME:

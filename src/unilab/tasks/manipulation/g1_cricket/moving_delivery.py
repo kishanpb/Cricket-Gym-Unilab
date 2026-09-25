@@ -33,6 +33,7 @@ def moving_command(env):
 @dataclass(kw_only=True)
 class MovingDeliveryActionCfg(ApproachFeedbackActionCfg):
     reference_directory: str
+    arm_velocity_feedforward: bool = False
 
     def build(self, env):
         return MovingDeliveryAction(self, env)
@@ -49,12 +50,17 @@ class MovingDeliveryAction(ApproachFeedbackAction):
                 reference["times"], reference["qpos"][:, model.jnt_qposadr[joints]], axis=0
             )
         self.arm_limits = model.jnt_range[joints].copy()
+        self.velocity_lead = -model.actuator_biasprm[15:, 2] / model.actuator_gainprm[15:, 0]
 
     def process_actions(self, actions):
         time = self._env.episode_length_buf * self._env.step_dt
         self._hold_action[:, 7] = time >= REFERENCE_START + RELEASE_TIME
         super().process_actions(actions)
-        target = self.arm_reference(np.clip(time - REFERENCE_START, 0, END_TIME))
+        local = np.clip(time - REFERENCE_START, 0, END_TIME)
+        target = self.arm_reference(local)
+        if self.cfg.arm_velocity_feedforward:
+            moving = (time >= REFERENCE_START) & (time <= REFERENCE_START + END_TIME)
+            target += moving[:, None] * self.arm_reference(local, nu=1) * self.velocity_lead
         weight = arm_weight(time)[:, None]
         # Only motor targets change; legs and trunk retain the live prior's feedback.
         current = self.processed_action[:, 15:]
