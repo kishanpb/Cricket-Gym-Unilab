@@ -18,6 +18,7 @@ from unilab.tasks.manipulation.g1_cricket.running import (
     BallisticRunupCOM,
     retarget_running_delivery,
 )
+from unilab.tasks.manipulation.g1_cricket.running_support import LateralSupportCOM
 from unilab.tasks.manipulation.g1_cricket.tracking import (
     ankle_balance,
     export_reference,
@@ -103,7 +104,16 @@ def render_review(output):
     sheet.save(output / "running_motion_review.png")
 
 
-def run(hand, output, render, *, ballistic_parent=None, lane_offset=0.0, conserve_momentum=False):
+def run(
+    hand,
+    output,
+    render,
+    *,
+    ballistic_parent=None,
+    lane_offset=0.0,
+    conserve_momentum=False,
+    lateral_support=False,
+):
     with TemporaryDirectory(prefix="g1-running-") as temporary:
         scene = Path(temporary) / "scene.xml"
         G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(ROBOT, scene)
@@ -125,6 +135,9 @@ def run(hand, output, render, *, ballistic_parent=None, lane_offset=0.0, conserv
             centers = np.asarray(centers)
             centers[:, 1] += lane_offset * (1 if hand == "right" else -1)
             com_target = BallisticRunupCOM(times, centers, -model.opt.gravity[2])
+            if lateral_support:
+                lane = (1 if hand == "right" else -1) * (0.5 + lane_offset)
+                com_target = LateralSupportCOM(com_target, hand, lane)
         reference = retarget_running_delivery(
             model,
             times,
@@ -248,7 +261,10 @@ if __name__ == "__main__":
     parser.add_argument("--ballistic-parent", type=Path)
     parser.add_argument("--lane-offset", type=float, default=0.0)
     parser.add_argument("--conserve-momentum", action="store_true")
+    parser.add_argument("--lateral-support", action="store_true")
     args = parser.parse_args()
+    if args.lateral_support and args.ballistic_parent is None:
+        parser.error("lateral support requires a ballistic parent")
     args.output.mkdir(parents=True, exist_ok=False)
     inputs = [Path(__file__), ROBOT, ROBOT.parent / "scene_flat.xml"]
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
@@ -264,6 +280,7 @@ if __name__ == "__main__":
             ballistic_parent=args.ballistic_parent,
             lane_offset=args.lane_offset,
             conserve_momentum=args.conserve_momentum,
+            lateral_support=args.lateral_support,
         )
         for hand in ("right", "left")
     ]
@@ -278,6 +295,7 @@ if __name__ == "__main__":
         "ik_direction": "forward",
         "ballistic_runup_com": args.ballistic_parent is not None,
         "momentum_conserving_runup": args.conserve_momentum,
+        "lateral_support_com": args.lateral_support,
         "outward_lane_offset_m": args.lane_offset,
         "input_sha256": hashes,
         "rows": rows,
