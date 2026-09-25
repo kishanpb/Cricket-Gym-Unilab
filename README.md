@@ -54,7 +54,12 @@ the [PPO pilot](docs/g1_cricket_running_tracking.md) still fall before release.
 The latest [planted-foot reference and joint-tracking comparison](docs/g1_cricket_ground_momentum.md#foreaft-pendulum-comparison)
 removes audited reference self-intersections and passes sampled support bounds,
 but every physical trial still falls before release. Stronger tracking gains
-worsen joint-limit violations; native startup and landing dynamics remain unresolved.
+worsen joint-limit violations; transition into running and landing dynamics remain unresolved.
+The new [two-foot startup test](docs/g1_cricket_running_startup.md) now completes
+settling and an 80 mm weight shift in both hands at two physics timesteps,
+without joint-stop or unintended-contact violations. This verifies a from-rest
+startup stage only: lifting the other foot, accelerating into strides and
+joining the complete delivery remain unfinished.
 Full reference and failed physical videos are
 development diagnostics, not learned bowling showcases. The research log
 retains the earlier [contact-control](docs/g1_cricket_contact_control.md) and
