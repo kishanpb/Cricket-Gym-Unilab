@@ -67,6 +67,15 @@ class FirstStepReplay:
         self.states.append(actual)
 
 
+def evaluation_override(owner, dt):
+    evaluation = OmegaConf.create(OmegaConf.to_container(owner, resolve=True))
+    evaluation.env.sim_dt = dt
+    evaluation.env.commands.motion.params.sampling_mode = "start"
+    override = BackendAdapter(evaluation, root_dir=ROOT).build_task_env_cfg_override()
+    override["auto_reset"] = False
+    return override
+
+
 def evaluate(directory, render=False):
     owner = OmegaConf.create(json.loads((directory / "run_config.json").read_text())["config"])
     summary = json.loads((directory / "run_summary.json").read_text())
@@ -96,9 +105,7 @@ def evaluate(directory, render=False):
     registry.ensure_registries()
     rows = []
     for dt in (0.0000625, 0.00003125):
-        owner.env.sim_dt = dt
-        override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
-        override["auto_reset"] = False
+        override = evaluation_override(owner, dt)
         env = registry.make(
             owner.training.task_name, num_envs=1, sim_backend="mujoco", env_cfg_override=override
         )
@@ -122,6 +129,8 @@ def evaluate(directory, render=False):
             model = env.get_playback_model()
             for controller in ("reference_only", "ppo"):
                 env.reset(seed=1)
+                np.testing.assert_array_equal(env.command_manager.get_term("motion").time_steps, 0)
+                np.testing.assert_array_equal(env.episode_length_buf, 0)
 
                 def action_at():
                     with torch.inference_mode():
@@ -183,6 +192,8 @@ def evaluate(directory, render=False):
         columns=STEP_COLUMNS,
         rows=rows,
         evaluation_pool="final checkpoint and zero residual; seed 1; both timesteps; no selection",
+        training_sampling_mode=owner.env.commands.motion.params.sampling_mode,
+        evaluation_sampling_mode="start",
         guard="No learned release, full run-up, delivery, generalization or independent Menagerie claim.",
     )
     (output / "evaluation.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")

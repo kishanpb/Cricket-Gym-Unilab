@@ -1,0 +1,10 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_first_step/mjbatch
+  - _self_
+
+env:
+  commands:
+    motion:
+      params:
+        sampling_mode: uniform
