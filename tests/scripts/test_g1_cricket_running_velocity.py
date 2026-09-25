@@ -1,4 +1,6 @@
+import mujoco
 import numpy as np
+from evaluate_g1_cricket_running_velocity import sample_curve_reference
 from scipy.spatial.transform import Rotation
 
 from unilab.tasks.manipulation.g1_cricket.tracking import ankle_balance
@@ -36,3 +38,20 @@ def test_zero_reference_preserves_legacy_result():
         ankle_balance(reference, q, velocity, 4),
         ankle_balance(reference, q, velocity, 4, reference_angular_velocity=np.zeros(3)),
     )
+
+
+def test_curve_initial_velocity_and_first_intervals_follow_positions():
+    model = mujoco.MjModel.from_xml_string(
+        '<mujoco><worldbody><body><joint type="slide"/>'
+        '<geom size=".1" mass="1"/></body></worldbody></mujoco>'
+    )
+    times = np.array([0.0, 0.005, 0.01])
+
+    def curve(time):
+        return np.array([0.2 + 0.4 * time + 30 * time**2])
+
+    sampled = sample_curve_reference(model, curve, times)
+    np.testing.assert_allclose(sampled["qpos"][:, 0], 0.2 + 0.4 * times + 30 * times**2)
+    np.testing.assert_allclose(sampled["qvel"][:, 0], 0.4 + 60 * times, atol=1e-12)
+    forward_velocity = np.array([(curve(t + 0.005) - curve(t))[0] / 0.005 for t in times])
+    np.testing.assert_allclose(forward_velocity - sampled["qvel"][:, 0], 0.15, atol=1e-12)
