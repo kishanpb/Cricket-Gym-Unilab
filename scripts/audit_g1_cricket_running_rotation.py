@@ -15,6 +15,10 @@ from scipy.spatial.transform import Rotation, RotationSpline
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
 from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
 from unilab.tasks.manipulation.g1_cricket.running import GATHER_TIME, BallisticRunupCOM
+from unilab.tasks.manipulation.g1_cricket.running_support import (
+    ForeAftSupportCOM,
+    LateralSupportCOM,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -79,10 +83,13 @@ def audit(directory):
     output = directory / "reference_rotation_refinement.json"
     if output.exists():
         raise FileExistsError(output)
+    source = json.loads((directory / "evaluation.json").read_text())
+    suffix = "dense_reference.npz" if source.get("retarget_substeps", 1) > 1 else "reference.npz"
     files = [Path(__file__), ROOT / "scripts/g1_cricket_delivery_trial.py"]
     files += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
     files += [ROOT / f"src/unilab/assets/robots/g1/{name}" for name in ("g1.xml", "scene_flat.xml")]
-    files += [directory / f"{hand}_reference.npz" for hand in ("right", "left")]
+    files += [directory / "evaluation.json"]
+    files += [directory / f"{hand}_{suffix}" for hand in ("right", "left")]
     hashes = {
         str(p.resolve().relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
         for p in files
@@ -95,8 +102,12 @@ def audit(directory):
                 ROOT / "src/unilab/assets/robots/g1/g1.xml", scene
             )
             model = mujoco.MjModel.from_xml_path(str(scene))
-        with np.load(directory / f"{hand}_reference.npz") as reference:
+        with np.load(directory / f"{hand}_{suffix}") as reference:
             curve = ReferenceCurve(model, reference["times"], reference["qpos"], hand)
+        if source.get("lateral_support_com", False):
+            lane = (1 if hand == "right" else -1) * (0.5 + source["outward_lane_offset_m"])
+            support = ForeAftSupportCOM if source.get("fore_aft_support_com") else LateralSupportCOM
+            curve.ballistic = support(curve.ballistic, hand, lane)
         feet = [
             np.flatnonzero(
                 (model.geom_bodyid == model.body(f"{side}_ankle_roll_link").id)
@@ -147,6 +158,7 @@ def audit(directory):
         "curve": "Cubic joint/position and rotation splines, exact run-up COM, ball held at wrist; not new IK samples or training",
         "guard": "Inferred angular-momentum derivative, not applied/measured torque or promotion evidence. Sampled clearance does not certify the entire continuous interval.",
         "input_sha256": hashes,
+        "reference_file_suffix": suffix,
         "rows": rows,
     }
     output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")

@@ -13,7 +13,10 @@ from g1_cricket_delivery_trial import capsule_bounds
 
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
 from unilab.tasks.manipulation.g1_cricket.reference_dynamics import ReferenceDynamics, curve_state
-from unilab.tasks.manipulation.g1_cricket.running_support import LateralSupportCOM
+from unilab.tasks.manipulation.g1_cricket.running_support import (
+    ForeAftSupportCOM,
+    LateralSupportCOM,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -52,7 +55,8 @@ def audit(directory):
             curve = ReferenceCurve(model, reference["times"], reference["qpos"], hand)
         if source.get("lateral_support_com", False):
             lane = (1 if hand == "right" else -1) * (0.5 + source["outward_lane_offset_m"])
-            curve.ballistic = LateralSupportCOM(curve.ballistic, hand, lane)
+            support = ForeAftSupportCOM if source.get("fore_aft_support_com") else LateralSupportCOM
+            curve.ballistic = support(curve.ballistic, hand, lane)
         helper = ReferenceDynamics(model)
         names = [model.joint(int(j)).name for j in model.actuator_trnid[:, 0]]
         ball_v = int(model.joint("ball_free").dofadr[0])

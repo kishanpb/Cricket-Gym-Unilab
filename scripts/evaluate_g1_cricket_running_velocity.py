@@ -14,7 +14,10 @@ from retarget_g1_cricket_running import ROBOT, ROOT, render_poses
 
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
 from unilab.tasks.manipulation.g1_cricket.reference_dynamics import curve_state
-from unilab.tasks.manipulation.g1_cricket.running_support import LateralSupportCOM
+from unilab.tasks.manipulation.g1_cricket.running_support import (
+    ForeAftSupportCOM,
+    LateralSupportCOM,
+)
 
 
 def sample_curve_reference(model, curve, times, derivative_step=0.000625):
@@ -73,10 +76,13 @@ def main():
             with np.load(args.reference / f"{hand}_{suffix}.npz") as dense:
                 curve = ReferenceCurve(model, dense["times"], dense["qpos"], hand)
                 if source.get("lateral_support_com", False):
-                    lane = (1 if hand == "right" else -1) * (
-                        0.5 + source["outward_lane_offset_m"]
+                    lane = (1 if hand == "right" else -1) * (0.5 + source["outward_lane_offset_m"])
+                    support = (
+                        ForeAftSupportCOM
+                        if source.get("fore_aft_support_com")
+                        else LateralSupportCOM
                     )
-                    curve.ballistic = LateralSupportCOM(curve.ballistic, hand, lane)
+                    curve.ballistic = support(curve.ballistic, hand, lane)
                 startup = sample_curve_reference(model, curve, dense["times"][:3])
                 comparisons.append(
                     {

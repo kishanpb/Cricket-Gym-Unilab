@@ -20,7 +20,10 @@ from unilab.tasks.manipulation.g1_cricket.running import (
 )
 from unilab.tasks.manipulation.g1_cricket.running_ground_momentum import RunningGroundMomentum
 from unilab.tasks.manipulation.g1_cricket.running_momentum import HeldBallMomentum
-from unilab.tasks.manipulation.g1_cricket.running_support import LateralSupportCOM
+from unilab.tasks.manipulation.g1_cricket.running_support import (
+    ForeAftSupportCOM,
+    LateralSupportCOM,
+)
 from unilab.tasks.manipulation.g1_cricket.tracking import (
     ankle_balance,
     export_reference,
@@ -128,6 +131,7 @@ def run(
     wrist_acceleration_weight=0.0,
     joint_acceleration_weight=0.0,
     limb_clearance=False,
+    fore_aft_support=False,
 ):
     with TemporaryDirectory(prefix="g1-running-") as temporary:
         scene = Path(temporary) / "scene.xml"
@@ -152,7 +156,8 @@ def run(
             com_target = BallisticRunupCOM(times, centers, -model.opt.gravity[2])
             if lateral_support:
                 lane = (1 if hand == "right" else -1) * (0.5 + lane_offset)
-                com_target = LateralSupportCOM(com_target, hand, lane)
+                support = ForeAftSupportCOM if fore_aft_support else LateralSupportCOM
+                com_target = support(com_target, hand, lane)
         momentum_target = None
         if ground_momentum_parent is not None:
             with np.load(ground_momentum_parent / f"{hand}_reference.npz") as parent:
@@ -164,7 +169,7 @@ def run(
                 axis=0,
             )
             momentum_target = RunningGroundMomentum(
-                com_target, model.body_mass.sum(), mean_momentum
+                com_target, model.body_mass.sum(), mean_momentum, constant=fore_aft_support
             )
         reference = retarget_running_delivery(
             model,
@@ -196,6 +201,8 @@ def run(
         mujoco.mj_resetData(model, data)
         data.qpos[:], data.qvel[:] = poses[0], velocity[0]
         mujoco.mj_forward(model, data)
+        mujoco.mj_subtreeVel(model, data)
+        initial_com_velocity = data.subtree_linvel[0].copy()
         joints = np.array([model.joint(name).id for name in SDK_JOINTS])
         qa, va = model.jnt_qposadr[joints], model.jnt_dofadr[joints]
         limits = model.jnt_range[joints]
@@ -281,6 +288,7 @@ def run(
             )
         return {
             "hand": hand,
+            "initial_com_velocity_m_s": initial_com_velocity.tolist(),
             "runup_momentum_target": {
                 "cycle_mean_nms": mean_momentum.tolist(),
                 "initial_nms": momentum_target.initial.tolist(),
@@ -314,6 +322,7 @@ if __name__ == "__main__":
     parser.add_argument("--wrist-acceleration-weight", type=float, default=0.0)
     parser.add_argument("--joint-acceleration-weight", type=float, default=0.0)
     parser.add_argument("--limb-clearance", action="store_true")
+    parser.add_argument("--fore-aft-support", action="store_true")
     args = parser.parse_args()
     if args.lateral_support and args.ballistic_parent is None:
         parser.error("lateral support requires a ballistic parent")
@@ -321,6 +330,8 @@ if __name__ == "__main__":
         args.lateral_support and args.conserve_momentum
     ):
         parser.error("ground momentum requires lateral support and momentum-conserving rotation")
+    if args.fore_aft_support and args.ground_momentum_parent is None:
+        parser.error("fore/aft support requires a ground-momentum parent")
     args.output.mkdir(parents=True, exist_ok=False)
     inputs = [Path(__file__), ROBOT, ROBOT.parent / "scene_flat.xml"]
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
@@ -346,6 +357,7 @@ if __name__ == "__main__":
             wrist_acceleration_weight=args.wrist_acceleration_weight,
             joint_acceleration_weight=args.joint_acceleration_weight,
             limb_clearance=args.limb_clearance,
+            fore_aft_support=args.fore_aft_support,
         )
         for hand in ("right", "left")
     ]
@@ -362,6 +374,12 @@ if __name__ == "__main__":
         "momentum_conserving_runup": args.conserve_momentum,
         "lateral_support_com": args.lateral_support,
         "stance_ground_momentum": args.ground_momentum_parent is not None,
+        "fore_aft_support_com": args.fore_aft_support,
+        "initial_state_scope": (
+            "periodic_moving_start_not_from_rest"
+            if args.fore_aft_support
+            else "reference_pose_with_forward_difference_velocity"
+        ),
         "retarget_substeps": args.retarget_substeps,
         "wrist_acceleration_weight": args.wrist_acceleration_weight,
         "joint_acceleration_weight": args.joint_acceleration_weight,

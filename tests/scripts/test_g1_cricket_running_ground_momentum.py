@@ -48,3 +48,11 @@ def test_stance_wrench_and_ballistic_flight(targets):
                 [com(cycle * 0.3 + 0.11)[0], com.lane + com.sign * (-1) ** cycle * 0.12],
                 atol=2e-6,
             )
+
+
+def test_constant_momentum_does_not_add_stance_impulse(targets):
+    com, _, mean = targets
+    momentum = RunningGroundMomentum(com, 40, mean, constant=True)
+    for time in np.linspace(0, 1.2, 241):
+        np.testing.assert_array_equal(momentum(time), mean)
+    np.testing.assert_array_equal(momentum.initial, mean)

@@ -14,7 +14,10 @@ from unilab.tasks.manipulation.g1_cricket.running import (
 )
 from unilab.tasks.manipulation.g1_cricket.running_ground_momentum import RunningGroundMomentum
 from unilab.tasks.manipulation.g1_cricket.running_momentum import HeldBallMomentum
-from unilab.tasks.manipulation.g1_cricket.running_support import LateralSupportCOM
+from unilab.tasks.manipulation.g1_cricket.running_support import (
+    ForeAftSupportCOM,
+    LateralSupportCOM,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -94,7 +97,10 @@ def test_rotation_repair_requires_ballistic_com(setup):
         retarget_running_delivery(model, np.arange(16) * 0.02, hand, conserve_momentum=True)
 
 
-def test_stance_momentum_target_is_offline_and_matches_native_momentum(setup, monkeypatch):
+@pytest.mark.parametrize("fore_aft", [False, True])
+def test_stance_momentum_target_is_offline_and_matches_native_momentum(
+    setup, monkeypatch, fore_aft
+):
     model, hand, parent = setup
     helper = HeldBallMomentum(model, hand)
     data = mujoco.MjData(model)
@@ -103,13 +109,14 @@ def test_stance_momentum_target_is_offline_and_matches_native_momentum(setup, mo
         data.qpos[:] = pose
         mujoco.mj_forward(model, data)
         centers.append(data.subtree_com[0].copy())
-    com = LateralSupportCOM(
+    support = ForeAftSupportCOM if fore_aft else LateralSupportCOM
+    com = support(
         BallisticRunupCOM(np.arange(136) * 0.02, centers, 9.81),
         hand,
         0.7 if hand == "right" else -0.7,
     )
     mean = np.mean([helper.measure(parent[i], parent[i + 1], 0.02) for i in range(30)], axis=0)
-    momentum = RunningGroundMomentum(com, model.body_mass.sum(), mean)
+    momentum = RunningGroundMomentum(com, model.body_mass.sum(), mean, constant=fore_aft)
     original = {
         name: getattr(model, name).copy()
         for name in ("body_mass", "body_inertia", "jnt_range", "actuator_forcerange")
