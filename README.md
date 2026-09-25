@@ -69,6 +69,9 @@ does not solve multi-step balance or leg collisions.
 The [native 120 ms preview experiment](docs/g1_cricket_preview_control.md)
 avoids joint-limit crossings in both fixed episodes, but still falls at
 0.86/1.04 s with unwanted arm/body contacts, before either delivery.
+The [support-wrench audit and lateral weight-shift repair](docs/g1_cricket_running_support.md)
+identify an inconsistent lateral COM target, but forward support and physical
+balance remain unresolved; the repaired reference is not a bowling result.
 Full reference/physics videos
 remain development diagnostics, not the requested bowling showcase; no new PPO
 was trained on them.

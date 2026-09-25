@@ -6,6 +6,49 @@ the robot, approximately 12 cm off the centerline. A support-wrench audit
 checks whether that motion demands a ground-force location outside the foot.
 These inferred forces are not measured contact telemetry or learned results.
 
+## Results
+
+![All supported samples, including phase boundaries](../g1_cricket_results/running_support_v1/support_comparison.png)
+
+Each hand retains 119 time samples at two derivative resolutions: 476 rows
+per variant, without dropping flight or transition rows. At the finer
+0.625 ms resolution, 91 samples per hand have an inferred vertical force
+above 1 N and a foot within the 2 mm support tolerance. Seven straddle phase
+boundaries, where derivative estimates blend the adjacent contact phases.
+
+| Reference | Lateral outside, right/left | Forward/backward outside, right/left | Physical fall, right/left |
+| --- | --- | --- | --- |
+| Parent momentum reference | 91/91 of 91 | 32/32 of 91 | 0.68/0.68 s |
+| Lateral support candidate | 3/3 of 91 | 33/33 of 91 | 0.66/0.66 s |
+
+For the 84 non-boundary stance samples, lateral violations reduce from 84/84
+to 2/2 per hand. Remaining interior lateral excess is 4.17/4.20 mm; with
+boundary samples it is 22.46/22.99 mm. The forward/backward problem remains:
+interior excess reaches 113.09 mm and boundary estimates reach approximately
+300 mm. CoP refinement differences reach 4.97 mm, so this is a sampled
+necessary-condition audit, not a converged continuous-contact certificate.
+The parent is already laterally inconsistent before its first ankle failure;
+fixing that component alone does not repair the entire reference/controller.
+
+Both unassisted PD episodes fail before release, with maximum joint-limit
+excess 0.08746/0.08772 rad and unwanted hand/hip/thigh contacts. No trained
+policy or bowling success is claimed. Full reference poses still track feet
+within 1.75 mm and arm segments within 5.46 mm, with no audited reference
+intersections; five/right and four/left IK frames hit their evaluation limit.
+These offline checks do not override the physical failures.
+
+![Complete reference and physical sequences](../g1_cricket_results/running_support_v1/running_motion_review.png)
+
+The [candidate evaluation](../g1_cricket_results/running_support_v1/evaluation.json),
+[candidate support audit](../g1_cricket_results/running_support_v1/support_audit.json),
+and [parent support audit](../g1_cricket_results/running_momentum_v1/support_audit.json)
+retain complete results. All 340 MP4 frames decode nonblank, both review figures
+were inspected, and all 33 reference input fingerprints match the frozen
+generator `d514f634`. All 79 focused tests pass with warnings as errors; Ruff
+passes. The next requirement is a stance angular-momentum/forward-support
+trajectory consistent with the planted foot, not another unchanged PPO run
+or a gain increase against an infeasible reference.
+
 ## Design
 
 For a level ground plane, total force is `F = mass * (COM_acceleration - gravity)`.
