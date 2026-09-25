@@ -1,14 +1,26 @@
+import gzip
 from pathlib import Path
 
 import mujoco
 import numpy as np
 import pytest
+from audit_g1_cricket_reference_dynamics import audit
 from g1_cricket_delivery_trial import capsule_bounds
 
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
 from unilab.tasks.manipulation.g1_cricket.reference_dynamics import ReferenceDynamics, curve_state
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def test_retained_compressed_audit_prevents_rerun(tmp_path):
+    path = tmp_path / "inverse_dynamics_audit.json.gz"
+    retained = gzip.compress(b'{"rows": []}')
+    path.write_bytes(retained)
+    with pytest.raises(FileExistsError):
+        audit(tmp_path)
+    assert path.read_bytes() == retained
+    assert not (tmp_path / "inverse_dynamics_audit.json").exists()
 
 
 def slide_model():

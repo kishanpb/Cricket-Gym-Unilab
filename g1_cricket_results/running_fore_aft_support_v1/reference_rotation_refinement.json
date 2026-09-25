@@ -1,0 +1,1295 @@
+{
+  "scope": "fixed_curve_offline_momentum_refinement_not_a_physical_rollout",
+  "curve": "Cubic joint/position and rotation splines, exact run-up COM, ball held at wrist; not new IK samples or training",
+  "guard": "Inferred angular-momentum derivative, not applied/measured torque or promotion evidence. Sampled clearance does not certify the entire continuous interval.",
+  "input_sha256": {
+    "scripts/audit_g1_cricket_running_rotation.py": "8ee04470f095b92a6e2b3ba75494eaad88a93391bd3ad859b9b0c92c18c76c95",
+    "scripts/g1_cricket_delivery_trial.py": "ec3c9b467226ec5c850978bc335d1ee9fb5e66372983bca86b2f295d66326b5d",
+    "src/unilab/tasks/manipulation/g1_cricket/__init__.py": "043181eac62df43a6ee774e1bbd83d8b11344794db5c18fb88a726f7dcc0b86a",
+    "src/unilab/tasks/manipulation/g1_cricket/arm_geometry.py": "47aced740d3bbf992edfcc65ec5d37aa6c0e11c32f7cb3786349db8c07ed4352",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual.py": "57ad5803011b869536153465b7212b5a4a4d8fb7a91f54d8c8d38f1aa4a84282",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual_contact.py": "0ce4482b48cf7dedd86f3b644711a938150cf67085934647820c684ec5f3e9ba",
+    "src/unilab/tasks/manipulation/g1_cricket/bowling.py": "3c690fd588f29e4fae4ae2e419fba3096320bd7999df252e076f3ca1e0ba9299",
+    "src/unilab/tasks/manipulation/g1_cricket/compliance_v2.py": "e0c0def29df2caa4ef23cb46f318669b46b9942e82c939ea810dee46a0ae7005",
+    "src/unilab/tasks/manipulation/g1_cricket/contact_control.py": "7c0bb7d6099184e28854e3bb9c27f4aa094ff1d92c80154f5b9bf861ac81a53c",
+    "src/unilab/tasks/manipulation/g1_cricket/delivery.py": "a1a82ea56f4bb0add72b4a3fe96a603e5378c749f7871cac246be4566f1e1a46",
+    "src/unilab/tasks/manipulation/g1_cricket/forward_exit_reward.py": "113a460361bb64db6be5b58974c42de96f978e0405df8dad4617e5d45ae66e6c",
+    "src/unilab/tasks/manipulation/g1_cricket/holder.py": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "c4cdf46ea64515324292cfe2947be8164c5de4925f67c6763e459fe2632a3a17",
+    "src/unilab/tasks/manipulation/g1_cricket/impedance.py": "7c51705a9ab41d93e587f65ec3faba11f990b5cf257068756cc6ecfed7b5486d",
+    "src/unilab/tasks/manipulation/g1_cricket/overarm.py": "06ac693650070e4434056da3f52f87dc64bd581453ba2efcff198d255fa44add",
+    "src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py": "304bffb9013bfec2d8ac57d805f2ce8156421b8024bda316f373f856fa61830f",
+    "src/unilab/tasks/manipulation/g1_cricket/preview_control.py": "05b320a5aade40d14e906c1e00bca1de83df6de6b70b7b085d965c7c5a69e44e",
+    "src/unilab/tasks/manipulation/g1_cricket/prior.py": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739",
+    "src/unilab/tasks/manipulation/g1_cricket/reference_dynamics.py": "da2e2c66400d7b462620058dd9ca349251cde68a4385df58cb9d41e27fcc5d12",
+    "src/unilab/tasks/manipulation/g1_cricket/residual.py": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c",
+    "src/unilab/tasks/manipulation/g1_cricket/running.py": "f0f6fba1a11fe4e3f340c11e7c3ff06c21bf5f88da6656b7f0695932c6025821",
+    "src/unilab/tasks/manipulation/g1_cricket/running_ground_momentum.py": "e358a992dade030f3d08300144f984dfc6dcadb49520e82b79c4a7cc2ec1c8c4",
+    "src/unilab/tasks/manipulation/g1_cricket/running_momentum.py": "6e421bc7b1350aec8648b0a0b76cdbab613802425e15a145fd24bfffbd64eb40",
+    "src/unilab/tasks/manipulation/g1_cricket/running_support.py": "1fb9b89464839d9ac24fd7d43ee3db67e2cba2a11f9457b86f2e9483fbb61aa9",
+    "src/unilab/tasks/manipulation/g1_cricket/running_task.py": "cea5ad13d85526afe4a74d1589561ca27ca7f5711106d475e71a6bae375fdcab",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/tasks/manipulation/g1_cricket/separation_reward.py": "e10c9a7918f67f8621d2e00af12729e31c389b1f8f7c288d90de77fcfff12994",
+    "src/unilab/tasks/manipulation/g1_cricket/substep_reward.py": "f2c2f7e35655cb4cda10f922660c004f297ee536abe9775d5e237b50206b4cb4",
+    "src/unilab/tasks/manipulation/g1_cricket/swing_reward.py": "08696424ea2556348e067c40e5c3bb9286b5caa9f89bd25add868ab87081a0a9",
+    "src/unilab/tasks/manipulation/g1_cricket/tanh_residual.py": "904a8dde165f872b200ef824466d38834e4b3d177882e7d01561995596466fa0",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb",
+    "src/unilab/tasks/manipulation/g1_cricket/tracking.py": "2401cf82300fea6baa407b4b287845ab31db6764e48b4d34529f5b29e4fb25d3",
+    "src/unilab/assets/robots/g1/g1.xml": "bb6089243f8fe1c97a6410ccde8754eaa58e5d8e476aca69d790ce501cb4a48e",
+    "src/unilab/assets/robots/g1/scene_flat.xml": "13ce8b2c7706885fa4f041ea8ebb5c2875506512bec6cef02a0455eddb9e4de2",
+    "g1_cricket_results/running_fore_aft_support_v1/evaluation.json": "5bf27423b8ee757f2eda42d436599e2dd6bb27311081431e57efad8929621d84",
+    "g1_cricket_results/running_fore_aft_support_v1/right_dense_reference.npz": "5ebb46f5c20a7f7f84c94c5f33d89646c5e494dcc819c271bf5b234f9e630b59",
+    "g1_cricket_results/running_fore_aft_support_v1/left_dense_reference.npz": "fa7ab38108fd2005dc3b65ea54b4a577d2872b717f0bebe37acca3eeb081deca"
+  },
+  "reference_file_suffix": "dense_reference.npz",
+  "rows": [
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.0020799192526276336,
+        0.015120462515855193,
+        -0.004094697747432027
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0029501166861620126,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.0020673632414003676,
+        0.015162808597071753,
+        -0.004093836636203871
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0029501166861620126,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.003587295675550224,
+        0.015260502195169057,
+        -0.004558798831959254
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006584867323028043,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.0035769335170333927,
+        0.015290350724450619,
+        -0.004555926601818028
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006584867323028043,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.0034549142340379105,
+        0.015374239774257337,
+        -0.004690132044853079
+      ],
+      "sampled_minimum_foot_clearance_m": 0.008904667642096164,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.0034462077725849055,
+        0.015400553283884122,
+        -0.004686621033586635
+      ],
+      "sampled_minimum_foot_clearance_m": 0.008904667642096164,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.00483722235254426,
+        0.013755362796463722,
+        -0.004451716839309894
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010183775108432165,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.004830657383315604,
+        0.013779114553780225,
+        -0.004447764689935463
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010183775108432165,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.016846550296118618,
+        0.01252268466571671,
+        -0.003123576123437166
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010852117997153304,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.016864963515982045,
+        0.01254432319170995,
+        -0.003116860978108482
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010852117997153304,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.025714283118147274,
+        0.011724915044730722,
+        -0.0021438552309738235
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011193365246838305,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.26,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.025782768288369617,
+        0.011742268417869184,
+        -0.002131583154807437
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011193365246838305,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.0015498565994042073,
+        0.011502837738658345,
+        -0.0005162129952655803
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0029488243346746847,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.001580945644562206,
+        0.011543274106379231,
+        -0.0005114444900044396
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0029488243346746847,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.0013281598964480848,
+        0.01071523132432084,
+        -0.00033878903597794885
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0065832191983148484,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.0013540122690211542,
+        0.010753146471326192,
+        -0.00033625959038885433
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0065832191983148484,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.0002485157532056831,
+        0.010715509423708802,
+        -0.000797137584389318
+      ],
+      "sampled_minimum_foot_clearance_m": 0.00890328047681011,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.00022583614980552225,
+        0.01075266131994601,
+        -0.000795671457456959
+      ],
+      "sampled_minimum_foot_clearance_m": 0.00890328047681011,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.00040535193913740497,
+        0.010164626571662616,
+        -0.0008297796507433786
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010182498511726857,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.00038372593506863506,
+        0.010201081250005295,
+        -0.0008286170235627388
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010182498511726857,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.00032836952588224944,
+        0.020651595447951365,
+        -0.001823496294883764
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010850938449779066,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.0003068283793074278,
+        0.02071057187600367,
+        -0.0018244768820174784
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010850938449779066,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.0003238161190716182,
+        0.02856267253505962,
+        -0.0025746899345868712
+      ],
+      "sampled_minimum_foot_clearance_m": 0.01119224215416322,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.56,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.0003025274578807857,
+        0.028666702083857132,
+        -0.0025799820564387232
+      ],
+      "sampled_minimum_foot_clearance_m": 0.01119224215416322,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.8740721935556569,
+        2.0267432433041215,
+        -0.18910838183121453
+      ],
+      "sampled_minimum_foot_clearance_m": 0.002948121687870367,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.8743013472715135,
+        2.0275340603437635,
+        -0.18914168154700697
+      ],
+      "sampled_minimum_foot_clearance_m": 0.002948121687870367,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.7254424912434987,
+        1.1442070164499107,
+        0.10203519142441761
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006581808334294685,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.7245317805830941,
+        1.1447943882103906,
+        0.10204708804886012
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006581808334294685,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.8988465554751355,
+        -0.5598335545315081,
+        -0.08237317041752262
+      ],
+      "sampled_minimum_foot_clearance_m": 0.00886156008181663,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.8994398332178778,
+        -0.5607817794096026,
+        -0.08255515654320006
+      ],
+      "sampled_minimum_foot_clearance_m": 0.00886156008181663,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.34266260229304757,
+        0.2852417122656936,
+        0.0631171970062433
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0101152864331304,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.3434894400097175,
+        0.28524012153066103,
+        0.06308451053406994
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0101152864331304,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.9338868890117501,
+        -0.23375400009406633,
+        0.04479379882075252
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010772806300123141,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.9353484982144833,
+        -0.23530495723025346,
+        0.04465385122941479
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010772806300123141,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        1.2383557569985992,
+        -0.7221419058698331,
+        0.015414992785844905
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011109357964737644,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 0.86,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        1.241150168927173,
+        -0.7267589981258205,
+        0.01506658314469611
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011109357964737644,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.029964206139735043,
+        0.0207154640702506,
+        0.02979975939324045
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0029508052700047875,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.029967478893039256,
+        0.020724319434720084,
+        0.029831716399309274
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0029508052700047875,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.013251393687266615,
+        0.025716538224285213,
+        0.0027234763674187368
+      ],
+      "sampled_minimum_foot_clearance_m": 0.00658750409185337,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.01319187537124145,
+        0.025742193699446192,
+        0.0027324321374075367
+      ],
+      "sampled_minimum_foot_clearance_m": 0.00658750409185337,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.010408442751392091,
+        0.02368196539137557,
+        -0.0025360234542221027
+      ],
+      "sampled_minimum_foot_clearance_m": 0.008908212829503917,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.010328817075105565,
+        0.02371303053776419,
+        -0.0025343324570506476
+      ],
+      "sampled_minimum_foot_clearance_m": 0.008908212829503917,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.006651126840091087,
+        0.028326797151589922,
+        -0.0015851455350823773
+      ],
+      "sampled_minimum_foot_clearance_m": 0.01018756057260679,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.006562162907653227,
+        0.028363567299227732,
+        -0.0015846558906129626
+      ],
+      "sampled_minimum_foot_clearance_m": 0.01018756057260679,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.033167186428414985,
+        0.02485657190698376,
+        -0.009236438276655212
+      ],
+      "sampled_minimum_foot_clearance_m": 0.01085612767220191,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.033339996249613646,
+        0.024884081643206102,
+        -0.009253128254477216
+      ],
+      "sampled_minimum_foot_clearance_m": 0.01085612767220191,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.06278963404645621,
+        0.021819546808909962,
+        -0.015170317254442622
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011197504437775103,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "right",
+      "time_s": 1.16,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.06313043023648407,
+        0.021828714569771535,
+        -0.015221421523203826
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011197504437775103,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.002064799308264427,
+        0.015083881571023583,
+        0.004074289419280994
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0029501136895343167,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.0020522211801371395,
+        0.015126198756001963,
+        0.004073389505327568
+      ],
+      "sampled_minimum_foot_clearance_m": 0.0029501136895343167,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.0035722714928099544,
+        0.01522482987684759,
+        0.004538510911714089
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006584867307719676,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.00356190810640155,
+        0.015254661703878458,
+        0.004535592670539684
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006584867307719676,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.0034354327478596652,
+        0.015325628904505617,
+        0.004669923926475805
+      ],
+      "sampled_minimum_foot_clearance_m": 0.008904667460234314,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.0034267272710898286,
+        0.015351926550177808,
+        0.004666365363126257
+      ],
+      "sampled_minimum_foot_clearance_m": 0.008904667460234314,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.004823880270124481,
+        0.013715826102056461,
+        0.0044305220359946995
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010183774922074632,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.004817321210225101,
+        0.013739572917703669,
+        0.004426522126638188
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010183774922074632,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.016836977782682533,
+        0.01248904928217165,
+        0.0030735816755667056
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010852117833026946,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.01685539634521463,
+        0.0125106885225712,
+        0.0030667566047526407
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010852117833026946,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.025706119871608812,
+        0.0116946233117865,
+        0.0020725341502325634
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011193365093861547,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.26,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.02577462031651545,
+        0.011712003210373467,
+        0.002060029989026102
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011193365093861547,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.0015542813357950335,
+        0.011520063887204834,
+        0.0005089465033247809
+      ],
+      "sampled_minimum_foot_clearance_m": 0.002948823208577046,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.0015853266767434232,
+        0.011560588497569468,
+        0.0005041488613365813
+      ],
+      "sampled_minimum_foot_clearance_m": 0.002948823208577046,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.0013304846413400746,
+        0.010732093968768286,
+        0.00033261518160299097
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006583218486913168,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.0013562757304426583,
+        0.010770099816304057,
+        0.00033005326700100146
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006583218486913168,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.00024383027087890308,
+        0.01073054956509667,
+        0.0007926737973520948
+      ],
+      "sampled_minimum_foot_clearance_m": 0.008903279880891029,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.00022121324185185587,
+        0.01076779212105805,
+        0.000791175449527115
+      ],
+      "sampled_minimum_foot_clearance_m": 0.008903279880891029,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.00040675138327297966,
+        0.010182290810201167,
+        0.0008251716173163226
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010182498012419288,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.000385192787874869,
+        0.010218837493880528,
+        0.0008239769065415681
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010182498012419288,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.0003820167722115575,
+        0.0207153779858249,
+        0.0018055831444430126
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010850937974395994,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.0003606466214424453,
+        0.02077454083062591,
+        0.0018065034768866006
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010850937974395994,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.00041504953212229134,
+        0.028660260447122,
+        0.002546774680833863
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011192241684194802,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.56,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.000394137366437064,
+        0.028764676715109516,
+        0.002551942672512908
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011192241684194802,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.8857824681741857,
+        2.044754589564113,
+        0.1909983231831464
+      ],
+      "sampled_minimum_foot_clearance_m": 0.002948129892337747,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.8860179618190935,
+        2.0455518827360826,
+        0.19103260737240446
+      ],
+      "sampled_minimum_foot_clearance_m": 0.002948129892337747,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.723709976605459,
+        1.1566058710041516,
+        -0.1026769541434408
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006581818674162733,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.722797023300936,
+        1.1571989915718894,
+        -0.10268898666686357
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006581818674162733,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.9018178778225215,
+        -0.5777415263050534,
+        0.08435254137249687
+      ],
+      "sampled_minimum_foot_clearance_m": 0.008861446261677366,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.902406131901611,
+        -0.5786963399296408,
+        0.08453535603984708
+      ],
+      "sampled_minimum_foot_clearance_m": 0.008861446261677366,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.3447848549673872,
+        0.2927524681759941,
+        -0.06401466074412998
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010115188758905744,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.3456229850419584,
+        0.29277288631046616,
+        -0.06398448023408332
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010115188758905744,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.9428330513253557,
+        -0.20136768381791015,
+        -0.04809198118884139
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010772719227999335,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.944318261171835,
+        -0.2028592979351984,
+        -0.04795809995016276
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010772719227999335,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -1.2517619852724509,
+        -0.6746286015420822,
+        -0.020128100258887116
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011109275019808986,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 0.86,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -1.254604430854149,
+        -0.6791117930361246,
+        -0.019792754448921812
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011109275019808986,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.03031593089840251,
+        0.02023325713370605,
+        -0.030012036153373098
+      ],
+      "sampled_minimum_foot_clearance_m": 0.002950797542276639,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.02,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.030319574387131787,
+        0.020241834679476933,
+        -0.03004408505161739
+      ],
+      "sampled_minimum_foot_clearance_m": 0.002950797542276639,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.013261711036506672,
+        0.02544556706277068,
+        -0.0027826818271063647
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006587492535827978,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.01,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.013202715909976705,
+        0.02547079253853446,
+        -0.002791754206879493
+      ],
+      "sampled_minimum_foot_clearance_m": 0.006587492535827978,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.010319256625572829,
+        0.023647582068087036,
+        0.0025461238087845506
+      ],
+      "sampled_minimum_foot_clearance_m": 0.00890820196267506,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.005,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.010240224077300887,
+        0.023678204311161632,
+        0.002544324517476937
+      ],
+      "sampled_minimum_foot_clearance_m": 0.00890820196267506,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        -0.006639574757505082,
+        0.028110791815105785,
+        0.0015535864410082256
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010187550854389469,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.0025,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        -0.006551297893567232,
+        0.028146929954075972,
+        0.0015529483030712887
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010187550854389469,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.03280052840946915,
+        0.024343005587557087,
+        0.009114265395376853
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010856118250656329,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.00125,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.03297187967078591,
+        0.024369357268039238,
+        0.00913063868261954
+      ],
+      "sampled_minimum_foot_clearance_m": 0.010856118250656329,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 0.0001,
+      "required_external_torque_nm": [
+        0.062148191246653994,
+        0.021104553137440973,
+        0.01498531490506938
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011197495085404872,
+      "sampled_world_contacts": 0
+    },
+    {
+      "hand": "left",
+      "time_s": 1.16,
+      "torque_step_s": 0.000625,
+      "velocity_step_s": 1e-05,
+      "required_external_torque_nm": [
+        0.06248600060387577,
+        0.02111146577661316,
+        0.015035757732451138
+      ],
+      "sampled_minimum_foot_clearance_m": 0.011197495085404872,
+      "sampled_world_contacts": 0
+    }
+  ]
+}

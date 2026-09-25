@@ -248,6 +248,95 @@ training against this reference or calling a video a learned bowling showcase.
 
 ## Construction
 
+### Fore/Aft Pendulum Comparison
+
+Source `6d3f9f50` replaces the constant forward COM speed and phase-varying
+pitch momentum with a periodic variable-height pendulum about each planted
+ankle. The same stance/flight durations and 0.3025 m foot advance are retained.
+If `A` propagates relative COM position/velocity through stance and flight,
+the initial state solves `(A - I) s = [0.3025, 0]`. Centroidal momentum stays
+at the parent's cycle mean; no root force is applied. Lateral/vertical targets,
+arms, gather, delivery, recovery and original hardware/model limits remain.
+
+This is explicitly a **moving start, not a from-rest startup**: measured initial
+COM velocity is approximately `(1.0648, +/-0.2241, -0.3890)` m/s. The retargeter
+reports that state; the support, inverse, velocity and standalone rotation
+audits now read the matching dense reference and support metadata.
+
+Both 541-knot references have zero audited intersections deeper than 1 mm,
+foot error at most 1.763 mm and arm error at most 6.100 mm. All IK solves
+terminate successfully. All 91 supported samples per hand at both derivative
+resolutions fall inside the foot outer box, but this necessary bound does not
+prove native contact or motor feasibility. At the finer resolution the ideal
+LP admits 73/119 samples with original motor caps and 65/119 with bounded
+commands. Native motor-cap requirements still fail at 97/119 samples per hand;
+root residual peaks are 12.07/12.11 kN, not measured successful-motion loads.
+
+![Full moving-start targets and physical failures](../g1_cricket_results/running_fore_aft_support_v1/running_motion_review.png)
+
+Physical baseline falls at 0.62/right and 0.64/left seconds, with no release,
+joint excursions of 0.12022/0.11979 rad and unintended contacts. Cleaner
+geometry and sampled support are therefore **not promotion evidence**. The
+[complete evaluation](../g1_cricket_results/running_fore_aft_support_v1/evaluation.json),
+[support audit](../g1_cricket_results/running_fore_aft_support_v1/support_audit.json),
+[compressed inverse audit](../g1_cricket_results/running_fore_aft_support_v1/inverse_dynamics_audit.json.gz)
+and [rotation refinement](../g1_cricket_results/running_fore_aft_support_v1/reference_rotation_refinement.json)
+retain all results. The latter still finds about 1.44 Nm residual aerial torque
+at the third flight in the reconstructed curve; discrete momentum matching
+does not certify its continuous derivative.
+
+Reproduce the dense command below using a fresh output directory and adding
+`--wrist-acceleration-weight 0.0002 --fore-aft-support`. This trial changes the
+forward support mechanism, not the failed all-joint smoothing option. All 337
+reference/physical video frames decode nonblank; the complete motion review
+was inspected. Generator/audit fingerprints verify against frozen `6d3f9f50`.
+The compressed inverse audit retains all 476 rows; its existence blocks reruns
+in the same directory just like an uncompressed audit.
+
+### Bounded Joint Tracking
+
+Source `08446dac` tests joint gains 1, 2 and 4 with damping multiplied by the
+square root of the gain, implemented through existing bounded position
+commands. Model actuator parameters, torque caps and joint ranges are not
+changed. Both absolute and reference-relative root damping are tested on
+both hands, keeping **all 12 episodes**. The gain-1 absolute baselines reproduce
+the saved parent poses exactly; default control behavior is unchanged.
+
+| Joint gain | Root damping | Fall right/left (s) | Peak joint excess right/left (rad) |
+| --- | --- | --- | --- |
+| 1 | Absolute | 0.62/0.64 | 0.12022/0.11979 |
+| 2 | Absolute | 0.66/0.70 | 0.18332/0.18151 |
+| 4 | Absolute | 0.70/0.64 | 0.19716/0.28194 |
+| 1 | Relative | 0.62/0.62 | 0.12181/0.12173 |
+| 2 | Relative | 0.70/0.60 | 0.17873/0.16944 |
+| 4 | Relative | 0.68/0.66 | 0.38030/0.33870 |
+
+All trials fail before release. Waist pitch crosses its original stop first,
+around 242 ms at gain 1 and as early as 202 ms at gain 4. Stronger tracking is
+rejected, not selected on a slightly later fall. No actor is retrained.
+
+![All relative-damping variants, including failures](../g1_cricket_results/running_joint_tracking_v1/physical_comparison_review.png)
+
+The [full gain comparison](../g1_cricket_results/running_joint_tracking_v1/evaluation.json)
+retains all 125,440 substeps, complete poses and six relative-damping videos.
+All 200 video frames decode nonblank and the review was inspected; all 39
+input hashes verify. Run `scripts/evaluate_g1_cricket_running_velocity.py`
+with the fore/aft reference directory, a fresh output, and
+`--joint-gains 1 2 4 --render` to reproduce it.
+
+All 91 focused running, dynamics, tracking and bimanual tests pass with warnings
+as errors; Ruff and diff checks pass. Unused fore/aft tracking exports were
+removed, while complete raw reference and physical poses remain.
+
+Next is a native two-foot equilibrium and controlled load transfer into the
+complete running motion, with continuous pose/velocity and achievable support
+forces. Simply zeroing velocity in a one-foot pose, skipping startup frames,
+raising limits or adding stronger gains is not that repair. Batting accuracy,
+learned interception and independent Menagerie learning remain unfinished;
+these are development diagnostics, not qualified bowling videos.
+
+### Original Stance-Momentum Construction
+
 The COM advances at constant forward velocity during the run-up. Its stance
 vertical acceleration is constant, giving `F_z = mass * (gravity + z_ddot)`.
 Choose a fixed fore/aft CoP at the COM's position halfway through each 0.22 s

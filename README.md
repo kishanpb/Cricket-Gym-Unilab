@@ -51,10 +51,10 @@ still fail; no final G1 advertising reel or running-bowling result is claimed.
 **Running bowling is unfinished.** Both-hand references preserve the full
 approach, gather, overarm delivery and recovery, but physical controllers and
 the [PPO pilot](docs/g1_cricket_running_tracking.md) still fall before release.
-The latest [full-body smoothing and controller-state comparisons](docs/g1_cricket_ground_momentum.md#rejected-whole-body-smoothing)
-remain rejected: stronger smoothing worsens self-intersections, and aligning
-the controller with the audited curve still falls before release. Feasible
-startup and landing dynamics remain unresolved.
+The latest [planted-foot reference and joint-tracking comparison](docs/g1_cricket_ground_momentum.md#foreaft-pendulum-comparison)
+removes audited reference self-intersections and passes sampled support bounds,
+but every physical trial still falls before release. Stronger tracking gains
+worsen joint-limit violations; native startup and landing dynamics remain unresolved.
 Full reference and failed physical videos are
 development diagnostics, not learned bowling showcases. The research log
 retains the earlier [contact-control](docs/g1_cricket_contact_control.md) and

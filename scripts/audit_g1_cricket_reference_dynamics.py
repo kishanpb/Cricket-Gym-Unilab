@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def audit(directory):
     output = directory / "inverse_dynamics_audit.json"
-    if output.exists():
+    if output.exists() or output.with_suffix(".json.gz").exists():
         raise FileExistsError(output)
     source = json.loads((directory / "evaluation.json").read_text())
     suffix = "dense_reference.npz" if source.get("retarget_substeps", 1) > 1 else "reference.npz"
