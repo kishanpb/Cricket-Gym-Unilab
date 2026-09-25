@@ -6,6 +6,58 @@ centroidal angular-momentum target, retaining the full lateral-support COM,
 foot and arm targets, stride/release times, original model and controller.
 It is offline retargeting followed by unassisted native PD, not learned bowling.
 
+## Complete Results
+
+![All support estimates, including startup and transitions](../g1_cricket_results/running_ground_momentum_v2/support_comparison.png)
+
+Both hands retain all 119 run-up times at two derivative resolutions. At the
+finer 0.625 ms derivative resolution, 91 samples per hand have defined support
+estimates, including seven phase-boundary samples. The projected foot box is
+a necessary outer bound, not a complete contact or actuator certificate.
+
+| Reference | Fore/aft violations, right/left | Lateral violations, right/left | Physical fall, right/left |
+| --- | --- | --- | --- |
+| Lateral-support parent | 33/33 of 91 | 3/3 of 91 | 0.66/0.66 s |
+| Stance momentum, 20 ms knots | 3/3 of 91 | 18/18 of 91 | 0.64/0.64 s |
+| Stance momentum, 5 ms knots | 0/0 of 91 | 2/2 of 91 | 0.68/0.68 s |
+
+The dense reference removes sampled fore/aft violations, but does not pass:
+lateral support excess reaches 261.3/261.9 mm at startup (0.01 s), and another
+violation occurs at the 0.90 s landing boundary. Discrete momentum errors below
+5e-13 Nms over 240 intervals per hand do not certify interpolated dynamics.
+The dense reference also has a shoulder/torso overlap of 1.99/2.03 mm at
+0.995 s, maximum foot error 5.01/5.02 mm and arm error below 5.91 mm. All IK
+solves terminate successfully, but that cannot override these defects.
+
+![Complete physical failures; every controller runs at 20 ms](../g1_cricket_results/running_velocity_v1/physical_comparison_review.png)
+
+The relative-rate comparison below reproduces both absolute-rate parent pose
+sequences bit-for-bit. Both settings fall at 0.68 s with hand/hip/thigh/wrist
+contacts, no release and no ball penetration. Absolute-rate first joint-stop
+crossings are 0.18175/0.18181 s; relative-rate crossings are slightly earlier,
+0.17875/0.17881 s. Relative-rate peak joint excess is 0.08601/0.08575 rad,
+versus 0.08935/0.08910 rad for absolute damping. It is not a successful control
+fix and is not enabled in the default controller or existing trained actors.
+
+Complete [coarse](../g1_cricket_results/running_ground_momentum_v1/evaluation.json),
+[dense](../g1_cricket_results/running_ground_momentum_v2/evaluation.json), and
+[four-row rate comparison](../g1_cricket_results/running_velocity_v1/evaluation.json)
+reports remain, with all reference/control knots and 43,520 substeps for the
+rate comparison. Frozen source revisions are `d2e545b7`, `634385fd`, and
+`40f899eb`. The corresponding 36/36/38 input hashes verify; both support
+audits' 37-input fingerprints also verify against their frozen sources.
+All 101 focused tests pass with warnings as errors, including shared batting
+balance regressions; Ruff passes. All 750 generated frames decode nonblank,
+and the motion/support reviews were inspected. Redundant coarse MP4s were
+pruned after review; complete poses, reports and the comparison sheets remain.
+The dense and relative-rate videos are retained as failed diagnostics.
+
+Next: full inverse-dynamics/contact feasibility under the original motor
+limits, including startup and landing transients and shoulder clearance.
+Do not equate centroidal support or lower joint error with a runnable teacher,
+relax the physical gates, or train PPO on this reference as if it passed.
+Batting and the independent Menagerie integration are unchanged and unfinished.
+
 ## Construction
 
 The COM advances at constant forward velocity during the run-up. Its stance
