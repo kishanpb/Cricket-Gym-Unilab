@@ -18,6 +18,8 @@ from unilab.tasks.manipulation.g1_cricket.running import (
     BallisticRunupCOM,
     retarget_running_delivery,
 )
+from unilab.tasks.manipulation.g1_cricket.running_ground_momentum import RunningGroundMomentum
+from unilab.tasks.manipulation.g1_cricket.running_momentum import HeldBallMomentum
 from unilab.tasks.manipulation.g1_cricket.running_support import LateralSupportCOM
 from unilab.tasks.manipulation.g1_cricket.tracking import (
     ankle_balance,
@@ -113,6 +115,7 @@ def run(
     lane_offset=0.0,
     conserve_momentum=False,
     lateral_support=False,
+    ground_momentum_parent=None,
 ):
     with TemporaryDirectory(prefix="g1-running-") as temporary:
         scene = Path(temporary) / "scene.xml"
@@ -138,6 +141,19 @@ def run(
             if lateral_support:
                 lane = (1 if hand == "right" else -1) * (0.5 + lane_offset)
                 com_target = LateralSupportCOM(com_target, hand, lane)
+        momentum_target = None
+        if ground_momentum_parent is not None:
+            with np.load(ground_momentum_parent / f"{hand}_reference.npz") as parent:
+                np.testing.assert_array_equal(parent["times"], times)
+                parent_poses = parent["qpos"]
+            helper = HeldBallMomentum(model, hand)
+            mean_momentum = np.mean(
+                [helper.measure(parent_poses[i], parent_poses[i + 1], 0.02) for i in range(30)],
+                axis=0,
+            )
+            momentum_target = RunningGroundMomentum(
+                com_target, model.body_mass.sum(), mean_momentum
+            )
         reference = retarget_running_delivery(
             model,
             times,
@@ -145,6 +161,7 @@ def run(
             com_target=com_target,
             lane_offset=lane_offset,
             conserve_momentum=conserve_momentum,
+            momentum_target=momentum_target,
         )
         poses = reference["qpos"]
         velocity = velocity_reference(model, poses, 0.02)
@@ -241,6 +258,13 @@ def run(
             )
         return {
             "hand": hand,
+            "runup_momentum_target": {
+                "cycle_mean_nms": mean_momentum.tolist(),
+                "initial_nms": momentum_target.initial.tolist(),
+                "vertical_force_n": float(momentum_target.force_z),
+            }
+            if momentum_target is not None
+            else None,
             "kinematic_errors": reference["errors"],
             "reference_forward_travel_m": float(poses[-1, 0] - poses[0, 0]),
             "reference_peak_joint_speed_rad_s": {
@@ -262,14 +286,23 @@ if __name__ == "__main__":
     parser.add_argument("--lane-offset", type=float, default=0.0)
     parser.add_argument("--conserve-momentum", action="store_true")
     parser.add_argument("--lateral-support", action="store_true")
+    parser.add_argument("--ground-momentum-parent", type=Path)
     args = parser.parse_args()
     if args.lateral_support and args.ballistic_parent is None:
         parser.error("lateral support requires a ballistic parent")
+    if args.ground_momentum_parent is not None and not (
+        args.lateral_support and args.conserve_momentum
+    ):
+        parser.error("ground momentum requires lateral support and momentum-conserving rotation")
     args.output.mkdir(parents=True, exist_ok=False)
     inputs = [Path(__file__), ROBOT, ROBOT.parent / "scene_flat.xml"]
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
     if args.ballistic_parent is not None:
         inputs += [args.ballistic_parent / f"{hand}_reference.npz" for hand in ("right", "left")]
+    if args.ground_momentum_parent is not None:
+        inputs += [
+            args.ground_momentum_parent / f"{hand}_reference.npz" for hand in ("right", "left")
+        ]
     inputs = [path.resolve() for path in inputs]
     hashes = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
     rows = [
@@ -281,6 +314,7 @@ if __name__ == "__main__":
             lane_offset=args.lane_offset,
             conserve_momentum=args.conserve_momentum,
             lateral_support=args.lateral_support,
+            ground_momentum_parent=args.ground_momentum_parent,
         )
         for hand in ("right", "left")
     ]
@@ -296,6 +330,7 @@ if __name__ == "__main__":
         "ballistic_runup_com": args.ballistic_parent is not None,
         "momentum_conserving_runup": args.conserve_momentum,
         "lateral_support_com": args.lateral_support,
+        "stance_ground_momentum": args.ground_momentum_parent is not None,
         "outward_lane_offset_m": args.lane_offset,
         "input_sha256": hashes,
         "rows": rows,

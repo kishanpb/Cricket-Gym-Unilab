@@ -12,7 +12,9 @@ from unilab.tasks.manipulation.g1_cricket.running import (
     BallisticRunupCOM,
     retarget_running_delivery,
 )
+from unilab.tasks.manipulation.g1_cricket.running_ground_momentum import RunningGroundMomentum
 from unilab.tasks.manipulation.g1_cricket.running_momentum import HeldBallMomentum
+from unilab.tasks.manipulation.g1_cricket.running_support import LateralSupportCOM
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -90,6 +92,52 @@ def test_rotation_repair_requires_ballistic_com(setup):
     model, hand, _ = setup
     with pytest.raises(ValueError, match="requires a COM target"):
         retarget_running_delivery(model, np.arange(16) * 0.02, hand, conserve_momentum=True)
+
+
+def test_stance_momentum_target_is_offline_and_matches_native_momentum(setup, monkeypatch):
+    model, hand, parent = setup
+    helper = HeldBallMomentum(model, hand)
+    data = mujoco.MjData(model)
+    centers = []
+    for pose in parent:
+        data.qpos[:] = pose
+        mujoco.mj_forward(model, data)
+        centers.append(data.subtree_com[0].copy())
+    com = LateralSupportCOM(
+        BallisticRunupCOM(np.arange(136) * 0.02, centers, 9.81),
+        hand,
+        0.7 if hand == "right" else -0.7,
+    )
+    mean = np.mean([helper.measure(parent[i], parent[i + 1], 0.02) for i in range(30)], axis=0)
+    momentum = RunningGroundMomentum(com, model.body_mass.sum(), mean)
+    original = {
+        name: getattr(model, name).copy()
+        for name in ("body_mass", "body_inertia", "jnt_range", "actuator_forcerange")
+    }
+
+    def forbid_step(*args):
+        raise AssertionError("stance retargeting must remain offline")
+
+    monkeypatch.setattr(mujoco, "mj_step", forbid_step)
+    result = retarget_running_delivery(
+        model,
+        np.arange(4) * 0.02,
+        hand,
+        com_target=com,
+        lane_offset=0.2,
+        conserve_momentum=True,
+        momentum_target=momentum,
+    )
+    for index in range(1, 4):
+        np.testing.assert_allclose(
+            helper.measure(result["qpos"][index - 1], result["qpos"][index], 0.02),
+            momentum(index * 0.02 - 0.01),
+            atol=1e-8,
+        )
+        assert result["errors"][index]["flight_momentum_error_nms"] is None
+        assert result["errors"][index]["centroidal_momentum_error_nms"] < 1e-8
+    for name, value in original.items():
+        np.testing.assert_array_equal(getattr(model, name), value)
 
 
 def test_full_momentum_reference_keeps_geometry_and_all_delivery_phases(setup, monkeypatch):

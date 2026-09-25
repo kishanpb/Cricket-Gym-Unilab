@@ -153,14 +153,23 @@ class RunningDeliveryTargets:
 
 
 def retarget_running_delivery(
-    model, times, hand, *, com_target=None, lane_offset=0.0, conserve_momentum=False
+    model,
+    times,
+    hand,
+    *,
+    com_target=None,
+    lane_offset=0.0,
+    conserve_momentum=False,
+    momentum_target=None,
 ):
     """Solve original G1 joints offline; do not use this loop as a physics rollout."""
     target = RunningDeliveryTargets(hand, lane_offset)
     if conserve_momentum and com_target is None:
         raise ValueError("momentum-conserving rotation requires a COM target")
+    if momentum_target is not None and not conserve_momentum:
+        raise ValueError("a momentum target requires momentum-conserving rotation")
     momentum = HeldBallMomentum(model, hand) if conserve_momentum else None
-    was_flying, desired_momentum, omega = False, None, np.zeros(3)
+    was_tracking, desired_momentum, omega = False, None, np.zeros(3)
     recovery, landing_rotation = None, None
     data = mujoco.MjData(model)
     mujoco.mj_resetDataKeyframe(model, data, 0)
@@ -203,9 +212,14 @@ def retarget_running_delivery(
             and time <= GATHER_TIME + 1e-12
             and (time - dt / 2) % 0.3 > 0.22
         )
-        if flying and not was_flying:
+        tracking = flying or bool(
+            momentum_target is not None and frame and time <= GATHER_TIME + 1e-12
+        )
+        if tracking and momentum_target is not None:
+            desired_momentum = momentum_target(time - dt / 2)
+        elif flying and not was_tracking:
             desired_momentum = momentum.measure(poses[-2], poses[-1], dt)
-        if was_flying and not flying:
+        if was_tracking and not tracking:
             landing = float(times[frame - 1])
             landing_rotation = Rotation.from_quat(poses[-1][[4, 5, 6, 3]])
             recovery = CubicHermiteSpline(
@@ -225,7 +239,7 @@ def retarget_running_delivery(
 
         def residual(q):
             data.qpos[addresses] = q
-            if flying:
+            if tracking:
                 data.qpos[3:7] = momentum.advance(poses[-1], q, desired_momentum, dt)[0]
             if com_target is not None:
                 data.qpos[:3] = target.root(time)
@@ -289,12 +303,12 @@ def retarget_running_delivery(
         data.qpos[ball_qa + 3 : ball_qa + 7] = data.xquat[wrist_id]
         mujoco.mj_forward(model, data)
         momentum_error = None
-        if flying:
+        if tracking:
             _, omega = momentum.advance(poses[-1], solved.x, desired_momentum, dt)
             momentum_error = float(
                 np.linalg.norm(momentum.measure(poses[-1], data.qpos, dt) - desired_momentum)
             )
-        was_flying = flying
+        was_tracking = tracking
         unexpected = []
         for c in data.contact:
             names = {model.geom(int(g)).name for g in c.geom}
@@ -317,7 +331,8 @@ def retarget_running_delivery(
                 "optimizer_success": bool(solved.success),
                 "optimizer_evaluations": int(solved.nfev),
                 "optimizer_optimality": float(solved.optimality),
-                "flight_momentum_error_nms": momentum_error,
+                "flight_momentum_error_nms": momentum_error if flying else None,
+                "centroidal_momentum_error_nms": momentum_error,
                 "root_rotation_rad": float(Rotation.from_quat(data.qpos[[4, 5, 6, 3]]).magnitude()),
                 "arm_segment_error_m": float(max(arm_error)),
                 "foot_error_m": float(np.linalg.norm(data.xpos[feet] - foot_targets, axis=1).max()),
