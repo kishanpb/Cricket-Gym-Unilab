@@ -3,7 +3,7 @@ from pathlib import Path
 import mujoco
 import numpy as np
 import pytest
-from evaluate_g1_cricket_startup import COLUMNS, replay_startup
+from evaluate_g1_cricket_startup import COLUMNS, STEP_COLUMNS, replay_startup
 
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
 from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
@@ -67,6 +67,9 @@ def test_reference_and_native_transfer_preserve_hardware_and_start_from_rest(set
         )
     ]
     reference = startup_reference(model, hand)
+    with np.load(ROOT / f"g1_cricket_results/running_startup_v1/{hand}_reference.npz") as saved:
+        for key in saved.files:
+            np.testing.assert_array_equal(reference[key], saved[key])
     assert reference["qpos"].shape == (276, model.nq)
     np.testing.assert_array_equal(reference["qvel"][:101], np.zeros((101, model.nv)))
     np.testing.assert_array_equal(reference["qvel"][176:], np.zeros((100, model.nv)))
@@ -86,6 +89,9 @@ def test_reference_and_native_transfer_preserve_hardware_and_start_from_rest(set
     assert trace["steps"].shape == (44000, len(COLUMNS))
     assert trace["qpos"].shape == reference["qpos"].shape
     assert np.isfinite(trace["steps"]).all()
+    with np.load(ROOT / f"g1_cricket_results/running_startup_v1/{hand}_125us.npz") as saved:
+        for key in saved.files:
+            np.testing.assert_array_equal(trace[key], saved[key])
     for old, new in zip(
         before,
         (
@@ -98,3 +104,33 @@ def test_reference_and_native_transfer_preserve_hardware_and_start_from_rest(set
         strict=True,
     ):
         np.testing.assert_array_equal(old, new)
+
+
+def test_first_step_removes_air_foot_support_and_keeps_complete_failed_replay(setup):
+    model, hand = setup
+    reference = startup_reference(model, hand, first_step=True)
+    front, swing = (0, 1) if hand == "right" else (1, 0)
+    assert reference["qpos"].shape == (526, model.nq)
+    np.testing.assert_array_equal(reference["qvel"][0], np.zeros(model.nv))
+    np.testing.assert_allclose(reference["support_loads"][200:326, swing], 0, atol=1e-10)
+    np.testing.assert_allclose(
+        reference["support_loads"][200:326, front],
+        -model.body_mass.sum() * model.opt.gravity[2],
+        atol=0.001,
+    )
+    assert reference["foot_targets"][275, swing, 2] == pytest.approx(0.085, abs=1e-9)
+    assert reference["foot_targets"][-1, swing, 0] - reference["foot_targets"][
+        0, swing, 0
+    ] == pytest.approx(0.16)
+    assert reference["errors"][:, 0].max() < 0.0004
+    assert reference["errors"][:, 1].max() < 0.006
+    assert reference["errors"][:, 2].max() < 0.001
+    summary, trace = replay_startup(model, reference, hand, first_step=True)
+    assert not summary["passed"]
+    assert "pelvis_height" in summary["failures"]
+    assert not summary["released"]
+    assert summary["longest_airborne_s"] > 1
+    assert summary["landing_time_s"] is not None
+    assert trace["steps"].shape[1] == len(STEP_COLUMNS)
+    assert trace["steps"][:, STEP_COLUMNS.index("swing_foot_forward_m")].max() > 0.14
+    assert np.isfinite(trace["steps"]).all()

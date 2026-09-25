@@ -40,7 +40,7 @@ def grounded_start(model, hand):
     return data.qpos.copy()
 
 
-def held_support_feedforward(model, pose, hand):
+def held_support_feedforward(model, pose, hand, *, front_fraction=None):
     """Static vertical support, including ball gravity transmitted through its holder."""
     data = mujoco.MjData(model)
     data.qpos[:] = pose
@@ -60,15 +60,38 @@ def held_support_feedforward(model, pose, hand):
                 mujoco.mj_jac(model, data, jacobian, None, point, int(geom.bodyid[0]))
                 normals.append(jacobian[2].copy())
     normals = np.asarray(normals)
-    solution = lsq_linear(normals[:, :6].T, bias[:6], bounds=(0, np.inf), tol=1e-12)
-    torque = bias - normals.T @ solution.x
+    matrix, required = normals[:, :6].T, bias[:6]
+    selected = np.ones(len(normals), dtype=bool)
+    if front_fraction is not None:
+        front = np.repeat([hand == "right", hand == "left"], len(normals) // 2)
+        if front_fraction == 1:
+            selected = front
+            matrix = matrix[:, selected]
+        else:
+            matrix = np.vstack((matrix, front.astype(float)))
+            required = np.r_[required, bias[2] * front_fraction]
+    solution = lsq_linear(
+        matrix,
+        required,
+        bounds=(0, np.inf),
+        tol=1e-12,
+        method="trf" if front_fraction is None else "bvls",
+    )
+    forces = np.zeros(len(normals))
+    forces[selected] = solution.x
+    torque = bias - normals.T @ forces
     joints = [model.joint(name).id for name in SDK_JOINTS]
-    return torque[model.jnt_dofadr[joints]], torque[:6], solution.x.reshape(2, -1).sum(axis=1)
+    return torque[model.jnt_dofadr[joints]], torque[:6], forces.reshape(2, -1).sum(axis=1)
 
 
-def startup_reference(model, hand, *, shift=0.08):
-    """Settle 2 s, transfer COM toward the front foot over 1.5 s, hold 2 s."""
-    times = np.arange(276) * 0.02
+def smooth_ramp(time, start, duration):
+    fraction = np.clip((time - start) / duration, 0, 1)
+    return fraction**3 * (10 - 15 * fraction + 6 * fraction**2)
+
+
+def startup_reference(model, hand, *, shift=0.08, first_step=False):
+    """Double-support transfer, or a 10.5 s unload/lift/advance/land reference."""
+    times = np.arange(526 if first_step else 276) * 0.02
     initial = grounded_start(model, hand)
     data = mujoco.MjData(model)
     data.qpos[:] = initial
@@ -77,6 +100,9 @@ def startup_reference(model, hand, *, shift=0.08):
     feet_position = data.xpos[feet].copy()
     feet_rotation = data.xmat[feet].reshape(2, 3, 3).copy()
     center = data.subtree_com[0].copy()
+    front, swing = (0, 1) if hand == "right" else (1, 0)
+    _, _, initial_load = held_support_feedforward(model, initial, hand)
+    initial_fraction = initial_load[front] / initial_load.sum()
     joints = [model.joint(name).id for name in SDK_JOINTS[:12]]
     qa = model.jnt_qposadr[joints]
     lower, upper = model.jnt_range[joints].T
@@ -84,11 +110,27 @@ def startup_reference(model, hand, *, shift=0.08):
     upper = np.r_[upper - 0.03, initial[:3] + [0.2, 0.2, 0.05]]
     origin = np.r_[initial[qa], initial[:3]]
     previous = origin.copy()
-    poses, errors, torques, loads = [], [], [], []
+    poses, errors, torques, loads, foot_targets = [], [], [], [], []
     for time in times:
         fraction = np.clip((time - 2) / 1.5, 0, 1)
         blend = fraction**3 * (10 - 15 * fraction + 6 * fraction**2)
         desired = center + [0, (1 if hand == "right" else -1) * shift * blend, 0]
+        desired_feet = feet_position.copy()
+        allocation = None
+        moving = 2 < time <= 3.5
+        if first_step:
+            transfer = smooth_ramp(time, 2, 2)
+            travel = smooth_ramp(time, 4.5, 2)
+            recover = smooth_ramp(time, 6.5, 2)
+            desired = center.copy()
+            desired[1] += (feet_position[front, 1] - center[1]) * transfer * (1 - recover)
+            desired[2] -= 0.03 * transfer
+            desired[0] += 0.08 * recover
+            desired_feet[swing, 0] += 0.16 * travel
+            phase = np.clip((time - 4.5) / 2, 0, 1)
+            desired_feet[swing, 2] += 0.05 * 64 * phase**3 * (1 - phase) ** 3
+            allocation = initial_fraction + (1 - initial_fraction) * transfer * (1 - recover)
+            moving = 2 < time <= 4 or 4.5 < time <= 8.5
 
         def residual(values):
             data.qpos[qa], data.qpos[:3] = values[:12], values[12:]
@@ -96,7 +138,7 @@ def startup_reference(model, hand, *, shift=0.08):
             mujoco.mj_kinematics(model, data)
             mujoco.mj_comPos(model, data)
             return np.r_[
-                100 * (data.xpos[feet] - feet_position).ravel(),
+                100 * (data.xpos[feet] - desired_feet).ravel(),
                 10
                 * Rotation.from_matrix(
                     feet_rotation.transpose(0, 2, 1) @ data.xmat[feet].reshape(2, 3, 3)
@@ -107,7 +149,7 @@ def startup_reference(model, hand, *, shift=0.08):
                 0.005 * (values - origin),
             ]
 
-        if 2 < time <= 3.5:
+        if moving:
             solved = least_squares(
                 residual,
                 previous,
@@ -122,10 +164,12 @@ def startup_reference(model, hand, *, shift=0.08):
             previous = solved.x
         residual(previous)
         pose = data.qpos.copy()
-        torque, root_residual, load = held_support_feedforward(model, pose, hand)
+        torque, root_residual, load = held_support_feedforward(
+            model, pose, hand, front_fraction=allocation
+        )
         errors.append(
             [
-                np.max(np.linalg.norm(data.xpos[feet] - feet_position, axis=1)),
+                np.max(np.linalg.norm(data.xpos[feet] - desired_feet, axis=1)),
                 np.linalg.norm(data.subtree_com[0] - desired),
                 np.linalg.norm(root_residual),
             ]
@@ -133,10 +177,14 @@ def startup_reference(model, hand, *, shift=0.08):
         poses.append(pose)
         torques.append(torque)
         loads.append(load)
+        foot_targets.append(desired_feet)
     poses = np.asarray(poses)
     velocity = np.zeros((len(times), model.nv))
     for index in range(1, len(times) - 1):
-        if 2 < times[index] < 3.5:
+        moving = 2 < times[index] < 3.5
+        if first_step:
+            moving = 2 < times[index] < 4 or 4.5 < times[index] < 8.5
+        if moving:
             mujoco.mj_differentiatePos(
                 model, velocity[index], 0.04, poses[index - 1], poses[index + 1]
             )
@@ -147,4 +195,5 @@ def startup_reference(model, hand, *, shift=0.08):
         torque=np.asarray(torques),
         support_loads=np.asarray(loads),
         errors=np.asarray(errors),
+        foot_targets=np.asarray(foot_targets),
     )

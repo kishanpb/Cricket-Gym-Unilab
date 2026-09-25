@@ -1,4 +1,4 @@
-"""Native two-foot settling and load-transfer test, not a running delivery."""
+"""Native settling and first-step diagnostics, not a running delivery."""
 
 import argparse
 import hashlib
@@ -9,8 +9,10 @@ from tempfile import TemporaryDirectory
 import mujoco
 import numpy as np
 from audit_g1_cricket_running_stance import foot_loads
+from g1_cricket_delivery_trial import capsule_bounds
 from retarget_g1_cricket_running import ROBOT, ROOT, render_poses, running_control
 
+from unilab.tasks.manipulation.g1_cricket.contact_control import ContactAccelerationControl
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
 from unilab.tasks.manipulation.g1_cricket.prior import SDK_JOINTS
 from unilab.tasks.manipulation.g1_cricket.running_startup import startup_reference
@@ -33,9 +35,24 @@ COLUMNS = [
     "com_y_m",
     "com_z_m",
 ]
+STEP_COLUMNS = COLUMNS + [
+    "stance_foot_displacement_m",
+    "swing_foot_clearance_m",
+    "swing_foot_forward_m",
+    "swing_foot_lateral_m",
+    "foot_target_error_m",
+]
 
 
-def replay_startup(model, reference, hand):
+def replay_startup(
+    model,
+    reference,
+    hand,
+    *,
+    first_step=False,
+    support_only_balance=False,
+    controller=None,
+):
     data = mujoco.MjData(model)
     data.qpos[:] = reference["qpos"][0]
     data.qvel[:] = reference["qvel"][0]
@@ -45,6 +62,12 @@ def replay_startup(model, reference, hand):
     limits = model.jnt_range[joints]
     feet = [model.body(f"{side}_ankle_roll_link").id for side in ("left", "right")]
     feet_start = data.xpos[feet].copy()
+    front, swing = (0, 1) if hand == "right" else (1, 0)
+    swing_geoms = np.flatnonzero(
+        (model.geom_bodyid == feet[swing])
+        & ((model.geom_contype != 0) | (model.geom_conaffinity != 0))
+    )
+    airborne_since, longest_airborne, landing_time = None, 0.0, None
     pelvis = model.body("pelvis").id
     wrist = model.body(f"{hand}_wrist_yaw_link").id
     ball = model.body("cricket_ball").id
@@ -59,7 +82,7 @@ def replay_startup(model, reference, hand):
     force = np.empty(6)
     substeps = round(0.02 / model.opt.timestep)
     for tick in range(len(reference["times"]) - 1):
-        control, _ = running_control(
+        control, correction = running_control(
             model,
             data,
             reference["qpos"][tick],
@@ -67,7 +90,12 @@ def replay_startup(model, reference, hand):
             qa,
             va,
         )
+        if support_only_balance and reference["support_loads"][tick, swing] == 0:
+            control[6 * swing + 4] -= correction[1]
+            control[6 * swing + 5] -= correction[0]
         control += (reference["torque"][tick] - data.qfrc_bias[va]) / model.actuator_gainprm[:, 0]
+        if controller is not None:
+            control = controller(data, reference["qpos"][tick], reference["qvel"][tick])
         data.ctrl[:] = np.clip(control, limits[:, 0], limits[:, 1])
         for _ in range(substeps):
             mujoco.mj_step(model, data)
@@ -85,23 +113,50 @@ def replay_startup(model, reference, hand):
                 if force[0] > 0.1:
                     unexpected.add("/".join(sorted(names)))
             held_position = data.xpos[wrist] + data.xmat[wrist].reshape(3, 3) @ offset
-            steps.append(
-                np.r_[
-                    data.time,
-                    foot_loads(model, data),
-                    data.qpos[2],
-                    data.xmat[pelvis, 8],
-                    max(0, excess.max()),
-                    np.max(np.abs(data.actuator_force) / model.actuator_forcerange[:, 1]),
-                    np.linalg.norm(data.qvel[:3]),
-                    np.linalg.norm(data.qvel[3:6]),
-                    np.max(np.abs(data.qvel[va])),
-                    np.linalg.norm(data.sensordata[force_address : force_address + 3]),
-                    np.linalg.norm(data.xpos[ball] - held_position),
-                    np.max(np.linalg.norm(data.xpos[feet] - feet_start, axis=1)),
-                    data.subtree_com[0],
+            loads = foot_loads(model, data)
+            row = np.r_[
+                data.time,
+                loads,
+                data.qpos[2],
+                data.xmat[pelvis, 8],
+                max(0, excess.max()),
+                np.max(np.abs(data.actuator_force) / model.actuator_forcerange[:, 1]),
+                np.linalg.norm(data.qvel[:3]),
+                np.linalg.norm(data.qvel[3:6]),
+                np.max(np.abs(data.qvel[va])),
+                np.linalg.norm(data.sensordata[force_address : force_address + 3]),
+                np.linalg.norm(data.xpos[ball] - held_position),
+                np.max(np.linalg.norm(data.xpos[feet] - feet_start, axis=1)),
+                data.subtree_com[0],
+            ]
+            if first_step:
+                bounds = capsule_bounds(
+                    data.geom_xpos[swing_geoms],
+                    data.geom_xmat[swing_geoms].reshape(-1, 3, 3),
+                    model.geom_size[swing_geoms],
+                    model.geom_type[swing_geoms],
+                )
+                clearance = float(bounds[0, 2])
+                if clearance > 0.002 and loads[swing] < 1:
+                    if airborne_since is None:
+                        airborne_since = data.time - model.opt.timestep
+                    longest_airborne = max(longest_airborne, data.time - airborne_since)
+                elif loads[swing] > 1:
+                    if longest_airborne >= 0.02 and landing_time is None:
+                        landing_time = float(data.time)
+                    airborne_since = None
+                else:
+                    airborne_since = None
+                row = np.r_[
+                    row,
+                    np.linalg.norm(data.xpos[feet[front]] - feet_start[front]),
+                    clearance,
+                    (data.xpos[feet[swing]] - feet_start[swing])[:2],
+                    np.max(
+                        np.linalg.norm(data.xpos[feet] - reference["foot_targets"][tick], axis=1)
+                    ),
                 ]
-            )
+            steps.append(row)
             if data.warning.number.any() or not np.isfinite(data.qpos).all():
                 raise RuntimeError("invalid native startup physics")
         poses.append(data.qpos.copy())
@@ -109,7 +164,7 @@ def replay_startup(model, reference, hand):
         if data.qpos[2] < 0.48:
             break
     steps = np.asarray(steps)
-    values = dict(zip(COLUMNS, steps.T, strict=True))
+    values = dict(zip(STEP_COLUMNS if first_step else COLUMNS, steps.T, strict=True))
     tail = steps[steps[:, 0] >= reference["times"][-1] - 0.5 - 1e-9]
     pre = steps[(steps[:, 0] >= 1.5) & (steps[:, 0] < 2)]
     front_column = 1 if hand == "right" else 2
@@ -131,7 +186,10 @@ def replay_startup(model, reference, hand):
         ("actuator_limit", values["motor_fraction"].max() > 1 + 1e-6),
         ("unexpected_contact", bool(unexpected)),
         ("holder_error", values["holder_error_m"].max() > 0.001),
-        ("foot_displacement", values["maximum_foot_displacement_m"].max() > 0.005),
+        (
+            "foot_displacement",
+            not first_step and values["maximum_foot_displacement_m"].max() > 0.005,
+        ),
         ("ball_penetration", peak_penetration > 0.006),
         ("not_settled", not len(tail) or np.max(tail[:, 7:10]) > 0.02),
         ("initial_hold_not_settled", not len(pre) or np.max(pre[:, 7:10]) > 0.02),
@@ -140,11 +198,28 @@ def replay_startup(model, reference, hand):
             "weight_not_supported",
             not len(tail) or abs(tail[:, 1:3].sum(axis=1).mean() / weight - 1) > 0.01,
         ),
-        ("load_transfer_not_achieved", front_fraction is None or front_fraction < 0.75),
-        ("com_shift_not_achieved", transfer is None or abs(transfer - 0.08) > 0.01),
+        (
+            "load_transfer_not_achieved",
+            not first_step and (front_fraction is None or front_fraction < 0.75),
+        ),
+        (
+            "com_shift_not_achieved",
+            not first_step and (transfer is None or abs(transfer - 0.08) > 0.01),
+        ),
     ):
         if failed:
             failures.append(label)
+    if first_step:
+        for label, failed in (
+            ("no_airborne_step", longest_airborne < 0.02),
+            ("no_landing", landing_time is None),
+            ("stance_foot_displacement", values["stance_foot_displacement_m"].max() > 0.005),
+            ("foot_target_error", values["foot_target_error_m"].max() > 0.02),
+            ("step_distance", not len(tail) or abs(tail[:, 18].mean() - 0.16) > 0.01),
+            ("step_lateral_drift", not len(tail) or abs(tail[:, 19].mean()) > 0.005),
+        ):
+            if failed:
+                failures.append(label)
     summary = dict(
         hand=hand,
         physics_dt_s=model.opt.timestep,
@@ -165,6 +240,8 @@ def replay_startup(model, reference, hand):
         final_half_second_mean=tail.mean(axis=0).tolist() if len(tail) else None,
         final_half_second_maximum=tail.max(axis=0).tolist() if len(tail) else None,
     )
+    if first_step:
+        summary.update(longest_airborne_s=longest_airborne, landing_time_s=landing_time)
     return summary, dict(steps=steps, qpos=np.asarray(poses), qvel=np.asarray(velocities))
 
 
@@ -172,7 +249,18 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path)
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--first-step", action="store_true")
+    parser.add_argument(
+        "--controllers",
+        nargs="+",
+        default=["pd"],
+        choices=["pd", "support_only", "contact_acceleration"],
+    )
     args = parser.parse_args()
+    if len(set(args.controllers)) != len(args.controllers):
+        parser.error("controller names must be distinct")
+    if not args.first_step and args.controllers != ["pd"]:
+        parser.error("controller comparisons require --first-step")
     args.output.mkdir(parents=True, exist_ok=False)
     inputs = [
         Path(__file__),
@@ -180,6 +268,7 @@ def main():
         ROBOT.parent / "scene_flat.xml",
         ROOT / "scripts/audit_g1_cricket_running_stance.py",
         ROOT / "scripts/retarget_g1_cricket_running.py",
+        ROOT / "scripts/g1_cricket_delivery_trial.py",
     ]
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
     hashes = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
@@ -190,39 +279,84 @@ def main():
             G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(ROBOT, scene)
             model = mujoco.MjModel.from_xml_path(str(scene))
         model.vis.global_.offwidth, model.vis.global_.offheight = 960, 540
-        reference = startup_reference(model, hand)
+        reference = startup_reference(model, hand, first_step=args.first_step)
         np.savez_compressed(args.output / f"{hand}_reference.npz", **reference)
         for dt in (0.000125, 0.0000625):
             model.opt.timestep = dt
-            summary, trace = replay_startup(model, reference, hand)
-            name = f"{hand}_{dt * 1e6:g}us"
-            summary["trace"] = f"{name}.npz"
-            np.savez_compressed(args.output / summary["trace"], **trace)
-            rows.append(summary)
-            print(hand, dt, summary["passed"], summary["failures"], flush=True)
-            if args.render and dt == 0.0000625:
-                render_poses(
+            for kind in args.controllers:
+                controller = None
+                if kind == "contact_acceleration":
+
+                    def baseline(model, data, target, velocity, qa, va):
+                        control, correction = running_control(model, data, target, velocity, qa, va)
+                        frame = int((data.time + 1e-9) / 0.02)
+                        control += (
+                            reference["torque"][frame] - data.qfrc_bias[va]
+                        ) / model.actuator_gainprm[:, 0]
+                        return control, correction
+
+                    controller = ContactAccelerationControl(
+                        model, reference["qvel"], baseline, foot_reference=reference["qpos"]
+                    )
+                summary, trace = replay_startup(
                     model,
-                    trace["qpos"],
+                    reference,
                     hand,
-                    args.output / f"{hand}.mp4",
-                    "PHYSICAL STARTUP ONLY, NOT RUNNING OR PPO",
+                    first_step=args.first_step,
+                    support_only_balance=kind == "support_only",
+                    controller=controller,
                 )
+                name = f"{hand}_{dt * 1e6:g}us"
+                if args.first_step:
+                    name += f"_{kind}"
+                summary.update(trace=f"{name}.npz", controller=kind)
+                if controller is not None:
+                    trace["optimizer_scores"] = np.asarray(
+                        [
+                            [row["time_s"], row["initial_score"], row["final_score"]]
+                            for row in controller.trace
+                        ]
+                    )
+                np.savez_compressed(args.output / summary["trace"], **trace)
+                rows.append(summary)
+                print(hand, dt, kind, summary["passed"], summary["failures"], flush=True)
+                if args.render and dt == 0.0000625:
+                    movie = f"{hand}_{kind}.mp4" if args.first_step else f"{hand}.mp4"
+                    render_poses(
+                        model,
+                        trace["qpos"],
+                        hand,
+                        args.output / movie,
+                        f"FIRST STEP {kind}, NOT RUNNING OR PPO"
+                        if args.first_step
+                        else "PHYSICAL STARTUP ONLY, NOT RUNNING OR PPO",
+                    )
     if any(
         hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != digest
         for name, digest in hashes.items()
     ):
         raise RuntimeError("startup inputs changed")
     report = dict(
-        scope="native_two_foot_settling_and_lateral_transfer_only",
+        scope="native_first_step_only"
+        if args.first_step
+        else "native_two_foot_settling_and_lateral_transfer_only",
         mujoco_version=mujoco.__version__,
         input_sha256=hashes,
         control_period_s=0.02,
-        com_lateral_shift_m=0.08,
+        first_step=args.first_step,
+        controllers=args.controllers,
+        com_lateral_shift_m=None if args.first_step else 0.08,
+        com_lateral_target="stance ankle" if args.first_step else "80 mm from neutral",
+        step_distance_m=0.16 if args.first_step else 0,
+        foot_lift_m=0.05 if args.first_step else 0,
+        com_lowering_m=0.03 if args.first_step else 0,
         settle_duration_s=2,
-        transfer_duration_s=1.5,
+        transfer_duration_s=2 if args.first_step else 1.5,
         final_hold_duration_s=2,
-        columns=COLUMNS,
+        swing_start_s=4.5 if args.first_step else None,
+        swing_end_s=6.5 if args.first_step else None,
+        recenter_end_s=8.5 if args.first_step else None,
+        columns=STEP_COLUMNS if args.first_step else COLUMNS,
         rows=rows,
         sample_timing="Each row has integrated end time, qpos and qvel; contacts, force sensors and kinematics are the solved frame at the start of that substep.",
         guard="Static foot loads are a feedforward hypothesis, not contact certification. Native replay retains the finite-compliance mechanical ball holder, original geometry, joint limits, actuator caps and all substeps. Initial placement is reset-only; no live root or joint writes, applied support forces, release, run-up, learned policy, delivery qualification or showcase promotion.",
