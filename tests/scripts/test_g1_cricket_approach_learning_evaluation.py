@@ -3,7 +3,9 @@ from pathlib import Path
 import evaluate_g1_cricket_approach_learning as evaluation
 import numpy as np
 import pytest
+import report_g1_cricket_approach_learning as reporting
 from hydra import compose, initialize_config_dir
+from PIL import Image
 
 from unilab.base.config_adapter import BackendAdapter, create_env
 
@@ -110,3 +112,35 @@ def test_partial_outcome_and_error_trace_are_retained(hand, failure, tmp_path, m
         assert len(list(tmp_path.glob("*.npz"))) == 4
     finally:
         env.close()
+
+
+@pytest.mark.parametrize("defect", [None, "blank", "truncated", "fps"])
+def test_media_decode_and_early_termination_sheet(defect, tmp_path, monkeypatch):
+    np.savez_compressed(tmp_path / "trace.npz", states=np.zeros((3, 10)))
+    frame = np.zeros((540, 960, 3), np.uint8)
+    if defect != "blank":
+        frame[:270] = 255
+
+    class Reader:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            pass
+
+        def get_meta_data(self):
+            return {"fps": 30 if defect == "fps" else 25}
+
+        def __iter__(self):
+            return iter([frame] * (2 if defect == "truncated" else 3))
+
+    monkeypatch.setattr(reporting.imageio, "get_reader", lambda path: Reader())
+    row = dict(hand="right", trace="trace.npz")
+    if defect:
+        with pytest.raises(AssertionError):
+            reporting.validate_media(tmp_path, row)
+    else:
+        result = reporting.validate_media(tmp_path, row)
+        assert result["frames"] == 3 and result["sheet_physics_times_s"] == [0, 0.04]
+        with Image.open(tmp_path / "right_ppo_approach_contact_sheet.png") as sheet:
+            assert sheet.size == (768, 216)
