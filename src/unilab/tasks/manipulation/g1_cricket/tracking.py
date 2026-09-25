@@ -81,6 +81,7 @@ class CricketReferenceAction(ActionTerm):
 class SupportedCricketReferenceActionCfg(CricketReferenceActionCfg):
     reference_file: str
     lookahead_frames: int = 0
+    inertial_compensation: bool = False
 
     def build(self, env):
         return SupportedCricketReferenceAction(self, env)
@@ -101,6 +102,7 @@ class SupportedCricketReferenceAction(CricketReferenceAction):
         self.velocity_gain = -model.actuator_biasprm[:, 2] / model.actuator_gainprm[:, 0]
         with np.load(cfg.reference_file) as saved:
             poses = saved["qpos"]
+            times = saved["times"] if cfg.inertial_compensation else None
         self.reference_root_quaternion = poses[:, 3:7].copy()
         self.reference_root_position = poses[:, :3].copy()
         self.reference_root_velocity = np.gradient(
@@ -113,10 +115,15 @@ class SupportedCricketReferenceAction(CricketReferenceAction):
         computed = [support_feedforward(model, pose) for pose in poses]
         if max(np.linalg.norm(residual) for _, residual in computed) > 1e-6:
             raise ValueError("reference has no static nonnegative foot-support solution")
-        self.gravity_offset = (
-            np.asarray([torque for torque, _ in computed], dtype=np.float32)
-            / model.actuator_gainprm[:, 0]
-        )
+        forces = np.asarray([torque for torque, _ in computed], dtype=np.float32)
+        self.inertial_audit = None
+        if cfg.inertial_compensation:
+            from .inertial_feedforward import bounded_reference_forces
+
+            forces, self.inertial_audit = bounded_reference_forces(
+                model, poses, times, forces, self.control_limits
+            )
+        self.gravity_offset = forces / model.actuator_gainprm[:, 0]
 
     def _reference_with_feedforward(self, actions):
         frames = self.command.time_steps

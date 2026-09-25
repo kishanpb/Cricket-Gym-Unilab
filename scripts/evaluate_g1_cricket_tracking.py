@@ -248,6 +248,7 @@ def evaluate(
     bounced_delivery=False,
     compact_substeps=False,
     reference_directory=None,
+    inertial_compensation=False,
 ):
     if (
         waist_tracking_gain is not None
@@ -255,6 +256,7 @@ def evaluate(
         or lookahead_frames is not None
         or contact_dt is not None
         or reference_directory is not None
+        or inertial_compensation
     ) and (output is None or output.resolve() == directory.resolve()):
         raise ValueError("controller variants require a separate output directory")
     if soft_toss and bounced_delivery:
@@ -271,6 +273,12 @@ def evaluate(
     if learned_batting and (not bounced_delivery or contact_dt is None):
         raise ValueError("batting learning evaluation requires bounced delivery and contact_dt")
     evaluation_overrides = {}
+    if inertial_compensation:
+        if not learned_batting or reference_directory is None:
+            raise ValueError("inertial compensation requires projected ball-observed batting")
+        OmegaConf.set_struct(owner, False)
+        owner.env.actions.reference.inertial_compensation = True
+        evaluation_overrides["inertial_compensation"] = True
     original_reference = None
     projection_manifest = None
     if reference_directory is not None:
@@ -393,6 +401,11 @@ def evaluate(
         )
         policy = runner.get_inference_policy(device="cpu")
         model = env.get_playback_model()
+        inertial_audit = (
+            env.action_manager.get_term("reference").inertial_audit
+            if inertial_compensation
+            else None
+        )
         bat_reference = None
         if "reference_file" in owner.env.actions.reference:
             with np.load(ROOT / owner.env.actions.reference.reference_file) as reference:
@@ -506,7 +519,9 @@ def evaluate(
                         )
                         draw.text(
                             (12, 34),
-                            "Frozen PPO, projected reference | mechanical grips | 0.5x"
+                            "Motor inertia compensation | mechanical grips | 0.5x"
+                            if inertial_compensation
+                            else "Projected reference | mechanical grips | 0.5x"
                             if reference_directory is not None
                             else "Ball/contact-observed PPO task, fixed feed | mechanical grips | 0.5x"
                             if learned_batting
@@ -558,7 +573,9 @@ def evaluate(
     finally:
         env.close()
     report = {
-        "scope": "frozen_ball_observed_ppo_projected_reference_not_retrained"
+        "scope": "frozen_ball_observed_ppo_inertial_compensation_not_retrained"
+        if inertial_compensation
+        else "frozen_ball_observed_ppo_projected_reference_not_retrained"
         if reference_directory is not None
         else "ball_contact_observed_ppo_nominal_bounced_delivery_not_held_out"
         if learned_batting
@@ -575,6 +592,8 @@ def evaluate(
         "runtime_source_sha256": runtime_hashes,
         "substep_audit": "all intervals independently replayed; exact native endpoint and sensor agreement; simulated loads are uncalibrated",
     }
+    if inertial_compensation:
+        report["inertial_feedforward_audit"] = inertial_audit
     if any(
         hashlib.sha256(p.read_bytes()).hexdigest() != hashes[str(p.resolve().relative_to(ROOT))]
         for p in inputs
@@ -603,6 +622,7 @@ if __name__ == "__main__":
     parser.add_argument("--bounced-delivery", action="store_true")
     parser.add_argument("--compact-substeps", action="store_true")
     parser.add_argument("--reference-directory", type=Path)
+    parser.add_argument("--inertial-compensation", action="store_true")
     args = parser.parse_args()
     evaluate(
         args.directory,
@@ -616,4 +636,5 @@ if __name__ == "__main__":
         bounced_delivery=args.bounced_delivery,
         compact_substeps=args.compact_substeps,
         reference_directory=args.reference_directory,
+        inertial_compensation=args.inertial_compensation,
     )

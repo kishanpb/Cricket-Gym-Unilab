@@ -90,3 +90,35 @@ def test_projection_report_rejects_changed_evidence(pool, failure):
     path.write_text(json.dumps(report))
     with pytest.raises(ValueError):
         reporter.build_report(pool)
+
+
+def test_compensation_report_uses_fixed_projected_reference_and_full_pool(pool):
+    for path in list(pool.glob("*/evaluation.json")):
+        report = json.loads(path.read_text())
+        report["evaluation_overrides"]["reference_directory"] = (
+            "g1_cricket_results/bimanual_projected_v1"
+        )
+        report["scope"] = "frozen_ball_observed_ppo_projected_reference_not_retrained"
+        for row in report["rows"]:
+            row["trace"] = [{"substep_audit": {"peaks": {"motor_force_fraction": 1.0}}}] * 150
+        if path.parent.name.startswith("projected_"):
+            report["scope"] = "frozen_ball_observed_ppo_inertial_compensation_not_retrained"
+            report["evaluation_overrides"]["inertial_compensation"] = True
+            report["inertial_feedforward_audit"] = [{}] * 151
+            old = path.parent
+            target = old.with_name(old.name.replace("projected_", "compensated_"))
+            old.rename(target)
+            path = target / path.name
+        path.write_text(json.dumps(report))
+    result = reporter.build_report(pool, compensation=True)
+    assert len(result["rows"]) == 16 and result["compensated_qualification"]
+    assert all(row["control_intervals_reaching_motor_limit"] == 150 for row in result["rows"])
+    path = pool / "compensated_left_finest/evaluation.json"
+    report = json.loads(path.read_text())
+    report["rows"][1]["all_checks_pass"] = False
+    path.write_text(json.dumps(report))
+    assert not reporter.build_report(pool, compensation=True)["compensated_qualification"]
+    report["inertial_feedforward_audit"].pop()
+    path.write_text(json.dumps(report))
+    with pytest.raises(ValueError, match="all reference feedforward"):
+        reporter.build_report(pool, compensation=True)
