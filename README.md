@@ -61,6 +61,9 @@ without joint-stop or unintended-contact violations. This verifies a from-rest
 startup stage only. The subsequent [first-step comparison](docs/g1_cricket_running_startup.md#first-step-results)
 achieves actual foot lift and landing with both PD variants, but all 12 trials
 fall before settling. Repeated strides and the complete delivery remain unfinished.
+The [whole-body first-step PPO pilot](docs/g1_cricket_first_step_learning.md)
+now retains both independently trained final actors and all eight evaluations:
+right PPO delays instability, left PPO regresses, and neither passes the step gate.
 Full reference and failed physical videos are
 development diagnostics, not learned bowling showcases. The research log
 retains the earlier [contact-control](docs/g1_cricket_contact_control.md) and
