@@ -101,11 +101,92 @@ Contacts/force sensors/kinematics refer to the solved beginning of each
 physics substep; the timestamp, integrated position and velocity refer to
 its end. These are simulated loads, not calibrated hardware tactile data.
 
+## First-Step Candidate
+
+Source `26db842d` extends the same owner with `--first-step`; the original
+two-foot mode remains unchanged. Regression tests reproduce both original
+references and their complete native 125-microsecond traces bit-for-bit.
+
+The new reference starts from rest and holds for 2 s, lowers COM 30 mm and
+transfers it over the opposite ankle over 2 s, waits 0.5 s, then advances the
+bowling-side foot 160 mm over 2 s with a 50 mm arch. It recentres COM between
+the feet over 2 s and holds for 2 s, for a 10.5 s target. The ball remains
+held; neither arm performs a delivery yet. During single support the lifted
+foot receives exactly zero planned feedforward load. Explicit front-foot load
+allocation uses bounded-variable least squares; the old unallocated solver
+and controller behavior are preserved.
+
+Three bounded controllers are compared for both hands and both physics
+timesteps, without changing robot geometry, joint ranges or motor caps:
+
+- The support-aware PD baseline.
+- The same baseline with balance correction removed from the unloaded ankle.
+- The existing native contact-acceleration controller, with the support-aware
+  baseline and both foot trajectories as its tracking objective.
+
+Step telemetry adds planted-foot displacement, swing-foot clearance across
+all eleven collision geoms, forward/lateral travel and foot-target error.
+Actual clearance over 2 mm and load below 1 N must persist for at least 20 ms
+before a loaded landing can count. Completion also requires 160 +/-10 mm
+final advance, at most 5 mm lateral drift/planted-foot displacement and at
+most 20 mm target error, alongside the original stability, contact, hardware
+and settling gates. This replaces the stationary-foot/80 mm transfer gates
+only for this explicitly different step task, not for bowling qualification.
+
+```sh
+PYTHONPATH=src:scripts OMP_NUM_THREADS=2 python -W error \
+  scripts/evaluate_g1_cricket_startup.py \
+  g1_cricket_results/running_first_step_v1 --first-step \
+  --controllers pd support_only contact_acceleration --render
+```
+
+The [complete comparison](../g1_cricket_results/running_first_step_v1/evaluation.json)
+retains every declared hand/controller/timestep outcome, raw substeps and full
+physical trajectories. Optimizer scores are retained for contact-acceleration
+control but are not physical success metrics. Existing folders are not
+overwritten. No new PPO checkpoint or learned delivery is claimed.
+
+### First-Step Results
+
+All 12 trials fail the complete gate. The table shows every finer-timestep
+trial; the four corresponding PD trials at 125 microseconds fall at the same
+control-frame times. The contact-acceleration controller is timestep-sensitive
+and fails at both resolutions, so neither resolution is promoted.
+
+| Hand | Controller | Fall stop (s) | Longest airborne interval (s) | First loaded landing (s) |
+| --- | --- | ---: | ---: | ---: |
+| Right | PD | 6.78 | 1.9380 | 5.8703 |
+| Right | Support-only balance | 6.74 | 1.9499 | 5.8865 |
+| Right | Contact acceleration | 4.58 | 0.8743 | None |
+| Left | PD | 6.76 | 1.9347 | 5.8659 |
+| Left | Support-only balance | 6.72 | 1.9423 | 5.8772 |
+| Left | Contact acceleration | 4.42 | 0.6683 | None |
+
+The eight PD trials lift and land without joint-stop violations, unintended
+loaded contacts or ball penetration, but lateral balance deteriorates during
+the swing and the robot falls after landing. Removing unloaded-ankle balance
+feedback does not fix it. The four contact-acceleration trials cross joint
+limits, never achieve a loaded landing, and two also have unintended loaded
+contacts. No trial releases the ball or reaches the 10.5 s settling horizon.
+
+All 865,760 substeps and six complete finer-timestep videos are retained. All
+1,806 frames decode nonblank at 960 x 540; the fixed, evenly spaced
+[review sheet](../g1_cricket_results/running_first_step_v1/first_step_review.png)
+includes every rendered condition and its terminal fall. The 37 input hashes
+match frozen source `26db842d`. These are failed first-step diagnostics, not a
+running action or an advertising video.
+
+The 107 focused running, reference-dynamics, tracking, bimanual and
+contact-control tests pass with warnings treated as errors. Ruff and diff
+checks pass. Passing implementation tests do not change the 0/12 physical
+success result.
+
 ## Remaining Work
 
-The unloaded foot has not yet lifted. Forward acceleration, the transition
-into actual strides, gather, overarm release, legal planting and recovery
-remain unverified. Do not splice this prefix onto the failed running curve
+The original passing two-foot test does not lift a foot. The separate step
+candidate must pass its complete physical gates before it can supply a
+successful transition. Forward acceleration, repeated strides, gather,
+overarm release, legal planting and recovery remain unverified. Do not splice this prefix onto the failed running curve
 and call it a successful delivery. The join needs continuous state and
 achievable native support forces. No new PPO training, independent Menagerie
 learning, complete cricket qualification or advertising video is claimed.

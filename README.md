@@ -58,8 +58,9 @@ worsen joint-limit violations; transition into running and landing dynamics rema
 The new [two-foot startup test](docs/g1_cricket_running_startup.md) now completes
 settling and an 80 mm weight shift in both hands at two physics timesteps,
 without joint-stop or unintended-contact violations. This verifies a from-rest
-startup stage only: lifting the other foot, accelerating into strides and
-joining the complete delivery remain unfinished.
+startup stage only. The subsequent [first-step comparison](docs/g1_cricket_running_startup.md#first-step-results)
+achieves actual foot lift and landing with both PD variants, but all 12 trials
+fall before settling. Repeated strides and the complete delivery remain unfinished.
 Full reference and failed physical videos are
 development diagnostics, not learned bowling showcases. The research log
 retains the earlier [contact-control](docs/g1_cricket_contact_control.md) and
