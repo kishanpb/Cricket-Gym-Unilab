@@ -51,9 +51,10 @@ still fail; no final G1 advertising reel or running-bowling result is claimed.
 **Running bowling is unfinished.** Both-hand references preserve the full
 approach, gather, overarm delivery and recovery, but physical controllers and
 the [PPO pilot](docs/g1_cricket_running_tracking.md) still fall before release.
-The latest [stance-momentum and controller comparisons](docs/g1_cricket_ground_momentum.md)
-improve sampled support estimates but still expose startup, joint-limit and
-collision failures. Full reference and failed physical videos are
+The latest [full-body dynamics audit and wrist-smoothing comparison](docs/g1_cricket_ground_momentum.md#native-dynamics-and-motor-authority)
+identify excessive reference torque demands. Smoother wrists improve the
+offline motor-limit check, but physical falls and hand-thigh collisions remain.
+Full reference and failed physical videos are
 development diagnostics, not learned bowling showcases. The research log
 retains the earlier [contact-control](docs/g1_cricket_contact_control.md) and
 [physics-preview](docs/g1_cricket_preview_control.md) comparisons.
