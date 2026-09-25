@@ -79,3 +79,33 @@ torques into the controller or declaring the motion physically qualified.
 Full evidence: [projection](../g1_cricket_results/bimanual_projected_v1/projection.json),
 [original inverse audit](../g1_cricket_results/bimanual_projected_v1/original_inverse_dynamics.json.gz),
 [projected inverse audit](../g1_cricket_results/bimanual_projected_v1/projected_inverse_dynamics.json.gz).
+
+## Full Rollout Results
+
+Source `693e62fd`. All 16 episodes complete three seconds, hit after exactly
+one incoming bounce and recover upright. All contact, grip, joint/motor,
+height, root/joint tracking and unintended-contact checks pass, as do all eight
+physics-resolution comparisons. Every episode still fails the unchanged 8 cm
+bat-path gate. At 15.625 microseconds:
+
+| Hand | Control | Original peak bat error (cm) | Projected peak bat error (cm) |
+| --- | --- | ---: | ---: |
+| Right | Reference only | 13.6891 | 13.6835 |
+| Right | Frozen PPO | 14.7939 | 14.7761 |
+| Left | Reference only | 13.6537 | 13.6381 |
+| Left | Frozen PPO | 13.5804 | 13.5541 |
+
+Across the entire paired pool, the error reduction is only 0.056 to 0.263 mm.
+**Projection alone is closed as a solution to follow-through lag.** It is useful
+for separating artificial inverse constraint loads from acceleration demand,
+not as a meaningful tracking improvement or a reason to promote the candidate.
+The default reference remains unchanged. No new training or nearly identical
+video is presented as progress; the retained two-hand PPO video remains current.
+
+The [full report](../g1_cricket_results/bimanual_projected_v1/summary.json)
+retains every row, eight resolution pairs and eight reference comparisons.
+All eight baseline episode rows exactly reproduce the previous learning pilot.
+There are 2,304,000 independently replayed physical substeps; 77 baseline or 79
+projected input hashes plus the recorder hash verify per evaluation. All 160
+focused tests pass with warnings treated as errors. Running bowling and
+independent Menagerie training remain unfinished.

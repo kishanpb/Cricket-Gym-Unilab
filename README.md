@@ -47,6 +47,9 @@ The [complete learning pilot](docs/g1_cricket_batting_learning.md#complete-resul
 retains both final checkpoints and all eight evaluations: contact/stability
 checks pass, but both actors still fail the 8 cm bat-path limit. Reference-only
 control also hits; this is not evidence of robust learned interception.
+The [reference-closure study](docs/g1_cricket_projected_batting.md) separates
+grip/foot inconsistencies from inverse-dynamics loads while preserving the
+complete bat trajectory; geometric closure alone does not qualify a video.
 The earlier [frozen-actor two-hand G1 video](g1_cricket_results/bimanual_bounced_delivery_v1/two_hand_ppo_bounced_delivery.mp4)
 shows a one-bounce incoming delivery, two-handed hit and upright recovery in
 both stances at 0.5x. These are frozen dry-swing PPO actors with mechanical
