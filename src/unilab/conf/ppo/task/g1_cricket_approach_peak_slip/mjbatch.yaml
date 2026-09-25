@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_approach_feedback/mjbatch
+  - _self_
+
+reward:
+  loaded_slip:
+    func: unilab.tasks.manipulation.g1_cricket.approach_peak_slip.peak_slip_cost
