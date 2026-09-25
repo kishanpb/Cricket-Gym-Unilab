@@ -126,3 +126,61 @@ state, native replay, contact ordering, preserved tracking/contact gates and
 both timestep-specific ball-only fixtures. No new actor training, independently
 learned Menagerie policy, running-bowling result, upstream PR or social launch
 is part of this comparison.
+
+## Third-Resolution Check
+
+The next check changes only the physics timestep to 15.625 microseconds.
+Keep the launch, both frozen actors, reference controls, gains, robot, contact
+pairs, complete episodes and original gates fixed. Append all four outcomes
+under `right_finest` and `left_finest`; do not replace the original eight.
+Use the same evaluation command with `--contact-dt 0.000015625`, initially
+without rendering. Run the reporter with `--include-finest` to retain all 12
+rows and both adjacent-resolution comparisons in `resolution_refinement.json`.
+The original eight-row summary and its videos remain unchanged.
+
+This tests whether timestep refinement resolves the contact discrepancy,
+not whether a different contact material or launch can produce a better clip.
+Inspect first-bounce separation, first blade contact, complete peak force,
+penetration and exit velocity. A converged contact comparison still cannot
+clear the failed bat-path tracking check or establish learned interception.
+
+### Refinement Results
+
+All four added episodes finish three seconds, hit after one completed incoming
+bounce, and pass the same height, grip, joint/motor, unintended-contact, root
+and joint tracking checks. All still fail the 0.08 m bat-path bound. No actor
+was retrained. Finest-resolution values:
+
+| Hand / control | Exit vx (m/s) | Blade peak force (N) | Blade penetration (mm) | Peak bat-path error (m) |
+| --- | ---: | ---: | ---: | ---: |
+| Right reference | 2.6204 | 652.35 | 4.100 | 0.13689 |
+| Right PPO | 2.2298 | 593.58 | 3.747 | 0.12840 |
+| Left reference | 2.6169 | 651.08 | 4.070 | 0.13654 |
+| Left PPO | 2.3095 | 616.86 | 3.825 | 0.13707 |
+
+All four 31.25-to-15.625-microsecond comparisons pass every original contact
+check. Pitch peak force changes from 1378.99 to 1387.88 N (0.6404% relative to
+the finer result), compared with the original coarse pair's failing 5.4195%.
+The first incoming pitch event is identical across all four controllers/hands
+at each resolution:
+
+| Physics step (microseconds) | Pitch separation (s) | Rebound vx (m/s) | Rebound vz (m/s) |
+| ---: | ---: | ---: | ---: |
+| 62.5 | 1.0604996 | -2.288405 | 2.920507 |
+| 31.25 | 1.0604996 | -2.285301 | 2.812882 |
+| 15.625 | 1.0604840 | -2.287324 | 2.852002 |
+
+This is finite-grid consistency for the declared nominal feed, not material
+calibration or proof that every future policy/contact will converge. Subsequent
+batting controller studies should use 31.25 microseconds with a 15.625-microsecond
+paired audit, repeating all contact checks rather than inheriting a pass.
+
+The [12-row refinement report](../g1_cricket_results/bimanual_bounced_delivery_v1/resolution_refinement.json)
+retains both adjacent comparisons for every hand/controller. The original
+eight rows and four failed comparisons reproduce unchanged; the full report
+remains failed, not promoted. The added 768,000 substeps bring the complete
+pool to 1,344,000 audited substeps with exact independent native endpoint/sensor
+replay. All 74 input hashes plus the recorder hash per case verify, and all
+104 focused tests pass with warnings as errors. No media is regenerated or
+replaced; the existing video remains a diagnostic. Tracking accuracy,
+ball-aware learning and full running bowling remain unfinished.

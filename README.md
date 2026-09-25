@@ -45,8 +45,10 @@ shows a one-bounce incoming delivery, two-handed hit and upright recovery in
 both stances at 0.5x. These are frozen dry-swing PPO actors with mechanical
 grips and no ball observation, not learned interception. The
 [complete eight-episode study](docs/g1_cricket_bounced_delivery.md) retains every
-reference/PPO outcome: all finish and hit, but bat-path accuracy and pitch-force
-resolution checks still fail. No final advertising reel is claimed.
+reference/PPO outcome: all finish and hit, but bat-path accuracy still fails.
+A [third physics resolution](docs/g1_cricket_bounced_delivery.md#refinement-results)
+passes the finer contact comparisons while retaining the original coarse-grid
+failures. This does not clear tracking or qualify a final advertising reel.
 The earlier [soft-toss video and contact study](docs/g1_cricket_bimanual_contact.md)
 remain available; neither input is a regulation-speed delivery.
 **Running bowling is unfinished.** Both-hand references preserve the full

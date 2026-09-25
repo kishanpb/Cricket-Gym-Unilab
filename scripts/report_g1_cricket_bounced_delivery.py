@@ -43,9 +43,12 @@ def summarize_bounced_row(row):
     }
 
 
-def build_report(directory):
+def build_report(directory, *, include_finest=False):
     rows, hashes = [], {}
-    for resolution, dt in (("coarse", 0.0000625), ("fine", 0.00003125)):
+    resolutions = [("coarse", 0.0000625), ("fine", 0.00003125)]
+    if include_finest:
+        resolutions.append(("finest", 0.000015625))
+    for resolution, dt in resolutions:
         for hand in ("right", "left"):
             path = directory / f"{hand}_{resolution}" / "evaluation.json"
             report = json.loads(path.read_text())
@@ -77,10 +80,16 @@ def build_report(directory):
     comparisons = []
     for hand in ("right", "left"):
         for controller in ("reference_only", "ppo"):
-            pair = [r for r in rows if r["hand"] == hand and r["controller"] == controller]
-            comparisons.append(
-                {"hand": hand, "controller": controller, **compare_resolution(*pair)}
-            )
+            matched = [r for r in rows if r["hand"] == hand and r["controller"] == controller]
+            for coarse, fine in zip(matched, matched[1:]):
+                comparisons.append(
+                    {
+                        "hand": hand,
+                        "controller": controller,
+                        "resolutions": [coarse["resolution"], fine["resolution"]],
+                        **compare_resolution(coarse, fine),
+                    }
+                )
     return {
         "scope": "complete_frozen_actor_one_bounce_diagnostic_not_learned_interception",
         "rows": rows,
@@ -96,13 +105,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory", type=Path)
     parser.add_argument("--media", action="store_true")
+    parser.add_argument("--include-finest", action="store_true")
     args = parser.parse_args()
-    result = build_report(args.directory)
+    result = build_report(args.directory, include_finest=args.include_finest)
     if args.media:
         result["media"] = create_media(
             args.directory, suffix="_fine", name="bounced_delivery", indices=(0, 52, 69, 89, 149)
         )
-    (args.directory / "summary.json").write_text(
-        json.dumps(result, indent=2, allow_nan=False) + "\n"
-    )
+    filename = "resolution_refinement.json" if args.include_finest else "summary.json"
+    (args.directory / filename).write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
     print(json.dumps({"rows": len(result["rows"]), "all_checks_pass": result["all_checks_pass"]}))
