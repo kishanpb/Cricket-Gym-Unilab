@@ -61,7 +61,9 @@ Moving the reference lane outward lets frozen right/left policies reach 0.66 /
 reference controls are retained. The [COM and airborne rotation repair](docs/g1_cricket_running_reference.md#airborne-rotation-repair)
 now accounts for the held ball's momentum and improves both-hand foot geometry.
 Its complete physical PD trials still fall before release: the stance ankle
-already crosses its joint stop before takeoff. Full reference/physics videos
+already crosses its joint stop before takeoff. A [substep stance comparison](docs/g1_cricket_running_stance.md)
+rules out disabling ankle balance, which makes both failures earlier and worse.
+Full reference/physics videos
 remain development diagnostics, not the requested bowling showcase; no new PPO
 was trained on them.
 

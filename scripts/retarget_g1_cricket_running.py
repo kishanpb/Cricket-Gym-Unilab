@@ -36,6 +36,21 @@ def velocity_reference(model, poses, dt):
     return velocity
 
 
+def running_control(model, data, target, velocity, qa, va, *, balance_gain=4.0):
+    kp = model.actuator_gainprm[:, 0]
+    control = target[qa] - model.actuator_biasprm[:, 2] / kp * velocity[va]
+    control += data.qfrc_bias[va] / kp
+    correction = ankle_balance(target[3:7], data.qpos[3:7], data.qvel[3:6], balance_gain)
+    correction += root_position_balance(
+        target[3:7], data.qpos[:3] - target[:3], data.qvel[:3] - velocity[:3], balance_gain
+    )
+    correction = np.clip(correction, -0.3, 0.3)
+    control[[4, 10]] += correction[1]
+    control[[5, 11]] += correction[0]
+    control[14] += target[qa[14]] - data.qpos[qa[14]]
+    return control, correction
+
+
 def render_poses(model, poses, hand, path, label):
     data = mujoco.MjData(model)
     camera = mujoco.MjvCamera()
@@ -131,7 +146,6 @@ def run(hand, output, render, *, ballistic_parent=None, lane_offset=0.0, conserv
         joints = np.array([model.joint(name).id for name in SDK_JOINTS])
         qa, va = model.jnt_qposadr[joints], model.jnt_dofadr[joints]
         limits = model.jnt_range[joints]
-        kv_over_kp = -model.actuator_biasprm[:, 2] / model.actuator_gainprm[:, 0]
         holder = model.equality("ball_holder").id
         ball = model.joint("ball_free")
         bq, bv = int(ball.qposadr[0]), int(ball.dofadr[0])
@@ -139,19 +153,7 @@ def run(hand, output, render, *, ballistic_parent=None, lane_offset=0.0, conserv
         wrench = np.zeros(6)
         for tick in range(135):
             target = poses[tick]
-            control = (
-                target[qa]
-                + kv_over_kp * velocity[tick, va]
-                + data.qfrc_bias[va] / model.actuator_gainprm[:, 0]
-            )
-            correction = ankle_balance(target[3:7], data.qpos[3:7], data.qvel[3:6], 4)
-            correction += root_position_balance(
-                target[3:7], data.qpos[:3] - target[:3], data.qvel[:3] - velocity[tick, :3], 4
-            )
-            correction = np.clip(correction, -0.3, 0.3)
-            control[[4, 10]] += correction[1]
-            control[[5, 11]] += correction[0]
-            control[14] += target[qa[14]] - data.qpos[qa[14]]
+            control, _ = running_control(model, data, target, velocity[tick], qa, va)
             data.ctrl[:] = np.clip(control, limits[:, 0], limits[:, 1])
             if tick * 0.02 >= RELEASE_TIME and release is None:
                 release = {

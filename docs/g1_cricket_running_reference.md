@@ -1,5 +1,9 @@
 # Whole-Body Running Delivery Reference
 
+The subsequent [native first-stance audit](g1_cricket_running_stance.md) rules
+out disabling the ankle balance correction: it makes both physical failures
+earlier and worse. Whole-body support and braking remain unresolved.
+
 ## Airborne Rotation Repair
 
 Current [complete two-hand results](../g1_cricket_results/running_momentum_v1/evaluation.json)
