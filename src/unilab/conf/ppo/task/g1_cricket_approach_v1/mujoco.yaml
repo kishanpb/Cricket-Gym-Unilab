@@ -1,0 +1,17 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_delivery_pitch_v2/mujoco
+  - _self_
+
+training:
+  task_name: G1CricketApproach
+env:
+  max_episode_seconds: 8.0
+  auto_reset: false
+  mujoco_substep_engine: mjbatch
+  mujoco_compact_substeps: true
+  observations:
+    policy:
+      terms:
+        command:
+          func: unilab.tasks.manipulation.g1_cricket.approach.approach_command

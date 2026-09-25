@@ -182,15 +182,19 @@ class BalancedCricketReferenceAction(SupportedCricketReferenceAction):
         np.clip(self.target, self.control_limits[:, 0], self.control_limits[:, 1], out=self.target)
 
 
-def export_reference(model: mujoco.MjModel, qpos: np.ndarray, fps: int, destination: Path):
+def export_reference(
+    model: mujoco.MjModel, qpos: np.ndarray, fps: int, destination: Path, *, qvel=None
+):
     """Export offline FK in the shared MotionLoader's compiled body-ID layout."""
     data = mujoco.MjData(model)
-    velocity = np.empty((len(qpos), model.nv))
-    for index in range(len(qpos)):
-        before, after = max(index - 1, 0), min(index + 1, len(qpos) - 1)
-        mujoco.mj_differentiatePos(
-            model, velocity[index], (after - before) / fps, qpos[before], qpos[after]
-        )
+    velocity = qvel
+    if velocity is None:
+        velocity = np.empty((len(qpos), model.nv))
+        for index in range(len(qpos)):
+            before, after = max(index - 1, 0), min(index + 1, len(qpos) - 1)
+            mujoco.mj_differentiatePos(
+                model, velocity[index], (after - before) / fps, qpos[before], qpos[after]
+            )
     position = np.empty((len(qpos), model.nbody, 3))
     quaternion = np.empty((len(qpos), model.nbody, 4))
     body_velocity = np.zeros((len(qpos), model.nbody, 6))
