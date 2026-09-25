@@ -49,7 +49,7 @@ class ContactAccelerationControl:
         transform = rotation.reshape(3, 3).T @ reference_rotation.reshape(3, 3)
         desired_velocity = velocity.copy()
         desired_velocity[3:6] = transform @ velocity[3:6]
-        frame = round(data.time / 0.02)
+        frame = int((data.time + 1e-9) / 0.02)
         feedforward = self.reference_acceleration[frame].copy()
         feedforward[3:6] = transform @ feedforward[3:6]
         desired = (feedforward + 80 * error + 18 * (desired_velocity - data.qvel))[self.selected]

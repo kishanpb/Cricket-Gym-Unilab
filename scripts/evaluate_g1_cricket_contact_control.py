@@ -21,6 +21,7 @@ def main():
     parser.add_argument("reference", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--controller-substeps", type=int, choices=(32, 320), default=320)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     sources = [
@@ -44,7 +45,13 @@ def main():
             model.vis.global_.offwidth, model.vis.global_.offheight = 960, 540
             with np.load(args.reference / f"{hand}_reference.npz") as reference:
                 controller = ContactAccelerationControl(model, reference["qvel"], running_control)
-                summary, steps, poses = replay(model, reference, 4, controller=controller)
+                summary, steps, poses = replay(
+                    model,
+                    reference,
+                    4,
+                    controller=controller,
+                    controller_substeps=args.controller_substeps,
+                )
                 summary.update(
                     hand=hand, controller="contact_acceleration", optimization=controller.trace
                 )
@@ -76,6 +83,9 @@ def main():
     report = {
         "scope": "Native physical motor-only experiment, not learned bowling or promotion evidence.",
         "mujoco_version": mujoco.__version__,
+        "controller_period_s": args.controller_substeps * 0.0000625,
+        "reference_period_s": 0.02,
+        "sampling": "Force caches describe step starts, endpoint qpos follows integration. The balance correction column is zero because no correction is added after optimization; the original balanced PD command is the optimization anchor.",
         "elapsed_seconds": time.monotonic() - start,
         "columns": COLUMNS,
         "input_sha256": hashes,

@@ -5,6 +5,7 @@ from pathlib import Path
 import mujoco
 import numpy as np
 import pytest
+from audit_g1_cricket_running_stance import replay
 from retarget_g1_cricket_running import running_control
 
 from unilab.tasks.manipulation.g1_cricket.contact_control import ContactAccelerationControl
@@ -72,3 +73,26 @@ def test_acceleration_jacobian_predicts_native_directional_change(setup):
         - controller.acceleration(data, command - 1e-6 * direction)
     ) / 2e-6
     np.testing.assert_allclose(jacobian @ direction, actual, rtol=0.01, atol=0.01)
+
+
+def test_faster_controller_preserves_reference_cadence_and_native_steps(setup):
+    model, data, poses, velocity = setup
+    control = ContactAccelerationControl(model, velocity, running_control)
+    command, _ = running_control(model, data, poses[0], velocity[0], control.qa, control.va)
+    reference = {"times": np.array([0.0, 0.02]), "qpos": poses[:2], "qvel": velocity[:2]}
+    calls = []
+
+    def fixed_command(actual, target, target_velocity):
+        calls.append(actual.time)
+        np.testing.assert_array_equal(target, poses[0])
+        np.testing.assert_array_equal(target_velocity, velocity[0])
+        return command
+
+    _, steps, actual = replay(model, reference, 4, controller=fixed_command, controller_substeps=32)
+    _, original_steps, original = replay(model, reference, 4)
+    np.testing.assert_allclose(calls, np.arange(10) * 0.002, atol=1e-15)
+    np.testing.assert_array_equal(actual, original)
+    np.testing.assert_array_equal(steps[:, :2], original_steps[:, :2])
+    assert len(steps) == 320
+    with pytest.raises(ValueError, match="must divide"):
+        replay(model, reference, 4, controller_substeps=31)

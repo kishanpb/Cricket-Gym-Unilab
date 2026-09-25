@@ -29,9 +29,12 @@ def foot_loads(model, data):
     return loads
 
 
-def replay(model, reference, gain, *, controller=None):
+def replay(model, reference, gain, *, controller=None, controller_substeps=320):
     times, poses, velocity = reference["times"], reference["qpos"], reference["qvel"]
     np.testing.assert_allclose(np.diff(times), 0.02, atol=1e-15)
+    substeps = round(0.02 / model.opt.timestep)
+    if controller_substeps <= 0 or substeps % controller_substeps:
+        raise ValueError("controller period must divide the reference interval")
     joints = np.array([model.joint(name).id for name in SDK_JOINTS])
     qa, va = model.jnt_qposadr[joints], model.jnt_dofadr[joints]
     limits = model.jnt_range[joints]
@@ -42,6 +45,9 @@ def replay(model, reference, gain, *, controller=None):
     holder = model.equality("ball_holder").id
     rows, physical = [], [data.qpos.copy()]
     first_limit = None
+    unexpected = set()
+    peak_ball_penetration = 0.0
+    wrench = np.empty(6)
     for tick in range(len(times) - 1):
         control, correction = running_control(
             model, data, poses[tick], velocity[tick], qa, va, balance_gain=gain
@@ -52,10 +58,24 @@ def replay(model, reference, gain, *, controller=None):
             control, correction = controller(data, poses[tick], velocity[tick]), np.zeros(2)
         data.ctrl[:] = np.clip(control, limits[:, 0], limits[:, 1])
         min_height = float(data.qpos[2])
-        for _ in range(round(0.02 / model.opt.timestep)):
+        for substep in range(substeps):
+            if controller is not None and substep and substep % controller_substeps == 0:
+                control = controller(data, poses[tick], velocity[tick])
+                data.ctrl[:] = np.clip(control, limits[:, 0], limits[:, 1])
             start_time = data.time
             q, v = data.qpos[qa[ankle]].copy(), data.qvel[va[ankle]].copy()
             mujoco.mj_step(model, data)
+            for index, contact in enumerate(data.contact):
+                names = {model.geom(int(g)).name for g in contact.geom}
+                if "ball_geom" in names:
+                    peak_ball_penetration = max(peak_ball_penetration, -float(contact.dist))
+                if "pitch" in names and (
+                    "ball_geom" in names or any("foot" in name for name in names)
+                ):
+                    continue
+                mujoco.mj_contactForce(model, data, index, wrench)
+                if wrench[0] > 0.1:
+                    unexpected.add("/".join(sorted(names)))
             excess = np.maximum(limits[:, 0] - data.qpos[qa], data.qpos[qa] - limits[:, 1])
             if first_limit is None and excess.max() > 1e-6:
                 index = int(excess.argmax())
@@ -105,6 +125,8 @@ def replay(model, reference, gain, *, controller=None):
             "first_joint_limit": first_limit,
             "released": not bool(data.eq_active[holder]),
             "completed_horizon": len(physical) == len(poses) and min_height >= 0.48,
+            "unexpected_contacts": sorted(unexpected),
+            "peak_ball_penetration_m": peak_ball_penetration,
         },
         np.asarray(rows),
         np.asarray(physical),
