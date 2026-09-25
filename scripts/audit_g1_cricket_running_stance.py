@@ -29,7 +29,7 @@ def foot_loads(model, data):
     return loads
 
 
-def replay(model, reference, gain):
+def replay(model, reference, gain, *, controller=None):
     times, poses, velocity = reference["times"], reference["qpos"], reference["qvel"]
     np.testing.assert_allclose(np.diff(times), 0.02, atol=1e-15)
     joints = np.array([model.joint(name).id for name in SDK_JOINTS])
@@ -46,9 +46,11 @@ def replay(model, reference, gain):
         control, correction = running_control(
             model, data, poses[tick], velocity[tick], qa, va, balance_gain=gain
         )
-        data.ctrl[:] = np.clip(control, limits[:, 0], limits[:, 1])
         if times[tick] >= RELEASE_TIME:
             data.eq_active[holder] = False
+        if controller is not None:
+            control, correction = controller(data, poses[tick], velocity[tick]), np.zeros(2)
+        data.ctrl[:] = np.clip(control, limits[:, 0], limits[:, 1])
         min_height = float(data.qpos[2])
         for _ in range(round(0.02 / model.opt.timestep)):
             start_time = data.time

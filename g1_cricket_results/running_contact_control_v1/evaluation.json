@@ -1,0 +1,1275 @@
+{
+  "scope": "Native physical motor-only experiment, not learned bowling or promotion evidence.",
+  "mujoco_version": "3.11.0",
+  "elapsed_seconds": 6.2680211663246155,
+  "columns": [
+    "step_start_s",
+    "step_end_s",
+    "left_q_start",
+    "right_q_start",
+    "left_velocity_start",
+    "right_velocity_start",
+    "left_reference",
+    "right_reference",
+    "left_raw_command",
+    "right_raw_command",
+    "left_command",
+    "right_command",
+    "balance_pitch_correction",
+    "left_motor_torque",
+    "right_motor_torque",
+    "left_bias_torque",
+    "right_bias_torque",
+    "left_constraint_torque",
+    "right_constraint_torque",
+    "left_acceleration",
+    "right_acceleration",
+    "left_foot_normal_load",
+    "right_foot_normal_load",
+    "left_q_end",
+    "right_q_end",
+    "maximum_joint_limit_excess",
+    "motor_force_fraction",
+    "pelvis_height"
+  ],
+  "input_sha256": {
+    "scripts/evaluate_g1_cricket_contact_control.py": "486634360ab37056b774ca651a86b187c0af89345c6e1128416ceafcb8f5dc03",
+    "scripts/audit_g1_cricket_running_stance.py": "080eb448e5662909a6383a69c251d29749a9368394e294c4d804dd04771c163c",
+    "scripts/retarget_g1_cricket_running.py": "c951ea966581e75302d90f389eb8fa4b20bc6e6b7d9a5217ed9e56b30dce9a8d",
+    "src/unilab/assets/robots/g1/g1.xml": "bb6089243f8fe1c97a6410ccde8754eaa58e5d8e476aca69d790ce501cb4a48e",
+    "src/unilab/assets/robots/g1/scene_flat.xml": "13ce8b2c7706885fa4f041ea8ebb5c2875506512bec6cef02a0455eddb9e4de2",
+    "src/unilab/tasks/manipulation/g1_cricket/__init__.py": "043181eac62df43a6ee774e1bbd83d8b11344794db5c18fb88a726f7dcc0b86a",
+    "src/unilab/tasks/manipulation/g1_cricket/arm_geometry.py": "47aced740d3bbf992edfcc65ec5d37aa6c0e11c32f7cb3786349db8c07ed4352",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual.py": "57ad5803011b869536153465b7212b5a4a4d8fb7a91f54d8c8d38f1aa4a84282",
+    "src/unilab/tasks/manipulation/g1_cricket/bimanual_contact.py": "0ce4482b48cf7dedd86f3b644711a938150cf67085934647820c684ec5f3e9ba",
+    "src/unilab/tasks/manipulation/g1_cricket/bowling.py": "3c690fd588f29e4fae4ae2e419fba3096320bd7999df252e076f3ca1e0ba9299",
+    "src/unilab/tasks/manipulation/g1_cricket/compliance_v2.py": "e0c0def29df2caa4ef23cb46f318669b46b9942e82c939ea810dee46a0ae7005",
+    "src/unilab/tasks/manipulation/g1_cricket/contact_control.py": "585a83f04a387bcefdf6c50bff632a1865e76236bb45576569f743c62c876706",
+    "src/unilab/tasks/manipulation/g1_cricket/delivery.py": "a1a82ea56f4bb0add72b4a3fe96a603e5378c749f7871cac246be4566f1e1a46",
+    "src/unilab/tasks/manipulation/g1_cricket/forward_exit_reward.py": "113a460361bb64db6be5b58974c42de96f978e0405df8dad4617e5d45ae66e6c",
+    "src/unilab/tasks/manipulation/g1_cricket/holder.py": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8",
+    "src/unilab/tasks/manipulation/g1_cricket/impact.py": "c4cdf46ea64515324292cfe2947be8164c5de4925f67c6763e459fe2632a3a17",
+    "src/unilab/tasks/manipulation/g1_cricket/impedance.py": "7c51705a9ab41d93e587f65ec3faba11f990b5cf257068756cc6ecfed7b5486d",
+    "src/unilab/tasks/manipulation/g1_cricket/overarm.py": "06ac693650070e4434056da3f52f87dc64bd581453ba2efcff198d255fa44add",
+    "src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py": "304bffb9013bfec2d8ac57d805f2ce8156421b8024bda316f373f856fa61830f",
+    "src/unilab/tasks/manipulation/g1_cricket/prior.py": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739",
+    "src/unilab/tasks/manipulation/g1_cricket/residual.py": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c",
+    "src/unilab/tasks/manipulation/g1_cricket/running.py": "d3d64fdf4386c89ab40d3d8bba99e98a6c951a1284dcec3103187b24b5c578ae",
+    "src/unilab/tasks/manipulation/g1_cricket/running_momentum.py": "6e421bc7b1350aec8648b0a0b76cdbab613802425e15a145fd24bfffbd64eb40",
+    "src/unilab/tasks/manipulation/g1_cricket/running_task.py": "cea5ad13d85526afe4a74d1589561ca27ca7f5711106d475e71a6bae375fdcab",
+    "src/unilab/tasks/manipulation/g1_cricket/scene.py": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4",
+    "src/unilab/tasks/manipulation/g1_cricket/separation_reward.py": "e10c9a7918f67f8621d2e00af12729e31c389b1f8f7c288d90de77fcfff12994",
+    "src/unilab/tasks/manipulation/g1_cricket/substep_reward.py": "f2c2f7e35655cb4cda10f922660c004f297ee536abe9775d5e237b50206b4cb4",
+    "src/unilab/tasks/manipulation/g1_cricket/swing_reward.py": "08696424ea2556348e067c40e5c3bb9286b5caa9f89bd25add868ab87081a0a9",
+    "src/unilab/tasks/manipulation/g1_cricket/tanh_residual.py": "904a8dde165f872b200ef824466d38834e4b3d177882e7d01561995596466fa0",
+    "src/unilab/tasks/manipulation/g1_cricket/task.py": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb",
+    "src/unilab/tasks/manipulation/g1_cricket/tracking.py": "8299edf82737817cf037b8bde9f5aeb1a7d4a2508d78e4a67f0b7a27235723d0",
+    "g1_cricket_results/running_momentum_v1/right_reference.npz": "8c3b35f159694d44f32bc1ec8512fc61c4c69c33510d1ac3ab10b4b63d1d8805",
+    "g1_cricket_results/running_momentum_v1/left_reference.npz": "9d77d3c458912dbe6556f47640ebaffdaf5cd8d4b234183a66b48e474243c4dd"
+  },
+  "results": [
+    {
+      "balance_gain": 4,
+      "duration_s": 0.6199999999999963,
+      "first_joint_limit": {
+        "time_s": 0.43550000000004135,
+        "joint": "right_ankle_pitch_joint",
+        "q_rad": -0.8726970957060954,
+        "reference_rad": -0.6077606497799312,
+        "command_rad": -0.08060880567027151,
+        "limit_rad": [
+          -0.87267,
+          0.5236
+        ]
+      },
+      "released": false,
+      "completed_horizon": false,
+      "hand": "right",
+      "controller": "contact_acceleration",
+      "optimization": [
+        {
+          "time_s": 0.0,
+          "initial_score": 187072.87537071542,
+          "final_score": 623.1785852548314,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 5,
+              "score": 5497.887918894923
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 5,
+              "score": 623.1785852548314
+            }
+          ]
+        },
+        {
+          "time_s": 0.020000000000000014,
+          "initial_score": 688421.9036065354,
+          "final_score": 353229.7207363686,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 16,
+              "score": 355104.94666381297
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 16,
+              "score": 353229.7207363686
+            }
+          ]
+        },
+        {
+          "time_s": 0.04000000000000003,
+          "initial_score": 702968.3399135931,
+          "final_score": 2408.1962755168033,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 7,
+              "score": 2805.5340657942415
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 4,
+              "score": 2408.1962755168033
+            }
+          ]
+        },
+        {
+          "time_s": 0.060000000000000046,
+          "initial_score": 1352969.7901319782,
+          "final_score": 8549.690040674515,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 13,
+              "score": 12507.741418266574
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 8,
+              "score": 8549.690040674515
+            }
+          ]
+        },
+        {
+          "time_s": 0.07999999999999811,
+          "initial_score": 2223664.9522827193,
+          "final_score": 4515.089372989165,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 11,
+              "score": 7638.344529577786
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 7,
+              "score": 4515.089372989165
+            }
+          ]
+        },
+        {
+          "time_s": 0.09999999999999591,
+          "initial_score": 2905581.5617422364,
+          "final_score": 9493.73557010977,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 10,
+              "score": 19148.224336000152
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 8,
+              "score": 9493.73557010977
+            }
+          ]
+        },
+        {
+          "time_s": 0.11999999999999371,
+          "initial_score": 3524228.8763450924,
+          "final_score": 19368.74522618143,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 9,
+              "score": 25393.210871988842
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 12,
+              "score": 19368.74522618143
+            }
+          ]
+        },
+        {
+          "time_s": 0.13999999999999152,
+          "initial_score": 3415548.3543706285,
+          "final_score": 4644.292414612496,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 8,
+              "score": 6400.592160386564
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 4,
+              "score": 4644.292414612496
+            }
+          ]
+        },
+        {
+          "time_s": 0.15999999999998932,
+          "initial_score": 3182778.0919867107,
+          "final_score": 4997.703475955817,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 7,
+              "score": 5846.638123226899
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 4,
+              "score": 4997.703475955817
+            }
+          ]
+        },
+        {
+          "time_s": 0.17999999999998711,
+          "initial_score": 2526972.350100005,
+          "final_score": 7679.979938826535,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 9,
+              "score": 7679.979938826535
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 10,
+              "score": 7679.979938826535
+            }
+          ]
+        },
+        {
+          "time_s": 0.1999999999999849,
+          "initial_score": 1640352.8776102245,
+          "final_score": 3212.534582451752,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 16,
+              "score": 4657.169978998142
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 16,
+              "score": 3212.534582451752
+            }
+          ]
+        },
+        {
+          "time_s": 0.2199999999999827,
+          "initial_score": 866405.2083183243,
+          "final_score": 10855.212494774625,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 12,
+              "score": 34053.84519026722
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 18,
+              "score": 10855.212494774625
+            }
+          ]
+        },
+        {
+          "time_s": 0.2399999999999805,
+          "initial_score": 643523.1616929383,
+          "final_score": 35889.02947958767,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 15,
+              "score": 50266.547383694546
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 11,
+              "score": 35889.02947958767
+            }
+          ]
+        },
+        {
+          "time_s": 0.25999999999998274,
+          "initial_score": 403396.3203400993,
+          "final_score": 27642.73225208178,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 13,
+              "score": 37155.90308217007
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 11,
+              "score": 27642.73225208178
+            }
+          ]
+        },
+        {
+          "time_s": 0.2799999999999894,
+          "initial_score": 1387020.6548550557,
+          "final_score": 11207.290658767997,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 11,
+              "score": 14318.759127784067
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 6,
+              "score": 11207.290658767997
+            }
+          ]
+        },
+        {
+          "time_s": 0.2999999999999961,
+          "initial_score": 5317844.749832667,
+          "final_score": 15039.13574245472,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 14,
+              "score": 22747.85326952294
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 26,
+              "score": 15039.13574245472
+            }
+          ]
+        },
+        {
+          "time_s": 0.3200000000000028,
+          "initial_score": 11706395.885876015,
+          "final_score": 11835.153187201784,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 16,
+              "score": 26820.326884301965
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 10,
+              "score": 11835.153187201784
+            }
+          ]
+        },
+        {
+          "time_s": 0.34000000000000946,
+          "initial_score": 15256165.051527632,
+          "final_score": 459960.88183073374,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 12,
+              "score": 4398512.222642187
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 17,
+              "score": 459960.88183073374
+            }
+          ]
+        },
+        {
+          "time_s": 0.36000000000001614,
+          "initial_score": 26953661.174609892,
+          "final_score": 2611348.806179866,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 8,
+              "score": 11020207.067672355
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 13,
+              "score": 2611348.806179866
+            }
+          ]
+        },
+        {
+          "time_s": 0.3800000000000228,
+          "initial_score": 22314280.19050958,
+          "final_score": 7351893.3447248405,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 12,
+              "score": 7524855.881600411
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 11,
+              "score": 7351893.3447248405
+            }
+          ]
+        },
+        {
+          "time_s": 0.4000000000000295,
+          "initial_score": 6060866.996645357,
+          "final_score": 41151.6422479362,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 13,
+              "score": 151972.34850096307
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 7,
+              "score": 41151.6422479362
+            }
+          ]
+        },
+        {
+          "time_s": 0.4200000000000362,
+          "initial_score": 7461854.231964094,
+          "final_score": 136613.10729834603,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 12,
+              "score": 1081846.890182157
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 9,
+              "score": 136613.10729834603
+            }
+          ]
+        },
+        {
+          "time_s": 0.44000000000004286,
+          "initial_score": 7364779.944879735,
+          "final_score": 27886.27702649671,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 10,
+              "score": 384021.3442829285
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 8,
+              "score": 27886.27702649671
+            }
+          ]
+        },
+        {
+          "time_s": 0.46000000000004954,
+          "initial_score": 6654838.497318031,
+          "final_score": 21264.254183170306,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 17,
+              "score": 21264.254183170306
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 10,
+              "score": 21264.254183170306
+            }
+          ]
+        },
+        {
+          "time_s": 0.4800000000000562,
+          "initial_score": 1738808.0150270266,
+          "final_score": 17065.353455494896,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 18,
+              "score": 24570.228988963314
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 14,
+              "score": 17065.353455494896
+            }
+          ]
+        },
+        {
+          "time_s": 0.5000000000000628,
+          "initial_score": 1476119.688441412,
+          "final_score": 33286.3797873317,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 20,
+              "score": 46070.0967370114
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 12,
+              "score": 33286.3797873317
+            }
+          ]
+        },
+        {
+          "time_s": 0.5200000000000518,
+          "initial_score": 2244165.2895626863,
+          "final_score": 231298.6231202425,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 15,
+              "score": 306110.9909553043
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 22,
+              "score": 231298.6231202425
+            }
+          ]
+        },
+        {
+          "time_s": 0.5400000000000407,
+          "initial_score": 2069818.882469683,
+          "final_score": 27955.83892818372,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 7,
+              "score": 88365.06143499337
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 5,
+              "score": 27955.83892818372
+            }
+          ]
+        },
+        {
+          "time_s": 0.5600000000000296,
+          "initial_score": 2345040.545303707,
+          "final_score": 68905.32963053123,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 6,
+              "score": 104957.8780868205
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 3,
+              "score": 68905.32963053123
+            }
+          ]
+        },
+        {
+          "time_s": 0.5800000000000185,
+          "initial_score": 1684693.558242944,
+          "final_score": 30782.775100595896,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 20,
+              "score": 35557.061079052764
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 4,
+              "score": 30782.775100595896
+            }
+          ]
+        },
+        {
+          "time_s": 0.6000000000000074,
+          "initial_score": 3567110.8223319026,
+          "final_score": 37206.74712493277,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 15,
+              "score": 37206.74712493277
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 3,
+              "score": 37206.74712493277
+            }
+          ]
+        }
+      ],
+      "max_joint_limit_excess_rad": 0.09166074752068565,
+      "peak_motor_fraction": 1.0
+    },
+    {
+      "balance_gain": 4,
+      "duration_s": 0.7399999999999298,
+      "first_joint_limit": {
+        "time_s": 0.3710000000000198,
+        "joint": "left_ankle_pitch_joint",
+        "q_rad": -0.8729878697234513,
+        "reference_rad": -0.39798405151932476,
+        "command_rad": -0.4246660564100885,
+        "limit_rad": [
+          -0.87267,
+          0.5236
+        ]
+      },
+      "released": false,
+      "completed_horizon": false,
+      "hand": "left",
+      "controller": "contact_acceleration",
+      "optimization": [
+        {
+          "time_s": 0.0,
+          "initial_score": 187598.0699336823,
+          "final_score": 611.7246764130306,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 5,
+              "score": 5399.267124942358
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 3,
+              "score": 611.7246764130306
+            }
+          ]
+        },
+        {
+          "time_s": 0.020000000000000014,
+          "initial_score": 695576.5251290279,
+          "final_score": 354104.3662583422,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 12,
+              "score": 355577.4913622324
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 19,
+              "score": 354104.3662583422
+            }
+          ]
+        },
+        {
+          "time_s": 0.04000000000000003,
+          "initial_score": 768007.1306220272,
+          "final_score": 1824.0503655925586,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 7,
+              "score": 2511.7881196900003
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 3,
+              "score": 1824.0503655925586
+            }
+          ]
+        },
+        {
+          "time_s": 0.060000000000000046,
+          "initial_score": 1478884.073344414,
+          "final_score": 7820.167958147746,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 11,
+              "score": 13268.868558043616
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 6,
+              "score": 7820.167958147746
+            }
+          ]
+        },
+        {
+          "time_s": 0.07999999999999811,
+          "initial_score": 2466468.234558282,
+          "final_score": 5740.642186748914,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 11,
+              "score": 8175.002882015665
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 4,
+              "score": 5740.642186748914
+            }
+          ]
+        },
+        {
+          "time_s": 0.09999999999999591,
+          "initial_score": 3218603.0265056076,
+          "final_score": 11548.053108835915,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 13,
+              "score": 12670.349345740266
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 9,
+              "score": 11548.053108835915
+            }
+          ]
+        },
+        {
+          "time_s": 0.11999999999999371,
+          "initial_score": 3878944.626223485,
+          "final_score": 11220.264537895466,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 14,
+              "score": 17668.56851821483
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 8,
+              "score": 11220.264537895466
+            }
+          ]
+        },
+        {
+          "time_s": 0.13999999999999152,
+          "initial_score": 3707387.12674143,
+          "final_score": 3950.1526513656822,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 9,
+              "score": 4965.465070173473
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 4,
+              "score": 3950.1526513656822
+            }
+          ]
+        },
+        {
+          "time_s": 0.15999999999998932,
+          "initial_score": 3330551.962730911,
+          "final_score": 3713.5378504003857,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 8,
+              "score": 4327.279219664598
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 6,
+              "score": 3713.5378504003857
+            }
+          ]
+        },
+        {
+          "time_s": 0.17999999999998711,
+          "initial_score": 2653507.1397044105,
+          "final_score": 5561.182515136473,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 8,
+              "score": 5561.182515136473
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 3,
+              "score": 5561.182515136473
+            }
+          ]
+        },
+        {
+          "time_s": 0.1999999999999849,
+          "initial_score": 1793014.6926507154,
+          "final_score": 4337.770780706229,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 13,
+              "score": 5739.59896129517
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 11,
+              "score": 4337.770780706229
+            }
+          ]
+        },
+        {
+          "time_s": 0.2199999999999827,
+          "initial_score": 1026792.9014522019,
+          "final_score": 10503.169555044535,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 16,
+              "score": 40212.5546197713
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 16,
+              "score": 10503.169555044535
+            }
+          ]
+        },
+        {
+          "time_s": 0.2399999999999805,
+          "initial_score": 770753.0044666766,
+          "final_score": 41911.573313928966,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 21,
+              "score": 77109.18617675331
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 12,
+              "score": 41911.573313928966
+            }
+          ]
+        },
+        {
+          "time_s": 0.25999999999998274,
+          "initial_score": 515121.3905613909,
+          "final_score": 27200.876351995197,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 11,
+              "score": 43535.0629952952
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 8,
+              "score": 27200.876351995197
+            }
+          ]
+        },
+        {
+          "time_s": 0.2799999999999894,
+          "initial_score": 1083753.4280426,
+          "final_score": 7370.070882604771,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 13,
+              "score": 16022.069132971672
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 8,
+              "score": 7370.070882604771
+            }
+          ]
+        },
+        {
+          "time_s": 0.2999999999999961,
+          "initial_score": 3944095.214810543,
+          "final_score": 3548.706714326715,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 9,
+              "score": 5198.227206394573
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 6,
+              "score": 3548.706714326715
+            }
+          ]
+        },
+        {
+          "time_s": 0.3200000000000028,
+          "initial_score": 9282374.855421558,
+          "final_score": 3295.002883167588,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 7,
+              "score": 215575.33376479975
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 5,
+              "score": 3295.002883167588
+            }
+          ]
+        },
+        {
+          "time_s": 0.34000000000000946,
+          "initial_score": 13481601.400260156,
+          "final_score": 180889.837118369,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 18,
+              "score": 3300475.521002758
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 17,
+              "score": 180889.837118369
+            }
+          ]
+        },
+        {
+          "time_s": 0.36000000000001614,
+          "initial_score": 17112856.00926525,
+          "final_score": 468267.720708276,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 8,
+              "score": 5144592.748110374
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 13,
+              "score": 468267.720708276
+            }
+          ]
+        },
+        {
+          "time_s": 0.3800000000000228,
+          "initial_score": 31504922.908544272,
+          "final_score": 14978.343139511115,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 10,
+              "score": 3493268.2910249024
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 19,
+              "score": 14978.343139511115
+            }
+          ]
+        },
+        {
+          "time_s": 0.4000000000000295,
+          "initial_score": 11160314.703414466,
+          "final_score": 33171.43078281232,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 19,
+              "score": 68784.05158437851
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 22,
+              "score": 33171.43078281232
+            }
+          ]
+        },
+        {
+          "time_s": 0.4200000000000362,
+          "initial_score": 8418739.54373416,
+          "final_score": 3583.81548518196,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 16,
+              "score": 79453.65434817853
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 17,
+              "score": 3583.81548518196
+            }
+          ]
+        },
+        {
+          "time_s": 0.44000000000004286,
+          "initial_score": 6659348.082214909,
+          "final_score": 185554.11092241274,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 14,
+              "score": 244097.13791273313
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 14,
+              "score": 185554.11092241274
+            }
+          ]
+        },
+        {
+          "time_s": 0.46000000000004954,
+          "initial_score": 5538183.936694826,
+          "final_score": 16104.80293610663,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 10,
+              "score": 28562.862700117665
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 20,
+              "score": 16104.80293610663
+            }
+          ]
+        },
+        {
+          "time_s": 0.4800000000000562,
+          "initial_score": 4567537.864032696,
+          "final_score": 9475.086266082115,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 14,
+              "score": 22246.478884662745
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 10,
+              "score": 9475.086266082115
+            }
+          ]
+        },
+        {
+          "time_s": 0.5000000000000628,
+          "initial_score": 1531475.0760053033,
+          "final_score": 14319.718158162616,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 17,
+              "score": 14319.718158162616
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 5,
+              "score": 14319.718158162616
+            }
+          ]
+        },
+        {
+          "time_s": 0.5200000000000518,
+          "initial_score": 1760338.5032969736,
+          "final_score": 2944.600738891262,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 13,
+              "score": 13294.87661031567
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 7,
+              "score": 2944.600738891262
+            }
+          ]
+        },
+        {
+          "time_s": 0.5400000000000407,
+          "initial_score": 2609930.198889196,
+          "final_score": 50153.62845827839,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 19,
+              "score": 89047.05822109386
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 10,
+              "score": 50153.62845827839
+            }
+          ]
+        },
+        {
+          "time_s": 0.5600000000000296,
+          "initial_score": 2548386.2348855585,
+          "final_score": 42725.957476346375,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 8,
+              "score": 85283.36804277636
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 7,
+              "score": 42725.957476346375
+            }
+          ]
+        },
+        {
+          "time_s": 0.5800000000000185,
+          "initial_score": 2586098.6635130104,
+          "final_score": 26000.69709698262,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 5,
+              "score": 50455.62370131868
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 6,
+              "score": 26000.69709698262
+            }
+          ]
+        },
+        {
+          "time_s": 0.6000000000000074,
+          "initial_score": 4995729.490195235,
+          "final_score": 21710.361415077998,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 7,
+              "score": 39551.05294012386
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 4,
+              "score": 21710.361415077998
+            }
+          ]
+        },
+        {
+          "time_s": 0.6199999999999963,
+          "initial_score": 9915125.91040232,
+          "final_score": 11070.389990186359,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 13,
+              "score": 64837.756536115565
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 6,
+              "score": 11070.389990186359
+            }
+          ]
+        },
+        {
+          "time_s": 0.6399999999999852,
+          "initial_score": 14110453.910850318,
+          "final_score": 87515.59144528279,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 9,
+              "score": 2043327.0681007567
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 12,
+              "score": 87515.59144528279
+            }
+          ]
+        },
+        {
+          "time_s": 0.6599999999999742,
+          "initial_score": 17411656.683002748,
+          "final_score": 79379.72083129497,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 11,
+              "score": 1223231.7922021633
+            },
+            {
+              "solver_status": 1,
+              "solver_iterations": 15,
+              "score": 79379.72083129497
+            }
+          ]
+        },
+        {
+          "time_s": 0.6799999999999631,
+          "initial_score": 21732941.53487581,
+          "final_score": 43394.35432919035,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 11,
+              "score": 2634195.2846269105
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 10,
+              "score": 43394.35432919035
+            }
+          ]
+        },
+        {
+          "time_s": 0.699999999999952,
+          "initial_score": 22723799.103780847,
+          "final_score": 203220.89392650325,
+          "stages": [
+            {
+              "solver_status": 2,
+              "solver_iterations": 15,
+              "score": 2611134.5799904596
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 14,
+              "score": 203220.89392650325
+            }
+          ]
+        },
+        {
+          "time_s": 0.7199999999999409,
+          "initial_score": 31489651.548318364,
+          "final_score": 2194992.599735653,
+          "stages": [
+            {
+              "solver_status": 1,
+              "solver_iterations": 10,
+              "score": 4809750.925822901
+            },
+            {
+              "solver_status": 2,
+              "solver_iterations": 7,
+              "score": 2194992.599735653
+            }
+          ]
+        }
+      ],
+      "max_joint_limit_excess_rad": 0.08126883293707299,
+      "peak_motor_fraction": 1.0
+    }
+  ],
+  "guard": "The local acceleration objective is a controller diagnostic, not a physical success metric. Full cricket/contact gates remain required."
+}
