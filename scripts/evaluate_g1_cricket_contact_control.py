@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import time
+from contextlib import ExitStack
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -14,6 +15,7 @@ from retarget_g1_cricket_running import ROBOT, ROOT, render_poses, running_contr
 
 from unilab.tasks.manipulation.g1_cricket.contact_control import ContactAccelerationControl
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
+from unilab.tasks.manipulation.g1_cricket.preview_control import PreviewControl, build_preview_model
 
 
 def main():
@@ -23,7 +25,10 @@ def main():
     parser.add_argument("--render", action="store_true")
     parser.add_argument("--controller-substeps", type=int, choices=(32, 320), default=320)
     parser.add_argument("--track-feet", action="store_true")
+    parser.add_argument("--preview", action="store_true")
     args = parser.parse_args()
+    if args.preview and (args.controller_substeps != 320 or args.track_feet):
+        parser.error("preview uses 20ms decisions and includes its own foot-tracking anchor")
     args.output.mkdir(parents=True, exist_ok=False)
     sources = [
         Path(__file__).resolve(),
@@ -44,13 +49,23 @@ def main():
             model = mujoco.MjModel.from_xml_path(str(scene))
             model.opt.timestep = 0.0000625
             model.vis.global_.offwidth, model.vis.global_.offheight = 960, 540
-            with np.load(args.reference / f"{hand}_reference.npz") as reference:
-                controller = ContactAccelerationControl(
-                    model,
-                    reference["qvel"],
-                    running_control,
-                    foot_reference=reference["qpos"] if args.track_feet else None,
-                )
+            with (
+                np.load(args.reference / f"{hand}_reference.npz") as reference,
+                ExitStack() as cleanup,
+            ):
+                if args.preview:
+                    preview = build_preview_model(
+                        scene, Path(temporary) / f"{hand}_preview.xml", model.opt.timestep
+                    )
+                    controller = PreviewControl(model, preview, reference, running_control)
+                    cleanup.callback(controller.close)
+                else:
+                    controller = ContactAccelerationControl(
+                        model,
+                        reference["qvel"],
+                        running_control,
+                        foot_reference=reference["qpos"] if args.track_feet else None,
+                    )
                 summary, steps, poses = replay(
                     model,
                     reference,
@@ -59,7 +74,9 @@ def main():
                     controller_substeps=args.controller_substeps,
                 )
                 summary.update(
-                    hand=hand, controller="contact_acceleration", optimization=controller.trace
+                    hand=hand,
+                    controller="preview" if args.preview else "contact_acceleration",
+                    optimization=controller.trace,
                 )
                 summary["max_joint_limit_excess_rad"] = float(
                     steps[:, COLUMNS.index("maximum_joint_limit_excess")].max()
@@ -74,7 +91,9 @@ def main():
                         poses,
                         hand,
                         args.output / f"{hand}.mp4",
-                        "PHYSICAL CONTACT CONTROL, NOT PPO",
+                        "PHYSICAL PREVIEW CONTROL, NOT PPO"
+                        if args.preview
+                        else "PHYSICAL CONTACT CONTROL, NOT PPO",
                     )
                 results.append(summary)
                 print(
@@ -92,6 +111,16 @@ def main():
         "controller_period_s": args.controller_substeps * 0.0000625,
         "reference_period_s": 0.02,
         "track_feet": args.track_feet,
+        "preview": {
+            "enabled": args.preview,
+            "seed": 1,
+            "samples": 24,
+            "horizon_s": 0.12,
+            "stages": 2,
+            "threads": 2,
+        }
+        if args.preview
+        else None,
         "sampling": "Force caches describe step starts, endpoint qpos follows integration. The balance correction column is zero because no correction is added after optimization; the original balanced PD command is the optimization anchor.",
         "elapsed_seconds": time.monotonic() - start,
         "columns": COLUMNS,
