@@ -89,7 +89,9 @@ def test_bat_reference_uses_forward_kinematics_without_changing_poses():
 
 
 @pytest.mark.parametrize("same_output", [False, True])
-@pytest.mark.parametrize("term", ["waist_tracking_gain", "root_position_gain", "lookahead_frames"])
+@pytest.mark.parametrize(
+    "term", ["waist_tracking_gain", "root_position_gain", "lookahead_frames", "reference_directory"]
+)
 def test_controller_variant_cannot_overwrite_parent(tmp_path, same_output, term):
     with pytest.raises(ValueError, match="separate output"):
         evaluate(tmp_path, output=tmp_path if same_output else None, **{term: 2})

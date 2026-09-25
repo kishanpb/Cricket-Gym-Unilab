@@ -247,12 +247,14 @@ def evaluate(
     soft_toss=False,
     bounced_delivery=False,
     compact_substeps=False,
+    reference_directory=None,
 ):
     if (
         waist_tracking_gain is not None
         or root_position_gain is not None
         or lookahead_frames is not None
         or contact_dt is not None
+        or reference_directory is not None
     ) and (output is None or output.resolve() == directory.resolve()):
         raise ValueError("controller variants require a separate output directory")
     if soft_toss and bounced_delivery:
@@ -269,6 +271,29 @@ def evaluate(
     if learned_batting and (not bounced_delivery or contact_dt is None):
         raise ValueError("batting learning evaluation requires bounced delivery and contact_dt")
     evaluation_overrides = {}
+    original_reference = None
+    projection_manifest = None
+    if reference_directory is not None:
+        if not learned_batting or not bounced_delivery:
+            raise ValueError("reference projection requires the ball-observed batting task")
+        original_reference = ROOT / owner.env.actions.reference.reference_file
+        projection_manifest = reference_directory / "projection.json"
+        projection = json.loads(projection_manifest.read_text())
+        if not projection["kinematic_pass"]:
+            raise ValueError("projected reference did not pass kinematic checks")
+        for name, digest in projection["output_sha256"].items():
+            if hashlib.sha256((reference_directory / name).read_bytes()).hexdigest() != digest:
+                raise ValueError("projected reference output changed")
+        hand = owner.env.handedness
+        owner.env.actions.reference.reference_file = str(
+            (reference_directory / f"{hand}_reference.npz").resolve().relative_to(ROOT)
+        )
+        owner.env.commands.motion.params.motion_file = str(
+            (reference_directory / f"{hand}_tracking.npz").resolve().relative_to(ROOT)
+        )
+        evaluation_overrides["reference_directory"] = str(
+            reference_directory.resolve().relative_to(ROOT)
+        )
     if compact_substeps:
         OmegaConf.set_struct(owner, False)
         owner.env.mujoco_group_identical_models = True
@@ -319,6 +344,8 @@ def evaluate(
     inputs += [mesh_dir / mesh.get("file") for mesh in robot_xml.findall("asset/mesh[@file]")]
     if "reference_file" in owner.env.actions.reference:
         inputs.append(ROOT / owner.env.actions.reference.reference_file)
+    if projection_manifest is not None:
+        inputs += [projection_manifest, original_reference]
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
     inputs += [ROOT / "src/unilab/base/mujoco_substeps.py"]
     hashes = {
@@ -371,6 +398,11 @@ def evaluate(
             with np.load(ROOT / owner.env.actions.reference.reference_file) as reference:
                 bat_reference = reference_bat_positions(model, reference["qpos"])
                 root_reference = reference["qpos"][:, :3].copy()
+            if projection_manifest is not None:
+                with np.load(original_reference) as reference:
+                    original_bat = reference_bat_positions(model, reference["qpos"])
+                np.testing.assert_allclose(bat_reference, original_bat, atol=1e-8, rtol=0)
+                bat_reference = original_bat
         display = (
             visual_model(Path(env.scene_directory.name) / "cricket.xml", model) if render else None
         )
@@ -474,7 +506,9 @@ def evaluate(
                         )
                         draw.text(
                             (12, 34),
-                            "Ball/contact-observed PPO task, fixed feed | mechanical grips | 0.5x"
+                            "Frozen PPO, projected reference | mechanical grips | 0.5x"
+                            if reference_directory is not None
+                            else "Ball/contact-observed PPO task, fixed feed | mechanical grips | 0.5x"
                             if learned_batting
                             else "Frozen dry-swing actor, no ball observation | mechanical grips | 0.5x"
                             if soft_toss or bounced_delivery
@@ -524,7 +558,9 @@ def evaluate(
     finally:
         env.close()
     report = {
-        "scope": "ball_contact_observed_ppo_nominal_bounced_delivery_not_held_out"
+        "scope": "frozen_ball_observed_ppo_projected_reference_not_retrained"
+        if reference_directory is not None
+        else "ball_contact_observed_ppo_nominal_bounced_delivery_not_held_out"
         if learned_batting
         else "frozen_dry_swing_actor_bounced_delivery_not_learned_interception"
         if bounced_delivery
@@ -566,6 +602,7 @@ if __name__ == "__main__":
     parser.add_argument("--soft-toss", action="store_true")
     parser.add_argument("--bounced-delivery", action="store_true")
     parser.add_argument("--compact-substeps", action="store_true")
+    parser.add_argument("--reference-directory", type=Path)
     args = parser.parse_args()
     evaluate(
         args.directory,
@@ -578,4 +615,5 @@ if __name__ == "__main__":
         soft_toss=args.soft_toss,
         bounced_delivery=args.bounced_delivery,
         compact_substeps=args.compact_substeps,
+        reference_directory=args.reference_directory,
     )
