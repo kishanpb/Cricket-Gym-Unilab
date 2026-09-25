@@ -22,6 +22,7 @@ def main():
     parser.add_argument("output", type=Path)
     parser.add_argument("--render", action="store_true")
     parser.add_argument("--controller-substeps", type=int, choices=(32, 320), default=320)
+    parser.add_argument("--track-feet", action="store_true")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     sources = [
@@ -44,7 +45,12 @@ def main():
             model.opt.timestep = 0.0000625
             model.vis.global_.offwidth, model.vis.global_.offheight = 960, 540
             with np.load(args.reference / f"{hand}_reference.npz") as reference:
-                controller = ContactAccelerationControl(model, reference["qvel"], running_control)
+                controller = ContactAccelerationControl(
+                    model,
+                    reference["qvel"],
+                    running_control,
+                    foot_reference=reference["qpos"] if args.track_feet else None,
+                )
                 summary, steps, poses = replay(
                     model,
                     reference,
@@ -85,6 +91,7 @@ def main():
         "mujoco_version": mujoco.__version__,
         "controller_period_s": args.controller_substeps * 0.0000625,
         "reference_period_s": 0.02,
+        "track_feet": args.track_feet,
         "sampling": "Force caches describe step starts, endpoint qpos follows integration. The balance correction column is zero because no correction is added after optimization; the original balanced PD command is the optimization anchor.",
         "elapsed_seconds": time.monotonic() - start,
         "columns": COLUMNS,

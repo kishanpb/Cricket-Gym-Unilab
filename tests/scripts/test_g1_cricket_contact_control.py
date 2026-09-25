@@ -31,9 +31,12 @@ def setup(request, tmp_path):
     return model, data, poses, velocity
 
 
-def test_control_keeps_native_state_and_original_limits(setup, monkeypatch):
+@pytest.mark.parametrize("track_feet", [False, True])
+def test_control_keeps_native_state_and_original_limits(setup, monkeypatch, track_feet):
     model, data, poses, velocity = setup
-    controller = ContactAccelerationControl(model, velocity, running_control)
+    controller = ContactAccelerationControl(
+        model, velocity, running_control, foot_reference=poses if track_feet else None
+    )
     spec = mujoco.mjtState.mjSTATE_INTEGRATION
     before = np.empty(mujoco.mj_stateSize(model, spec))
     mujoco.mj_getState(model, data, before, spec)
@@ -96,3 +99,28 @@ def test_faster_controller_preserves_reference_cadence_and_native_steps(setup):
     assert len(steps) == 320
     with pytest.raises(ValueError, match="must divide"):
         replay(model, reference, 4, controller_substeps=31)
+
+
+def test_foot_acceleration_map_matches_finite_difference_kinematics(setup):
+    model, data, poses, velocity = setup
+    controller = ContactAccelerationControl(model, velocity, running_control, foot_reference=poses)
+    task, target = controller.foot_tasks(data, 0)
+    assert task.shape == (6, 35) and target.shape == (6,)
+    np.testing.assert_allclose(controller.foot_positions[0], data.xpos[controller.feet], atol=1e-15)
+    h = 1e-5
+    positions = []
+    for sign in (-1, 1):
+        shifted = mujoco.MjData(model)
+        mujoco.mj_copyData(shifted, model, data)
+        mujoco.mj_integratePos(
+            model, shifted.qpos, data.qvel + sign * 0.5 * h * data.qacc, sign * h
+        )
+        mujoco.mj_kinematics(model, shifted)
+        positions.append(shifted.xpos[controller.feet].copy())
+    numeric = (positions[0] - 2 * data.xpos[controller.feet] + positions[1]) / h**2
+    for index, body in enumerate(controller.feet):
+        jacobian = controller.foot_jacobian(data, body)
+        derivative = np.empty_like(jacobian)
+        mujoco.mj_jacDot(model, data, derivative, None, data.xpos[body], body)
+        predicted = jacobian @ data.qacc + derivative @ data.qvel
+        np.testing.assert_allclose(predicted, numeric[index], atol=1e-3, rtol=1e-4)

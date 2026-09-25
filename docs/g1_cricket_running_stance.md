@@ -1,5 +1,9 @@
 # Running Stance Diagnosis
 
+The subsequent [whole-body contact-control comparisons](g1_cricket_contact_control.md)
+test native acceleration feedback and explicit foot tracking; all remain failed
+physical experiments, not a qualified running teacher.
+
 This fixed comparison replays both complete `running_momentum_v1` references
 with the original PD controller and with its ankle balance correction disabled.
 Only that correction changes. Neither hand completes delivery under either

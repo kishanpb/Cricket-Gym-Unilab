@@ -63,6 +63,9 @@ now accounts for the held ball's momentum and improves both-hand foot geometry.
 Its complete physical PD trials still fall before release: the stance ankle
 already crosses its joint stop before takeoff. A [substep stance comparison](docs/g1_cricket_running_stance.md)
 rules out disabling ankle balance, which makes both failures earlier and worse.
+The subsequent [whole-body contact-control comparisons](docs/g1_cricket_contact_control.md)
+delay some joint violations but still fall before release; foot tracking alone
+does not solve multi-step balance or leg collisions.
 Full reference/physics videos
 remain development diagnostics, not the requested bowling showcase; no new PPO
 was trained on them.
