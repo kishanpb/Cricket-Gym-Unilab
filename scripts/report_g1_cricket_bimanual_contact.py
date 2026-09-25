@@ -133,16 +133,15 @@ def build_report(directory):
     }
 
 
-def create_media(directory):
+def create_media(directory, *, suffix="_fine_toss", name="soft_toss", indices=(0, 56, 69, 89, 149)):
     import imageio.v2 as imageio
     from PIL import Image
 
-    combined = directory / "two_hand_ppo_soft_toss.mp4"
+    combined = directory / f"two_hand_ppo_{name}.mp4"
     sheet = Image.new("RGB", (1920, 432))
-    indices = (0, 56, 69, 89, 149)
     with imageio.get_writer(combined, fps=25, macro_block_size=1) as writer:
         for row, hand in enumerate(("right", "left")):
-            path = directory / f"{hand}_fine_toss" / "ppo_diagnostic.mp4"
+            path = directory / f"{hand}{suffix}" / "ppo_diagnostic.mp4"
             count = 0
             with imageio.get_reader(path) as reader:
                 for index, frame in enumerate(reader):
@@ -163,12 +162,12 @@ def create_media(directory):
             count += 1
     if count != 350:
         raise ValueError("combined video failed decode validation")
-    sheet.save(directory / "soft_toss_contact_sheet.png")
+    sheet.save(directory / f"{name}_contact_sheet.png")
     return {
         "combined_frames": count,
         "fps": 25,
         "physical_speed": 0.5,
-        "contact_sheet_times_s": [0.02, 1.14, 1.40, 1.80, 3.00],
+        "contact_sheet_times_s": [round((index + 1) * 0.02, 2) for index in indices],
     }
 
 

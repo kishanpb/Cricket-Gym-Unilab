@@ -2,8 +2,11 @@
 
 from copy import deepcopy
 
+import numpy as np
 import pytest
+from evaluate_g1_cricket_tracking import BallContactSequence
 from report_g1_cricket_bimanual_contact import compare_resolution, summarize_row
+from report_g1_cricket_bounced_delivery import summarize_bounced_row
 
 
 @pytest.fixture
@@ -87,3 +90,26 @@ def test_resolution_uses_complete_pair_not_only_exit_velocity(row):
     coarse = deepcopy(fine)
     coarse["ball_contacts"]["ball_geom/pitch"] = {"peak_force_n": 1, "penetration_m": 0.001}
     assert not compare_resolution(coarse, fine)["all_pass"]
+
+
+@pytest.mark.parametrize("case", ["one", "none", "two", "incomplete", "after", "upward"])
+def test_one_bounce_requires_completed_incoming_pitch_before_blade(row, case):
+    sequence = BallContactSequence()
+    position = np.array([0.8, 0, 0.036])
+    down, up = np.array([-3, 0, -6]), np.array([-2.3, 0, 3])
+    if case == "after":
+        sequence.update(0.9, position, down, down, False, True)
+    if case != "none":
+        sequence.update(1.0, position, up if case == "upward" else down, down, True, False)
+        early = sequence.snapshot()
+        if case != "incomplete":
+            sequence.update(1.02, position, up, up, False, False)
+            assert "end_s" not in early["pitch_events"][0]
+    if case == "two":
+        sequence.update(1.2, position, down, down, True, False)
+        sequence.update(1.22, position, up, up, False, False)
+    sequence.update(1.4, position, down, up, case == "incomplete", True)
+    row["trace"][-1]["substep_audit"]["ball_contact_sequence"] = sequence.snapshot()
+    result = summarize_bounced_row(row)
+    assert result["all_checks_pass"] == (case == "one")
+    assert result["delivery_checks"]["exactly_one_completed_bounce_before_blade"] == (case == "one")

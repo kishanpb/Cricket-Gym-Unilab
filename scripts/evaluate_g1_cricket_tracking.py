@@ -22,6 +22,40 @@ from unilab.training import algo_config_dict
 ROOT = Path(__file__).resolve().parents[1]
 
 
+class BallContactSequence:
+    """Track loaded pitch intervals and the first blade contact in substep order."""
+
+    def __init__(self):
+        self.pitch_loaded = False
+        self.pitch_events = []
+        self.first_blade_contact = None
+
+    def update(self, time, position, before_velocity, velocity, pitch_loaded, blade_loaded):
+        if pitch_loaded and not self.pitch_loaded:
+            self.pitch_events.append(
+                {
+                    "start_s": float(time),
+                    "position_m": position.tolist(),
+                    "incoming_velocity_m_s": before_velocity.tolist(),
+                }
+            )
+        if self.pitch_loaded and not pitch_loaded:
+            self.pitch_events[-1].update(end_s=float(time), outgoing_velocity_m_s=velocity.tolist())
+        self.pitch_loaded = pitch_loaded
+        if blade_loaded and self.first_blade_contact is None:
+            self.first_blade_contact = {
+                "time_s": float(time),
+                "position_m": position.tolist(),
+                "incoming_velocity_m_s": before_velocity.tolist(),
+            }
+
+    def snapshot(self):
+        return {
+            "pitch_events": [dict(event) for event in self.pitch_events],
+            "first_blade_contact": self.first_blade_contact,
+        }
+
+
 def reference_bat_positions(model, poses):
     data = mujoco.MjData(model)
     positions = []
@@ -42,6 +76,7 @@ class TrackingReplay:
         self.ball_contact = ball_contact
         self.blade_loaded = False
         self.first_separation = None
+        self.ball_sequence = BallContactSequence()
         self.sensors = env.scene.bind_sensor_data(
             tuple(self.model.sensor(i).name for i in range(self.model.nsensor))
         )
@@ -70,6 +105,10 @@ class TrackingReplay:
         minimum_height = float(data.qpos[2])
         ball_contacts = {}
         for _ in range(env.cfg.sim_substeps):
+            if self.ball_contact:
+                ball_joint = model.joint("ball_free")
+                qa, va = int(ball_joint.qposadr[0]), int(ball_joint.dofadr[0])
+                before_velocity = data.qvel[va : va + 3].copy()
             mujoco.mj_step(model, data)
             minimum_height = min(minimum_height, float(data.qpos[2]))
             q = data.qpos[model.jnt_qposadr[joints]]
@@ -140,6 +179,14 @@ class TrackingReplay:
             for pair in loaded_pairs:
                 ball_contacts[pair]["duration_s"] += model.opt.timestep
             if self.ball_contact:
+                self.ball_sequence.update(
+                    data.time,
+                    data.qpos[qa : qa + 3],
+                    before_velocity,
+                    data.qvel[va : va + 3],
+                    "ball_geom/pitch" in loaded_pairs,
+                    blade_loaded,
+                )
                 if self.blade_loaded and not blade_loaded and self.first_separation is None:
                     address = model.joint("ball_free").dofadr[0]
                     self.first_separation = {
@@ -169,6 +216,7 @@ class TrackingReplay:
         if self.ball_contact:
             result["ball_contacts"] = ball_contacts
             result["first_force_free_blade_exit"] = self.first_separation
+            result["ball_contact_sequence"] = self.ball_sequence.snapshot()
         return result
 
 
@@ -205,18 +253,29 @@ def evaluate(
     root_position_gain=None,
     contact_dt=None,
     soft_toss=False,
+    bounced_delivery=False,
+    compact_substeps=False,
 ):
     if (
         waist_tracking_gain is not None or root_position_gain is not None or contact_dt is not None
     ) and (output is None or output.resolve() == directory.resolve()):
         raise ValueError("controller variants require a separate output directory")
-    if soft_toss and contact_dt is None:
-        raise ValueError("soft toss requires the fine-resolution contact model")
+    if soft_toss and bounced_delivery:
+        raise ValueError("select only one incoming delivery")
+    if (soft_toss or bounced_delivery) and contact_dt is None:
+        raise ValueError("incoming delivery requires the fine-resolution contact model")
+    if compact_substeps and (output is None or output.resolve() == directory.resolve()):
+        raise ValueError("recorder variants require a separate output directory")
     saved = json.loads((directory / "run_config.json").read_text())
     summary = json.loads((directory / "run_summary.json").read_text())
     checkpoint = Path(summary["last_checkpoint"])
     owner = OmegaConf.create(saved["config"])
     evaluation_overrides = {}
+    if compact_substeps:
+        OmegaConf.set_struct(owner, False)
+        owner.env.mujoco_group_identical_models = True
+        owner.env.mujoco_compact_substeps = True
+        evaluation_overrides["compact_substeps"] = True
     if waist_tracking_gain is not None:
         owner.env.actions.reference.waist_tracking_gain = waist_tracking_gain
         evaluation_overrides["waist_tracking_gain"] = waist_tracking_gain
@@ -226,14 +285,17 @@ def evaluate(
     if contact_dt is not None:
         owner.env.sim_dt = contact_dt
         evaluation_overrides.update(contact_dt=contact_dt, soft_toss=soft_toss)
-        if soft_toss:
+        if bounced_delivery:
+            evaluation_overrides["bounced_delivery"] = True
+        if soft_toss or bounced_delivery:
             owner.env.scene.entities.ball = {
                 "root_body_name": "cricket_ball",
                 "body_names": ["cricket_ball"],
             }
             owner.env.events = {
-                "soft_toss": {
-                    "func": "unilab.tasks.manipulation.g1_cricket.bimanual_contact.ResetSoftToss",
+                "incoming_delivery": {
+                    "func": "unilab.tasks.manipulation.g1_cricket.bimanual_contact."
+                    + ("ResetBouncedDelivery" if bounced_delivery else "ResetSoftToss"),
                     "mode": "reset",
                 }
             }
@@ -256,9 +318,18 @@ def evaluate(
     if "reference_file" in owner.env.actions.reference:
         inputs.append(ROOT / owner.env.actions.reference.reference_file)
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
+    inputs += [ROOT / "src/unilab/base/mujoco_substeps.py"]
     hashes = {
         str(p.resolve().relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
         for p in inputs
+    }
+    runtime_inputs = {}
+    if owner.env.get("mujoco_substep_engine") == "mjbatch":
+        import mjbatch.held_control
+
+        runtime_inputs["mjbatch.held_control"] = Path(mjbatch.held_control.__file__)
+    runtime_hashes = {
+        name: hashlib.sha256(path.read_bytes()).hexdigest() for name, path in runtime_inputs.items()
     }
     hand = owner.env.handedness
     override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
@@ -391,13 +462,14 @@ def evaluate(
                         font = ImageFont.load_default(size=18)
                         draw.text(
                             (12, 8),
-                            f"G1 {hand} | {controller} | two-hand {'soft toss' if soft_toss else 'dry swing'} | t={data.time:.2f}s",
+                            f"G1 {hand} | {controller} | two-hand "
+                            f"{'bounced delivery' if bounced_delivery else 'soft toss' if soft_toss else 'dry swing'} | t={data.time:.2f}s",
                             font=font,
                         )
                         draw.text(
                             (12, 34),
                             "Frozen dry-swing actor, no ball observation | mechanical grips | 0.5x"
-                            if soft_toss
+                            if soft_toss or bounced_delivery
                             else "Development episode, no ball-hit claim | mechanical grips | 0.5x",
                             font=font,
                         )
@@ -444,7 +516,9 @@ def evaluate(
     finally:
         env.close()
     report = {
-        "scope": "frozen_dry_swing_actor_soft_toss_not_learned_interception"
+        "scope": "frozen_dry_swing_actor_bounced_delivery_not_learned_interception"
+        if bounced_delivery
+        else "frozen_dry_swing_actor_soft_toss_not_learned_interception"
         if soft_toss
         else "deterministic_development_dry_swing_not_held_out_cricket",
         "checkpoint_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
@@ -452,6 +526,7 @@ def evaluate(
         "mujoco_version": mujoco.__version__,
         "rows": rows,
         "input_sha256": hashes,
+        "runtime_source_sha256": runtime_hashes,
         "substep_audit": "all intervals independently replayed; exact native endpoint and sensor agreement; simulated loads are uncalibrated",
     }
     if any(
@@ -459,6 +534,11 @@ def evaluate(
         for p in inputs
     ):
         raise RuntimeError("evaluation inputs changed during execution")
+    if any(
+        hashlib.sha256(path.read_bytes()).hexdigest() != runtime_hashes[name]
+        for name, path in runtime_inputs.items()
+    ):
+        raise RuntimeError("recorder source changed during execution")
     (output / "evaluation.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
     print([{key: value for key, value in row.items() if key != "trace"} for row in rows])
     return report
@@ -473,6 +553,8 @@ if __name__ == "__main__":
     parser.add_argument("--root-position-gain", type=float)
     parser.add_argument("--contact-dt", type=float)
     parser.add_argument("--soft-toss", action="store_true")
+    parser.add_argument("--bounced-delivery", action="store_true")
+    parser.add_argument("--compact-substeps", action="store_true")
     args = parser.parse_args()
     evaluate(
         args.directory,
@@ -482,4 +564,6 @@ if __name__ == "__main__":
         root_position_gain=args.root_position_gain,
         contact_dt=args.contact_dt,
         soft_toss=args.soft_toss,
+        bounced_delivery=args.bounced_delivery,
+        compact_substeps=args.compact_substeps,
     )
