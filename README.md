@@ -66,6 +66,9 @@ rules out disabling ankle balance, which makes both failures earlier and worse.
 The subsequent [whole-body contact-control comparisons](docs/g1_cricket_contact_control.md)
 delay some joint violations but still fall before release; foot tracking alone
 does not solve multi-step balance or leg collisions.
+The [native 120 ms preview experiment](docs/g1_cricket_preview_control.md)
+avoids joint-limit crossings in both fixed episodes, but still falls at
+0.86/1.04 s with unwanted arm/body contacts, before either delivery.
 Full reference/physics videos
 remain development diagnostics, not the requested bowling showcase; no new PPO
 was trained on them.
