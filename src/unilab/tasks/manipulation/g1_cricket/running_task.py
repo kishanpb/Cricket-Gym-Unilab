@@ -11,7 +11,7 @@ from unilab.utils.rotation import np_quat_apply_batched
 from .bowling import HOLDER_SENSORS
 from .prior import SDK_JOINTS
 from .running import RELEASE_TIME
-from .scene import CONTACT_WIDTH
+from .scene import CONTACT_WIDTH, SUPPORT_NAMES, SUPPORT_SLOTS
 from .tracking import (
     CricketReferenceAction,
     CricketReferenceActionCfg,
@@ -60,6 +60,8 @@ class RunningReferenceActionCfg(CricketReferenceActionCfg):
     balance_gain: float = 4.0
     root_position_gain: float = 4.0
     waist_tracking_gain: float = 1.0
+    use_reference_torque: bool = False
+    release_time: float | None = RELEASE_TIME
 
     def build(self, env):
         return RunningReferenceAction(self, env)
@@ -77,19 +79,25 @@ class RunningReferenceAction(CricketReferenceAction):
         self.velocity_gain = -model.actuator_biasprm[:, 2] / model.actuator_gainprm[:, 0]
         with np.load(cfg.reference_file) as saved:
             self.poses = saved["qpos"].copy()
+            torque = saved["torque"].copy() if cfg.use_reference_torque else None
         motion = self.command.motion.get_motion_at_frame(np.arange(len(self.poses)))
         np.testing.assert_allclose(
             motion.joint_pos, self.poses[:, model.jnt_qposadr[joints]], atol=1e-6, rtol=0
         )
         self.root_velocity = motion.body_lin_vel_w[:, 0]
-        data = mujoco.MjData(model)
-        self.bias_offset = np.empty((len(self.poses), 29))
-        for i, pose in enumerate(self.poses):
-            data.qpos[:] = pose
-            mujoco.mj_forward(model, data)
-            self.bias_offset[i] = (
-                data.qfrc_bias[model.jnt_dofadr[joints]] / model.actuator_gainprm[:, 0]
-            )
+        if torque is not None:
+            if torque.shape != (len(self.poses), 29) or not np.isfinite(torque).all():
+                raise ValueError("reference torque must contain finite 29-joint frame values")
+            self.bias_offset = torque / model.actuator_gainprm[:, 0]
+        else:
+            data = mujoco.MjData(model)
+            self.bias_offset = np.empty((len(self.poses), 29))
+            for i, pose in enumerate(self.poses):
+                data.qpos[:] = pose
+                mujoco.mj_forward(model, data)
+                self.bias_offset[i] = (
+                    data.qfrc_bias[model.jnt_dofadr[joints]] / model.actuator_gainprm[:, 0]
+                )
         self.released = np.zeros(env.num_envs, dtype=bool)
         self.just_released = self.released.copy()
         self.release_physics = np.zeros(
@@ -130,7 +138,11 @@ class RunningReferenceAction(CricketReferenceAction):
             self.command.joint_pos[:, 14] - robot.joint_pos[:, 14]
         )
         np.clip(self.target, self.control_limits[:, 0], self.control_limits[:, 1], out=self.target)
-        self.just_released[:] = ~self.released & (frames / self.command.motion.fps >= RELEASE_TIME)
+        self.just_released[:] = False
+        if self.cfg.release_time is not None:
+            self.just_released[:] = ~self.released & (
+                frames / self.command.motion.fps >= self.cfg.release_time
+            )
         ids = np.flatnonzero(self.just_released)
         if len(ids):
             self.release_physics[ids] = self._env.get_physics_state_snapshot()[ids]
@@ -176,3 +188,23 @@ def running_contact_observation(env):
         ),
         axis=1,
     )
+
+
+class RunningSupportObservation:
+    """Foot contact snapshots and reference phase, not calibrated tactile taxels."""
+
+    def __init__(self, cfg, env):
+        self.support = env.scene.bind_sensor_data(SUPPORT_NAMES)
+
+    def __call__(self, env):
+        rows = self.support.read().reshape(env.num_envs, 2, SUPPORT_SLOTS, CONTACT_WIDTH)
+        if np.any(rows[..., 0] > SUPPORT_SLOTS):
+            raise RuntimeError("running foot contact sensor capacity exceeded")
+        force = np.where((rows[..., 0] > 0)[..., None], rows[..., 1:4], 0)
+        normal = force[..., 0].sum(axis=-1)
+        shear = np.linalg.norm(force[..., 1:], axis=-1).sum(axis=-1)
+        feet = np.stack((normal > 1, normal / 100, shear / 100), axis=-1)
+        command = env.command_manager.get_term("motion")
+        duration = env.max_episode_length * env.cfg.ctrl_dt
+        phase = command.time_steps / command.motion.fps / duration
+        return np.concatenate((feet.reshape(env.num_envs, 6), phase[:, None]), axis=1)

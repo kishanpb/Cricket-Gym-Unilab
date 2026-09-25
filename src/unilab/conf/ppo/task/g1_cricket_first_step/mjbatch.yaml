@@ -1,0 +1,31 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_running_tracking/mjbatch
+  - _self_
+
+algo:
+  max_iterations: 256
+  save_interval: 256
+  policy:
+    init_noise_std: 0.1
+env:
+  max_episode_seconds: 10.5
+  actions:
+    reference:
+      reference_file: g1_cricket_results/running_first_step_v1/${env.handedness}_reference.npz
+      use_reference_torque: true
+      release_time: null
+      scale: 0.1
+  commands:
+    motion:
+      params:
+        motion_file: g1_cricket_results/first_step_tracking_v1/${env.handedness}_tracking.npz
+  observations:
+    actor:
+      terms:
+        support:
+          func: unilab.tasks.manipulation.g1_cricket.running_task.RunningSupportObservation
+    critic:
+      terms:
+        support:
+          func: unilab.tasks.manipulation.g1_cricket.running_task.RunningSupportObservation
