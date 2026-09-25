@@ -81,6 +81,12 @@ verifies exact command transfer, then trains both 29-joint actors for 49,152
 transitions each. All eight evaluations are retained: PPO loses balance at
 2.76 s right and 2.18 s left, and fixed reference commands are timestep-sensitive.
 Both uncut failed videos are available; neither is promoted as bowling.
+The [closed-loop whole-body PPO follow-up](docs/g1_cricket_approach_feedback.md#complete-results)
+retains the external locomotion policy's live feedback. Both local residual
+actors now complete eight-second approaches and stop upright at both physics
+resolutions, travelling 2.78-2.81 m. Full videos and all eight outcomes remain
+available: foot-slip and drift checks still fail. These are walking/carry
+diagnostics, not running deliveries or independently learned locomotion.
 The latest [planted-foot reference and joint-tracking comparison](docs/g1_cricket_ground_momentum.md#foreaft-pendulum-comparison)
 removes audited reference self-intersections and passes sampled support bounds,
 but every physical trial still falls before release. Stronger tracking gains

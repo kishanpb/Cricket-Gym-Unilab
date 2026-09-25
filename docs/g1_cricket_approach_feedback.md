@@ -63,3 +63,51 @@ Repeat for `left`/`ppo_left`, then use
 No gather, overarm release or recovery after delivery is implemented by this
 approach task. Those must be integrated continuously from a moving state before
 the requested running-bowling showcase is complete.
+
+## Complete Results
+
+Both final actors completed the fixed 49,152-transition budget at clean source
+`2b2a2a5647f4b1069e60a47e607e3d5828c15341`. Right/left training took
+1,866/1,848 seconds; all 256 iterations and 25 iteration-indexed scalar series
+were retained and checked against TensorBoard. Checkpoint tensors are finite.
+Only final weights, configurations, summaries and portable scalars are retained.
+
+Every evaluation completes eight seconds and stops upright, with six landings
+per foot. Unlike the fixed-command pilot, both PPO actors and both zero-residual
+controllers also agree across physics resolutions. This repairs the early-fall
+failure; it does **not** qualify the approach or establish an improvement over
+the external locomotion controller.
+
+| Hand | Controller | Physics step (us) | Distance (m) | Peak loaded slip (m/s) | Max stance slip (cm) | Failed checks |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| Right | Zero residual | 62.5 | 2.8443 | 2.2632 | 3.1667 | Slip speed, stance slip |
+| Right | PPO | 62.5 | 2.8085 | 2.2266 | 2.9757 | Lateral drift, slip speed |
+| Right | Zero residual | 31.25 | 2.8474 | 2.2682 | 3.1747 | Slip speed, stance slip |
+| Right | PPO | 31.25 | 2.8049 | 2.2272 | 2.8268 | Lateral drift, slip speed |
+| Left | Zero residual | 62.5 | 2.8276 | 2.5532 | 3.2550 | Lateral drift, slip speed, stance slip |
+| Left | PPO | 62.5 | 2.7812 | 2.5369 | 3.1200 | Lateral drift, slip speed, stance slip |
+| Left | Zero residual | 31.25 | 2.8251 | 2.5509 | 3.2582 | Lateral drift, slip speed, stance slip |
+| Left | PPO | 31.25 | 2.7820 | 2.5328 | 3.2614 | Lateral drift, slip speed, stance slip |
+
+Limits remain 0.2 m/s loaded slip, 3 cm integrated stance slip and 15 cm lateral
+drift. Other original checks pass, including support, joint/motor limits,
+unintended contact, holder error, ball penetration, foot corridor and settling.
+All 1,536,000 physical substeps pass independent native endpoint/sensor replay;
+the reward's contact-slip cost agrees within 2.23e-16. Four resolution comparisons
+pass, but agreement on failed checks is not qualification. This is one development
+seed, not a robustness study or independent Menagerie G1 training.
+
+[Full report](../g1_cricket_results/approach_feedback_v1/summary.json) retains
+every outcome, provenance, input hashes and artifact hashes. Both predeclared
+finest-timestep videos show the full episode: 401 nonblank 960x540 frames,
+25 fps, half speed. The external locomotion prior and local PPO residual are
+identified on screen; neither video is a bowling highlight.
+
+| Right-hand carry | Left-hand carry |
+| --- | --- |
+| [![Right approach](../g1_cricket_results/approach_feedback_v1/evaluation/right_ppo_approach_contact_sheet.png)](../g1_cricket_results/approach_feedback_v1/evaluation/right_ppo_approach.mp4) | [![Left approach](../g1_cricket_results/approach_feedback_v1/evaluation/left_ppo_approach_contact_sheet.png)](../g1_cricket_results/approach_feedback_v1/evaluation/left_ppo_approach.mp4) |
+
+Next work must address actual loaded-foot slip and lane control before joining a
+continuous moving gather, legal overarm release and recovery. Extending this
+training run or splicing a stationary delivery onto its stopped tail is not an
+established solution. The existing two-handed batting video is unchanged.
