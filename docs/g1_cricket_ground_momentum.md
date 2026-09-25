@@ -31,14 +31,22 @@ Whole-body retargeting, interpolation, joint limits, motor authority, yaw
 friction and contacts can still invalidate it. The full-momentum support audit
 and both complete physical trials remain required, including failed motion.
 
+The coarse candidate uses 20 ms retargeting. Its discrete momentum matches do
+not prevent large derivative errors between frames. A fixed 5 ms refinement
+keeps the same mechanism and 20 ms physical controller, saves all 541 dense
+poses per hand, and uses the corresponding dense forward-difference velocity
+at each control knot. The support audit reads the dense reference explicitly,
+not a cubic reconstruction from only the 136 control knots.
+
 ```sh
 PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run --no-project \
   --python ../unilab_submission_checkout/.venv/bin/python \
   python scripts/retarget_g1_cricket_running.py \
-  g1_cricket_results/running_ground_momentum_v1 --render \
+  g1_cricket_results/running_ground_momentum_v2 --render \
   --ballistic-parent g1_cricket_results/running_front_raise_v1 \
   --lane-offset 0.2 --conserve-momentum --lateral-support \
-  --ground-momentum-parent g1_cricket_results/running_support_v1
+  --ground-momentum-parent g1_cricket_results/running_support_v1 \
+  --retarget-substeps 4
 ```
 
 Then run `scripts/audit_g1_cricket_running_support.py` on the output directory.

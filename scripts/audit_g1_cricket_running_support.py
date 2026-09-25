@@ -29,6 +29,9 @@ def audit(directory):
     if output.exists():
         raise FileExistsError(output)
     source = json.loads((directory / "evaluation.json").read_text())
+    reference_name = (
+        "dense_reference.npz" if source.get("retarget_substeps", 1) > 1 else "reference.npz"
+    )
     inputs = [
         Path(__file__),
         ROOT / "scripts/audit_g1_cricket_running_rotation.py",
@@ -39,7 +42,7 @@ def audit(directory):
     inputs += [
         ROOT / f"src/unilab/assets/robots/g1/{name}" for name in ("g1.xml", "scene_flat.xml")
     ]
-    inputs += [directory / f"{hand}_reference.npz" for hand in ("right", "left")]
+    inputs += [directory / f"{hand}_{reference_name}" for hand in ("right", "left")]
     hashes = {
         str(p.resolve().relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
         for p in inputs
@@ -52,7 +55,7 @@ def audit(directory):
                 ROOT / "src/unilab/assets/robots/g1/g1.xml", scene
             )
             model = mujoco.MjModel.from_xml_path(str(scene))
-        with np.load(directory / f"{hand}_reference.npz") as reference:
+        with np.load(directory / f"{hand}_{reference_name}") as reference:
             curve = ReferenceCurve(model, reference["times"], reference["qpos"], hand)
         if source.get("lateral_support_com", False):
             lane = (1 if hand == "right" else -1) * (0.5 + source["outward_lane_offset_m"])
@@ -127,6 +130,7 @@ def audit(directory):
         raise RuntimeError("support audit input changed")
     result = {
         "scope": "offline_inferred_ground_wrench_not_a_physical_rollout",
+        "reference_file_suffix": reference_name,
         "guard": "The axis-aligned projected foot box overestimates planar support; outside disproves support at the sampled pose, inside does not prove feasibility. No friction, yaw-wrench, actuator or continuous-contact certificate is claimed. Boundary rows and both derivative resolutions are retained.",
         "input_sha256": hashes,
         "rows": rows,

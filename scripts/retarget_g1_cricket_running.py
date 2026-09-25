@@ -116,6 +116,7 @@ def run(
     conserve_momentum=False,
     lateral_support=False,
     ground_momentum_parent=None,
+    retarget_substeps=1,
 ):
     with TemporaryDirectory(prefix="g1-running-") as temporary:
         scene = Path(temporary) / "scene.xml"
@@ -156,15 +157,23 @@ def run(
             )
         reference = retarget_running_delivery(
             model,
-            times,
+            np.arange(135 * retarget_substeps + 1) * (0.02 / retarget_substeps),
             hand,
             com_target=com_target,
             lane_offset=lane_offset,
             conserve_momentum=conserve_momentum,
             momentum_target=momentum_target,
         )
-        poses = reference["qpos"]
-        velocity = velocity_reference(model, poses, 0.02)
+        dense_velocity = velocity_reference(model, reference["qpos"], 0.02 / retarget_substeps)
+        poses = reference["qpos"][::retarget_substeps]
+        velocity = dense_velocity[::retarget_substeps]
+        if retarget_substeps > 1:
+            np.savez_compressed(
+                output / f"{hand}_dense_reference.npz",
+                times=reference["times"],
+                qpos=reference["qpos"],
+                qvel=dense_velocity,
+            )
         np.savez_compressed(
             output / f"{hand}_reference.npz", times=times, qpos=poses, qvel=velocity
         )
@@ -268,7 +277,7 @@ def run(
             "kinematic_errors": reference["errors"],
             "reference_forward_travel_m": float(poses[-1, 0] - poses[0, 0]),
             "reference_peak_joint_speed_rad_s": {
-                name: float(np.abs(velocity[:, dof]).max())
+                name: float(np.abs(dense_velocity[:, dof]).max())
                 for name, dof in zip(SDK_JOINTS, va, strict=True)
             },
             "completed_physical_motion": len(trace) == 135
@@ -287,6 +296,7 @@ if __name__ == "__main__":
     parser.add_argument("--conserve-momentum", action="store_true")
     parser.add_argument("--lateral-support", action="store_true")
     parser.add_argument("--ground-momentum-parent", type=Path)
+    parser.add_argument("--retarget-substeps", type=int, choices=(1, 4), default=1)
     args = parser.parse_args()
     if args.lateral_support and args.ballistic_parent is None:
         parser.error("lateral support requires a ballistic parent")
@@ -315,6 +325,7 @@ if __name__ == "__main__":
             conserve_momentum=args.conserve_momentum,
             lateral_support=args.lateral_support,
             ground_momentum_parent=args.ground_momentum_parent,
+            retarget_substeps=args.retarget_substeps,
         )
         for hand in ("right", "left")
     ]
@@ -331,6 +342,9 @@ if __name__ == "__main__":
         "momentum_conserving_runup": args.conserve_momentum,
         "lateral_support_com": args.lateral_support,
         "stance_ground_momentum": args.ground_momentum_parent is not None,
+        "retarget_substeps": args.retarget_substeps,
+        "retarget_period_s": 0.02 / args.retarget_substeps,
+        "physical_control_period_s": 0.02,
         "outward_lane_offset_m": args.lane_offset,
         "input_sha256": hashes,
         "rows": rows,
