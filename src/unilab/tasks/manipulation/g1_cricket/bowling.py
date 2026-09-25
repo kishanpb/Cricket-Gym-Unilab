@@ -78,6 +78,8 @@ class BowlingActionCfg(FrozenPriorResidualCfg):
 
 
 class BowlingAction(FrozenPriorResidual):
+    sensor_names = HOLDER_SENSORS
+
     def __init__(self, cfg, env):
         super().__init__(cfg, env)
         self._bowling_raw = np.zeros((env.num_envs, 8), dtype=np.float32)
@@ -100,7 +102,7 @@ class BowlingAction(FrozenPriorResidual):
             (env.num_envs, mujoco.mj_stateSize(model, mujoco.mjtState.mjSTATE_FULLPHYSICS))
         )
         self.joint_limits = self._entity.data.soft_joint_pos_limits
-        env.set_substep_observer(HOLDER_SENSORS, "cricket_ball", self.observe)
+        env.set_substep_observer(self.sensor_names, "cricket_ball", self.observe)
 
     @property
     def action_dim(self):

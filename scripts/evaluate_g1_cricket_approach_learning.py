@@ -26,6 +26,7 @@ from rsl_rl.runners import OnPolicyRunner
 from uni_rl.algos.rsl_rl import RslRlVecEnvWrapper, normalize_ppo_train_cfg
 
 from unilab.base.config_adapter import BackendAdapter, create_env
+from unilab.tasks.manipulation.g1_cricket.prior import ASSET_HASHES
 from unilab.training import algo_config_dict
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,9 +62,11 @@ def qualification(rows):
     )
 
 
-def evaluate_case(env, action_at, output, controller, resolution, render):
+def evaluate_case(
+    env, action_at, output, controller, resolution, render, *, action_name="reference"
+):
     env.reset(seed=1)
-    replay = DeliveryReplay(env, action_name="reference")
+    replay = DeliveryReplay(env, action_name=action_name)
     model = replay.model
     hand = env.cfg.handedness
     slip, events = LoadedFootSlip(model), ApproachEvents(hand)
@@ -100,7 +103,7 @@ def evaluate_case(env, action_at, output, controller, resolution, render):
             try:
                 state = replay.step(env, action, events, observer=observe)
             finally:
-                term = env.action_manager.get_term("reference")
+                term = env.action_manager.get_term(action_name)
                 controls.append(term.processed_action[0].copy())
                 loads.append(float(term.peak_load[0]))
                 states.append(env.get_physics_state_snapshot()[0].copy())
@@ -173,7 +176,11 @@ def evaluate_case(env, action_at, output, controller, resolution, render):
             hand,
             output / f"{hand}_ppo_approach.mp4",
             "WHOLE-BODY PPO APPROACH, NOT BOWLING",
-            subtitle="Final actor | measured-command residual | held ball | full outcome | 0.5x",
+            subtitle=(
+                "Final actor | measured-command residual | held ball | full outcome | 0.5x"
+                if action_name == "reference"
+                else "Local whole-body residual + external locomotion prior | held ball | 0.5x"
+            ),
         )
         result["video_status"] = "partial_error_outcome" if error else "full_episode_outcome"
     return result
@@ -183,6 +190,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory", type=Path)
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--action-name", choices=("reference", "residual"), default="reference")
     args = parser.parse_args()
     output = args.directory / "evaluation"
     output.mkdir(exist_ok=False)
@@ -190,7 +198,11 @@ def main():
     inputs += sorted((ROOT / "src/unilab/tasks/manipulation/g1_cricket").glob("*.py"))
     source = json.loads((ROOT / "g1_cricket_results/approach_teacher_v1/summary.json").read_text())
     inputs += [ROOT / p for p in source["input_sha256"]]
-    for task in ("g1_cricket_measured_approach", "g1_cricket_approach_learning"):
+    for task in (
+        "g1_cricket_measured_approach",
+        "g1_cricket_approach_learning",
+        "g1_cricket_approach_feedback",
+    ):
         inputs.append(ROOT / f"src/unilab/conf/ppo/task/{task}/mjbatch.yaml")
     configurations = {}
     for hand in HANDS:
@@ -200,10 +212,11 @@ def main():
         checkpoint = Path(run["last_checkpoint"])
         configurations[hand] = (owner, checkpoint)
         inputs += [directory / "run_config.json", directory / "run_summary.json", checkpoint]
-        inputs += [
-            ROOT / owner.env.commands.motion.reference_file,
-            ROOT / owner.env.commands.motion.params.motion_file,
-        ]
+        if args.action_name == "reference":
+            inputs += [
+                ROOT / owner.env.commands.motion.reference_file,
+                ROOT / owner.env.commands.motion.params.motion_file,
+            ]
     hashes = {
         str(p.resolve().relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
         for p in inputs
@@ -214,7 +227,8 @@ def main():
     for hand, (owner, checkpoint) in configurations.items():
         for resolution, dt in RESOLUTIONS:
             owner.env.sim_dt = dt
-            owner.env.commands.motion.params.sampling_mode = "start"
+            if args.action_name == "reference":
+                owner.env.commands.motion.params.sampling_mode = "start"
             override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
             override["auto_reset"] = False
             env = create_env(owner, num_envs=1, env_cfg_override=override)
@@ -247,7 +261,13 @@ def main():
 
                     print("START", hand, controller, resolution, flush=True)
                     result = evaluate_case(
-                        env, action_at, output, controller, resolution, args.render
+                        env,
+                        action_at,
+                        output,
+                        controller,
+                        resolution,
+                        args.render,
+                        action_name=args.action_name,
                     )
                     rows.append(result)
                     (output / "progress.json").write_text(
@@ -269,7 +289,13 @@ def main():
     assert hashlib.sha256(runtime.read_bytes()).hexdigest() == runtime_hash
     (output / "progress.json").unlink()
     report = dict(
-        scope="full_from_rest_measured_command_ppo_approach_not_running_delivery",
+        scope=(
+            "full_from_rest_measured_command_ppo_approach_not_running_delivery"
+            if args.action_name == "reference"
+            else "full_from_rest_local_whole_body_residual_over_external_locomotion_not_running_delivery"
+        ),
+        action_name=args.action_name,
+        external_asset_sha256=ASSET_HASHES if args.action_name == "residual" else {},
         rows=rows,
         **qualification(rows),
         columns=COLUMNS,
@@ -277,7 +303,15 @@ def main():
         runtime_source_sha256={"mjbatch.held_control": runtime_hash},
         versions={
             name: version(name)
-            for name in ("mujoco", "mjbatch", "unilab-rl", "rsl-rl-lib", "torch", "numpy")
+            for name in (
+                "mujoco",
+                "mjbatch",
+                "unilab-rl",
+                "rsl-rl-lib",
+                "torch",
+                "numpy",
+                "onnxruntime",
+            )
         },
         artifact_sha256={
             p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(output.iterdir())

@@ -1,0 +1,52 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_approach_v1/mujoco
+  - _self_
+
+training:
+  task_name: G1CricketApproachLearning
+algo:
+  num_envs: 8
+  num_steps_per_env: 24
+  max_iterations: 256
+  save_interval: 256
+  obs_groups:
+    default: [policy]
+    actor: [policy]
+    critic: [policy]
+  actor:
+    class_name: unilab.tasks.manipulation.g1_cricket.feedback_policy.ZeroResidualModel
+    hidden_dims: [128, 128]
+    activation: elu
+    obs_normalization: false
+    distribution_cfg:
+      class_name: rsl_rl.modules.distribution.GaussianDistribution
+      init_std: 0.02
+      std_type: scalar
+  critic:
+    class_name: rsl_rl.models.MLPModel
+    hidden_dims: [128, 128]
+    activation: elu
+    obs_normalization: false
+env:
+  auto_reset: true
+  actions:
+    residual:
+      _target_: unilab.tasks.manipulation.g1_cricket.approach_feedback.ApproachFeedbackActionCfg
+      scale: 0.1
+  observations:
+    bowling:
+      terms:
+        gait:
+          func: unilab.tasks.manipulation.g1_cricket.approach_feedback.gait_observation
+reward:
+  bowling: null
+  loaded_slip:
+    func: unilab.tasks.manipulation.g1_cricket.approach_feedback.loaded_slip_cost
+    weight: -5.0
+  lane:
+    func: unilab.tasks.manipulation.g1_cricket.approach_feedback.lane_tracking
+    weight: 1.0
+  velocity:
+    func: unilab.tasks.manipulation.g1_cricket.approach_feedback.velocity_tracking
+    weight: 1.0
