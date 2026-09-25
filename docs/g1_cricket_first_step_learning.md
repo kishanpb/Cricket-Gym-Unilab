@@ -119,6 +119,10 @@ installed-runtime git snapshots were removed after scalar verification.
 
 ## Next Bounded Comparison
 
+The [uniform-start comparison](g1_cricket_first_step_uniform.md) below is now
+complete: mixed handedness results, with neither hand passing the full gate.
+The following records its original proposal, not a further unchanged rerun.
+
 Do not extend these same from-rest runs unchanged. Compare uniform reference
 state initialization during training, with the same reference, physical
 model, reward, residual scale and budget. This is a proposed sampling-axis

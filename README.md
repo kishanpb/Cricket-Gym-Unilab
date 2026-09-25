@@ -64,6 +64,9 @@ fall before settling. Repeated strides and the complete delivery remain unfinish
 The [whole-body first-step PPO pilot](docs/g1_cricket_first_step_learning.md)
 now retains both independently trained final actors and all eight evaluations:
 right PPO delays instability, left PPO regresses, and neither passes the step gate.
+The [uniform-start training comparison](docs/g1_cricket_first_step_uniform.md)
+improves left-hand landing but regresses the right hand; all eight from-rest
+evaluations still fail. Neither result is a running-bowling highlight.
 Full reference and failed physical videos are
 development diagnostics, not learned bowling showcases. The research log
 retains the earlier [contact-control](docs/g1_cricket_contact_control.md) and
