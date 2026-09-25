@@ -8,7 +8,10 @@ import pytest
 from scipy.spatial.transform import Rotation
 
 from unilab.tasks.manipulation.g1_cricket.pitch_contact import G1CricketDeliveryPitchV2Cfg
-from unilab.tasks.manipulation.g1_cricket.running import retarget_running_delivery
+from unilab.tasks.manipulation.g1_cricket.running import (
+    BallisticRunupCOM,
+    retarget_running_delivery,
+)
 from unilab.tasks.manipulation.g1_cricket.running_momentum import HeldBallMomentum
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -87,3 +90,38 @@ def test_rotation_repair_requires_ballistic_com(setup):
     model, hand, _ = setup
     with pytest.raises(ValueError, match="requires a COM target"):
         retarget_running_delivery(model, np.arange(16) * 0.02, hand, conserve_momentum=True)
+
+
+def test_full_momentum_reference_keeps_geometry_and_all_delivery_phases(setup, monkeypatch):
+    model, hand, _ = setup
+    with np.load(
+        ROOT / f"g1_cricket_results/running_front_raise_v1/{hand}_reference.npz"
+    ) as parent:
+        times, poses = parent["times"], parent["qpos"]
+    data = mujoco.MjData(model)
+    centers = []
+    for pose in poses:
+        data.qpos[:] = pose
+        mujoco.mj_forward(model, data)
+        centers.append(data.subtree_com[0].copy())
+    centers = np.asarray(centers)
+    centers[:, 1] += 0.2 if hand == "right" else -0.2
+    target = BallisticRunupCOM(times, centers, -model.opt.gravity[2])
+
+    def forbid_step(*args):
+        raise AssertionError("retargeting must remain offline")
+
+    monkeypatch.setattr(mujoco, "mj_step", forbid_step)
+    result = retarget_running_delivery(
+        model, times, hand, com_target=target, lane_offset=0.2, conserve_momentum=True
+    )
+    assert len(result["qpos"]) == 136
+    assert result["times"][-1] == pytest.approx(2.7)
+    flights = [row for row in result["errors"] if row["flight_momentum_error_nms"] is not None]
+    assert len(flights) == 16
+    assert max(row["flight_momentum_error_nms"] for row in flights) < 1e-8
+    assert max(row["foot_error_m"] for row in result["errors"]) < 0.002
+    assert max(row["arm_segment_error_m"] for row in result["errors"]) < 0.006
+    assert not any(row["unexpected_penetrations"] for row in result["errors"])
+    assert max(row["root_rotation_rad"] for row in result["errors"]) > 0.1
+    np.testing.assert_allclose(result["qpos"][71:, 3:7], np.tile([1, 0, 0, 0], (65, 1)), atol=1e-12)

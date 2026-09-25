@@ -14,15 +14,14 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 @pytest.mark.parametrize("hand", ["right", "left"])
-def test_curve_preserves_all_reference_knots_and_held_ball(hand, tmp_path):
+@pytest.mark.parametrize("reference_name", ["running_ballistic_com_v3", "running_momentum_v1"])
+def test_curve_preserves_all_reference_knots_and_held_ball(hand, reference_name, tmp_path):
     scene = tmp_path / "scene.xml"
     G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(
         ROOT / "src/unilab/assets/robots/g1/g1.xml", scene
     )
     model = mujoco.MjModel.from_xml_path(str(scene))
-    with np.load(
-        ROOT / f"g1_cricket_results/running_ballistic_com_v3/{hand}_reference.npz"
-    ) as source:
+    with np.load(ROOT / f"g1_cricket_results/{reference_name}/{hand}_reference.npz") as source:
         times, poses = source["times"], source["qpos"]
     curve = ReferenceCurve(model, times, poses, hand)
     np.testing.assert_allclose([curve(t) for t in times], poses, atol=1e-12, rtol=0)

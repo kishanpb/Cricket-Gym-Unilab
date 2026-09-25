@@ -58,11 +58,12 @@ The [native whole-body running PPO pilot](docs/g1_cricket_running_tracking.md)
 now trains all 29 joints with simulated holder-load/contact observations.
 Moving the reference lane outward lets frozen right/left policies reach 0.66 /
 0.72 s, but both still stop before release; complete diagnostic videos and both
-reference controls are retained. The [ballistic COM repair](docs/g1_cricket_running_reference.md#ballistic-com-repair-comparison)
-now removes the reference's fictitious airborne support demand. Its complete
-both-hand physical PD trials still fall before release, and coarse angular-momentum
-diagnostics expose another flight inconsistency. These remain failed development
-episodes, not the requested bowling showcase; no new PPO was trained on them.
+reference controls are retained. The [COM and airborne rotation repair](docs/g1_cricket_running_reference.md#airborne-rotation-repair)
+now accounts for the held ball's momentum and improves both-hand foot geometry.
+Its complete physical PD trials still fall before release: the stance ankle
+already crosses its joint stop before takeoff. Full reference/physics videos
+remain development diagnostics, not the requested bowling showcase; no new PPO
+was trained on them.
 
 Earlier one-arm contact experiments and failed bowling trials remain in the
 research log, including [force/touch diagnostic video](g1_cricket_results/bc_v1/learned_development_diagnostic.mp4)

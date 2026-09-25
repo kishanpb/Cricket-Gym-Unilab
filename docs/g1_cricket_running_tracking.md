@@ -1,5 +1,11 @@
 # G1 Running-Delivery Learning Pilot
 
+The policies/configurations below remain the frozen original pilots. The newer
+[COM and root-rotation reference repair](g1_cricket_running_reference.md#airborne-rotation-repair)
+has not been substituted into their training or claimed as new PPO evidence.
+Its physical PD trials still fail at the stance ankle before takeoff; ground
+support/control remains unresolved before a learned running-bowling showcase.
+
 This native UniLab task uses CPU mjbatch to control all 29 G1 joints against
 the repaired front-raise running reference. It includes approach, gather,
 back/front plant, overarm motion and recovery, not an arm policy over a frozen

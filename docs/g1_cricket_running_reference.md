@@ -2,6 +2,37 @@
 
 ## Airborne Rotation Repair
 
+Current [complete two-hand results](../g1_cricket_results/running_momentum_v1/evaluation.json)
+and [fixed-frame review](../g1_cricket_results/running_momentum_v1/running_motion_review.png)
+use `278e09f6`. All 16 flight intervals per hand conserve discrete midpoint
+angular momentum within 3.5e-12 Nms; COM remains exact. Arm error is below
+5.46 mm, foot error below 1.75 mm, and all 136 poses per hand have no audited
+intersection. One optimizer frame per hand (0.78 s) still reaches its evaluation
+limit. Peak root orientation changes by 0.667 rad; the original model and its
+joint/force limits are unchanged, and recovery is level again by 1.42 s.
+The [maximum-root-rotation review](../g1_cricket_results/running_momentum_v1/maximum_root_rotation_review.png)
+shows frame 63 for each hand; it is an offline target, not achieved balance.
+
+The [independent fixed-curve refinement](../g1_cricket_results/running_momentum_v1/reference_rotation_refinement.json)
+does not claim exact continuous conservation: finest pitch residuals are
+7.72-8.02 Nm rather than the parent's 93.94-97.41 Nm in the first three flights.
+All 96 rows remain, including the fourth flight. This is a reference repair,
+not achieved physical motion or measured torque.
+
+Both unchanged PD baselines still fall at 0.68 s, before release. At the recorded
+0.16 s endpoint, the stance ankle pitch is -0.9102/-0.9100 rad (right/left trial),
+past its original -0.87267 rad stop; the reference is approximately -0.7079 rad.
+The violating joint is left/right ankle pitch respectively, before the first
+takeoff. Full traces retain subsequent contacts and up to 0.090 rad excursions.
+The next actual-control repair should inspect first-stance support loads and
+ankle/hip control allocation, not spend more PPO on unchanged failed support
+control or present the target animation as learned bowling. No new PPO was run.
+
+All 342 new video frames decode nonblank; source hashes and the full review
+are checked. All 50 focused running/reference/delivery tests pass with warnings
+treated as errors; Ruff checks pass. Existing batting demonstrations and earlier failed-reference
+comparisons are preserved. The full two-fork learned-bowling goal remains open.
+
 The [fixed-curve refinement](../g1_cricket_results/running_ballistic_com_v3/reference_rotation_refinement.json)
 (`0bf43b25`) retains both hands, four flight centers, six torque intervals from
 20 ms to 0.625 ms, and both 0.1/0.01 ms velocity differences: 96 rows. Joint and
@@ -10,8 +41,10 @@ and held ball. Finest pitch residuals remain 93.94-97.41 Nm in the first three
 flights and 48.93-48.96 Nm in the fourth, with over 11 mm sampled foot clearance
 and no sampled world contact. This confirms a defect of the reconstructed
 reference curve, not a measured torque, new IK solution or physical rollout.
+The finest two torque intervals differ by at most 0.48% in vector norm;
+changing the velocity-difference interval changes torque by at most 0.0023 Nm.
 
-The next fixed comparison changes only offline root-orientation construction.
+This fixed comparison changes only offline root-orientation construction.
 Native angular-momentum and wrist Jacobians include the mechanically held ball.
 During each declared flight interval, an implicit-midpoint solve chooses root
 angular velocity to preserve the preceding takeoff momentum while the original
