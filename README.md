@@ -40,7 +40,14 @@ both three-second reference-controlled swings without falls or unintended
 contacts. Complete controller and PPO diagnostic videos, including failures,
 retain substep force, grip, joint-limit and bat-path measurements; they are not
 advertising clips or evidence of learned ball hitting.
-The [latest two-hand G1 video](g1_cricket_results/bimanual_bounced_delivery_v1/two_hand_ppo_bounced_delivery.mp4)
+The [new ball/contact-observed PPO video](g1_cricket_results/bimanual_batting_learning_v1/two_hand_ppo_learned_batting.mp4)
+shows independently trained right/left actors swinging with two mechanical
+grips, hitting a one-bounce practice feed and recovering upright at 0.5x.
+The [complete learning pilot](docs/g1_cricket_batting_learning.md#complete-results)
+retains both final checkpoints and all eight evaluations: contact/stability
+checks pass, but both actors still fail the 8 cm bat-path limit. Reference-only
+control also hits; this is not evidence of robust learned interception.
+The earlier [frozen-actor two-hand G1 video](g1_cricket_results/bimanual_bounced_delivery_v1/two_hand_ppo_bounced_delivery.mp4)
 shows a one-bounce incoming delivery, two-handed hit and upright recovery in
 both stances at 0.5x. These are frozen dry-swing PPO actors with mechanical
 grips and no ball observation, not learned interception. The

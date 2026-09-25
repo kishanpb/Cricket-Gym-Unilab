@@ -8,7 +8,7 @@ import math
 from pathlib import Path
 
 import mjbatch.held_control
-from report_g1_cricket_bimanual_contact import compare_resolution
+from report_g1_cricket_bimanual_contact import compare_resolution, create_media
 from report_g1_cricket_bounced_delivery import summarize_bounced_row
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -147,8 +147,17 @@ def build_report(directory):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory", type=Path)
+    parser.add_argument("--media", action="store_true")
     args = parser.parse_args()
     report = build_report(args.directory)
+    if args.media:
+        report["media"] = create_media(
+            args.directory, suffix="_fine", name="learned_batting", indices=(0, 52, 69, 89, 149)
+        )
+        report["media"]["sha256"] = {
+            name: hashlib.sha256((args.directory / name).read_bytes()).hexdigest()
+            for name in ("two_hand_ppo_learned_batting.mp4", "learned_batting_contact_sheet.png")
+        }
     (args.directory / "summary.json").write_text(
         json.dumps(report, indent=2, allow_nan=False) + "\n"
     )

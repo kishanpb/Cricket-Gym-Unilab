@@ -1,0 +1,2443 @@
+{
+  "scope": "ball_contact_observed_ppo_nominal_bounced_delivery_not_held_out",
+  "training": {
+    "right": {
+      "status": "completed",
+      "completed_iterations": 255,
+      "total_env_steps": 49152,
+      "run_env_steps": 49152,
+      "world_size": 1,
+      "num_envs_per_rank": 8,
+      "global_num_envs": 8,
+      "samples_per_iteration": 192,
+      "training_throughput_env_steps_per_sec": 50.581097424972974,
+      "final_mean_reward": 31.42977861404419,
+      "best_mean_reward": 31.513736724853516,
+      "mean_episode_length": 150.0,
+      "last_checkpoint": "g1_cricket_results/bimanual_batting_learning_v1/ppo_right/model_255.pt",
+      "training_wall_time_sec": 972.6558351516724,
+      "algo": "ppo",
+      "task": "G1CricketBimanualLearning",
+      "sim_backend": "mujoco",
+      "log_dir": "g1_cricket_results/bimanual_batting_learning_v1/ppo_right",
+      "start_time_utc": "2026-09-25T16:43:41.790403+00:00",
+      "end_time_utc": "2026-09-25T16:59:56.369839+00:00",
+      "wall_time_sec": 974.5921210413799,
+      "wandb_run_url": null,
+      "configured_seed": 1,
+      "configured_seed_source": "algo.seed",
+      "effective_seed": 1,
+      "checkpoint_sha256": "54821b4d351f2f146bc4bc04208a2d2c9351db1dc3d98ce8d5a10bd2f6b05f52"
+    },
+    "left": {
+      "status": "completed",
+      "completed_iterations": 255,
+      "total_env_steps": 49152,
+      "run_env_steps": 49152,
+      "world_size": 1,
+      "num_envs_per_rank": 8,
+      "global_num_envs": 8,
+      "samples_per_iteration": 192,
+      "training_throughput_env_steps_per_sec": 49.772139560267576,
+      "final_mean_reward": 31.62806327819824,
+      "best_mean_reward": 31.74135971069336,
+      "mean_episode_length": 150.0,
+      "last_checkpoint": "g1_cricket_results/bimanual_batting_learning_v1/ppo_left/model_255.pt",
+      "training_wall_time_sec": 988.4812910556793,
+      "algo": "ppo",
+      "task": "G1CricketBimanualLearning",
+      "sim_backend": "mujoco",
+      "log_dir": "g1_cricket_results/bimanual_batting_learning_v1/ppo_left",
+      "start_time_utc": "2026-09-25T16:59:58.494819+00:00",
+      "end_time_utc": "2026-09-25T17:16:28.468604+00:00",
+      "wall_time_sec": 989.9369383752346,
+      "wandb_run_url": null,
+      "configured_seed": 1,
+      "configured_seed_source": "algo.seed",
+      "effective_seed": 1,
+      "checkpoint_sha256": "3beb612df895d64a7290cfafa9c5d87c094c7639b4e6f20f42c43b3198062b94"
+    }
+  },
+  "rows": [
+    {
+      "resolution": "fine",
+      "hand": "right",
+      "controller": "reference_only",
+      "return": 31.815664686262608,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.1369900537881469,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341753699477544,
+        "fixture_force_n": 141.93583032229458,
+        "fixture_torque_nm": 39.667502842120165,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 0.9110312500000007,
+          "peak_force_n": 1378.990358988151,
+          "normal_impulse_ns": 3.9690788273099518,
+          "penetration_m": 0.002468482707759463
+        },
+        "ball_geom/bat_blade": {
+          "duration_s": 0.007000000000000005,
+          "peak_force_n": 647.9029448558183,
+          "normal_impulse_ns": 0.785289446099635,
+          "penetration_m": 0.004089999434677985
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4049992609023931,
+        "velocity_m_s": [
+          2.6030746465136927,
+          -0.47004149782452337,
+          -0.6311886975211921
+        ]
+      },
+      "unexpected_contacts": [],
+      "ball_contact_sequence": {
+        "pitch_events": [
+          {
+            "start_s": 1.0588746042251147,
+            "position_m": [
+              0.823378698029999,
+              5.314673562792307e-23,
+              0.03577974695932277
+            ],
+            "incoming_velocity_m_s": [
+              -3.0,
+              -5.036651623459195e-50,
+              -6.387254057159187
+            ],
+            "end_s": 1.0604995851516712,
+            "outgoing_velocity_m_s": [
+              -2.2853009551013357,
+              -3.3973727429764744e-17,
+              2.8128818344622726
+            ]
+          },
+          {
+            "start_s": 1.6321553010940268,
+            "position_m": [
+              0.6794091773049293,
+              -0.10367997708208264,
+              0.03584817342677586
+            ],
+            "incoming_velocity_m_s": [
+              2.7797064781188965,
+              -0.4451010227203369,
+              -2.807575400390645
+            ],
+            "end_s": 1.633811551094023,
+            "outgoing_velocity_m_s": [
+              2.130703908716533,
+              -0.37900795015988825,
+              1.2704719547004384
+            ]
+          },
+          {
+            "start_s": 1.8926550531387034,
+            "position_m": [
+              1.2348035567006237,
+              -0.20244555153148913,
+              0.0359280074159546
+            ],
+            "incoming_velocity_m_s": [
+              2.130703926086426,
+              -0.3790079355239868,
+              -1.2684787018966883
+            ],
+            "end_s": 1.8942800531386996,
+            "outgoing_velocity_m_s": [
+              2.00504347367601,
+              -0.36524876202085516,
+              0.5653393418829474
+            ]
+          },
+          {
+            "start_s": 2.0092799386978593,
+            "position_m": [
+              1.4687093470365973,
+              -0.24505005053528486,
+              0.03597526576495173
+            ],
+            "incoming_velocity_m_s": [
+              2.0050435066223145,
+              -0.36524876952171326,
+              -0.5625041140842539
+            ],
+            "end_s": 2.010904938697867,
+            "outgoing_velocity_m_s": [
+              1.9815204942987996,
+              -0.36267874483886653,
+              0.24594269325792492
+            ]
+          },
+          {
+            "start_s": 2.060748750686649,
+            "position_m": [
+              1.5707087056683466,
+              -0.2637181012755127,
+              0.035989324170640886
+            ],
+            "incoming_velocity_m_s": [
+              1.9815205335617065,
+              -0.36267873644828796,
+              -0.24271792778015128
+            ],
+            "end_s": 2.062405000686657,
+            "outgoing_velocity_m_s": [
+              1.9776125338323536,
+              -0.3622839484305839,
+              0.10554640722842625
+            ]
+          },
+          {
+            "start_s": 2.0836549816131766,
+            "position_m": [
+              1.6160105525576365,
+              -0.27201688955622766,
+              0.0359946957060273
+            ],
+            "incoming_velocity_m_s": [
+              1.9776124954223633,
+              -0.36228394508361816,
+              -0.10260953143119766
+            ],
+            "end_s": 2.0853424816131847,
+            "outgoing_velocity_m_s": [
+              1.9771412078345125,
+              -0.3622574857266058,
+              0.04444129342739093
+            ]
+          },
+          {
+            "start_s": 2.0941549816132268,
+            "position_m": [
+              1.6367707970404637,
+              -0.2758206071760366,
+              0.03599816810003409
+            ],
+            "incoming_velocity_m_s": [
+              1.9771412078345125,
+              -0.3622574857266058,
+              -0.041702769072609176
+            ],
+            "end_s": 2.0959987316132356,
+            "outgoing_velocity_m_s": [
+              1.977178322363298,
+              -0.36227531609117614,
+              0.016645825881931645
+            ]
+          },
+          {
+            "start_s": 2.0992799816132512,
+            "position_m": [
+              1.6469038026078875,
+              -0.2776772554170696,
+              0.035999230330647246
+            ],
+            "incoming_velocity_m_s": [
+              1.977178322363298,
+              -0.36227531609117614,
+              -0.01523667411806836
+            ],
+            "end_s": 2.101311212539679,
+            "outgoing_velocity_m_s": [
+              1.977233973815897,
+              -0.3622872437388283,
+              0.0049981333322858396
+            ]
+          },
+          {
+            "start_s": 2.102373712539684,
+            "position_m": [
+              1.6530208766901853,
+              -0.2787980788144183,
+              0.035999805168131144
+            ],
+            "incoming_velocity_m_s": [
+              1.977233973815897,
+              -0.3622872437388283,
+              -0.005118429167714152
+            ],
+            "end_s": 2.1044987125396943,
+            "outgoing_velocity_m_s": [
+              1.9772562715337922,
+              -0.36229154872700764,
+              0.0013017241031783625
+            ]
+          },
+          {
+            "start_s": 2.104811212539696,
+            "position_m": [
+              1.6578404204158004,
+              -0.2796811609416805,
+              0.03599994380803629
+            ],
+            "incoming_velocity_m_s": [
+              1.9772562715337922,
+              -0.36229154872700764,
+              -0.0014573383968216399
+            ],
+            "end_s": 2.107342462539708,
+            "outgoing_velocity_m_s": [
+              1.977264713427843,
+              -0.36229312167412125,
+              -7.590073184689847e-05
+            ]
+          },
+          {
+            "start_s": 2.107404962539708,
+            "position_m": [
+              1.6629689425356138,
+              -0.280620857198921,
+              0.035999979237921705
+            ],
+            "incoming_velocity_m_s": [
+              1.977264713427843,
+              -0.36229312167412125,
+              -0.0003824632318468988
+            ]
+          }
+        ],
+        "first_blade_contact": {
+          "time_s": 1.3998430299758449,
+          "position_m": [
+            0.04378234132856789,
+            -3.588209437571662e-07,
+            0.42495433083236855
+          ],
+          "incoming_velocity_m_s": [
+            -2.2853009700775146,
+            -3.397372719948399e-17,
+            -0.5157736353588108
+          ]
+        }
+      },
+      "delivery_checks": {
+        "exactly_one_completed_bounce_before_blade": true,
+        "bounce_in_front_on_pitch": true,
+        "incoming_at_blade": true
+      }
+    },
+    {
+      "resolution": "fine",
+      "hand": "right",
+      "controller": "ppo",
+      "return": 31.54808847606182,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.1481037688114357,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341755064772628,
+        "fixture_force_n": 134.27123446114726,
+        "fixture_torque_nm": 37.53677136294998,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 0.9093750000000007,
+          "peak_force_n": 1378.990358988151,
+          "normal_impulse_ns": 3.961279530616462,
+          "penetration_m": 0.002468482707759463
+        },
+        "ball_geom/bat_blade": {
+          "duration_s": 0.006968750000000005,
+          "peak_force_n": 641.5466452241157,
+          "normal_impulse_ns": 0.77773856428826,
+          "penetration_m": 0.003968510236130922
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4062492609023902,
+        "velocity_m_s": [
+          2.549766980008922,
+          -0.44493911120859436,
+          -0.5966823459204019
+        ]
+      },
+      "unexpected_contacts": [],
+      "ball_contact_sequence": {
+        "pitch_events": [
+          {
+            "start_s": 1.0588746042251147,
+            "position_m": [
+              0.823378698029999,
+              5.314673562792307e-23,
+              0.03577974695932277
+            ],
+            "incoming_velocity_m_s": [
+              -3.0,
+              -5.036651623459195e-50,
+              -6.387254057159187
+            ],
+            "end_s": 1.0604995851516712,
+            "outgoing_velocity_m_s": [
+              -2.2853009551013357,
+              -3.3973727429764744e-17,
+              2.8128818344622726
+            ]
+          },
+          {
+            "start_s": 1.6362490510940173,
+            "position_m": [
+              0.6729464086469791,
+              -0.09858630702632531,
+              0.0358473788309806
+            ],
+            "incoming_velocity_m_s": [
+              2.733370780944824,
+              -0.41762134432792664,
+              -2.7977396655273705
+            ],
+            "end_s": 1.6378740510940135,
+            "outgoing_velocity_m_s": [
+              2.0934009644876,
+              -0.35726770455144363,
+              1.2666579148199486
+            ]
+          },
+          {
+            "start_s": 1.8959050531386958,
+            "position_m": [
+              1.2168518253790233,
+              -0.19138415965198177,
+              0.03593330637604924
+            ],
+            "incoming_velocity_m_s": [
+              2.0934009552001953,
+              -0.35726770758628845,
+              -1.2643220878982806
+            ],
+            "end_s": 1.897530053138692,
+            "outgoing_velocity_m_s": [
+              1.9692536635513533,
+              -0.3446646384145064,
+              0.5610893108021535
+            ]
+          },
+          {
+            "start_s": 2.0116549386978706,
+            "position_m": [
+              1.4448601997930388,
+              -0.23128584763685553,
+              0.03597772933585091
+            ],
+            "incoming_velocity_m_s": [
+              1.969253659248352,
+              -0.34466463327407837,
+              -0.5581703593826385
+            ],
+            "end_s": 2.0132799386978784,
+            "outgoing_velocity_m_s": [
+              1.946129721109937,
+              -0.3423471305797995,
+              0.24303687801080093
+            ]
+          },
+          {
+            "start_s": 2.0625300006866576,
+            "position_m": [
+              1.5438821827337719,
+              -0.24870404976780824,
+              0.0359887318954804
+            ],
+            "incoming_velocity_m_s": [
+              1.9461296796798706,
+              -0.3423471450805664,
+              -0.23979905083179442
+            ],
+            "end_s": 2.0641862506866655,
+            "outgoing_velocity_m_s": [
+              1.942306159022422,
+              -0.34200482425021295,
+              0.10456715931549673
+            ]
+          },
+          {
+            "start_s": 2.0852487316131842,
+            "position_m": [
+              1.5880110899434758,
+              -0.2564741621871464,
+              0.03599380863225151
+            ],
+            "incoming_velocity_m_s": [
+              1.9423061609268188,
+              -0.34200483560562134,
+              -0.10174940462470015
+            ],
+            "end_s": 2.0869362316131923,
+            "outgoing_velocity_m_s": [
+              1.9418362825374396,
+              -0.3419850136067048,
+              0.044394195020431286
+            ]
+          },
+          {
+            "start_s": 2.0957487316132344,
+            "position_m": [
+              1.608400629551558,
+              -0.26006501470982407,
+              0.03599814223274752
+            ],
+            "incoming_velocity_m_s": [
+              1.9418362825374396,
+              -0.3419850136067048,
+              -0.041749867479568874
+            ],
+            "end_s": 2.097592481613243,
+            "outgoing_velocity_m_s": [
+              1.9418707623077633,
+              -0.3420026757647264,
+              0.016669126769153712
+            ]
+          },
+          {
+            "start_s": 2.100873712539677,
+            "position_m": [
+              1.6183526986337957,
+              -0.2618177605663436,
+              0.03599931449362237
+            ],
+            "incoming_velocity_m_s": [
+              1.9418708086013794,
+              -0.3420026898384094,
+              -0.015213373027592889
+            ],
+            "end_s": 2.102936212539687,
+            "outgoing_velocity_m_s": [
+              1.9419263413240881,
+              -0.34201429130141114,
+              0.004813538520993367
+            ]
+          },
+          {
+            "start_s": 2.103998712539692,
+            "position_m": [
+              1.6244211721292146,
+              -0.2628865458891559,
+              0.03599973380776267
+            ],
+            "incoming_velocity_m_s": [
+              1.9419263413240881,
+              -0.34201429130141114,
+              -0.005303023979006636
+            ],
+            "end_s": 2.106123712539702,
+            "outgoing_velocity_m_s": [
+              1.941947061517033,
+              -0.3420181640623914,
+              0.0013525240667131477
+            ]
+          },
+          {
+            "start_s": 2.1064674625397037,
+            "position_m": [
+              1.6292153361726163,
+              -0.2637308999555363,
+              0.035999928327576446
+            ],
+            "incoming_velocity_m_s": [
+              1.941947061517033,
+              -0.3420181640623914,
+              -0.0017131009332868505
+            ],
+            "end_s": 2.1088737125397152,
+            "outgoing_velocity_m_s": [
+              1.9419548593376301,
+              -0.3420195637614207,
+              4.7848920736479105e-05
+            ]
+          },
+          {
+            "start_s": 2.1089362125397155,
+            "position_m": [
+              1.6340095297047634,
+              -0.26457525940929,
+              0.03599998752752917
+            ],
+            "incoming_velocity_m_s": [
+              1.9419548593376301,
+              -0.3420195637614207,
+              -0.00025871357926352055
+            ]
+          }
+        ],
+        "first_blade_contact": {
+          "time_s": 1.401155510902402,
+          "position_m": [
+            0.040782845004438996,
+            -3.4877052260875343e-07,
+            0.42426836456558653
+          ],
+          "incoming_velocity_m_s": [
+            -2.2853009700775146,
+            -3.397372719948399e-17,
+            -0.5286492437171955
+          ]
+        }
+      },
+      "delivery_checks": {
+        "exactly_one_completed_bounce_before_blade": true,
+        "bounce_in_front_on_pitch": true,
+        "incoming_at_blade": true
+      }
+    },
+    {
+      "resolution": "finest",
+      "hand": "right",
+      "controller": "reference_only",
+      "return": 31.839609824121,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13689102922561466,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341772571951323,
+        "fixture_force_n": 135.43940984951888,
+        "fixture_torque_nm": 38.869513083489544,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 0.90110937499998,
+          "peak_force_n": 1387.877663794283,
+          "normal_impulse_ns": 3.9797660205273577,
+          "penetration_m": 0.0025094826660504027
+        },
+        "ball_geom/bat_blade": {
+          "duration_s": 0.005187500000000004,
+          "peak_force_n": 652.3549311951448,
+          "normal_impulse_ns": 0.7666569310608621,
+          "penetration_m": 0.00409975768820995
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4044055109024258,
+        "velocity_m_s": [
+          2.6204393625858233,
+          -0.4788205129448518,
+          -0.6140252116842991
+        ]
+      },
+      "unexpected_contacts": [],
+      "ball_contact_sequence": {
+        "pitch_events": [
+          {
+            "start_s": 1.0588746042252488,
+            "position_m": [
+              0.8233780667878307,
+              7.976140349368999e-26,
+              0.03585598590378287
+            ],
+            "incoming_velocity_m_s": [
+              -3.0,
+              2.603911035869867e-50,
+              -6.387407338409723
+            ],
+            "end_s": 1.0604839601516747,
+            "outgoing_velocity_m_s": [
+              -2.287323678392311,
+              -3.7954016871813985e-17,
+              2.8520022876347135
+            ]
+          },
+          {
+            "start_s": 1.6347334260941255,
+            "position_m": [
+              0.6615257589341885,
+              -0.11144234256753607,
+              0.03591282444380778
+            ],
+            "incoming_velocity_m_s": [
+              2.649425983428955,
+              -0.4748828411102295,
+              -2.862560626678282
+            ],
+            "end_s": 1.6363740510941334,
+            "outgoing_velocity_m_s": [
+              1.9974093761703022,
+              -0.3996015365038047,
+              1.2978095410716826
+            ]
+          },
+          {
+            "start_s": 1.90071753406525,
+            "position_m": [
+              1.1931700331647757,
+              -0.2177708188470601,
+              0.035979489287934596
+            ],
+            "incoming_velocity_m_s": [
+              1.9974093437194824,
+              -0.399601548910141,
+              -1.2952494304656994
+            ],
+            "end_s": 1.9023581590652578,
+            "outgoing_velocity_m_s": [
+              1.8700797738944255,
+              -0.3838353214766969,
+              0.5683724056395362
+            ]
+          },
+          {
+            "start_s": 2.0179361886979006,
+            "position_m": [
+              1.4124510371950445,
+              -0.26277240452948897,
+              0.0359874740180315
+            ],
+            "incoming_velocity_m_s": [
+              1.870079755783081,
+              -0.3838353157043457,
+              -0.5652957044887839
+            ],
+            "end_s": 2.0195768136979084,
+            "outgoing_velocity_m_s": [
+              1.8465574578336543,
+              -0.38092034761512433,
+              0.24815397655008883
+            ]
+          },
+          {
+            "start_s": 2.0698581256866926,
+            "position_m": [
+              1.5083413330420452,
+              -0.28255216027822055,
+              0.03599258732017177
+            ],
+            "incoming_velocity_m_s": [
+              1.8465574979782104,
+              -0.3809203505516052,
+              -0.2449518032789218
+            ],
+            "end_s": 2.0714987506867004,
+            "outgoing_velocity_m_s": [
+              1.8425842490442075,
+              -0.3804647890237431,
+              0.10810957201302607
+            ]
+          },
+          {
+            "start_s": 2.0932174816132223,
+            "position_m": [
+              1.551385221124869,
+              -0.2914398391176496,
+              0.03599783812609349
+            ],
+            "incoming_velocity_m_s": [
+              1.842584252357483,
+              -0.3804647922515869,
+              -0.10479808335304187
+            ],
+            "end_s": 2.0949206066132304,
+            "outgoing_velocity_m_s": [
+              1.8420763866611995,
+              -0.3804301443353084,
+              0.04528761340344346
+            ]
+          },
+          {
+            "start_s": 2.1038737125396914,
+            "position_m": [
+              1.5710151518691782,
+              -0.2954938062631693,
+              0.03599912018367751
+            ],
+            "incoming_velocity_m_s": [
+              1.8420764207839966,
+              -0.38043013215065,
+              -0.04238926179066299
+            ],
+            "end_s": 2.1057174625397,
+            "outgoing_velocity_m_s": [
+              1.8420995409134622,
+              -0.3804477822416008,
+              0.017207762698663635
+            ]
+          },
+          {
+            "start_s": 2.109076837539716,
+            "position_m": [
+              1.5805998017197949,
+              -0.2974733105321904,
+              0.03599952843991087
+            ],
+            "incoming_velocity_m_s": [
+              1.8420995409134622,
+              -0.3804477822416008,
+              -0.015594424801336335
+            ],
+            "end_s": 2.111123712539726,
+            "outgoing_velocity_m_s": [
+              1.8421511945997675,
+              -0.380460506390605,
+              0.005253458619931944
+            ]
+          },
+          {
+            "start_s": 2.1122330875397313,
+            "position_m": [
+              1.5864140470438712,
+              -0.2986741284621671,
+              0.03599983730939058
+            ],
+            "incoming_velocity_m_s": [
+              1.8421511945997675,
+              -0.380460506390605,
+              -0.00547622888006806
+            ],
+            "end_s": 2.1143424625397413,
+            "outgoing_velocity_m_s": [
+              1.8421716218464306,
+              -0.38046498603078316,
+              0.0016182980253219353
+            ]
+          },
+          {
+            "start_s": 2.114701837539743,
+            "position_m": [
+              1.5909618905028564,
+              -0.2996133975563622,
+              0.03599995072867906
+            ],
+            "incoming_velocity_m_s": [
+              1.8421716218464306,
+              -0.38046498603078316,
+              -0.0017538894746780655
+            ],
+            "end_s": 2.1170924625397545,
+            "outgoing_velocity_m_s": [
+              1.8421795468968225,
+              -0.3804666545948881,
+              0.00022498921845614907
+            ]
+          },
+          {
+            "start_s": 2.117170587539755,
+            "position_m": [
+              1.595509763519653,
+              -0.30055267298818045,
+              0.0359999888150722
+            ],
+            "incoming_velocity_m_s": [
+              1.8421795468968225,
+              -0.3804666545948881,
+              -0.00038813578154385
+            ]
+          }
+        ],
+        "first_blade_contact": {
+          "time_s": 1.3993742799759836,
+          "position_m": [
+            0.04414608515511734,
+            -9.207178767730209e-08,
+            0.4383590761493518
+          ],
+          "incoming_velocity_m_s": [
+            -2.2873237133026123,
+            -3.79540177366932e-17,
+            -0.472361346540483
+          ]
+        }
+      },
+      "delivery_checks": {
+        "exactly_one_completed_bounce_before_blade": true,
+        "bounce_in_front_on_pitch": true,
+        "incoming_at_blade": true
+      }
+    },
+    {
+      "resolution": "finest",
+      "hand": "right",
+      "controller": "ppo",
+      "return": 31.578359819948673,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.14793860642893011,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011341773486147216,
+        "fixture_force_n": 123.73480489979741,
+        "fixture_torque_nm": 36.29635416822861,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 0.90385937499998,
+          "peak_force_n": 1387.877663794283,
+          "normal_impulse_ns": 3.9714121044483868,
+          "penetration_m": 0.0025094826660504027
+        },
+        "ball_geom/bat_blade": {
+          "duration_s": 0.005218750000000004,
+          "peak_force_n": 645.821736405179,
+          "normal_impulse_ns": 0.7604502221224602,
+          "penetration_m": 0.003996519441538268
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4056711359024319,
+        "velocity_m_s": [
+          2.5679238780755997,
+          -0.4530429910465363,
+          -0.5789541991212707
+        ]
+      },
+      "unexpected_contacts": [],
+      "ball_contact_sequence": {
+        "pitch_events": [
+          {
+            "start_s": 1.0588746042252488,
+            "position_m": [
+              0.8233780667878307,
+              7.976140349368999e-26,
+              0.03585598590378287
+            ],
+            "incoming_velocity_m_s": [
+              -3.0,
+              2.603911035869867e-50,
+              -6.387407338409723
+            ],
+            "end_s": 1.0604839601516747,
+            "outgoing_velocity_m_s": [
+              -2.287323678392311,
+              -3.7954016871813985e-17,
+              2.8520022876347135
+            ]
+          },
+          {
+            "start_s": 1.6390615510941462,
+            "position_m": [
+              0.656993769982099,
+              -0.10628502797251249,
+              0.03595292924022413
+            ],
+            "incoming_velocity_m_s": [
+              2.612375497817993,
+              -0.4465661346912384,
+              -2.851468812713384
+            ],
+            "end_s": 1.6407177820205723,
+            "outgoing_velocity_m_s": [
+              1.9671826522742348,
+              -0.37705940350266376,
+              1.2740922265925223
+            ]
+          },
+          {
+            "start_s": 1.9002331590652477,
+            "position_m": [
+              1.1711295042441174,
+              -0.204800298017834,
+              0.035972352565675145
+            ],
+            "incoming_velocity_m_s": [
+              1.9671826362609863,
+              -0.3770594000816345,
+              -1.2716028009033207
+            ],
+            "end_s": 1.9018737840652555,
+            "outgoing_velocity_m_s": [
+              1.8434543271512476,
+              -0.36279002651886155,
+              0.5612030241769741
+            ]
+          },
+          {
+            "start_s": 2.0159986886978913,
+            "position_m": [
+              1.3846085309719083,
+              -0.24680696078433842,
+              0.03598576677189505
+            ],
+            "incoming_velocity_m_s": [
+              1.843454360961914,
+              -0.3627900183200836,
+              -0.5582099372577931
+            ],
+            "end_s": 2.017639313697899,
+            "outgoing_velocity_m_s": [
+              1.8204484865868698,
+              -0.3601352001453149,
+              0.24583907046179979
+            ]
+          },
+          {
+            "start_s": 2.067451875686681,
+            "position_m": [
+              1.47828958977596,
+              -0.2653385860600425,
+              0.03599265288035174
+            ],
+            "incoming_velocity_m_s": [
+              1.8204485177993774,
+              -0.36013519763946533,
+              -0.24266826430797483
+            ],
+            "end_s": 2.069092500686689,
+            "outgoing_velocity_m_s": [
+              1.8165435787589332,
+              -0.35972317477121313,
+              0.10710101794149121
+            ]
+          },
+          {
+            "start_s": 2.09060810661321,
+            "position_m": [
+              1.520356242796112,
+              -0.27366865913174426,
+              0.035997592455524294
+            ],
+            "incoming_velocity_m_s": [
+              1.8165435791015625,
+              -0.35972318053245544,
+              -0.10381398205866957
+            ],
+            "end_s": 2.092311231613218,
+            "outgoing_velocity_m_s": [
+              1.8160426760574375,
+              -0.35969350257774657,
+              0.044951034811148045
+            ]
+          },
+          {
+            "start_s": 2.1012018375396786,
+            "position_m": [
+              1.5395951855988306,
+              -0.27747916847720383,
+              0.03599896781361487
+            ],
+            "incoming_velocity_m_s": [
+              1.8160426616668701,
+              -0.3596934974193573,
+              -0.042112714760899415
+            ],
+            "end_s": 2.1030455875396874,
+            "outgoing_velocity_m_s": [
+              1.8160643408907096,
+              -0.3597105276833895,
+              0.017122881150711963
+            ]
+          },
+          {
+            "start_s": 2.1063893375397034,
+            "position_m": [
+              1.5490159956760465,
+              -0.2793451541579308,
+              0.035999561582096835
+            ],
+            "incoming_velocity_m_s": [
+              1.8160643408907096,
+              -0.3597105276833895,
+              -0.015526025099288014
+            ],
+            "end_s": 2.108436212539713,
+            "outgoing_velocity_m_s": [
+              1.8161148219457373,
+              -0.3597225590320851,
+              0.0052306097794954575
+            ]
+          },
+          {
+            "start_s": 2.1095299625397184,
+            "position_m": [
+              1.5547196879913587,
+              -0.2804748978830107,
+              0.03599988771097141
+            ],
+            "incoming_velocity_m_s": [
+              1.8161148219457373,
+              -0.3597225590320851,
+              -0.005345796470504541
+            ],
+            "end_s": 2.1116549625397285,
+            "outgoing_velocity_m_s": [
+              1.816135135006276,
+              -0.3597268408242134,
+              0.0015476829237327766
+            ]
+          },
+          {
+            "start_s": 2.11199871253973,
+            "position_m": [
+              1.5592032540527618,
+              -0.2813629698676335,
+              0.03599996059246877
+            ],
+            "incoming_velocity_m_s": [
+              1.816135135006276,
+              -0.3597268408242134,
+              -0.001671223326267222
+            ],
+            "end_s": 2.1144205875397417,
+            "outgoing_velocity_m_s": [
+              1.8161428007716978,
+              -0.3597283902357591,
+              0.00018845805488833435
+            ]
+          },
+          {
+            "start_s": 2.114483087539742,
+            "position_m": [
+              1.5637152262921683,
+              -0.2822566685725454,
+              0.03599999414841183
+            ],
+            "incoming_velocity_m_s": [
+              1.8161428007716978,
+              -0.3597283902357591,
+              -0.0002713856951116653
+            ]
+          }
+        ],
+        "first_blade_contact": {
+          "time_s": 1.400686760902408,
+          "position_m": [
+            0.04114396155504533,
+            -8.908400530268615e-08,
+            0.43773037202570514
+          ],
+          "incoming_velocity_m_s": [
+            -2.2873237133026123,
+            -3.79540177366932e-17,
+            -0.4852369847011577
+          ]
+        }
+      },
+      "delivery_checks": {
+        "exactly_one_completed_bounce_before_blade": true,
+        "bounce_in_front_on_pitch": true,
+        "incoming_at_blade": true
+      }
+    },
+    {
+      "resolution": "fine",
+      "hand": "left",
+      "controller": "reference_only",
+      "return": 31.81651632487774,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13659085253859962,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357265775915294,
+        "fixture_force_n": 141.73864780479806,
+        "fixture_torque_nm": 39.627339347294196,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 0.9220312500000007,
+          "peak_force_n": 1378.990358988151,
+          "normal_impulse_ns": 3.9689909286347036,
+          "penetration_m": 0.002468482707759463
+        },
+        "ball_geom/bat_blade": {
+          "duration_s": 0.0071250000000000055,
+          "peak_force_n": 646.7862654683149,
+          "normal_impulse_ns": 0.7851901397120403,
+          "penetration_m": 0.004065261600680728
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.405061760902393,
+        "velocity_m_s": [
+          2.5997232316331282,
+          0.47181452033329685,
+          -0.6313820620557149
+        ]
+      },
+      "unexpected_contacts": [],
+      "ball_contact_sequence": {
+        "pitch_events": [
+          {
+            "start_s": 1.0588746042251147,
+            "position_m": [
+              0.823378698029999,
+              5.314673562792307e-23,
+              0.03577974695932277
+            ],
+            "incoming_velocity_m_s": [
+              -3.0,
+              -5.036651623459195e-50,
+              -6.387254057159187
+            ],
+            "end_s": 1.0604995851516712,
+            "outgoing_velocity_m_s": [
+              -2.2853009551013357,
+              -3.3973727429764744e-17,
+              2.8128818344622726
+            ]
+          },
+          {
+            "start_s": 1.6321865510940268,
+            "position_m": [
+              0.6792079654205967,
+              0.10398312493598619,
+              0.0359133827007095
+            ],
+            "incoming_velocity_m_s": [
+              2.7791383266448975,
+              0.4464104473590851,
+              -2.807318579788228
+            ],
+            "end_s": 1.633842801094023,
+            "outgoing_velocity_m_s": [
+              2.12714950258229,
+              0.3798376731438021,
+              1.2404083266548924
+            ]
+          },
+          {
+            "start_s": 1.8865300531387177,
+            "position_m": [
+              1.2205865675610954,
+              0.20062703757573078,
+              0.035933719001417765
+            ],
+            "incoming_velocity_m_s": [
+              2.1271495819091797,
+              0.37983766198158264,
+              -1.2381494747543442
+            ],
+            "end_s": 1.888155053138714,
+            "outgoing_velocity_m_s": [
+              2.004504347111878,
+              0.3663117609451617,
+              0.5498324465399155
+            ]
+          },
+          {
+            "start_s": 1.9999987077712547,
+            "position_m": [
+              1.448101618008487,
+              0.2421992142622223,
+              0.03597047421955447
+            ],
+            "incoming_velocity_m_s": [
+              2.004504442214966,
+              0.3663117587566376,
+              -0.5470481821250975
+            ],
+            "end_s": 2.0016236886978227,
+            "outgoing_velocity_m_s": [
+              1.9817299892064992,
+              0.36382416506897797,
+              0.24159265994836363
+            ]
+          },
+          {
+            "start_s": 2.0505925197601824,
+            "position_m": [
+              1.5483772753921672,
+              0.26060779589452354,
+              0.035989013781711175
+            ],
+            "incoming_velocity_m_s": [
+              1.9817299842834473,
+              0.36382415890693665,
+              -0.2384842136287676
+            ],
+            "end_s": 2.0522487697601903,
+            "outgoing_velocity_m_s": [
+              1.9779053164896645,
+              0.36344328901081824,
+              0.10389991280713795
+            ]
+          },
+          {
+            "start_s": 2.0731550006867083,
+            "position_m": [
+              1.593005873339064,
+              0.26880819257679334,
+              0.035995791328422407
+            ],
+            "incoming_velocity_m_s": [
+              1.9779052734375,
+              0.3634432852268219,
+              -0.10088383660316441
+            ],
+            "end_s": 2.0748425006867164,
+            "outgoing_velocity_m_s": [
+              1.9774434009901158,
+              0.36341909001761324,
+              0.0433330617437565
+            ]
+          },
+          {
+            "start_s": 2.0834049816131754,
+            "position_m": [
+              1.6132749163154425,
+              0.2725332649674222,
+              0.03599877420644452
+            ],
+            "incoming_velocity_m_s": [
+              1.9774434566497803,
+              0.3634190857410431,
+              -0.04035850066259508
+            ],
+            "end_s": 2.0852799816131844,
+            "outgoing_velocity_m_s": [
+              1.977482504940368,
+              0.36343751569583305,
+              0.015703387518845615
+            ]
+          },
+          {
+            "start_s": 2.088373731613199,
+            "position_m": [
+              1.623100497753308,
+              0.2743390818782565,
+              0.035999444114193986
+            ],
+            "incoming_velocity_m_s": [
+              1.977482504940368,
+              0.36343751569583305,
+              -0.014339737481154384
+            ],
+            "end_s": 2.090436231613209,
+            "outgoing_velocity_m_s": [
+              1.9775360363930836,
+              0.3634490624983122,
+              0.00452432051098056
+            ]
+          },
+          {
+            "start_s": 2.091436231613214,
+            "position_m": [
+              1.629156657670815,
+              0.27545213540340613,
+              0.03599972424233367
+            ],
+            "incoming_velocity_m_s": [
+              1.9775360363930836,
+              0.3634490624983122,
+              -0.004979116989019444
+            ],
+            "end_s": 2.093561231613224,
+            "outgoing_velocity_m_s": [
+              1.977555995897961,
+              0.3634529405027939,
+              0.0012494211195400542
+            ]
+          },
+          {
+            "start_s": 2.0938737316132254,
+            "position_m": [
+              1.6339769332520226,
+              0.2763380486539997,
+              0.03599995034218176
+            ],
+            "incoming_velocity_m_s": [
+              1.977555995897961,
+              0.3634529405027939,
+              -0.0015096413804599467
+            ],
+            "end_s": 2.0963737316132374,
+            "outgoing_velocity_m_s": [
+              1.9775638143951033,
+              0.3634544023752266,
+              -4.606329732455663e-05
+            ]
+          },
+          {
+            "start_s": 2.0964362316132377,
+            "position_m": [
+              1.6390444328578988,
+              0.2772693991326977,
+              0.03599997901734577
+            ],
+            "incoming_velocity_m_s": [
+              1.9775638143951033,
+              0.3634544023752266,
+              -0.000352625797324557
+            ]
+          }
+        ],
+        "first_blade_contact": {
+          "time_s": 1.3998742799758448,
+          "position_m": [
+            0.043710918559792596,
+            3.59839199819091e-07,
+            0.4249381944187697
+          ],
+          "incoming_velocity_m_s": [
+            -2.2853009700775146,
+            -3.397372719948399e-17,
+            -0.5160801978588109
+          ]
+        }
+      },
+      "delivery_checks": {
+        "exactly_one_completed_bounce_before_blade": true,
+        "bounce_in_front_on_pitch": true,
+        "incoming_at_blade": true
+      }
+    },
+    {
+      "resolution": "fine",
+      "hand": "left",
+      "controller": "ppo",
+      "return": 31.766190245747566,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13596698152501793,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357265111690675,
+        "fixture_force_n": 147.13897171130108,
+        "fixture_torque_nm": 38.75601726418702,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 0.9072812500000007,
+          "peak_force_n": 1378.990358988151,
+          "normal_impulse_ns": 3.9685539568008767,
+          "penetration_m": 0.002468482707759463
+        },
+        "ball_geom/bat_blade": {
+          "duration_s": 0.005812500000000004,
+          "peak_force_n": 655.1998977880093,
+          "normal_impulse_ns": 0.7801960068235209,
+          "penetration_m": 0.004082969965412214
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.403811760902396,
+        "velocity_m_s": [
+          2.6264634310417705,
+          0.5973437109448274,
+          -0.6034817891670792
+        ]
+      },
+      "unexpected_contacts": [],
+      "ball_contact_sequence": {
+        "pitch_events": [
+          {
+            "start_s": 1.0588746042251147,
+            "position_m": [
+              0.823378698029999,
+              5.314673562792307e-23,
+              0.03577974695932277
+            ],
+            "incoming_velocity_m_s": [
+              -3.0,
+              -5.036651623459195e-50,
+              -6.387254057159187
+            ],
+            "end_s": 1.0604995851516712,
+            "outgoing_velocity_m_s": [
+              -2.2853009551013357,
+              -3.3973727429764744e-17,
+              2.8128818344622726
+            ]
+          },
+          {
+            "start_s": 1.6324678010940261,
+            "position_m": [
+              0.6748923292866486,
+              0.1378537062893425,
+              0.03583333237285059
+            ],
+            "incoming_velocity_m_s": [
+              2.7260215282440186,
+              0.591525673866272,
+              -2.8072764624023643
+            ],
+            "end_s": 1.6340928010940223,
+            "outgoing_velocity_m_s": [
+              2.058610056355479,
+              0.4997343381145028,
+              1.2785482048802346
+            ]
+          },
+          {
+            "start_s": 1.894561303138699,
+            "position_m": [
+              1.2147956656505974,
+              0.2688780613995761,
+              0.035922275101792835
+            ],
+            "incoming_velocity_m_s": [
+              2.058609962463379,
+              0.4997343420982361,
+              -1.2763437244415523
+            ],
+            "end_s": 1.8961863031386952,
+            "outgoing_velocity_m_s": [
+              1.928594481188518,
+              0.48056141783127493,
+              0.5714365214145729
+            ]
+          },
+          {
+            "start_s": 2.0124361886978743,
+            "position_m": [
+              1.4421985636311967,
+              0.3255343470947883,
+              0.03597377052836034
+            ],
+            "incoming_velocity_m_s": [
+              1.9285944700241089,
+              0.48056140542030334,
+              -0.5686694274044145
+            ],
+            "end_s": 2.014061188697882,
+            "outgoing_velocity_m_s": [
+              1.9040183456923545,
+              0.4769205059229791,
+              0.24919966035386124
+            ]
+          },
+          {
+            "start_s": 2.0645612506866673,
+            "position_m": [
+              1.5414590244855295,
+              0.3503958208151859,
+              0.0359916735882324
+            ],
+            "incoming_velocity_m_s": [
+              1.9040184020996094,
+              0.4769205152988434,
+              -0.24589876625537815
+            ],
+            "end_s": 2.066217500686675,
+            "outgoing_velocity_m_s": [
+              1.8998702786017958,
+              0.4763501999771266,
+              0.10594506355704247
+            ]
+          },
+          {
+            "start_s": 2.087529981613195,
+            "position_m": [
+              1.585099046071825,
+              0.36133730231028166,
+              0.035995568745663876
+            ],
+            "incoming_velocity_m_s": [
+              1.8998702764511108,
+              0.47635018825531006,
+              -0.1028239994317291
+            ],
+            "end_s": 2.089217481613203,
+            "outgoing_velocity_m_s": [
+              1.899356695340433,
+              0.4763085365567722,
+              0.04422322109180401
+            ]
+          },
+          {
+            "start_s": 2.097967481613245,
+            "position_m": [
+              1.6049238698783748,
+              0.36630879556417495,
+              0.03599857000570303
+            ],
+            "incoming_velocity_m_s": [
+              1.899356695340433,
+              0.4763085365567722,
+              -0.04130771640819611
+            ],
+            "end_s": 2.099811231613254,
+            "outgoing_velocity_m_s": [
+              1.899381430819845,
+              0.4763307882709387,
+              0.016418306481898518
+            ]
+          },
+          {
+            "start_s": 2.1030299625396873,
+            "position_m": [
+              1.6145394337304813,
+              0.36872021844378466,
+              0.03599934052442902
+            ],
+            "incoming_velocity_m_s": [
+              1.899381399154663,
+              0.47633078694343567,
+              -0.01485106896638867
+            ],
+            "end_s": 2.105092462539697,
+            "outgoing_velocity_m_s": [
+              1.8994338332999774,
+              0.476346451469691,
+              0.004692245398617014
+            ]
+          },
+          {
+            "start_s": 2.106123712539702,
+            "position_m": [
+              1.6204157633590766,
+              0.3701939026666274,
+              0.03599976821967703
+            ],
+            "incoming_velocity_m_s": [
+              1.8994338332999774,
+              0.476346451469691,
+              -0.0051177546013829915
+            ],
+            "end_s": 2.1082487125397122,
+            "outgoing_velocity_m_s": [
+              1.8994536099992703,
+              0.47635171980440116,
+              0.0012976832116490642
+            ]
+          },
+          {
+            "start_s": 2.1085612125397137,
+            "position_m": [
+              1.6250456647495335,
+              0.37135500557094336,
+              0.035999955271893785
+            ],
+            "incoming_velocity_m_s": [
+              1.8994536099992703,
+              0.47635171980440116,
+              -0.0014613792883509382
+            ],
+            "end_s": 2.111092462539726,
+            "outgoing_velocity_m_s": [
+              1.8994614983038576,
+              0.47635373484340277,
+              -7.140551006743307e-05
+            ]
+          },
+          {
+            "start_s": 2.111154962539726,
+            "position_m": [
+              1.6299723853187968,
+              0.37259054611493564,
+              0.03599997729742155
+            ],
+            "incoming_velocity_m_s": [
+              1.8994614983038576,
+              0.47635373484340277,
+              -0.00037796801006743344
+            ]
+          }
+        ],
+        "first_blade_contact": {
+          "time_s": 1.3987492799758474,
+          "position_m": [
+            0.0462819246620129,
+            4.6227234909016366e-07,
+            0.4255131003474281
+          ],
+          "incoming_velocity_m_s": [
+            -2.2853009700775146,
+            -3.397372719948399e-17,
+            -0.505043947858809
+          ]
+        }
+      },
+      "delivery_checks": {
+        "exactly_one_completed_bounce_before_blade": true,
+        "bounce_in_front_on_pitch": true,
+        "incoming_at_blade": true
+      }
+    },
+    {
+      "resolution": "finest",
+      "hand": "left",
+      "controller": "reference_only",
+      "return": 31.83960573375225,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.13653725753779994,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357284675417947,
+        "fixture_force_n": 135.23974145115162,
+        "fixture_torque_nm": 38.82362275165997,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 0.9059374999999801,
+          "peak_force_n": 1387.877663794283,
+          "normal_impulse_ns": 3.977307207729816,
+          "penetration_m": 0.0025094826660504027
+        },
+        "ball_geom/bat_blade": {
+          "duration_s": 0.005515625000000004,
+          "peak_force_n": 651.0796689399401,
+          "normal_impulse_ns": 0.772867951628956,
+          "penetration_m": 0.004069684702565177
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.404436760902426,
+        "velocity_m_s": [
+          2.616860890619446,
+          0.4797102877781217,
+          -0.6139868018305981
+        ]
+      },
+      "unexpected_contacts": [],
+      "ball_contact_sequence": {
+        "pitch_events": [
+          {
+            "start_s": 1.0588746042252488,
+            "position_m": [
+              0.8233780667878307,
+              7.976140349368999e-26,
+              0.03585598590378287
+            ],
+            "incoming_velocity_m_s": [
+              -3.0,
+              2.603911035869867e-50,
+              -6.387407338409723
+            ],
+            "end_s": 1.0604839601516747,
+            "outgoing_velocity_m_s": [
+              -2.287323678392311,
+              -3.7954016871813985e-17,
+              2.8520022876347135
+            ]
+          },
+          {
+            "start_s": 1.6358115510941307,
+            "position_m": [
+              0.6722105776601998,
+              0.1110421690022387,
+              0.03595513098769882
+            ],
+            "incoming_velocity_m_s": [
+              2.690131902694702,
+              0.47014713287353516,
+              -2.857375419082443
+            ],
+            "end_s": 1.6374678010941386,
+            "outgoing_velocity_m_s": [
+              2.035689067160067,
+              0.3966491751581573,
+              1.2759983611459749
+            ]
+          },
+          {
+            "start_s": 1.8973738031388159,
+            "position_m": [
+              1.2050390930515051,
+              0.21483086339139906,
+              0.03596884348205262
+            ],
+            "incoming_velocity_m_s": [
+              2.035689115524292,
+              0.39664918184280396,
+              -1.2735286869430829
+            ],
+            "end_s": 1.8990144281388237,
+            "outgoing_velocity_m_s": [
+              1.910465082531561,
+              0.38157415593011823,
+              0.5636173587565129
+            ]
+          },
+          {
+            "start_s": 2.01363931369788,
+            "position_m": [
+              1.427231854183149,
+              0.259203278121879,
+              0.035983014983137544
+            ],
+            "incoming_velocity_m_s": [
+              1.910465121269226,
+              0.3815741539001465,
+              -0.5607006348419414
+            ],
+            "end_s": 2.015264313697888,
+            "outgoing_velocity_m_s": [
+              1.8871526795053553,
+              0.3787552249183696,
+              0.24825757766501905
+            ]
+          },
+          {
+            "start_s": 2.065545625686672,
+            "position_m": [
+              1.5252003981664435,
+              0.2788646449113391,
+              0.035995916419998296
+            ],
+            "incoming_velocity_m_s": [
+              1.8871526718139648,
+              0.37875521183013916,
+              -0.2448482039308541
+            ],
+            "end_s": 2.06720187568668,
+            "outgoing_velocity_m_s": [
+              1.883179896570907,
+              0.3783174196320092,
+              0.1065533141845526
+            ]
+          },
+          {
+            "start_s": 2.0886081066132003,
+            "position_m": [
+              1.5686336180323806,
+              0.28758985853219715,
+              0.03599757124513291
+            ],
+            "incoming_velocity_m_s": [
+              1.8831799030303955,
+              0.3783174157142639,
+              -0.10328871656954204
+            ],
+            "end_s": 2.0903112316132084,
+            "outgoing_velocity_m_s": [
+              1.8826864634287752,
+              0.37828633272519985,
+              0.044733952784041575
+            ]
+          },
+          {
+            "start_s": 2.0991549816132506,
+            "position_m": [
+              1.5884903656962615,
+              0.2915796147500687,
+              0.03599909512268505
+            ],
+            "incoming_velocity_m_s": [
+              1.8826864634287752,
+              0.37828633272519985,
+              -0.04186995346595836
+            ],
+            "end_s": 2.1009987125396776,
+            "outgoing_velocity_m_s": [
+              1.8827132283714323,
+              0.3783041762117799,
+              0.017001218906537347
+            ]
+          },
+          {
+            "start_s": 2.1043112125396934,
+            "position_m": [
+              1.5981981345061442,
+              0.2935302189485749,
+              0.03599961788760438
+            ],
+            "incoming_velocity_m_s": [
+              1.8827132283714323,
+              0.3783041762117799,
+              -0.015341124843462629
+            ],
+            "end_s": 2.106358087539703,
+            "outgoing_velocity_m_s": [
+              1.8827660067815224,
+              0.3783167732327196,
+              0.005167935061302734
+            ]
+          },
+          {
+            "start_s": 2.1074362125397084,
+            "position_m": [
+              1.6040817334183264,
+              0.29471244851738543,
+              0.03599988411024913
+            ],
+            "incoming_velocity_m_s": [
+              1.8827660067815224,
+              0.3783167732327196,
+              -0.00525518993869727
+            ],
+            "end_s": 2.1095612125397185,
+            "outgoing_velocity_m_s": [
+              1.8827869878297254,
+              0.37832124227491776,
+              0.001518556023364619
+            ]
+          },
+          {
+            "start_s": 2.10990496253972,
+            "position_m": [
+              1.6087298457013879,
+              0.295646425275336,
+              0.03599994865517539
+            ],
+            "incoming_velocity_m_s": [
+              1.8827869878297254,
+              0.37832124227491776,
+              -0.0017003502266353815
+            ],
+            "end_s": 2.1123112125397316,
+            "outgoing_velocity_m_s": [
+              1.8827947437359536,
+              0.3783228310900489,
+              0.00020203487314402217
+            ]
+          },
+          {
+            "start_s": 2.112389337539732,
+            "position_m": [
+              1.6134074062107489,
+              0.2965863194929292,
+              0.03599998755743436
+            ],
+            "incoming_velocity_m_s": [
+              1.8827947437359536,
+              0.3783228310900489,
+              -0.0004110901268559775
+            ]
+          }
+        ],
+        "first_blade_contact": {
+          "time_s": 1.3993899049759837,
+          "position_m": [
+            0.04411034371355127,
+            9.21212368710193e-08,
+            0.4383516909001041
+          ],
+          "incoming_velocity_m_s": [
+            -2.2873237133026123,
+            -3.79540177366932e-17,
+            -0.47251462779048303
+          ]
+        }
+      },
+      "delivery_checks": {
+        "exactly_one_completed_bounce_before_blade": true,
+        "bounce_in_front_on_pitch": true,
+        "incoming_at_blade": true
+      }
+    },
+    {
+      "resolution": "finest",
+      "hand": "left",
+      "controller": "ppo",
+      "return": 31.782213523983955,
+      "duration_s": 2.999997854232788,
+      "terminal_terms": [
+        "time_out"
+      ],
+      "original_checks": {
+        "complete": true,
+        "pelvis_height": true,
+        "no_unexpected_contact": true,
+        "hard_joint_limits": true,
+        "grip": true,
+        "motor_limits": true,
+        "root_tracking": true,
+        "joint_tracking": true,
+        "bat_tracking": false
+      },
+      "contact_checks": {
+        "loaded_blade_contact": true,
+        "outgoing_vx": true,
+        "all_ball_penetration": true
+      },
+      "all_checks_pass": false,
+      "peak_bat_error_m": 0.1358042454617451,
+      "peaks": {
+        "hard_joint_limit_excess_rad": 0.0,
+        "motor_force_fraction": 1.0,
+        "grip_separation_m": 0.0011357284404965654,
+        "fixture_force_n": 139.92097218589953,
+        "fixture_torque_nm": 37.97771601625388,
+        "unexpected_contact_force_n": 0.0,
+        "unexpected_penetration_m": 0.0
+      },
+      "ball_contacts": {
+        "ball_geom/pitch": {
+          "duration_s": 0.89984374999998,
+          "peak_force_n": 1387.877663794283,
+          "normal_impulse_ns": 3.9786842504166806,
+          "penetration_m": 0.0025094826660504027
+        },
+        "ball_geom/bat_blade": {
+          "duration_s": 0.0049687500000000035,
+          "peak_force_n": 658.7926457824875,
+          "normal_impulse_ns": 0.7674697988415161,
+          "penetration_m": 0.004081210267179704
+        }
+      },
+      "first_force_free_blade_exit": {
+        "time_s": 1.4032648859024204,
+        "velocity_m_s": [
+          2.6379426875809093,
+          0.6034130240387752,
+          -0.5850713237274007
+        ]
+      },
+      "unexpected_contacts": [],
+      "ball_contact_sequence": {
+        "pitch_events": [
+          {
+            "start_s": 1.0588746042252488,
+            "position_m": [
+              0.8233780667878307,
+              7.976140349368999e-26,
+              0.03585598590378287
+            ],
+            "incoming_velocity_m_s": [
+              -3.0,
+              2.603911035869867e-50,
+              -6.387407338409723
+            ],
+            "end_s": 1.0604839601516747,
+            "outgoing_velocity_m_s": [
+              -2.287323678392311,
+              -3.7954016871813985e-17,
+              2.8520022876347135
+            ]
+          },
+          {
+            "start_s": 1.6354365510941289,
+            "position_m": [
+              0.6672932628926868,
+              0.14245804721142843,
+              0.03592390147525263
+            ],
+            "incoming_velocity_m_s": [
+              2.6379427909851074,
+              0.6034130454063416,
+              -2.862523878555104
+            ],
+            "end_s": 1.6370928010941368,
+            "outgoing_velocity_m_s": [
+              1.9629107291163883,
+              0.504600152615701,
+              1.2935541413573066
+            ]
+          },
+          {
+            "start_s": 1.9005925340652494,
+            "position_m": [
+              1.1881498588631942,
+              0.27630948766136326,
+              0.035964317907442346
+            ],
+            "incoming_velocity_m_s": [
+              1.962910771369934,
+              0.5046001672744751,
+              -1.2912276034164438
+            ],
+            "end_s": 1.9022175340652572,
+            "outgoing_velocity_m_s": [
+              1.8319615095129398,
+              0.48401540331458454,
+              0.5736044115339994
+            ]
+          },
+          {
+            "start_s": 2.018858063697905,
+            "position_m": [
+              1.4048822406556836,
+              0.3335633715902241,
+              0.035987895855489956
+            ],
+            "incoming_velocity_m_s": [
+              1.8319615125656128,
+              0.48401540517807007,
+              -0.5704868414306952
+            ],
+            "end_s": 2.0204987888336206,
+            "outgoing_velocity_m_s": [
+              1.807327624317752,
+              0.48013252543264345,
+              0.2502131986063385
+            ]
+          },
+          {
+            "start_s": 2.071186250686699,
+            "position_m": [
+              1.499470503806108,
+              0.3586900246597797,
+              0.03599567930756844
+            ],
+            "incoming_velocity_m_s": [
+              1.8073276281356812,
+              0.480132520198822,
+              -0.24687789902686932
+            ],
+            "end_s": 2.072842500686707,
+            "outgoing_velocity_m_s": [
+              1.8031312028959796,
+              0.47951939088335493,
+              0.10752128763493009
+            ]
+          },
+          {
+            "start_s": 2.094451856613228,
+            "position_m": [
+              1.5414239780309715,
+              0.36984669553146965,
+              0.03599704031551589
+            ],
+            "incoming_velocity_m_s": [
+              1.8031312227249146,
+              0.47951939702033997,
+              -0.10431339945554657
+            ],
+            "end_s": 2.0961393566132362,
+            "outgoing_velocity_m_s": [
+              1.8025851363244467,
+              0.4794680404174993,
+              0.04551417956407047
+            ]
+          },
+          {
+            "start_s": 2.1051393375396974,
+            "position_m": [
+              1.5606893677855682,
+              0.3749710263150907,
+              0.03599874985473598
+            ],
+            "incoming_velocity_m_s": [
+              1.8025851249694824,
+              0.47946804761886597,
+              -0.04262253910198804
+            ],
+            "end_s": 2.106967462539706,
+            "outgoing_velocity_m_s": [
+              1.8025971711137831,
+              0.4794887322928777,
+              0.017525673130120212
+            ]
+          },
+          {
+            "start_s": 2.1103737125397224,
+            "position_m": [
+              1.5701248201206564,
+              0.37748083466228594,
+              0.03599970038295631
+            ],
+            "incoming_velocity_m_s": [
+              1.8025971711137831,
+              0.4794887322928777,
+              -0.015736358119879775
+            ],
+            "end_s": 2.1124362125397322,
+            "outgoing_velocity_m_s": [
+              1.802647843157689,
+              0.47950506185048347,
+              0.005215805363062881
+            ]
+          },
+          {
+            "start_s": 2.1135299625397375,
+            "position_m": [
+              1.5758143837646714,
+              0.37899425899567457,
+              0.0359999065805161
+            ],
+            "incoming_velocity_m_s": [
+              1.802647843157689,
+              0.47950506185048347,
+              -0.00536060088693712
+            ],
+            "end_s": 2.1156549625397476,
+            "outgoing_velocity_m_s": [
+              1.8026678418355364,
+              0.4795107373589452,
+              0.0015542116240232153
+            ]
+          },
+          {
+            "start_s": 2.1159987125397492,
+            "position_m": [
+              1.580264702753963,
+              0.3801780462976573,
+              0.03599995675440793
+            ],
+            "incoming_velocity_m_s": [
+              1.8026678418355364,
+              0.4795107373589452,
+              -0.0016646946259767867
+            ],
+            "end_s": 2.118420587539761,
+            "outgoing_velocity_m_s": [
+              1.8026754618853216,
+              0.4795128070440537,
+              0.0001861105142365102
+            ]
+          },
+          {
+            "start_s": 2.118483087539761,
+            "position_m": [
+              1.584743217111755,
+              0.381369333903095,
+              0.035999994392507874
+            ],
+            "incoming_velocity_m_s": [
+              1.8026754618853216,
+              0.4795128070440537,
+              -0.0002737332357634895
+            ]
+          }
+        ],
+        "first_blade_contact": {
+          "time_s": 1.3982961549759785,
+          "position_m": [
+            0.04661211353182862,
+            1.1764717029649359e-07,
+            0.43886288925328
+          ],
+          "incoming_velocity_m_s": [
+            -2.2873237133026123,
+            -3.79540177366932e-17,
+            -0.4617849402904812
+          ]
+        }
+      },
+      "delivery_checks": {
+        "exactly_one_completed_bounce_before_blade": true,
+        "bounce_in_front_on_pitch": true,
+        "incoming_at_blade": true
+      }
+    }
+  ],
+  "resolution_comparisons": [
+    {
+      "hand": "right",
+      "controller": "reference_only",
+      "checks": {
+        "ball_geom/bat_blade:present_both": true,
+        "ball_geom/bat_blade:peak_force_n": true,
+        "ball_geom/bat_blade:penetration_m": true,
+        "ball_geom/pitch:present_both": true,
+        "ball_geom/pitch:peak_force_n": true,
+        "ball_geom/pitch:penetration_m": true,
+        "blade_exit_both": true,
+        "blade_exit_velocity": true
+      },
+      "all_pass": true
+    },
+    {
+      "hand": "right",
+      "controller": "ppo",
+      "checks": {
+        "ball_geom/bat_blade:present_both": true,
+        "ball_geom/bat_blade:peak_force_n": true,
+        "ball_geom/bat_blade:penetration_m": true,
+        "ball_geom/pitch:present_both": true,
+        "ball_geom/pitch:peak_force_n": true,
+        "ball_geom/pitch:penetration_m": true,
+        "blade_exit_both": true,
+        "blade_exit_velocity": true
+      },
+      "all_pass": true
+    },
+    {
+      "hand": "left",
+      "controller": "reference_only",
+      "checks": {
+        "ball_geom/bat_blade:present_both": true,
+        "ball_geom/bat_blade:peak_force_n": true,
+        "ball_geom/bat_blade:penetration_m": true,
+        "ball_geom/pitch:present_both": true,
+        "ball_geom/pitch:peak_force_n": true,
+        "ball_geom/pitch:penetration_m": true,
+        "blade_exit_both": true,
+        "blade_exit_velocity": true
+      },
+      "all_pass": true
+    },
+    {
+      "hand": "left",
+      "controller": "ppo",
+      "checks": {
+        "ball_geom/bat_blade:present_both": true,
+        "ball_geom/bat_blade:peak_force_n": true,
+        "ball_geom/bat_blade:penetration_m": true,
+        "ball_geom/pitch:present_both": true,
+        "ball_geom/pitch:peak_force_n": true,
+        "ball_geom/pitch:penetration_m": true,
+        "blade_exit_both": true,
+        "blade_exit_velocity": true
+      },
+      "all_pass": true
+    }
+  ],
+  "trained_policy_qualification": {
+    "right": false,
+    "left": false
+  },
+  "all_trained_policies_qualify": false,
+  "input_sha256": {
+    "ppo_right/run_summary.json": "3007afc610b2d00f1e8c842dd964074808e02669e1c3d1897e37ed604562ce67",
+    "ppo_right/run_config.json": "6e05ca35539ad5ab882d80c6c8d794d7926abe53d238e48ff1446b0ee52784b4",
+    "ppo_right/training_diagnostics.json": "02caf4b0dbbbda9030c159523d8d8768b76f9f5bb10a36f11f6f8a4c77ffd5ff",
+    "ppo_right/training_scalars.csv": "ea018b0c60f555257eef398ce158df0699dd17a6359fb659fff51c241c5beb00",
+    "ppo_right/model_255.pt": "54821b4d351f2f146bc4bc04208a2d2c9351db1dc3d98ce8d5a10bd2f6b05f52",
+    "right_fine/evaluation.json": "523c31b899e43dba907665a2bce146195e9aa4ce8574639d112806186dd1419e",
+    "right_finest/evaluation.json": "5035bbd185bacb71cea650e7673996fea3f17f1370c51ae8d9859e078cbdcce7",
+    "ppo_left/run_summary.json": "92d41a30bf12785712b8853237b6d767441aed019456f86c815b3eba5bb808cb",
+    "ppo_left/run_config.json": "bf1214cdc6ce10af3559572b102275d8b02f2beaefa03356734f0c1b559f2545",
+    "ppo_left/training_diagnostics.json": "ba58bc155fab4dec901e87d8c588a1ca7a20c0b2e569ada33581fef5e60acac7",
+    "ppo_left/training_scalars.csv": "0312a81f164317bb6c7de367d64ab55d5ed0bdffbf8f49849a3e7f07710a2707",
+    "ppo_left/model_255.pt": "3beb612df895d64a7290cfafa9c5d87c094c7639b4e6f20f42c43b3198062b94",
+    "left_fine/evaluation.json": "6c057e70ab00ef84fa261993dc6ca311979bd00ceb9dfa9ba8ca10e0b2151d2c",
+    "left_finest/evaluation.json": "b5e2972ee54b42ed039b856accc0e6bcf1d9b8195db15ceb7dda45570bced28b"
+  },
+  "reporter_sha256": "6fcf9120111095cb70788bbbce7a749a2c9f60cd6ea817deb5341cb2e75e61c1",
+  "media": {
+    "combined_frames": 350,
+    "fps": 25,
+    "physical_speed": 0.5,
+    "contact_sheet_times_s": [
+      0.02,
+      1.06,
+      1.4,
+      1.8,
+      3.0
+    ],
+    "sha256": {
+      "two_hand_ppo_learned_batting.mp4": "1bb0f1937da1e41505739fc2bb52ef82afb60a400dbce2ef500f7e086e0ed9bc",
+      "learned_batting_contact_sheet.png": "d76b350154c69abcb91f48965e1e6029b3954b8f8d36309df37ef6110311cfe7"
+    }
+  }
+}

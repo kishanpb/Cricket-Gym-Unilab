@@ -64,3 +64,65 @@ exit, bounce ordering, motor/joint/grip/stability checks and resolution
 agreement. A completed training run alone cannot clear the original 8 cm
 bat-path gate, any physical gate or the running-bowling requirement. Nominal-feed
 success would still need perturbed-delivery evaluation before a robust showcase.
+
+Add `--render` to each 31.25-microsecond evaluation to retain both reference and
+PPO videos. Export the native scalar logs with
+`scripts/retain_g1_training_diagnostics.py` for each completed training directory,
+then build the complete report and the right-then-left video:
+
+```sh
+PYTHONPATH=src:scripts uv run python scripts/report_g1_cricket_batting_learning.py \
+  g1_cricket_results/bimanual_batting_learning_v1 --media
+```
+
+The report checks both final checkpoints, the declared training budget and
+observations, all four evaluation files and their source fingerprints. Video
+assembly requires both full 150-control PPO episodes plus their terminal hold;
+it rejects missing or blank frames and retains 0.5x playback. Qualification
+remains separate from video assembly. Fixed review frames are 0.02, 1.06, 1.40,
+1.80 and 3.00 seconds, independent of which actor performs better.
+
+## Complete Results
+
+Task source `c969ca49`. Both seed-1 runs completed all 49,152 transitions;
+all 256 iteration rows and 53 native scalar series per hand are finite. Final
+actor/critic tensors are finite and changed since the first update. The
+[complete report](../g1_cricket_results/bimanual_batting_learning_v1/summary.json)
+retains both final checkpoints and all eight outcomes, without checkpoint selection.
+
+| Hand | Control | Physics step (microseconds) | Peak bat error (cm) | First forward exit (m/s) | Peak blade penetration (mm) |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Right | Reference only | 31.25 | 13.6990 | 2.60307 | 4.0900 |
+| Right | PPO | 31.25 | 14.8104 | 2.54977 | 3.9685 |
+| Right | Reference only | 15.625 | 13.6891 | 2.62044 | 4.0998 |
+| Right | PPO | 15.625 | 14.7939 | 2.56792 | 3.9965 |
+| Left | Reference only | 31.25 | 13.6591 | 2.59972 | 4.0653 |
+| Left | PPO | 31.25 | 13.5967 | 2.62646 | 4.0830 |
+| Left | Reference only | 15.625 | 13.6537 | 2.61686 | 4.0697 |
+| Left | PPO | 15.625 | 13.5804 | 2.63794 | 4.0812 |
+
+Every episode completes three seconds, hits after exactly one incoming bounce,
+and passes height, grip, joint/motor limits, unintended-contact, root/joint
+tracking and ball-contact gates. All four force/penetration/exit-velocity
+resolution comparisons pass. **Every episode still fails the unchanged 8 cm
+bat-path limit**, with its error peak at 1.66 s during follow-through. Right
+PPO worsens reference tracking; left PPO improves it only slightly. Adding
+ball/contact observations and training does not establish learned interception:
+reference-only control also hits, and no perturbed delivery was tested.
+
+The [full right-then-left slow-motion video](../g1_cricket_results/bimanual_batting_learning_v1/two_hand_ppo_learned_batting.mp4)
+shows the final PPO actors with mechanical grips, not learned finger grasping.
+The [fixed-frame review sheet](../g1_cricket_results/bimanual_batting_learning_v1/learned_batting_contact_sheet.png)
+was visually inspected. Full reference/PPO source clips remain in
+[right fine evaluation](../g1_cricket_results/bimanual_batting_learning_v1/right_fine/)
+and [left fine evaluation](../g1_cricket_results/bimanual_batting_learning_v1/left_fine/).
+All 1,050 source/combined frames decode nonblank at 960 x 540. This is a
+development diagnostic, not an advertising qualification or running-bowling video.
+
+All 1,152,000 evaluated physical substeps pass independent native endpoint/sensor
+replay. Each evaluation's 75 input hashes and recorder hash verify; every
+reference-control physical trace exactly matches the prior zero-lead study.
+The complete summary reproduces, and 154 focused tests pass with warnings as
+errors. Final weights, configs, scalar CSVs and complete reports remain;
+redundant initial weights, events and unrelated generated runtime diffs were
+removed after verification. Neither actor is promoted as the accuracy solution.
