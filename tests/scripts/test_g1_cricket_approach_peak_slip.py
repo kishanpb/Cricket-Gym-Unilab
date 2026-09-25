@@ -3,6 +3,8 @@ from types import SimpleNamespace
 
 import numpy as np
 import pytest
+from evaluate_g1_cricket_approach import ApproachEvents, LoadedFootSlip
+from g1_cricket_delivery_trial import DeliveryReplay
 from hydra import compose, initialize_config_dir
 from omegaconf import OmegaConf
 
@@ -67,3 +69,38 @@ def test_native_reward_change_preserves_trajectory_and_observations(hand):
     finally:
         for env in envs:
             env.close()
+
+
+@pytest.mark.parametrize("hand", ["right", "left"])
+def test_peak_reward_matches_native_touchdown_contact_speed(hand):
+    owner = owners()[1]
+    override = BackendAdapter(owner, root_dir=ROOT).build_task_env_cfg_override()
+    override.update(handedness=hand, auto_reset=False)
+    env = create_env(owner, num_envs=1, env_cfg_override=override)
+    try:
+        env.reset(seed=1)
+        action = np.zeros((1, 29), np.float32)
+        for _ in range(85):
+            env.step(action)
+        replay = DeliveryReplay(env)
+        slip = LoadedFootSlip(replay.model)
+        events = ApproachEvents(hand)
+        speeds = []
+
+        def observe(model, data):
+            speeds.append(slip.measure(model, data)[:2])
+
+        maximum = 0.0
+        for _ in range(15):
+            speeds.clear()
+            replay.step(env, action, events, observer=observe)
+            peak = np.asarray(speeds).max(axis=0)
+            maximum = max(maximum, float(peak.max()))
+            term = env.action_manager.get_term("residual")
+            np.testing.assert_allclose(term.slip_peak[0], peak, atol=1e-12, rtol=0)
+            np.testing.assert_allclose(
+                peak_slip_cost(env)[0], np.square(peak).sum(), atol=1e-12, rtol=0
+            )
+        assert maximum > 1
+    finally:
+        env.close()

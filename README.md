@@ -92,6 +92,9 @@ reduces right/left drift from about 17/27 cm to 10/15 cm while retaining upright
 approaches. Left remains outside the 15 cm limit; peak slip still fails and
 right stance slip regresses on the finer grid. All four outcomes and full videos
 are retained, without promoting this controller as a bowling solution.
+The matched [peak-slip reward pilot](docs/g1_cricket_approach_peak_slip.md#complete-results)
+also fails the same physical gates after fresh 49,152-transition runs per hand;
+complete checkpoints, comparisons and videos are retained as a rejected result.
 The latest [planted-foot reference and joint-tracking comparison](docs/g1_cricket_ground_momentum.md#foreaft-pendulum-comparison)
 removes audited reference self-intersections and passes sampled support bounds,
 but every physical trial still falls before release. Stronger tracking gains
