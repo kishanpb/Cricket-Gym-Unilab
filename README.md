@@ -87,6 +87,11 @@ actors now complete eight-second approaches and stop upright at both physics
 resolutions, travelling 2.78-2.81 m. Full videos and all eight outcomes remain
 available: foot-slip and drift checks still fail. These are walking/carry
 diagnostics, not running deliveries or independently learned locomotion.
+The [frozen-policy lane-feedback trial](docs/g1_cricket_approach_lane.md#complete-results)
+reduces right/left drift from about 17/27 cm to 10/15 cm while retaining upright
+approaches. Left remains outside the 15 cm limit; peak slip still fails and
+right stance slip regresses on the finer grid. All four outcomes and full videos
+are retained, without promoting this controller as a bowling solution.
 The latest [planted-foot reference and joint-tracking comparison](docs/g1_cricket_ground_momentum.md#foreaft-pendulum-comparison)
 removes audited reference self-intersections and passes sampled support bounds,
 but every physical trial still falls before release. Stronger tracking gains

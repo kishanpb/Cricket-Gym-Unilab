@@ -26,3 +26,42 @@ PYTHONPATH=src:scripts OMP_NUM_THREADS=2 uv run python \
   scripts/evaluate_g1_cricket_approach_lane.py \
   g1_cricket_results/approach_lane_v1
 ```
+
+## Complete Results
+
+Source `a10c1fdd2fc8b58ccbcf044722605834612abe38`; both frozen final actors and
+all parent training provenance are unchanged. All four candidates complete
+eight seconds upright, travel 2.821-2.826 m and settle. Lane feedback reduces
+drift, but does not qualify either hand:
+
+| Hand | Physics step (us) | Parent drift (cm) | Lane-feedback drift (cm) | Peak slip (m/s) | Stance slip (cm) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Right | 62.5 | 17.0715 | 10.2261 | 2.2458 | 2.9636 |
+| Right | 31.25 | 16.5840 | 9.8385 | 2.2400 | 3.0708 |
+| Left | 62.5 | 26.0776 | 15.5761 | 2.5573 | 3.0881 |
+| Left | 31.25 | 26.7284 | 15.3731 | 2.5535 | 3.1119 |
+
+Right clears the 15 cm lane limit at both resolutions. Left still exceeds it;
+all cases still fail peak slip. Right stance slip crosses 3 cm only at the finer
+timestep, so its resolution comparison fails; left's comparison passes while
+retaining all three failed gates. All other original checks pass. This is a
+directional lane-control improvement with a stance-slip regression, not a gait
+promotion or a running-bowling result. No thresholds or physics were changed.
+
+All 768,000 substeps reproduce native endpoints/sensors exactly; measured slip
+cost agrees within 3.34e-16. The [complete report](../g1_cricket_results/approach_lane_v1/summary.json)
+retains the four candidates, all four parent PPO rows, input/checkpoint/model
+fingerprints, traces and failure states. Both videos contain all 401 nonblank
+960x540 frames at 25 fps, half speed; fixed-time sheets were inspected.
+
+| Right-hand carry | Left-hand carry |
+| --- | --- |
+| [![Right lane trial](../g1_cricket_results/approach_lane_v1/right_ppo_approach_contact_sheet.png)](../g1_cricket_results/approach_lane_v1/right_ppo_approach.mp4) | [![Left lane trial](../g1_cricket_results/approach_lane_v1/left_ppo_approach_contact_sheet.png)](../g1_cricket_results/approach_lane_v1/left_ppo_approach.mp4) |
+
+The parent finest traces locate their peak slip at loaded landings: right
+2.7264/3.6764 s and left 2.7101/3.6669 s, with 146-178 N total foot load.
+Above-threshold slip lasts 0.133-0.146 seconds per foot over each complete
+episode. These are real short touchdown slides, not a lane-error proxy.
+Next work should address landing-foot velocity and contact control; this lane
+correction alone is insufficient. Full moving gather, overarm release and
+recovery, plus the remaining batting tracking failure, are still outstanding.
