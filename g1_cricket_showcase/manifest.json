@@ -1,0 +1,37 @@
+{
+  "scope": "Video/evidence package integrity only",
+  "files": {
+    "README.md": {
+      "size_bytes": 4472,
+      "sha256": "31de17239c6e585517aac29c8e4ade739ed16b31fd5d9a1e528ea5c12b102cc1"
+    },
+    "verify.py": {
+      "size_bytes": 1750,
+      "sha256": "906bb2cfda8b1fbef55f0dc8c907885d386b79019adb088db1ccc817a1522849"
+    },
+    "evidence.json": {
+      "size_bytes": 121123,
+      "sha256": "8de84181735a729ac0d88b6647f0bbf237f3767b9b99a5b6929029b1c13f04c1"
+    },
+    "batting.mp4": {
+      "size_bytes": 9355096,
+      "sha256": "267286cd462dc7dfa7566d46c02f90c0ad81c693dcfce9c3d0d2f07a12ae14ae"
+    },
+    "bowling.mp4": {
+      "size_bytes": 9530714,
+      "sha256": "0d80e63d76c1c940734749d7dca988aad98214d645a618f80b1768e8639e2237"
+    },
+    "batting_preview.gif": {
+      "size_bytes": 1351043,
+      "sha256": "730ef2dc019ab79586392b5a75f3b436533c5e81b660189065c1262101d9bbd9"
+    },
+    "bowling_preview.gif": {
+      "size_bytes": 2648589,
+      "sha256": "28d865c5d99d816ea8476de1f191d4e1eb4aa3c2741c71ff77aba372db0e9b3f"
+    }
+  },
+  "preview_selection": {
+    "batting": "First 4 seconds",
+    "bowling": "First 4 seconds of each style"
+  }
+}

@@ -1,0 +1,3427 @@
+{
+  "scope": "Video and complete-cohort evidence preview; full controller/checkpoint reproduction package is not included",
+  "hardware_validated": false,
+  "release_goal_complete": false,
+  "raw_traces_included": false,
+  "generator": {
+    "size_bytes": 5474,
+    "sha256": "28ede4ebad860bb9f0c9446b554a5f783007ab79ea98906914e3e598b3aa9ec2"
+  },
+  "batting": {
+    "native_summary": {
+      "size_bytes": 100199,
+      "sha256": "f3978e1e29e8fbec143230af4d329fbff37311a09f303f97acfcbfc8e7076703"
+    },
+    "mjbatch_summary": {
+      "size_bytes": 108373,
+      "sha256": "15cf57de1bea1b4df72310bc85b5e1e94ba9bbe91ede4f28dd1e42fc467b1d30"
+    },
+    "checkpoint": {
+      "size_bytes": 471507,
+      "sha256": "cb9aa53339e48ecf8f0a1f8e8e226dda54045193eb2386ff0e14d2442d267bd0"
+    },
+    "metrics": {
+      "cases": 14,
+      "physical_passes": 10,
+      "qualified_hits": 8,
+      "one_pitch_hit_flags": 12,
+      "raw_boundary_cases": 0,
+      "qualified_boundary_cases": 0,
+      "physical_failures": {
+        "relative_grip_retained": 4,
+        "returned_to_guard": 3
+      }
+    },
+    "rows": [
+      {
+        "case": "right_feed0",
+        "hand": "right",
+        "feed_index": 0,
+        "physical": {
+          "minimum_root_height_m": 0.723772566573156,
+          "max_root_tilt_rad": 0.06667367928221106,
+          "max_foot_displacement_m": 0.01129317476816789,
+          "max_relative_grip_position_m": 0.017094350130690533,
+          "max_relative_grip_angle_rad": 0.11361663143725019,
+          "max_penetration_m": 0.0007782340190404559,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 2246,
+          "minimum_loaded_fingers_after_settle": 6,
+          "max_loaded_slip_m_s": 0.24957853244827038,
+          "max_backswing_angle_rad": 0.7398440432756077,
+          "min_followthrough_angle_rad": -0.8006742498604695,
+          "peak_blade_speed_m_s": 2.828795496697309,
+          "recovery_guard_position_m": 0.024678796403136867,
+          "recovery_guard_angle_rad": 0.08341570779100864,
+          "recovery_bat_speed_m_s": 0.02539045085563892,
+          "recovery_bat_angular_speed_rad_s": 0.04898949437139162,
+          "recovery_joint_speed_rad_s": 0.03203680506005674,
+          "recovery_root_speed_m_s": 0.015136933677018693,
+          "recovery_root_displacement_m": 0.025738525015724566,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 4.500000000001394,
+              "joint": "right_hip_roll_joint",
+              "signed_velocity_rad_s": -0.03203680506005674
+            },
+            "guard_position": {
+              "time_s": 4.5030000000013874,
+              "world_error_m": [
+                0.006984143018624829,
+                0.022973966593958624,
+                0.005697507976523464
+              ],
+              "root_world_error_m": [
+                -0.0010417727800623583,
+                0.018041344482929433,
+                -0.018309583428089304
+              ]
+            }
+          },
+          "saturation_fraction": 0.006937499999999624,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": true,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": true
+        },
+        "delivery": {
+          "bat_plane_reached": false,
+          "bat_plane_time_s": null,
+          "ball_height_at_bat_plane_m": null,
+          "completed_bounces_at_bat_plane": null,
+          "first_loaded_bat_contact_s": 2.10140624999981,
+          "completed_pitch_contacts": 2277,
+          "minimum_ball_blade_center_distance_m": 0.0633585182897043,
+          "peak_ball_bat_normal_force_n": 1913.141169001579,
+          "maximum_ball_bat_penetration_m": 0.000960758351496116,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          3.809321542511025,
+          -0.5837467343147942,
+          -0.8435177427359044
+        ],
+        "maximum_radius_after_hit_m": 17.077312746385843,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": true,
+        "training_reward_return": 11.417815998491772,
+        "max_abs_residual_action": 0.06303432583808899,
+        "integration": {
+          "fine_steps": 9803,
+          "coarse_steps": 62774,
+          "alignment_steps": 1,
+          "fine_seconds": 0.1531718750000001,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 5131541,
+          "sha256": "77c5e2ec232c9470177806cc557e361ba03a5071067e3cd0f282f38459397cf2"
+        },
+        "contacts": {
+          "size_bytes": 5731636,
+          "sha256": "da0f1c0e2572da49f5fd81736568764175560a54627f357cbbd15a0b645ef2db"
+        },
+        "wall_seconds": 158.88673687539995
+      },
+      {
+        "case": "right_feed1",
+        "hand": "right",
+        "feed_index": 1,
+        "physical": {
+          "minimum_root_height_m": 0.7246715849731757,
+          "max_root_tilt_rad": 0.06842544646209353,
+          "max_foot_displacement_m": 0.01377544145191292,
+          "max_relative_grip_position_m": 0.026236376708929213,
+          "max_relative_grip_angle_rad": 0.18344449607368485,
+          "max_penetration_m": 0.0007782470709406467,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 814,
+          "minimum_loaded_fingers_after_settle": 4,
+          "max_loaded_slip_m_s": 0.556328159504957,
+          "max_backswing_angle_rad": 0.7394178030120766,
+          "min_followthrough_angle_rad": -0.7678195127353162,
+          "peak_blade_speed_m_s": 2.825957263537151,
+          "recovery_guard_position_m": 0.02927603736901338,
+          "recovery_guard_angle_rad": 0.1703664822703213,
+          "recovery_bat_speed_m_s": 0.051952590367125975,
+          "recovery_bat_angular_speed_rad_s": 0.06218296850544521,
+          "recovery_joint_speed_rad_s": 0.05810199632575967,
+          "recovery_root_speed_m_s": 0.029090783083580228,
+          "recovery_root_displacement_m": 0.027406422089179955,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 4.504000000002268,
+              "joint": "right_hip_roll_joint",
+              "signed_velocity_rad_s": -0.05810199632575967
+            },
+            "guard_position": {
+              "time_s": 4.621875000001993,
+              "world_error_m": [
+                0.013076559034886859,
+                0.025505866116407466,
+                0.005961607290897675
+              ],
+              "root_world_error_m": [
+                -0.0014522217691804937,
+                0.01993973341614108,
+                -0.01850785189846582
+              ]
+            }
+          },
+          "saturation_fraction": 0.0037363281249998604,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": false,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": false,
+            "settled_recovery": true
+          },
+          "passed": false
+        },
+        "delivery": {
+          "bat_plane_reached": true,
+          "bat_plane_time_s": 2.3165625000000647,
+          "ball_height_at_bat_plane_m": 0.7915068455243893,
+          "completed_bounces_at_bat_plane": 1,
+          "first_loaded_bat_contact_s": 2.327687500000118,
+          "completed_pitch_contacts": 10,
+          "minimum_ball_blade_center_distance_m": 0.15745256479565561,
+          "peak_ball_bat_normal_force_n": 1191.6607184303937,
+          "maximum_ball_bat_penetration_m": 0.0006905060779919397,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          0.9727447586850652,
+          -0.30700754097089017,
+          0.9097553822993
+        ],
+        "maximum_radius_after_hit_m": 3.7111063400939863,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": false,
+        "training_reward_return": -15.068784926377953,
+        "max_abs_residual_action": 0.058515798300504684,
+        "integration": {
+          "fine_steps": 25704,
+          "coarse_steps": 60787,
+          "alignment_steps": 0,
+          "fine_seconds": 0.40162500000013174,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 6065777,
+          "sha256": "96e51a34ce91bdc6819bf8a675a11b7fec01f433d742c9202a771ec4e935bbe0"
+        },
+        "contacts": {
+          "size_bytes": 5755456,
+          "sha256": "164c62fd4092451d54f49893d5d23d941594530c453b67ef42345fe639579cae"
+        },
+        "wall_seconds": 198.22516591660678
+      },
+      {
+        "case": "right_feed2",
+        "hand": "right",
+        "feed_index": 2,
+        "physical": {
+          "minimum_root_height_m": 0.7246621907750789,
+          "max_root_tilt_rad": 0.06841701692868803,
+          "max_foot_displacement_m": 0.012891363465077426,
+          "max_relative_grip_position_m": 0.013704201652371663,
+          "max_relative_grip_angle_rad": 0.07637857819764242,
+          "max_penetration_m": 0.000778224126698911,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 309,
+          "minimum_loaded_fingers_after_settle": 6,
+          "max_loaded_slip_m_s": 0.036855585973668906,
+          "max_backswing_angle_rad": 0.7394467892212693,
+          "min_followthrough_angle_rad": -0.8016828682061895,
+          "peak_blade_speed_m_s": 2.8220987812604035,
+          "recovery_guard_position_m": 0.02833918221201572,
+          "recovery_guard_angle_rad": 0.07710492549763305,
+          "recovery_bat_speed_m_s": 0.03160696180888901,
+          "recovery_bat_angular_speed_rad_s": 0.06114232582588096,
+          "recovery_joint_speed_rad_s": 0.02746304520382192,
+          "recovery_root_speed_m_s": 0.020103900073138198,
+          "recovery_root_displacement_m": 0.02611971084341139,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 4.520000000001091,
+              "joint": "right_ankle_pitch_joint",
+              "signed_velocity_rad_s": -0.02746304520382192
+            },
+            "guard_position": {
+              "time_s": 4.500000000001138,
+              "world_error_m": [
+                0.014186077454474942,
+                0.02392810368759601,
+                0.005413899594296168
+              ],
+              "root_world_error_m": [
+                -0.0006204958337859487,
+                0.01856329009332708,
+                -0.018364600196428493
+              ]
+            }
+          },
+          "saturation_fraction": 0.0032695312500000025,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": true,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": true
+        },
+        "delivery": {
+          "bat_plane_reached": true,
+          "bat_plane_time_s": 1.931703124999755,
+          "ball_height_at_bat_plane_m": 0.23536533235178064,
+          "completed_bounces_at_bat_plane": 1,
+          "first_loaded_bat_contact_s": null,
+          "completed_pitch_contacts": 2384,
+          "minimum_ball_blade_center_distance_m": 0.26923509339644625,
+          "peak_ball_bat_normal_force_n": 0.0,
+          "maximum_ball_bat_penetration_m": 0.0,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": false,
+        "disqualified": true,
+        "boundary_runs": 0,
+        "separated": false,
+        "separation_velocity_m_s": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_radius_after_hit_m": 0.0,
+        "invalid_ball_contact_force_n": 37.18358506113228,
+        "invalid_ball_contact_depth_m": 0.017866501348000666,
+        "qualified_hit": false,
+        "training_reward_return": -11.195101657540304,
+        "max_abs_residual_action": 0.07204771041870117,
+        "integration": {
+          "fine_steps": 3452,
+          "coarse_steps": 63568,
+          "alignment_steps": 1,
+          "fine_seconds": 0.053937499999995794,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 4801071,
+          "sha256": "b8ae8c5e676cd53768e7adcbe8904258af77c77dea092f3d22982eadb31710f2"
+        },
+        "contacts": {
+          "size_bytes": 5771787,
+          "sha256": "95c55869328d2c2399d2688ffa42c865220e1712fc78d478eeaeaf6ffd824937"
+        },
+        "wall_seconds": 146.52043200004846
+      },
+      {
+        "case": "right_feed3",
+        "hand": "right",
+        "feed_index": 3,
+        "physical": {
+          "minimum_root_height_m": 0.723999553222253,
+          "max_root_tilt_rad": 0.06784788862824698,
+          "max_foot_displacement_m": 0.012504005639236305,
+          "max_relative_grip_position_m": 0.015630934799266964,
+          "max_relative_grip_angle_rad": 0.09208922142588225,
+          "max_penetration_m": 0.0007782425153981427,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 538,
+          "minimum_loaded_fingers_after_settle": 6,
+          "max_loaded_slip_m_s": 0.29147304512507777,
+          "max_backswing_angle_rad": 0.7398382430610868,
+          "min_followthrough_angle_rad": -0.7904169803239531,
+          "peak_blade_speed_m_s": 2.828652575964868,
+          "recovery_guard_position_m": 0.028074952998840844,
+          "recovery_guard_angle_rad": 0.06647715174288617,
+          "recovery_bat_speed_m_s": 0.030471737569762996,
+          "recovery_bat_angular_speed_rad_s": 0.05938073206794904,
+          "recovery_joint_speed_rad_s": 0.03725788659626681,
+          "recovery_root_speed_m_s": 0.019267515649629516,
+          "recovery_root_displacement_m": 0.026875455664759983,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 4.500000000001151,
+              "joint": "right_hip_roll_joint",
+              "signed_velocity_rad_s": -0.03725788659626681
+            },
+            "guard_position": {
+              "time_s": 4.534500000001071,
+              "world_error_m": [
+                0.011719324129130022,
+                0.024754166591021188,
+                0.006171844475315602
+              ],
+              "root_world_error_m": [
+                -0.000860023902315642,
+                0.01935692563874697,
+                -0.018436132978373543
+              ]
+            }
+          },
+          "saturation_fraction": 0.003621093749999991,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": true,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": true
+        },
+        "delivery": {
+          "bat_plane_reached": true,
+          "bat_plane_time_s": 2.1205624999998913,
+          "ball_height_at_bat_plane_m": 0.5084131296703704,
+          "completed_bounces_at_bat_plane": 1,
+          "first_loaded_bat_contact_s": 2.105796874999821,
+          "completed_pitch_contacts": 2283,
+          "minimum_ball_blade_center_distance_m": 0.09525151497790216,
+          "peak_ball_bat_normal_force_n": 930.9958188648677,
+          "maximum_ball_bat_penetration_m": 0.0005180996580726599,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          -0.10231216789434192,
+          -2.1150177482472925,
+          -1.233707180602535
+        ],
+        "maximum_radius_after_hit_m": 11.541829239076915,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": true,
+        "training_reward_return": 7.941959395863148,
+        "max_abs_residual_action": 0.08533230423927307,
+        "integration": {
+          "fine_steps": 5419,
+          "coarse_steps": 63322,
+          "alignment_steps": 1,
+          "fine_seconds": 0.08467187500000226,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 4766667,
+          "sha256": "0e1f289f3d190f40e7099dd5687f8201545a728eba88f0536f365cc68d3d777d"
+        },
+        "contacts": {
+          "size_bytes": 5745470,
+          "sha256": "e340badbe23999198916362e056c8c276c69435cea201f9ec15177d88748fe4e"
+        },
+        "wall_seconds": 149.48434758279473
+      },
+      {
+        "case": "right_feed4",
+        "hand": "right",
+        "feed_index": 4,
+        "physical": {
+          "minimum_root_height_m": 0.7248563232866945,
+          "max_root_tilt_rad": 0.06692102339862273,
+          "max_foot_displacement_m": 0.012785426127481948,
+          "max_relative_grip_position_m": 0.02598535292021962,
+          "max_relative_grip_angle_rad": 0.1851591550761738,
+          "max_penetration_m": 0.0007782255397722152,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 1518,
+          "minimum_loaded_fingers_after_settle": 5,
+          "max_loaded_slip_m_s": 0.5003865292518995,
+          "max_backswing_angle_rad": 0.7398298069913306,
+          "min_followthrough_angle_rad": -0.8041916965839288,
+          "peak_blade_speed_m_s": 2.8288524117532887,
+          "recovery_guard_position_m": 0.026079408392832067,
+          "recovery_guard_angle_rad": 0.17342326414640205,
+          "recovery_bat_speed_m_s": 0.02855470098336658,
+          "recovery_bat_angular_speed_rad_s": 0.05641541490730251,
+          "recovery_joint_speed_rad_s": 0.036371331953077284,
+          "recovery_root_speed_m_s": 0.01802723115480959,
+          "recovery_root_displacement_m": 0.02650890875741904,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 4.500000000001215,
+              "joint": "right_hip_roll_joint",
+              "signed_velocity_rad_s": -0.036371331953077284
+            },
+            "guard_position": {
+              "time_s": 4.526500000001153,
+              "world_error_m": [
+                0.008551919507409272,
+                0.023958340129496804,
+                0.00574440189212555
+              ],
+              "root_world_error_m": [
+                -0.0012899976920783575,
+                0.018925298832242088,
+                -0.018389341524406633
+              ]
+            }
+          },
+          "saturation_fraction": 0.006218749999999791,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": false,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": false,
+            "settled_recovery": true
+          },
+          "passed": false
+        },
+        "delivery": {
+          "bat_plane_reached": false,
+          "bat_plane_time_s": null,
+          "ball_height_at_bat_plane_m": null,
+          "completed_bounces_at_bat_plane": null,
+          "first_loaded_bat_contact_s": 2.1013749999998144,
+          "completed_pitch_contacts": 2301,
+          "minimum_ball_blade_center_distance_m": 0.09773688779951524,
+          "peak_ball_bat_normal_force_n": 1441.19732128188,
+          "maximum_ball_bat_penetration_m": 0.0007749510361068079,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          1.6051092342826303,
+          2.6243578974131796,
+          -1.2894575566059647
+        ],
+        "maximum_radius_after_hit_m": 14.754083918145954,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": false,
+        "training_reward_return": -15.026516409533619,
+        "max_abs_residual_action": 0.1272469013929367,
+        "integration": {
+          "fine_steps": 6578,
+          "coarse_steps": 63177,
+          "alignment_steps": 1,
+          "fine_seconds": 0.1027812500000083,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 4803512,
+          "sha256": "074c417031d324dc13b4c5254ff30933f6681f29fb9b0b4bb0e61d3b4a5c3295"
+        },
+        "contacts": {
+          "size_bytes": 5734568,
+          "sha256": "1c66cbaeb62327aaa97e3f80c1074125a46b3af4962f3dfa1d9f2da38539bac2"
+        },
+        "wall_seconds": 151.9984251242131
+      },
+      {
+        "case": "right_feed5",
+        "hand": "right",
+        "feed_index": 5,
+        "physical": {
+          "minimum_root_height_m": 0.7237739200338519,
+          "max_root_tilt_rad": 0.06669314905670028,
+          "max_foot_displacement_m": 0.011269794983603153,
+          "max_relative_grip_position_m": 0.01788724269408685,
+          "max_relative_grip_angle_rad": 0.11972367340650926,
+          "max_penetration_m": 0.0007782107447475099,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 2312,
+          "minimum_loaded_fingers_after_settle": 6,
+          "max_loaded_slip_m_s": 0.2543357587491513,
+          "max_backswing_angle_rad": 0.7398423486803448,
+          "min_followthrough_angle_rad": -0.8001844485662428,
+          "peak_blade_speed_m_s": 2.828757746795145,
+          "recovery_guard_position_m": 0.024615873636594683,
+          "recovery_guard_angle_rad": 0.0906143508170637,
+          "recovery_bat_speed_m_s": 0.025348968847043175,
+          "recovery_bat_angular_speed_rad_s": 0.04877070218921193,
+          "recovery_joint_speed_rad_s": 0.03192615143002929,
+          "recovery_root_speed_m_s": 0.015064561064862095,
+          "recovery_root_displacement_m": 0.025721165033774227,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 4.500000000001381,
+              "joint": "right_hip_roll_joint",
+              "signed_velocity_rad_s": -0.03192615143002929
+            },
+            "guard_position": {
+              "time_s": 4.502375000001376,
+              "world_error_m": [
+                0.006923995796405541,
+                0.022939883345562347,
+                0.0056357137255317324
+              ],
+              "root_world_error_m": [
+                -0.0010412317850879427,
+                0.018022567877551132,
+                -0.018307412669679946
+              ]
+            }
+          },
+          "saturation_fraction": 0.006976562499999608,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": true,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": true
+        },
+        "delivery": {
+          "bat_plane_reached": false,
+          "bat_plane_time_s": null,
+          "ball_height_at_bat_plane_m": null,
+          "completed_bounces_at_bat_plane": null,
+          "first_loaded_bat_contact_s": 2.1011093749998078,
+          "completed_pitch_contacts": 2294,
+          "minimum_ball_blade_center_distance_m": 0.060271126934092416,
+          "peak_ball_bat_normal_force_n": 1925.0730377212599,
+          "maximum_ball_bat_penetration_m": 0.0009813139769142623,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          3.820436471263797,
+          -0.5850349071681427,
+          -0.8739168513203645
+        ],
+        "maximum_radius_after_hit_m": 17.12528871224256,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": true,
+        "training_reward_return": 11.220497060264758,
+        "max_abs_residual_action": 0.0631154403090477,
+        "integration": {
+          "fine_steps": 9560,
+          "coarse_steps": 62805,
+          "alignment_steps": 0,
+          "fine_seconds": 0.1493750000000022,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 5091737,
+          "sha256": "366be00757b50c458c50d539f476104b323151293173d208d4f80b8fc4247334"
+        },
+        "contacts": {
+          "size_bytes": 5725720,
+          "sha256": "1700ed8dc1467d2723d9e097c04a5f9b981b969c73b751e9101112b2ca751297"
+        },
+        "wall_seconds": 158.9755413327366
+      },
+      {
+        "case": "right_feed6",
+        "hand": "right",
+        "feed_index": 6,
+        "physical": {
+          "minimum_root_height_m": 0.723763931194134,
+          "max_root_tilt_rad": 0.06664716025755969,
+          "max_foot_displacement_m": 0.011304489264221416,
+          "max_relative_grip_position_m": 0.016416261532922957,
+          "max_relative_grip_angle_rad": 0.10800320710985663,
+          "max_penetration_m": 0.0007782574629278012,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 2121,
+          "minimum_loaded_fingers_after_settle": 6,
+          "max_loaded_slip_m_s": 0.2517581254643608,
+          "max_backswing_angle_rad": 0.7398490866929361,
+          "min_followthrough_angle_rad": -0.800876477569093,
+          "peak_blade_speed_m_s": 2.8287862055922934,
+          "recovery_guard_position_m": 0.024705948389643215,
+          "recovery_guard_angle_rad": 0.07891318559193561,
+          "recovery_bat_speed_m_s": 0.02541937802522194,
+          "recovery_bat_angular_speed_rad_s": 0.049093697931836086,
+          "recovery_joint_speed_rad_s": 0.03207789689647429,
+          "recovery_root_speed_m_s": 0.015170846507208357,
+          "recovery_root_displacement_m": 0.025746204835535712,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 4.500000000001406,
+              "joint": "right_hip_roll_joint",
+              "signed_velocity_rad_s": -0.03207789689647429
+            },
+            "guard_position": {
+              "time_s": 4.503500000001398,
+              "world_error_m": [
+                0.007011006265078036,
+                0.022984552908796634,
+                0.00573933833864837
+              ],
+              "root_world_error_m": [
+                -0.0010388509671192953,
+                0.0180486516704374,
+                -0.018310393401630543
+              ]
+            }
+          },
+          "saturation_fraction": 0.006494140624999647,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": true,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": true
+        },
+        "delivery": {
+          "bat_plane_reached": false,
+          "bat_plane_time_s": null,
+          "ball_height_at_bat_plane_m": null,
+          "completed_bounces_at_bat_plane": null,
+          "first_loaded_bat_contact_s": 2.1017343749998125,
+          "completed_pitch_contacts": 2297,
+          "minimum_ball_blade_center_distance_m": 0.06962660913852875,
+          "peak_ball_bat_normal_force_n": 1918.1131533176394,
+          "maximum_ball_bat_penetration_m": 0.000949611442022047,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          3.8070356829975815,
+          -0.5922177659883353,
+          -0.8139551942356723
+        ],
+        "maximum_radius_after_hit_m": 17.05717456368327,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": true,
+        "training_reward_return": 11.582426608378901,
+        "max_abs_residual_action": 0.06295287609100342,
+        "integration": {
+          "fine_steps": 10006,
+          "coarse_steps": 62749,
+          "alignment_steps": 1,
+          "fine_seconds": 0.15634374999999834,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 5139303,
+          "sha256": "07955c7d1a666ce4a4d13238ab09ccf922675cb9c04911c93456bef5076bd89c"
+        },
+        "contacts": {
+          "size_bytes": 5723118,
+          "sha256": "a34d9a08ed12bfac4cca9193ba927f256a727ee2819bc358d5e735776419f2aa"
+        },
+        "wall_seconds": 159.82545250002295
+      },
+      {
+        "case": "left_feed0",
+        "hand": "left",
+        "feed_index": 0,
+        "physical": {
+          "minimum_root_height_m": 0.7234957381009659,
+          "max_root_tilt_rad": 0.06782489687776809,
+          "max_foot_displacement_m": 0.009895829170733441,
+          "max_relative_grip_position_m": 0.01684867146119486,
+          "max_relative_grip_angle_rad": 0.10964430030401665,
+          "max_penetration_m": 0.0007589062799536143,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 2263,
+          "minimum_loaded_fingers_after_settle": 6,
+          "max_loaded_slip_m_s": 0.24176865015417848,
+          "max_backswing_angle_rad": 0.7413875009982838,
+          "min_followthrough_angle_rad": -0.7990245711926425,
+          "peak_blade_speed_m_s": 2.81580590182243,
+          "recovery_guard_position_m": 0.023799153125164372,
+          "recovery_guard_angle_rad": 0.08050736081989335,
+          "recovery_bat_speed_m_s": 0.025524161982376673,
+          "recovery_bat_angular_speed_rad_s": 0.04940877946521329,
+          "recovery_joint_speed_rad_s": 0.16313661904470378,
+          "recovery_root_speed_m_s": 0.016925592642883222,
+          "recovery_root_displacement_m": 0.026140954787413535,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 5.69462499999861,
+              "joint": "left_hand_thumb_2_joint",
+              "signed_velocity_rad_s": 0.16313661904470378
+            },
+            "guard_position": {
+              "time_s": 4.500000000001394,
+              "world_error_m": [
+                0.007992601109491862,
+                -0.02208747954320116,
+                0.003829003056702973
+              ],
+              "root_world_error_m": [
+                0.002181244385925589,
+                -0.017817874669742217,
+                -0.019003026926777355
+              ]
+            }
+          },
+          "saturation_fraction": 0.0071171874999996524,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": true,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": true
+        },
+        "delivery": {
+          "bat_plane_reached": false,
+          "bat_plane_time_s": null,
+          "ball_height_at_bat_plane_m": null,
+          "completed_bounces_at_bat_plane": null,
+          "first_loaded_bat_contact_s": 2.10156249999981,
+          "completed_pitch_contacts": 2299,
+          "minimum_ball_blade_center_distance_m": 0.06334165079493874,
+          "peak_ball_bat_normal_force_n": 1936.3372823826953,
+          "maximum_ball_bat_penetration_m": 0.0009712087580915282,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          3.817029944431891,
+          0.6130798928478502,
+          -0.8202043989499616
+        ],
+        "maximum_radius_after_hit_m": 17.101207378427898,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": true,
+        "training_reward_return": 11.520597976061293,
+        "max_abs_residual_action": 0.06858190149068832,
+        "integration": {
+          "fine_steps": 9813,
+          "coarse_steps": 62773,
+          "alignment_steps": 1,
+          "fine_seconds": 0.153328125,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 5130054,
+          "sha256": "a77bffb03925e63bb1bd8534a6ad2452522b42efc971a7fb7e3a00401a7a6fbf"
+        },
+        "contacts": {
+          "size_bytes": 5927544,
+          "sha256": "009eaf6d31f60cbb7f3c85f54f0718e75948a40e96a7beb2ce5ec75f2de5a727"
+        },
+        "wall_seconds": 162.0910826670006
+      },
+      {
+        "case": "left_feed1",
+        "hand": "left",
+        "feed_index": 1,
+        "physical": {
+          "minimum_root_height_m": 0.7240275149680662,
+          "max_root_tilt_rad": 0.06993689409953226,
+          "max_foot_displacement_m": 0.010495553633698146,
+          "max_relative_grip_position_m": 0.022449091768926455,
+          "max_relative_grip_angle_rad": 0.1488990205030575,
+          "max_penetration_m": 0.0007589210943323797,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 1209,
+          "minimum_loaded_fingers_after_settle": 5,
+          "max_loaded_slip_m_s": 0.5227812736023315,
+          "max_backswing_angle_rad": 0.742108493860391,
+          "min_followthrough_angle_rad": -0.7711490006602786,
+          "peak_blade_speed_m_s": 2.8178129988775624,
+          "recovery_guard_position_m": 0.028251365357942235,
+          "recovery_guard_angle_rad": 0.14891454408969504,
+          "recovery_bat_speed_m_s": 0.03218978716690529,
+          "recovery_bat_angular_speed_rad_s": 0.06294797914313312,
+          "recovery_joint_speed_rad_s": 0.17000505498316093,
+          "recovery_root_speed_m_s": 0.02139903127796009,
+          "recovery_root_displacement_m": 0.027742352751952835,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 5.257874999999999,
+              "joint": "left_hand_thumb_2_joint",
+              "signed_velocity_rad_s": 0.17000505498316093
+            },
+            "guard_position": {
+              "time_s": 4.575125000001591,
+              "world_error_m": [
+                0.012899931135630732,
+                -0.024742321731894525,
+                0.004421417939908356
+              ],
+              "root_world_error_m": [
+                0.0015868016617681911,
+                -0.019828733627519635,
+                -0.019211952596902337
+              ]
+            }
+          },
+          "saturation_fraction": 0.003974609374999827,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": false,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": false
+        },
+        "delivery": {
+          "bat_plane_reached": true,
+          "bat_plane_time_s": 2.317000000000065,
+          "ball_height_at_bat_plane_m": 0.7908184253697047,
+          "completed_bounces_at_bat_plane": 1,
+          "first_loaded_bat_contact_s": 2.328062500000118,
+          "completed_pitch_contacts": 2041,
+          "minimum_ball_blade_center_distance_m": 0.1571558191569474,
+          "peak_ball_bat_normal_force_n": 1273.6337233238696,
+          "maximum_ball_bat_penetration_m": 0.0006975103666313001,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          1.1910403586868241,
+          0.30468207145130816,
+          1.0378561134075983
+        ],
+        "maximum_radius_after_hit_m": 4.59426457496726,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": false,
+        "training_reward_return": -13.728476344997851,
+        "max_abs_residual_action": 0.06838192790746689,
+        "integration": {
+          "fine_steps": 16492,
+          "coarse_steps": 61938,
+          "alignment_steps": 1,
+          "fine_seconds": 0.2576874999999558,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 5408262,
+          "sha256": "bd55b534a8d78316bd897452730ac993a9968592d41136d21cb6d12cbdeed96a"
+        },
+        "contacts": {
+          "size_bytes": 5936377,
+          "sha256": "8e48dc216180270f976e1a7e1d76313dfc50abb9f2c1262744d6fa28f93d2d24"
+        },
+        "wall_seconds": 177.84131287503988
+      },
+      {
+        "case": "left_feed2",
+        "hand": "left",
+        "feed_index": 2,
+        "physical": {
+          "minimum_root_height_m": 0.7240856475503913,
+          "max_root_tilt_rad": 0.06957090295547544,
+          "max_foot_displacement_m": 0.013406492583515766,
+          "max_relative_grip_position_m": 0.013858194205858007,
+          "max_relative_grip_angle_rad": 0.07220193614672248,
+          "max_penetration_m": 0.0007588938642621394,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 320,
+          "minimum_loaded_fingers_after_settle": 6,
+          "max_loaded_slip_m_s": 0.03425161258896967,
+          "max_backswing_angle_rad": 0.7413215563726799,
+          "min_followthrough_angle_rad": -0.8012577999022702,
+          "peak_blade_speed_m_s": 2.8176439423517934,
+          "recovery_guard_position_m": 0.027819781979976154,
+          "recovery_guard_angle_rad": 0.07309313195618466,
+          "recovery_bat_speed_m_s": 0.03178362279937182,
+          "recovery_bat_angular_speed_rad_s": 0.060283881351861204,
+          "recovery_joint_speed_rad_s": 0.16326727045357217,
+          "recovery_root_speed_m_s": 0.021539346219874203,
+          "recovery_root_displacement_m": 0.026652412224275557,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 6.028374999997576,
+              "joint": "left_hand_thumb_2_joint",
+              "signed_velocity_rad_s": 0.16326727045357217
+            },
+            "guard_position": {
+              "time_s": 4.500000000001138,
+              "world_error_m": [
+                0.0148619967212799,
+                -0.023278898759749624,
+                0.00333978972442861
+              ],
+              "root_world_error_m": [
+                0.002567614374185106,
+                -0.01857056084580272,
+                -0.01894446366806224
+              ]
+            }
+          },
+          "saturation_fraction": 0.0034414062500000026,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": true,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": true
+        },
+        "delivery": {
+          "bat_plane_reached": true,
+          "bat_plane_time_s": 1.931874999999755,
+          "ball_height_at_bat_plane_m": 0.23491046246667213,
+          "completed_bounces_at_bat_plane": 1,
+          "first_loaded_bat_contact_s": null,
+          "completed_pitch_contacts": 2385,
+          "minimum_ball_blade_center_distance_m": 0.2692517583838669,
+          "peak_ball_bat_normal_force_n": 0.0,
+          "maximum_ball_bat_penetration_m": 0.0,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": false,
+        "disqualified": true,
+        "boundary_runs": 0,
+        "separated": false,
+        "separation_velocity_m_s": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_radius_after_hit_m": 0.0,
+        "invalid_ball_contact_force_n": 37.183553544599654,
+        "invalid_ball_contact_depth_m": 0.01786649114084177,
+        "qualified_hit": false,
+        "training_reward_return": -11.178048530734392,
+        "max_abs_residual_action": 0.08336224406957626,
+        "integration": {
+          "fine_steps": 3449,
+          "coarse_steps": 63568,
+          "alignment_steps": 1,
+          "fine_seconds": 0.0538906249999958,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 4798421,
+          "sha256": "56555d036cd7a3f3cdd5862bac5da8f0074e8fbfda7352839967c17eacf48a59"
+        },
+        "contacts": {
+          "size_bytes": 5935940,
+          "sha256": "03e1e3d9d35a26a6666d10d3ab882c22997ab88adc65b056b73efbd1a2634fb4"
+        },
+        "wall_seconds": 148.28129237517715
+      },
+      {
+        "case": "left_feed3",
+        "hand": "left",
+        "feed_index": 3,
+        "physical": {
+          "minimum_root_height_m": 0.7236236338665903,
+          "max_root_tilt_rad": 0.07008836019002825,
+          "max_foot_displacement_m": 0.013574140086563612,
+          "max_relative_grip_position_m": 0.014870425884318847,
+          "max_relative_grip_angle_rad": 0.08340900299915789,
+          "max_penetration_m": 0.0007589202234627845,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 534,
+          "minimum_loaded_fingers_after_settle": 5,
+          "max_loaded_slip_m_s": 0.28328249903732877,
+          "max_backswing_angle_rad": 0.741422874834212,
+          "min_followthrough_angle_rad": -0.7883391245199111,
+          "peak_blade_speed_m_s": 2.8158022232204356,
+          "recovery_guard_position_m": 0.028034445107003328,
+          "recovery_guard_angle_rad": 0.07127111811741402,
+          "recovery_bat_speed_m_s": 0.03220732560721149,
+          "recovery_bat_angular_speed_rad_s": 0.058917811597257265,
+          "recovery_joint_speed_rad_s": 0.1681730810629364,
+          "recovery_root_speed_m_s": 0.02171413716266747,
+          "recovery_root_displacement_m": 0.028042447091075583,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 5.484749999998858,
+              "joint": "left_hand_thumb_2_joint",
+              "signed_velocity_rad_s": 0.1681730810629364
+            },
+            "guard_position": {
+              "time_s": 4.500000000001153,
+              "world_error_m": [
+                0.011830820355150179,
+                -0.0250210652304135,
+                0.004461849046879518
+              ],
+              "root_world_error_m": [
+                0.002646318578597335,
+                -0.02030265659151953,
+                -0.019161888533314575
+              ]
+            }
+          },
+          "saturation_fraction": 0.0034492187500000026,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": true,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": true
+        },
+        "delivery": {
+          "bat_plane_reached": true,
+          "bat_plane_time_s": 2.120968749999893,
+          "ball_height_at_bat_plane_m": 0.507885571494062,
+          "completed_bounces_at_bat_plane": 1,
+          "first_loaded_bat_contact_s": 2.105968749999821,
+          "completed_pitch_contacts": 2302,
+          "minimum_ball_blade_center_distance_m": 0.09521948464923588,
+          "peak_ball_bat_normal_force_n": 953.181497508413,
+          "maximum_ball_bat_penetration_m": 0.0005291861272058301,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          -0.0785939019715632,
+          2.1596243112850853,
+          -1.2226615294946332
+        ],
+        "maximum_radius_after_hit_m": 11.707398890999487,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": true,
+        "training_reward_return": 8.152145947926256,
+        "max_abs_residual_action": 0.0977768823504448,
+        "integration": {
+          "fine_steps": 5456,
+          "coarse_steps": 63318,
+          "alignment_steps": 0,
+          "fine_seconds": 0.08525000000000245,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 4767284,
+          "sha256": "838ee094fb689ae9a9a33be9922ba1ecb36b23c34c5f71424d729a001c2623a7"
+        },
+        "contacts": {
+          "size_bytes": 5917267,
+          "sha256": "5a28bccc2a1c8db3f9c77f9c89b56b0e33f89fe1cdcb0f6ab8ea7b697357b19a"
+        },
+        "wall_seconds": 152.4804090000689
+      },
+      {
+        "case": "left_feed4",
+        "hand": "left",
+        "feed_index": 4,
+        "physical": {
+          "minimum_root_height_m": 0.7242298020253314,
+          "max_root_tilt_rad": 0.06807461304518725,
+          "max_foot_displacement_m": 0.010305133878573016,
+          "max_relative_grip_position_m": 0.026553200221123507,
+          "max_relative_grip_angle_rad": 0.1932560078513808,
+          "max_penetration_m": 0.0007588924516466755,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 1857,
+          "minimum_loaded_fingers_after_settle": 4,
+          "max_loaded_slip_m_s": 0.5148777903327213,
+          "max_backswing_angle_rad": 0.7413911709435677,
+          "min_followthrough_angle_rad": -0.8046936326610633,
+          "peak_blade_speed_m_s": 2.8158093248969656,
+          "recovery_guard_position_m": 0.024505717962644877,
+          "recovery_guard_angle_rad": 0.16805584484229552,
+          "recovery_bat_speed_m_s": 0.026306543075822225,
+          "recovery_bat_angular_speed_rad_s": 0.05189932706879872,
+          "recovery_joint_speed_rad_s": 0.16435097213996286,
+          "recovery_root_speed_m_s": 0.01739400418141256,
+          "recovery_root_displacement_m": 0.02615209713463118,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 6.706124999996068,
+              "joint": "left_hand_thumb_2_joint",
+              "signed_velocity_rad_s": 0.16435097213996286
+            },
+            "guard_position": {
+              "time_s": 4.50000000000121,
+              "world_error_m": [
+                0.008950537363396828,
+                -0.02244654176808687,
+                0.0040707316817329975
+              ],
+              "root_world_error_m": [
+                0.0015494192452788769,
+                -0.01784793966556142,
+                -0.0190521005203107
+              ]
+            }
+          },
+          "saturation_fraction": 0.007003906249999751,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": false,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": false,
+            "settled_recovery": true
+          },
+          "passed": false
+        },
+        "delivery": {
+          "bat_plane_reached": false,
+          "bat_plane_time_s": null,
+          "ball_height_at_bat_plane_m": null,
+          "completed_bounces_at_bat_plane": null,
+          "first_loaded_bat_contact_s": 2.1014687499998144,
+          "completed_pitch_contacts": 2279,
+          "minimum_ball_blade_center_distance_m": 0.09776724659348604,
+          "peak_ball_bat_normal_force_n": 1463.5044408762874,
+          "maximum_ball_bat_penetration_m": 0.0007865763608576118,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          1.6153506041889971,
+          -2.6168379656634984,
+          -1.2829622859762513
+        ],
+        "maximum_radius_after_hit_m": 14.713180131828532,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": false,
+        "training_reward_return": -15.243458349024088,
+        "max_abs_residual_action": 0.11106984317302704,
+        "integration": {
+          "fine_steps": 6484,
+          "coarse_steps": 63189,
+          "alignment_steps": 1,
+          "fine_seconds": 0.10131250000000781,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 4825230,
+          "sha256": "bc4712fd2e4713dbb5fabbf863807f92c7881ddbe05c256989f85d7432d98edd"
+        },
+        "contacts": {
+          "size_bytes": 5919028,
+          "sha256": "d9e404dde862979690f0e962a31858201d4dcf43e69f06a8279468d448f01ee5"
+        },
+        "wall_seconds": 154.37969900015742
+      },
+      {
+        "case": "left_feed5",
+        "hand": "left",
+        "feed_index": 5,
+        "physical": {
+          "minimum_root_height_m": 0.7234989410696192,
+          "max_root_tilt_rad": 0.06782013988957392,
+          "max_foot_displacement_m": 0.009924207106970544,
+          "max_relative_grip_position_m": 0.01771859710819953,
+          "max_relative_grip_angle_rad": 0.11625581027774208,
+          "max_penetration_m": 0.0007588979837018159,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 2325,
+          "minimum_loaded_fingers_after_settle": 6,
+          "max_loaded_slip_m_s": 0.2524871896981782,
+          "max_backswing_angle_rad": 0.7413915584722456,
+          "min_followthrough_angle_rad": -0.7985432643135367,
+          "peak_blade_speed_m_s": 2.815849708182278,
+          "recovery_guard_position_m": 0.02374880804809821,
+          "recovery_guard_angle_rad": 0.08884270466978103,
+          "recovery_bat_speed_m_s": 0.02544009458141628,
+          "recovery_bat_angular_speed_rad_s": 0.04929436697114841,
+          "recovery_joint_speed_rad_s": 0.1600588989840914,
+          "recovery_root_speed_m_s": 0.01687910442076337,
+          "recovery_root_displacement_m": 0.026127891876624922,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 6.063499999997741,
+              "joint": "left_hand_thumb_2_joint",
+              "signed_velocity_rad_s": 0.1600588989840914
+            },
+            "guard_position": {
+              "time_s": 4.500000000001385,
+              "world_error_m": [
+                0.007929525361617784,
+                -0.02206114663379137,
+                0.0037992526169274843
+              ],
+              "root_world_error_m": [
+                0.0021998416734697254,
+                -0.017798690930002303,
+                -0.019000895550118746
+              ]
+            }
+          },
+          "saturation_fraction": 0.007179687499999638,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": true,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": true
+        },
+        "delivery": {
+          "bat_plane_reached": false,
+          "bat_plane_time_s": null,
+          "ball_height_at_bat_plane_m": null,
+          "completed_bounces_at_bat_plane": null,
+          "first_loaded_bat_contact_s": 2.1012499999998075,
+          "completed_pitch_contacts": 2296,
+          "minimum_ball_blade_center_distance_m": 0.06027039540012917,
+          "peak_ball_bat_normal_force_n": 1929.6422782580125,
+          "maximum_ball_bat_penetration_m": 0.0009831062188494707,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          3.8099760228806496,
+          0.6088257001764753,
+          -0.8499124628788027
+        ],
+        "maximum_radius_after_hit_m": 17.082954060229643,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": true,
+        "training_reward_return": 11.289527246875265,
+        "max_abs_residual_action": 0.06857465952634811,
+        "integration": {
+          "fine_steps": 9624,
+          "coarse_steps": 62797,
+          "alignment_steps": 0,
+          "fine_seconds": 0.15037500000000165,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 5118040,
+          "sha256": "b1434e82bb2339dd768a171ac368bdc6dfe6ccc7eb87386af07d56d92f9c03d8"
+        },
+        "contacts": {
+          "size_bytes": 5924339,
+          "sha256": "82b224ebaf1888bcc304679f3fbaa262c163b2f77b52833395bd5d7337cabd70"
+        },
+        "wall_seconds": 161.36368287540972
+      },
+      {
+        "case": "left_feed6",
+        "hand": "left",
+        "feed_index": 6,
+        "physical": {
+          "minimum_root_height_m": 0.7234862051628517,
+          "max_root_tilt_rad": 0.0678442527902252,
+          "max_foot_displacement_m": 0.009962338253940512,
+          "max_relative_grip_position_m": 0.0161354202116674,
+          "max_relative_grip_angle_rad": 0.10357798056487649,
+          "max_penetration_m": 0.0007589145396401653,
+          "max_robot_self_penetration_m": 0.0,
+          "forbidden_contact_steps": 0,
+          "max_joint_limit_excess_rad": 0.0,
+          "max_motor_force_excess_nm": 0.0,
+          "saturated_steps": 2167,
+          "minimum_loaded_fingers_after_settle": 6,
+          "max_loaded_slip_m_s": 0.24246107621059296,
+          "max_backswing_angle_rad": 0.7414894865526332,
+          "min_followthrough_angle_rad": -0.7991281841965837,
+          "peak_blade_speed_m_s": 2.81587646934189,
+          "recovery_guard_position_m": 0.023910415732093508,
+          "recovery_guard_angle_rad": 0.07671291174466442,
+          "recovery_bat_speed_m_s": 0.025625992315426983,
+          "recovery_bat_angular_speed_rad_s": 0.04960343651273049,
+          "recovery_joint_speed_rad_s": 0.16406010409435848,
+          "recovery_root_speed_m_s": 0.017003663553341312,
+          "recovery_root_displacement_m": 0.02617720016576067,
+          "recovery_peaks": {
+            "joint_speed": {
+              "time_s": 5.537624999998991,
+              "joint": "left_hand_thumb_2_joint",
+              "signed_velocity_rad_s": 0.16406010409435848
+            },
+            "guard_position": {
+              "time_s": 4.5000000000014095,
+              "world_error_m": [
+                0.00813379946939407,
+                -0.022149726985536175,
+                0.0038650848812723515
+              ],
+              "root_world_error_m": [
+                0.0021885720560858232,
+                -0.01786830719624205,
+                -0.019004724644528403
+              ]
+            }
+          },
+          "saturation_fraction": 0.006960937499999673,
+          "max_motion_support_residual": 0.0,
+          "checks": {
+            "upright": true,
+            "planted_feet": true,
+            "relative_grip_retained": true,
+            "loaded_fingers": true,
+            "contact_geometry": true,
+            "no_forbidden_contact": true,
+            "joint_and_motor_limits": true,
+            "complete_swing": true,
+            "returned_to_guard": true,
+            "settled_recovery": true
+          },
+          "passed": true
+        },
+        "delivery": {
+          "bat_plane_reached": false,
+          "bat_plane_time_s": null,
+          "ball_height_at_bat_plane_m": null,
+          "completed_bounces_at_bat_plane": null,
+          "first_loaded_bat_contact_s": 2.1018749999998123,
+          "completed_pitch_contacts": 2297,
+          "minimum_ball_blade_center_distance_m": 0.06962703695651082,
+          "peak_ball_bat_normal_force_n": 1912.8207107314022,
+          "maximum_ball_bat_penetration_m": 0.0009465422862221171,
+          "scope": "plane/center diagnostics are not contact or scoring evidence; unreached plane is censored at episode stop"
+        },
+        "valid_one_pitch_hit": true,
+        "disqualified": false,
+        "boundary_runs": 0,
+        "separated": true,
+        "separation_velocity_m_s": [
+          3.789324618246717,
+          0.6122258692956865,
+          -0.7900403048580835
+        ],
+        "maximum_radius_after_hit_m": 16.982277536050663,
+        "invalid_ball_contact_force_n": 0.0,
+        "invalid_ball_contact_depth_m": 0.0,
+        "qualified_hit": true,
+        "training_reward_return": 11.66782968181188,
+        "max_abs_residual_action": 0.06858903914690018,
+        "integration": {
+          "fine_steps": 10083,
+          "coarse_steps": 62739,
+          "alignment_steps": 1,
+          "fine_seconds": 0.15754687499999767,
+          "fine_dt_s": 1.5625e-05,
+          "coarse_dt_s": 0.000125,
+          "coarse_integrator": "implicitfast",
+          "fine_integrator": "RK4",
+          "refinement_gap_m": 0.15,
+          "scope": "Refine near the blade only; pitch and other contacts retain the coarse timestep."
+        },
+        "trace": {
+          "size_bytes": 5137433,
+          "sha256": "59a35268ddeee284d422f15a594fe6e9f7fa02f02d211536d43cd0756d861e79"
+        },
+        "contacts": {
+          "size_bytes": 5926198,
+          "sha256": "36a4b70a4a9a0646bb7b65da453e6cb73e339c1125faf0b77430697ac34993cc"
+        },
+        "wall_seconds": 163.01669904123992
+      }
+    ],
+    "backend_comparison": [
+      {
+        "case": "right_feed0",
+        "arrays_exact": 10,
+        "physics_samples": 72578,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "right_feed1",
+        "arrays_exact": 10,
+        "physics_samples": 86491,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "right_feed2",
+        "arrays_exact": 10,
+        "physics_samples": 67021,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "right_feed3",
+        "arrays_exact": 10,
+        "physics_samples": 68742,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "right_feed4",
+        "arrays_exact": 10,
+        "physics_samples": 69756,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "right_feed5",
+        "arrays_exact": 10,
+        "physics_samples": 72365,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "right_feed6",
+        "arrays_exact": 10,
+        "physics_samples": 72756,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "left_feed0",
+        "arrays_exact": 10,
+        "physics_samples": 72587,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "left_feed1",
+        "arrays_exact": 10,
+        "physics_samples": 78431,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "left_feed2",
+        "arrays_exact": 10,
+        "physics_samples": 67018,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "left_feed3",
+        "arrays_exact": 10,
+        "physics_samples": 68774,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "left_feed4",
+        "arrays_exact": 10,
+        "physics_samples": 69674,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "left_feed5",
+        "arrays_exact": 10,
+        "physics_samples": 72421,
+        "tactile_exact": true,
+        "results_exact": true
+      },
+      {
+        "case": "left_feed6",
+        "arrays_exact": 10,
+        "physics_samples": 72823,
+        "tactile_exact": true,
+        "results_exact": true
+      }
+    ],
+    "evaluation_intervention": {
+      "axis": "reference_swing_power",
+      "training_value": 0.5,
+      "evaluation_value": 0.65,
+      "scope": "Fixed checkpoint with changed reference timing; not newly learned power or matched-training evaluation."
+    },
+    "video_selection": "Every complete 1x episode; slow replay centered on first loaded contact, else bat-plane crossing, else final sample; shorter hand window padded with its final native sample",
+    "video_duration_s": 67.2,
+    "controller": "112000-step SKRL PPO residuals, frozen GR00T balance and reference swing; pace changed after training"
+  },
+  "bowling": {
+    "overarm": {
+      "native_summary": {
+        "size_bytes": 91178,
+        "sha256": "0ff0f70a5fdde6a341fe3c619f3c704a7dd6940d3e35797505a9e9f52c085293"
+      },
+      "mjbatch_summary": {
+        "size_bytes": 92795,
+        "sha256": "56f698f7d543806ce20f7edf87c2cfaad0fe9f871f4b4ec416f92a900754cf11"
+      },
+      "rows": [
+        {
+          "passed": false,
+          "failures": [
+            "first_bounce_outside_delivery_zone",
+            "not_exactly_one_bounce_before_target",
+            "target_corridor_missed"
+          ],
+          "release": {
+            "time": 3.0799999999984906,
+            "position": [
+              -1.869157759080535,
+              0.4557342812159919,
+              1.4537722818796137
+            ],
+            "velocity": [
+              7.186221078919919,
+              1.0420718422429955,
+              -3.772243311957191
+            ],
+            "shoulder_z": 1.0575774095923995,
+            "upper_z": 0.8698416829741991,
+            "elbow_angle_rad": 2.280955148996035,
+            "maximum_elbow_extension_rad": 8.64349466702663e-05,
+            "horizontal_time": 2.3231250000002546,
+            "front_landing": {
+              "time": 2.9921249999986954,
+              "bounds": [
+                [
+                  -2.0114631531710843,
+                  0.4872577524268932,
+                  -6.402187924907723e-05
+                ],
+                [
+                  -1.806807269909885,
+                  0.5655260842846085,
+                  0.036719574855300086
+                ]
+              ]
+            },
+            "back_landing": {
+              "time": 2.7290624999993085,
+              "bounds": [
+                [
+                  -2.2993343840386467,
+                  0.2231845504014374,
+                  -1.980127558149844e-05
+                ],
+                [
+                  -2.0996796156006408,
+                  0.32584610613881265,
+                  0.04730256451387842
+                ]
+              ]
+            }
+          },
+          "first_bounce": {
+            "time": 3.356499999997846,
+            "position": [
+              0.11783236924095213,
+              0.7438671455960435,
+              0.03566395534213712
+            ]
+          },
+          "target_crossing": {
+            "time": 6.734875000009405,
+            "position": [
+              17.680000000000003,
+              3.4431734979338176,
+              0.035999856356489314
+            ]
+          },
+          "bounces_before_target": 11,
+          "ball_contact_counts": {
+            "pitch": 57213
+          },
+          "ball_contact_peak_force_n": {
+            "pitch": 1477.6215753360425
+          },
+          "maximum_ball_penetration_m": 0.002560797979488133,
+          "minimum_pelvis_height_m": 0.6894652990406526,
+          "minimum_pelvis_up": 0.9791880325701466,
+          "maximum_joint_limit_excess_rad": 0.0,
+          "maximum_actuator_limit_fraction": 1.0,
+          "peak_holder_force_n": 32.701096754365835,
+          "holder_impulse_world_ns": [
+            1.1153616738352095,
+            0.14903969350674845,
+            4.126508319973716
+          ],
+          "case": "right_dt6.25e-05",
+          "terminal": "complete",
+          "duration_s": 8.000000000015445,
+          "hand": "right",
+          "timestep": 6.25e-05,
+          "max_lateral_excursion_m": 0.505630636832298,
+          "max_artificial_support": 0.0,
+          "landings": {
+            "left": [
+              {
+                "time": 1.792312500000754,
+                "bounds": [
+                  [
+                    -3.3434565671980465,
+                    0.8984977361815584,
+                    -5.903620710583091e-05
+                  ],
+                  [
+                    -3.148407597601274,
+                    0.9714398372010068,
+                    0.08276029731871071
+                  ]
+                ]
+              },
+              {
+                "time": 2.4230625000000217,
+                "bounds": [
+                  [
+                    -2.5861889161413534,
+                    0.43006666438493246,
+                    -2.671877479718931e-05
+                  ],
+                  [
+                    -2.3908963664064244,
+                    0.5561986731505689,
+                    0.03326381034606906
+                  ]
+                ]
+              },
+              {
+                "time": 2.9921249999986954,
+                "bounds": [
+                  [
+                    -2.0114631531710843,
+                    0.4872577524268932,
+                    -6.402187924907723e-05
+                  ],
+                  [
+                    -1.806807269909885,
+                    0.5655260842846085,
+                    0.036719574855300086
+                  ]
+                ]
+              }
+            ],
+            "right": [
+              {
+                "time": 1.2028125000000336,
+                "bounds": [
+                  [
+                    -4.117275642943983,
+                    0.7647120695959425,
+                    -1.2529153832398048e-05
+                  ],
+                  [
+                    -3.9207412313692354,
+                    0.8594418399073159,
+                    0.07179924795384984
+                  ]
+                ]
+              },
+              {
+                "time": 2.03331250000093,
+                "bounds": [
+                  [
+                    -3.1300950220887147,
+                    0.4491522755404286,
+                    -1.1452372725958941e-05
+                  ],
+                  [
+                    -2.949418272070062,
+                    0.6020223285991139,
+                    0.03908446284780248
+                  ]
+                ]
+              },
+              {
+                "time": 2.7290624999993085,
+                "bounds": [
+                  [
+                    -2.2993343840386467,
+                    0.2231845504014374,
+                    -1.980127558149844e-05
+                  ],
+                  [
+                    -2.0996796156006408,
+                    0.32584610613881265,
+                    0.04730256451387842
+                  ]
+                ]
+              }
+            ]
+          },
+          "robot_contact_details": {},
+          "joint_limit_excess_rad": {},
+          "trace": {
+            "size_bytes": 7378758,
+            "sha256": "f73be799c71665955f1fdf28247bd830b496b261a86b02b1fe4e1ea99a43b566"
+          }
+        },
+        {
+          "passed": false,
+          "failures": [
+            "first_bounce_outside_delivery_zone",
+            "not_exactly_one_bounce_before_target",
+            "target_corridor_missed"
+          ],
+          "release": {
+            "time": 3.08000000000333,
+            "position": [
+              -1.803432676784549,
+              0.4625916286639299,
+              1.4527721492935897
+            ],
+            "velocity": [
+              7.214143263154922,
+              1.1014085001095357,
+              -3.7868624661290164
+            ],
+            "shoulder_z": 1.058265363942582,
+            "upper_z": 0.8701280764699376,
+            "elbow_angle_rad": 2.280702266110753,
+            "maximum_elbow_extension_rad": 0.0001428022495031378,
+            "horizontal_time": 2.325062499999725,
+            "front_landing": {
+              "time": 2.999187500002944,
+              "bounds": [
+                [
+                  -1.9522813511164607,
+                  0.48662119132225856,
+                  -1.819197081079013e-05
+                ],
+                [
+                  -1.7473438923448257,
+                  0.5626968718147577,
+                  0.03560264502097489
+                ]
+              ]
+            },
+            "back_landing": {
+              "time": 2.731343750001665,
+              "bounds": [
+                [
+                  -2.2389945688157815,
+                  0.23335370464822458,
+                  -2.8855177309869418e-05
+                ],
+                [
+                  -2.0388161667334934,
+                  0.33081709754270655,
+                  0.048146303773514317
+                ]
+              ]
+            }
+          },
+          "first_bounce": {
+            "time": 3.355687500004646,
+            "position": [
+              0.185416444076565,
+              0.7662361845376928,
+              0.0359415989345263
+            ]
+          },
+          "target_crossing": {
+            "time": 6.710093750020663,
+            "position": [
+              17.680000000000003,
+              3.5913668862698445,
+              0.035999856356469996
+            ]
+          },
+          "bounces_before_target": 11,
+          "ball_contact_counts": {
+            "pitch": 114694
+          },
+          "ball_contact_peak_force_n": {
+            "pitch": 1423.9677133841224
+          },
+          "maximum_ball_penetration_m": 0.002520258029519766,
+          "minimum_pelvis_height_m": 0.6891617838085091,
+          "minimum_pelvis_up": 0.9796150832402302,
+          "maximum_joint_limit_excess_rad": 0.0,
+          "maximum_actuator_limit_fraction": 1.0,
+          "peak_holder_force_n": 32.55666480666466,
+          "holder_impulse_world_ns": [
+            1.1226246313701675,
+            0.16504490897875107,
+            4.123575307852666
+          ],
+          "case": "right_dt3.125e-05",
+          "terminal": "complete",
+          "duration_s": 8.000000000026821,
+          "hand": "right",
+          "timestep": 3.125e-05,
+          "max_lateral_excursion_m": 0.5014296684639361,
+          "max_artificial_support": 0.0,
+          "landings": {
+            "left": [
+              {
+                "time": 1.7947187499986517,
+                "bounds": [
+                  [
+                    -3.348991247724403,
+                    0.9055566256867008,
+                    -5.311223190751502e-06
+                  ],
+                  [
+                    -3.155525152624586,
+                    0.9791951037851518,
+                    0.08706734175004727
+                  ]
+                ]
+              },
+              {
+                "time": 2.4323437500002374,
+                "bounds": [
+                  [
+                    -2.5311858436256087,
+                    0.43525302318223646,
+                    -7.767914091574672e-06
+                  ],
+                  [
+                    -2.336103348638591,
+                    0.5628480251161432,
+                    0.024948566316568305
+                  ]
+                ]
+              },
+              {
+                "time": 2.999187500002944,
+                "bounds": [
+                  [
+                    -1.9522813511164607,
+                    0.48662119132225856,
+                    -1.819197081079013e-05
+                  ],
+                  [
+                    -1.7473438923448257,
+                    0.5626968718147577,
+                    0.03560264502097489
+                  ]
+                ]
+              }
+            ],
+            "right": [
+              {
+                "time": 1.2052187500000255,
+                "bounds": [
+                  [
+                    -4.118348956277345,
+                    0.7674492456013575,
+                    -8.540965750428002e-06
+                  ],
+                  [
+                    -3.9214381912671006,
+                    0.8615068434810746,
+                    0.0706749481719098
+                  ]
+                ]
+              },
+              {
+                "time": 2.0367499999983485,
+                "bounds": [
+                  [
+                    -3.116615579867991,
+                    0.47379746665841505,
+                    -1.4479049051887953e-05
+                  ],
+                  [
+                    -2.9347850002334095,
+                    0.6251725965656154,
+                    0.03822157969223726
+                  ]
+                ]
+              },
+              {
+                "time": 2.731343750001665,
+                "bounds": [
+                  [
+                    -2.2389945688157815,
+                    0.23335370464822458,
+                    -2.8855177309869418e-05
+                  ],
+                  [
+                    -2.0388161667334934,
+                    0.33081709754270655,
+                    0.048146303773514317
+                  ]
+                ]
+              }
+            ]
+          },
+          "robot_contact_details": {},
+          "joint_limit_excess_rad": {},
+          "trace": {
+            "size_bytes": 13682626,
+            "sha256": "6bd8c3d44de4a6ae194c7fbb4495c787f30d4c941350ddee6958ebc0f56b2b07"
+          }
+        },
+        {
+          "passed": false,
+          "failures": [
+            "first_bounce_outside_delivery_zone",
+            "not_exactly_one_bounce_before_target",
+            "target_corridor_missed"
+          ],
+          "release": {
+            "time": 2.89999999999891,
+            "position": [
+              -2.5505104222076778,
+              -0.507178885969251,
+              1.439897167149027
+            ],
+            "velocity": [
+              7.188242365535388,
+              -0.00818291521570202,
+              -4.004331285450669
+            ],
+            "shoulder_z": 1.0672160906317358,
+            "upper_z": 0.8717969932102304,
+            "elbow_angle_rad": 2.2845936372241944,
+            "maximum_elbow_extension_rad": 0.0,
+            "horizontal_time": 2.317000000000269,
+            "front_landing": {
+              "time": 2.778187499999194,
+              "bounds": [
+                [
+                  -2.769030036776688,
+                  -0.6114152783813877,
+                  -3.909113373490314e-05
+                ],
+                [
+                  -2.56607247759066,
+                  -0.5211100562427986,
+                  0.03792590641398726
+                ]
+              ]
+            },
+            "back_landing": {
+              "time": 2.5784999999996594,
+              "bounds": [
+                [
+                  -3.03783798400283,
+                  -0.24156803158419762,
+                  -7.584291407071713e-05
+                ],
+                [
+                  -2.844184961379519,
+                  -0.11096615347419364,
+                  0.02924857533902596
+                ]
+              ]
+            }
+          },
+          "first_bounce": {
+            "time": 3.164749999998293,
+            "position": [
+              -0.6474232559319174,
+              -0.5093453127728291,
+              0.03586527784152945
+            ]
+          },
+          "target_crossing": {
+            "time": 6.7130625000093005,
+            "position": [
+              17.680000000000003,
+              -0.6592637080672638,
+              0.03599985635647261
+            ]
+          },
+          "bounces_before_target": 11,
+          "ball_contact_counts": {
+            "pitch": 60534
+          },
+          "ball_contact_peak_force_n": {
+            "pitch": 1454.0604414759205
+          },
+          "maximum_ball_penetration_m": 0.0025248321673851312,
+          "minimum_pelvis_height_m": 0.7235265056233898,
+          "minimum_pelvis_up": 0.9683050816066413,
+          "maximum_joint_limit_excess_rad": 0.0,
+          "maximum_actuator_limit_fraction": 1.0,
+          "peak_holder_force_n": 31.88293717367191,
+          "holder_impulse_world_ns": [
+            1.1144983825346682,
+            0.011778183554253347,
+            3.815725517259375
+          ],
+          "case": "left_dt6.25e-05",
+          "terminal": "complete",
+          "duration_s": 8.000000000015445,
+          "hand": "left",
+          "timestep": 6.25e-05,
+          "max_lateral_excursion_m": 0.5329164993713186,
+          "max_artificial_support": 0.0,
+          "landings": {
+            "left": [
+              {
+                "time": 1.0431874999998385,
+                "bounds": [
+                  [
+                    -4.307566146661575,
+                    -0.8368374630161545,
+                    -2.4030218555663556e-05
+                  ],
+                  [
+                    -4.1160485118795656,
+                    -0.717369950527827,
+                    0.07144335398105539
+                  ]
+                ]
+              },
+              {
+                "time": 1.8931250000008772,
+                "bounds": [
+                  [
+                    -3.6277676542890434,
+                    -0.39321515513087957,
+                    -5.0367131652860435e-05
+                  ],
+                  [
+                    -3.4633610243142803,
+                    -0.22052106217395678,
+                    0.03339310800307122
+                  ]
+                ]
+              },
+              {
+                "time": 2.5784999999996594,
+                "bounds": [
+                  [
+                    -3.03783798400283,
+                    -0.24156803158419762,
+                    -7.584291407071713e-05
+                  ],
+                  [
+                    -2.844184961379519,
+                    -0.11096615347419364,
+                    0.02924857533902596
+                  ]
+                ]
+              }
+            ],
+            "right": [
+              {
+                "time": 1.6346875000005614,
+                "bounds": [
+                  [
+                    -3.5679547833861602,
+                    -0.7449606564314983,
+                    -2.8553435638747904e-05
+                  ],
+                  [
+                    -3.376129800966675,
+                    -0.6312652361167743,
+                    0.07331972350420127
+                  ]
+                ]
+              },
+              {
+                "time": 2.227687500000477,
+                "bounds": [
+                  [
+                    -3.3360147614709246,
+                    -0.5266076863653281,
+                    -4.149713396457526e-06
+                  ],
+                  [
+                    -3.145488872642552,
+                    -0.3922334410435402,
+                    0.04416088174844571
+                  ]
+                ]
+              },
+              {
+                "time": 2.778187499999194,
+                "bounds": [
+                  [
+                    -2.769030036776688,
+                    -0.6114152783813877,
+                    -3.909113373490314e-05
+                  ],
+                  [
+                    -2.56607247759066,
+                    -0.5211100562427986,
+                    0.03792590641398726
+                  ]
+                ]
+              }
+            ]
+          },
+          "robot_contact_details": {},
+          "joint_limit_excess_rad": {},
+          "trace": {
+            "size_bytes": 7219644,
+            "sha256": "1342eca8420cf5d1bf97c80b7d0e08327f93a56828d46d234f14c72a6ba187f8"
+          }
+        },
+        {
+          "passed": false,
+          "failures": [
+            "first_bounce_outside_delivery_zone",
+            "not_exactly_one_bounce_before_target",
+            "target_corridor_missed"
+          ],
+          "release": {
+            "time": 2.880000000002375,
+            "position": [
+              -2.560795089104504,
+              -0.46555507888673764,
+              1.43979304048488
+            ],
+            "velocity": [
+              7.342266728010167,
+              -0.08038550674120484,
+              -4.043533105464311
+            ],
+            "shoulder_z": 1.0647531867337532,
+            "upper_z": 0.8712415900814737,
+            "elbow_angle_rad": 2.2859737724979112,
+            "maximum_elbow_extension_rad": 0.0,
+            "horizontal_time": 2.316656249999685,
+            "front_landing": {
+              "time": 2.781593750001905,
+              "bounds": [
+                [
+                  -2.748768112339251,
+                  -0.5767283753837833,
+                  -3.095725389003906e-06
+                ],
+                [
+                  -2.547167641202643,
+                  -0.48035753042068546,
+                  0.03909836642827576
+                ]
+              ]
+            },
+            "back_landing": {
+              "time": 2.579281250000939,
+              "bounds": [
+                [
+                  -3.0388377120474197,
+                  -0.2242339094657625,
+                  -3.3820557350404054e-06
+                ],
+                [
+                  -2.848546880526395,
+                  -0.0856262750939875,
+                  0.029543804383995
+                ]
+              ]
+            }
+          },
+          "first_bounce": {
+            "time": 3.1431562500036314,
+            "position": [
+              -0.6286317104611163,
+              -0.48670902739523847,
+              0.03599450034305029
+            ]
+          },
+          "target_crossing": {
+            "time": 6.607562500020173,
+            "position": [
+              17.680000000000003,
+              -0.8303908897129832,
+              0.035999856356473715
+            ]
+          },
+          "bounces_before_target": 11,
+          "ball_contact_counts": {
+            "pitch": 121212
+          },
+          "ball_contact_peak_force_n": {
+            "pitch": 1441.2237158867367
+          },
+          "maximum_ball_penetration_m": 0.0025516063044358564,
+          "minimum_pelvis_height_m": 0.7221304753817592,
+          "minimum_pelvis_up": 0.9662591354319789,
+          "maximum_joint_limit_excess_rad": 0.0,
+          "maximum_actuator_limit_fraction": 1.0,
+          "peak_holder_force_n": 32.293748998962116,
+          "holder_impulse_world_ns": [
+            1.1418447612576597,
+            -0.006044580580411962,
+            3.7776758577847582
+          ],
+          "case": "left_dt3.125e-05",
+          "terminal": "complete",
+          "duration_s": 8.000000000026821,
+          "hand": "left",
+          "timestep": 3.125e-05,
+          "max_lateral_excursion_m": 0.552040415923126,
+          "max_artificial_support": 0.0,
+          "landings": {
+            "left": [
+              {
+                "time": 1.0510937500003847,
+                "bounds": [
+                  [
+                    -4.285209395287597,
+                    -0.8364282163885486,
+                    -7.1075340989058475e-06
+                  ],
+                  [
+                    -4.093634089841808,
+                    -0.7188908559540304,
+                    0.07309925840075152
+                  ]
+                ]
+              },
+              {
+                "time": 1.9006562499984048,
+                "bounds": [
+                  [
+                    -3.615137119007369,
+                    -0.39141335027769575,
+                    -2.2808898393625147e-05
+                  ],
+                  [
+                    -3.451519471961109,
+                    -0.21807625332999153,
+                    0.033138579367414246
+                  ]
+                ]
+              },
+              {
+                "time": 2.579281250000939,
+                "bounds": [
+                  [
+                    -3.0388377120474197,
+                    -0.2242339094657625,
+                    -3.3820557350404054e-06
+                  ],
+                  [
+                    -2.848546880526395,
+                    -0.0856262750939875,
+                    0.029543804383995
+                  ]
+                ]
+              }
+            ],
+            "right": [
+              {
+                "time": 1.6498437499989893,
+                "bounds": [
+                  [
+                    -3.551610895868827,
+                    -0.7535851189717789,
+                    -1.4192419322718586e-05
+                  ],
+                  [
+                    -3.3605388328305277,
+                    -0.6356046812273421,
+                    0.07142762055385818
+                  ]
+                ]
+              },
+              {
+                "time": 2.2259062499992517,
+                "bounds": [
+                  [
+                    -3.3123227609820285,
+                    -0.5196269042308802,
+                    -1.2735964112979385e-05
+                  ],
+                  [
+                    -3.1249765480038247,
+                    -0.37954955496881315,
+                    0.04555303154196097
+                  ]
+                ]
+              },
+              {
+                "time": 2.781593750001905,
+                "bounds": [
+                  [
+                    -2.748768112339251,
+                    -0.5767283753837833,
+                    -3.095725389003906e-06
+                  ],
+                  [
+                    -2.547167641202643,
+                    -0.48035753042068546,
+                    0.03909836642827576
+                  ]
+                ]
+              }
+            ]
+          },
+          "robot_contact_details": {},
+          "joint_limit_excess_rad": {},
+          "trace": {
+            "size_bytes": 13415413,
+            "sha256": "a0d831bece544128036c402f33da0c623cdfb8651ef1eaa228b3546bb0ebb9f5"
+          }
+        }
+      ],
+      "backend_comparison": {
+        "parent_summary": {
+          "size_bytes": 91178,
+          "sha256": "0ff0f70a5fdde6a341fe3c619f3c704a7dd6940d3e35797505a9e9f52c085293"
+        },
+        "cases": 4,
+        "arrays_exact": 56,
+        "physics_samples": 768000,
+        "result_rows_exact": true
+      },
+      "controller": "Frozen AMP/GR00T locomotion and reference arms with a mechanical ball holder; not learned bowling arms or finger grasp"
+    },
+    "underarm": {
+      "native_summary": {
+        "size_bytes": 92909,
+        "sha256": "2154beb9fd13fe58eb82d3c50e485b6a6ffac177c450d26614d5d0674da785f5"
+      },
+      "mjbatch_summary": {
+        "size_bytes": 94399,
+        "sha256": "fdf4c4782ce72e34e3f397b40b69efe7e2890af567aa5b08777863f4759fa663"
+      },
+      "rows": [
+        {
+          "passed": false,
+          "failures": [
+            "first_bounce_outside_delivery_zone",
+            "invalid_delivery_stride_order",
+            "no_upward_shoulder_level_crossing",
+            "not_exactly_one_bounce_before_target",
+            "release_forward_speed_not_above_6_m_s",
+            "release_not_overarm",
+            "target_corridor_missed"
+          ],
+          "release": {
+            "time": 3.199999999998211,
+            "position": [
+              -1.9957794403620623,
+              0.11299744944326784,
+              0.638267024678097
+            ],
+            "velocity": [
+              5.219831678348037,
+              0.25704889058494046,
+              2.785176555408757
+            ],
+            "shoulder_z": 1.0095854895524836,
+            "upper_z": -0.7708137864924193,
+            "elbow_angle_rad": 3.1197032161528595,
+            "maximum_elbow_extension_rad": 0.0,
+            "horizontal_time": null,
+            "front_landing": {
+              "time": 3.0367499999985914,
+              "bounds": [
+                [
+                  -2.1516478854052674,
+                  0.6073912653141266,
+                  -1.9440580713942987e-06
+                ],
+                [
+                  -1.9479354574174172,
+                  0.6965874896398305,
+                  0.030928726389256464
+                ]
+              ]
+            },
+            "back_landing": {
+              "time": 3.1636249999982957,
+              "bounds": [
+                [
+                  -2.3001420247217537,
+                  0.3550788517819859,
+                  -3.0159019103803697e-05
+                ],
+                [
+                  -2.118973553567659,
+                  0.5072153181844794,
+                  0.039713088742438465
+                ]
+              ]
+            }
+          },
+          "first_bounce": {
+            "time": 3.9348749999964983,
+            "position": [
+              1.8401443642644348,
+              0.3018962529119106,
+              0.03589595282601055
+            ]
+          },
+          "target_crossing": null,
+          "bounces_before_target": 10,
+          "ball_contact_counts": {
+            "pitch": 53696
+          },
+          "ball_contact_peak_force_n": {
+            "pitch": 984.3067911668003
+          },
+          "maximum_ball_penetration_m": 0.0017005090718537827,
+          "minimum_pelvis_height_m": 0.6894662798110037,
+          "minimum_pelvis_up": 0.9786584223306333,
+          "maximum_joint_limit_excess_rad": 0.0,
+          "maximum_actuator_limit_fraction": 1.0,
+          "peak_holder_force_n": 13.376921996696368,
+          "holder_impulse_world_ns": [
+            0.8152849667605722,
+            0.04133260995306023,
+            5.334682468065268
+          ],
+          "case": "right_dt6.25e-05",
+          "terminal": "complete",
+          "duration_s": 8.000000000015445,
+          "hand": "right",
+          "timestep": 6.25e-05,
+          "max_lateral_excursion_m": 0.4200233045250692,
+          "max_artificial_support": 0.0,
+          "landings": {
+            "left": [
+              {
+                "time": 1.793125000000755,
+                "bounds": [
+                  [
+                    -3.3430113542692794,
+                    0.9004170854609029,
+                    -8.11237631578171e-06
+                  ],
+                  [
+                    -3.1483196234542437,
+                    0.9733456204212124,
+                    0.08384679525334549
+                  ]
+                ]
+              },
+              {
+                "time": 2.4334374999999975,
+                "bounds": [
+                  [
+                    -2.537378366247404,
+                    0.4475420459561781,
+                    -2.4016049777922203e-05
+                  ],
+                  [
+                    -2.3366782723706465,
+                    0.5492161305299579,
+                    0.04281304944157478
+                  ]
+                ]
+              },
+              {
+                "time": 3.0367499999985914,
+                "bounds": [
+                  [
+                    -2.1516478854052674,
+                    0.6073912653141266,
+                    -1.9440580713942987e-06
+                  ],
+                  [
+                    -1.9479354574174172,
+                    0.6965874896398305,
+                    0.030928726389256464
+                  ]
+                ]
+              }
+            ],
+            "right": [
+              {
+                "time": 1.2028125000000336,
+                "bounds": [
+                  [
+                    -4.117275642943983,
+                    0.7647120695959425,
+                    -1.2529153832398048e-05
+                  ],
+                  [
+                    -3.9207412313692354,
+                    0.8594418399073159,
+                    0.07179924795384984
+                  ]
+                ]
+              },
+              {
+                "time": 2.0288125000009405,
+                "bounds": [
+                  [
+                    -3.1322435224959686,
+                    0.46491473441372816,
+                    -5.102647195595177e-05
+                  ],
+                  [
+                    -2.9488259100915806,
+                    0.6143798231830646,
+                    0.03547188757020772
+                  ]
+                ]
+              },
+              {
+                "time": 2.74131249999928,
+                "bounds": [
+                  [
+                    -2.3723677332235766,
+                    0.29325508142567247,
+                    -4.515137778330052e-05
+                  ],
+                  [
+                    -2.17289830330961,
+                    0.4070959669177466,
+                    0.025568751063806742
+                  ]
+                ]
+              },
+              {
+                "time": 3.1636249999982957,
+                "bounds": [
+                  [
+                    -2.3001420247217537,
+                    0.3550788517819859,
+                    -3.0159019103803697e-05
+                  ],
+                  [
+                    -2.118973553567659,
+                    0.5072153181844794,
+                    0.039713088742438465
+                  ]
+                ]
+              }
+            ]
+          },
+          "robot_contact_details": {},
+          "joint_limit_excess_rad": {},
+          "trace": {
+            "size_bytes": 7503580,
+            "sha256": "879aebfaaed4a2b77d93b1908f107ba0e4c0d964e256bf96a3c7d8e99b4ca690"
+          }
+        },
+        {
+          "passed": false,
+          "failures": [
+            "first_bounce_outside_delivery_zone",
+            "invalid_delivery_stride_order",
+            "no_upward_shoulder_level_crossing",
+            "not_exactly_one_bounce_before_target",
+            "release_forward_speed_not_above_6_m_s",
+            "release_not_overarm",
+            "target_corridor_missed"
+          ],
+          "release": {
+            "time": 3.200000000003903,
+            "position": [
+              -1.9245931195972839,
+              0.12676462450191195,
+              0.6382964099800168
+            ],
+            "velocity": [
+              5.203470418169921,
+              0.17160200781028895,
+              2.780729914983852
+            ],
+            "shoulder_z": 1.0076788803444603,
+            "upper_z": -0.7671378290643734,
+            "elbow_angle_rad": 3.118729958934709,
+            "maximum_elbow_extension_rad": 0.0,
+            "horizontal_time": null,
+            "front_landing": {
+              "time": 3.0265625000030747,
+              "bounds": [
+                [
+                  -2.080268924573496,
+                  0.6087086246504207,
+                  -3.443219859136648e-06
+                ],
+                [
+                  -1.8775603965769896,
+                  0.7025178099953703,
+                  0.032897488868127725
+                ]
+              ]
+            },
+            "back_landing": {
+              "time": 3.1695312500037573,
+              "bounds": [
+                [
+                  -2.2261202701534115,
+                  0.37677650175235816,
+                  -1.1716110195246314e-05
+                ],
+                [
+                  -2.053044490520412,
+                  0.5405054739004505,
+                  0.035524615918437114
+                ]
+              ]
+            }
+          },
+          "first_bounce": {
+            "time": 3.9341562500074083,
+            "position": [
+              1.8955672095911191,
+              0.2527473110486377,
+              0.03595074011335745
+            ]
+          },
+          "target_crossing": null,
+          "bounces_before_target": 10,
+          "ball_contact_counts": {
+            "pitch": 107201
+          },
+          "ball_contact_peak_force_n": {
+            "pitch": 978.4036739608016
+          },
+          "maximum_ball_penetration_m": 0.0017234318941946256,
+          "minimum_pelvis_height_m": 0.6891628544048247,
+          "minimum_pelvis_up": 0.9792901324020221,
+          "maximum_joint_limit_excess_rad": 0.0,
+          "maximum_actuator_limit_fraction": 1.0,
+          "peak_holder_force_n": 13.413580680061767,
+          "holder_impulse_world_ns": [
+            0.8122457148782385,
+            0.027338755680225233,
+            5.332455183756862
+          ],
+          "case": "right_dt3.125e-05",
+          "terminal": "complete",
+          "duration_s": 8.000000000026821,
+          "hand": "right",
+          "timestep": 3.125e-05,
+          "max_lateral_excursion_m": 0.40053743872272585,
+          "max_artificial_support": 0.0,
+          "landings": {
+            "left": [
+              {
+                "time": 1.7953437499986502,
+                "bounds": [
+                  [
+                    -3.3477580216367104,
+                    0.9060902731662629,
+                    -1.8210769847773478e-05
+                  ],
+                  [
+                    -3.1544034638426326,
+                    0.9799582146596448,
+                    0.08730251806735846
+                  ]
+                ]
+              },
+              {
+                "time": 2.442750000000287,
+                "bounds": [
+                  [
+                    -2.4977261631641934,
+                    0.46890628828865344,
+                    -3.8042291696611594e-06
+                  ],
+                  [
+                    -2.296428787777008,
+                    0.5691547493188299,
+                    0.03902141875949099
+                  ]
+                ]
+              },
+              {
+                "time": 3.0265625000030747,
+                "bounds": [
+                  [
+                    -2.080268924573496,
+                    0.6087086246504207,
+                    -3.443219859136648e-06
+                  ],
+                  [
+                    -1.8775603965769896,
+                    0.7025178099953703,
+                    0.032897488868127725
+                  ]
+                ]
+              }
+            ],
+            "right": [
+              {
+                "time": 1.2052187500000255,
+                "bounds": [
+                  [
+                    -4.118348956277345,
+                    0.7674492456013575,
+                    -8.540965750428002e-06
+                  ],
+                  [
+                    -3.9214381912671006,
+                    0.8615068434810746,
+                    0.0706749481719098
+                  ]
+                ]
+              },
+              {
+                "time": 2.032468749998328,
+                "bounds": [
+                  [
+                    -3.1184284832503995,
+                    0.48679693173562577,
+                    -4.80831353083782e-06
+                  ],
+                  [
+                    -2.934161962864133,
+                    0.6350584062729372,
+                    0.03465127025854068
+                  ]
+                ]
+              },
+              {
+                "time": 2.7371250000016927,
+                "bounds": [
+                  [
+                    -2.334007184356624,
+                    0.3170843616094464,
+                    -1.9719470700434e-05
+                  ],
+                  [
+                    -2.135066959150165,
+                    0.4327635659853518,
+                    0.02756073847499388
+                  ]
+                ]
+              },
+              {
+                "time": 3.1695312500037573,
+                "bounds": [
+                  [
+                    -2.2261202701534115,
+                    0.37677650175235816,
+                    -1.1716110195246314e-05
+                  ],
+                  [
+                    -2.053044490520412,
+                    0.5405054739004505,
+                    0.035524615918437114
+                  ]
+                ]
+              }
+            ]
+          },
+          "robot_contact_details": {},
+          "joint_limit_excess_rad": {},
+          "trace": {
+            "size_bytes": 14022123,
+            "sha256": "165bbfd0e1ae232b0b3046602f7265cff51baf61b8daa3673806125848d62252"
+          }
+        },
+        {
+          "passed": false,
+          "failures": [
+            "first_bounce_outside_delivery_zone",
+            "invalid_delivery_stride_order",
+            "no_upward_shoulder_level_crossing",
+            "not_exactly_one_bounce_before_target",
+            "release_forward_speed_not_above_6_m_s",
+            "release_not_overarm",
+            "target_corridor_missed"
+          ],
+          "release": {
+            "time": 3.0199999999986304,
+            "position": [
+              -2.6716667529147484,
+              -0.11594175508959531,
+              0.6532343115259593
+            ],
+            "velocity": [
+              5.34460912007218,
+              -0.08935695419834754,
+              2.5282653729996944
+            ],
+            "shoulder_z": 1.0237118534611274,
+            "upper_z": -0.7712377596160122,
+            "elbow_angle_rad": 3.1200721012079335,
+            "maximum_elbow_extension_rad": 0.0,
+            "horizontal_time": null,
+            "front_landing": {
+              "time": 2.854937499999015,
+              "bounds": [
+                [
+                  -2.8722448624408337,
+                  -0.721399828359483,
+                  -5.0370764236504044e-05
+                ],
+                [
+                  -2.666676612803763,
+                  -0.6473479088824188,
+                  0.03038806221837558
+                ]
+              ]
+            },
+            "back_landing": {
+              "time": 3.0049374999986656,
+              "bounds": [
+                [
+                  -2.9593984911011737,
+                  -0.529098370328867,
+                  -6.015492564184592e-06
+                ],
+                [
+                  -2.777022626414009,
+                  -0.3770032705152897,
+                  0.030004715772097287
+                ]
+              ]
+            }
+          },
+          "first_bounce": {
+            "time": 3.716187499997008,
+            "position": [
+              1.0491833088657663,
+              -0.1781509496404809,
+              0.03582677846906573
+            ]
+          },
+          "target_crossing": null,
+          "bounces_before_target": 10,
+          "ball_contact_counts": {
+            "pitch": 57181
+          },
+          "ball_contact_peak_force_n": {
+            "pitch": 976.5349036919129
+          },
+          "maximum_ball_penetration_m": 0.0016814994901141467,
+          "minimum_pelvis_height_m": 0.7235265056233898,
+          "minimum_pelvis_up": 0.9682904896718731,
+          "maximum_joint_limit_excess_rad": 0.0,
+          "maximum_actuator_limit_fraction": 1.0,
+          "peak_holder_force_n": 13.339905379537374,
+          "holder_impulse_world_ns": [
+            0.8348099769139142,
+            -0.015258546241320465,
+            5.018881215123214
+          ],
+          "case": "left_dt6.25e-05",
+          "terminal": "complete",
+          "duration_s": 8.000000000015445,
+          "hand": "left",
+          "timestep": 6.25e-05,
+          "max_lateral_excursion_m": 0.4966675343588752,
+          "max_artificial_support": 0.0,
+          "landings": {
+            "left": [
+              {
+                "time": 1.0431874999998385,
+                "bounds": [
+                  [
+                    -4.307566146661575,
+                    -0.8368374630161545,
+                    -2.4030218555663556e-05
+                  ],
+                  [
+                    -4.1160485118795656,
+                    -0.717369950527827,
+                    0.07144335398105539
+                  ]
+                ]
+              },
+              {
+                "time": 1.8918125000008756,
+                "bounds": [
+                  [
+                    -3.6256306028033842,
+                    -0.39143455128477117,
+                    -5.720667817506013e-06
+                  ],
+                  [
+                    -3.459808250907041,
+                    -0.22001240595637317,
+                    0.03450503741544288
+                  ]
+                ]
+              },
+              {
+                "time": 2.610499999999585,
+                "bounds": [
+                  [
+                    -3.017914555797396,
+                    -0.3508275827682352,
+                    -2.058156644778493e-05
+                  ],
+                  [
+                    -2.8133771387398934,
+                    -0.266994240376662,
+                    0.030287089841251356
+                  ]
+                ]
+              },
+              {
+                "time": 3.0049374999986656,
+                "bounds": [
+                  [
+                    -2.9593984911011737,
+                    -0.529098370328867,
+                    -6.015492564184592e-06
+                  ],
+                  [
+                    -2.777022626414009,
+                    -0.3770032705152897,
+                    0.030004715772097287
+                  ]
+                ]
+              }
+            ],
+            "right": [
+              {
+                "time": 1.6347500000005615,
+                "bounds": [
+                  [
+                    -3.567820588184759,
+                    -0.7450197215435058,
+                    -3.990560770026491e-05
+                  ],
+                  [
+                    -3.3759880335503087,
+                    -0.6313924593693483,
+                    0.07334180833877502
+                  ]
+                ]
+              },
+              {
+                "time": 2.2445625000004377,
+                "bounds": [
+                  [
+                    -3.289391441634293,
+                    -0.5072287772841062,
+                    -2.2537351274984352e-05
+                  ],
+                  [
+                    -3.0927119233398286,
+                    -0.38975147417918476,
+                    0.04619930653463238
+                  ]
+                ]
+              },
+              {
+                "time": 2.854937499999015,
+                "bounds": [
+                  [
+                    -2.8722448624408337,
+                    -0.721399828359483,
+                    -5.0370764236504044e-05
+                  ],
+                  [
+                    -2.666676612803763,
+                    -0.6473479088824188,
+                    0.03038806221837558
+                  ]
+                ]
+              }
+            ]
+          },
+          "robot_contact_details": {},
+          "joint_limit_excess_rad": {},
+          "trace": {
+            "size_bytes": 7290852,
+            "sha256": "4717bfcaca6169a77a91a13e02571e75326a6da68377f2d97ab3aa359e1400e7"
+          }
+        },
+        {
+          "passed": false,
+          "failures": [
+            "first_bounce_outside_delivery_zone",
+            "invalid_delivery_stride_order",
+            "no_upward_shoulder_level_crossing",
+            "not_exactly_one_bounce_before_target",
+            "release_forward_speed_not_above_6_m_s",
+            "release_not_overarm",
+            "target_corridor_missed"
+          ],
+          "release": {
+            "time": 3.0200000000030434,
+            "position": [
+              -2.6708631573393378,
+              -0.08735144254137511,
+              0.6514101096275997
+            ],
+            "velocity": [
+              5.3675003504740655,
+              -0.08798006640598698,
+              2.557429969410101
+            ],
+            "shoulder_z": 1.0231734364732274,
+            "upper_z": -0.7736020656791153,
+            "elbow_angle_rad": 3.12010258532611,
+            "maximum_elbow_extension_rad": 0.0,
+            "horizontal_time": null,
+            "front_landing": {
+              "time": 2.856375000002262,
+              "bounds": [
+                [
+                  -2.8585490678671994,
+                  -0.6919500533168114,
+                  -2.1158198534795662e-05
+                ],
+                [
+                  -2.6533661694813016,
+                  -0.6140929469732476,
+                  0.03048020866852795
+                ]
+              ]
+            },
+            "back_landing": {
+              "time": 3.0013750000029544,
+              "bounds": [
+                [
+                  -2.952530850468062,
+                  -0.49507001822102,
+                  -3.0944205464565264e-06
+                ],
+                [
+                  -2.7700614327786734,
+                  -0.34346576251045435,
+                  0.03267506735054787
+                ]
+              ]
+            }
+          },
+          "first_bounce": {
+            "time": 3.720500000006388,
+            "position": [
+              1.089070838167495,
+              -0.14898147905888467,
+              0.035897703433431426
+            ]
+          },
+          "target_crossing": null,
+          "bounces_before_target": 10,
+          "ball_contact_counts": {
+            "pitch": 114333
+          },
+          "ball_contact_peak_force_n": {
+            "pitch": 968.9390620622563
+          },
+          "maximum_ball_penetration_m": 0.0017042514340322307,
+          "minimum_pelvis_height_m": 0.7221304753817592,
+          "minimum_pelvis_up": 0.9661740040083845,
+          "maximum_joint_limit_excess_rad": 0.0,
+          "maximum_actuator_limit_fraction": 1.0,
+          "peak_holder_force_n": 13.606351588624339,
+          "holder_impulse_world_ns": [
+            0.8378525720205517,
+            -0.014407303270922154,
+            5.022040787173568
+          ],
+          "case": "left_dt3.125e-05",
+          "terminal": "complete",
+          "duration_s": 8.000000000026821,
+          "hand": "left",
+          "timestep": 3.125e-05,
+          "max_lateral_excursion_m": 0.5035851726638225,
+          "max_artificial_support": 0.0,
+          "landings": {
+            "left": [
+              {
+                "time": 1.0510937500003847,
+                "bounds": [
+                  [
+                    -4.285209395287597,
+                    -0.8364282163885486,
+                    -7.1075340989058475e-06
+                  ],
+                  [
+                    -4.093634089841808,
+                    -0.7188908559540304,
+                    0.07309925840075152
+                  ]
+                ]
+              },
+              {
+                "time": 1.8986249999984095,
+                "bounds": [
+                  [
+                    -3.6142781804480992,
+                    -0.3922305426887499,
+                    -4.7719594409049645e-06
+                  ],
+                  [
+                    -3.449582765825711,
+                    -0.2197839589567756,
+                    0.03352062056286029
+                  ]
+                ]
+              },
+              {
+                "time": 2.6086562500010793,
+                "bounds": [
+                  [
+                    -3.005880823374733,
+                    -0.32819782785862817,
+                    -2.415505532403668e-05
+                  ],
+                  [
+                    -2.8025835780790054,
+                    -0.2365670219565077,
+                    0.030283238531289676
+                  ]
+                ]
+              },
+              {
+                "time": 3.0013750000029544,
+                "bounds": [
+                  [
+                    -2.952530850468062,
+                    -0.49507001822102,
+                    -3.0944205464565264e-06
+                  ],
+                  [
+                    -2.7700614327786734,
+                    -0.34346576251045435,
+                    0.03267506735054787
+                  ]
+                ]
+              }
+            ],
+            "right": [
+              {
+                "time": 1.6499062499989892,
+                "bounds": [
+                  [
+                    -3.5514409952429995,
+                    -0.753696909526566,
+                    -8.15958187568716e-06
+                  ],
+                  [
+                    -3.3603442267070247,
+                    -0.6358296200966901,
+                    0.07146576891974987
+                  ]
+                ]
+              },
+              {
+                "time": 2.2350624999992954,
+                "bounds": [
+                  [
+                    -3.273648637700678,
+                    -0.5008905665037228,
+                    -1.3920250095243725e-05
+                  ],
+                  [
+                    -3.07947055035864,
+                    -0.37618082052150936,
+                    0.0470619595488836
+                  ]
+                ]
+              },
+              {
+                "time": 2.856375000002262,
+                "bounds": [
+                  [
+                    -2.8585490678671994,
+                    -0.6919500533168114,
+                    -2.1158198534795662e-05
+                  ],
+                  [
+                    -2.6533661694813016,
+                    -0.6140929469732476,
+                    0.03048020866852795
+                  ]
+                ]
+              }
+            ]
+          },
+          "robot_contact_details": {},
+          "joint_limit_excess_rad": {},
+          "trace": {
+            "size_bytes": 13653328,
+            "sha256": "66d1368433e1b82b5be4359d3c53ea95a3cdb765c588b331d60c42c554b92632"
+          }
+        }
+      ],
+      "backend_comparison": {
+        "parent_summary": {
+          "size_bytes": 92909,
+          "sha256": "2154beb9fd13fe58eb82d3c50e485b6a6ffac177c450d26614d5d0674da785f5"
+        },
+        "cases": 4,
+        "arrays_exact": 56,
+        "physics_samples": 768000,
+        "result_rows_exact": true
+      },
+      "controller": "Frozen AMP/GR00T locomotion and reference arms with a mechanical ball holder; not learned bowling arms or finger grasp"
+    }
+  },
+  "videos": {
+    "batting.mp4": {
+      "size_bytes": 9355096,
+      "sha256": "267286cd462dc7dfa7566d46c02f90c0ad81c693dcfce9c3d0d2f07a12ae14ae"
+    },
+    "bowling.mp4": {
+      "size_bytes": 9530714,
+      "sha256": "0d80e63d76c1c940734749d7dca988aad98214d645a618f80b1768e8639e2237"
+    }
+  }
+}

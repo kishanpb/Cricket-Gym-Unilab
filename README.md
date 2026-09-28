@@ -8,6 +8,27 @@ cricket batting and bowling task configurations proposed in
 [upstream PR #1560](https://github.com/Motphys/UniLab/pull/1560).
 UniLab remains an upstream project; this fork does not imply upstream acceptance.
 
+### Unitree G1 Cricket Preview
+
+| G1 batting: both hands | G1 bowling: overarm and underarm |
+| --- | --- |
+| [![G1 batting](g1_cricket_showcase/batting_preview.gif)](https://github.com/kishanpb/Cricket-Gym-Unilab/raw/refs/heads/main/g1_cricket_showcase/batting.mp4) | [![G1 bowling](g1_cricket_showcase/bowling_preview.gif)](https://github.com/kishanpb/Cricket-Gym-Unilab/raw/refs/heads/main/g1_cricket_showcase/bowling.mp4) |
+
+The 67.2-second batting and 30.56-second bowling reels use a UniLab-derived G1
+scene with normal speed, slow replay and failures. Batting combines SKRL PPO
+residuals with frozen GR00T balance/reference control; bowling uses learned
+locomotion, reference arms and a mechanical holder. These are standalone
+development evaluations, not a completed UniLab task/learner integration.
+
+**Development limits:** 8 qualified batting contacts, 0 boundaries, remaining
+grip/guard failures, and no fully qualified legal bowling deliveries. All 14
+batting and 8 bowling cases also match live native mjbatch execution exactly;
+that is backend parity, not independent training. Portable controller/checkpoint
+reproduction remains in progress.
+[All cases, forces, provenance and limitations](g1_cricket_showcase/README.md).
+
+### Earlier Cricket Demonstrations
+
 | Batting: both stances | Bowling: both arms |
 | --- | --- |
 | [![Gym-Cricket batting highlight](https://raw.githubusercontent.com/kishanpb/gym-cricket/28e1f00d882cdf82a22642e907a19a0f05a2581c/release/batting_preview.gif)](https://github.com/kishanpb/gym-cricket/releases/download/v0.1.0/gym_cricket_batting_human_motion.mp4) | [![Gym-Cricket running-bowling highlight](https://raw.githubusercontent.com/kishanpb/gym-cricket/28e1f00d882cdf82a22642e907a19a0f05a2581c/release/bowling_preview.gif)](https://github.com/kishanpb/gym-cricket/releases/download/v0.1.0/gym_cricket_bowling_runup.mp4) |
@@ -26,8 +47,8 @@ release parameters with a scripted run-up. Neither is learned whole-body locomot
 **Contact diagnostics:** [force and simulated-touch reporting](CRICKET_CONTACTS.md)
 now includes complete reference-control traces, terminal-reset handling and explicit
 sensor-timing limits. These are simulated contact loads, not hardware taxels. The
-next extension is learned cricket on the repository's Unitree G1 model; the current
-videos are not G1 demonstrations.
+G1 development preview above is separate; these earlier videos are not G1
+demonstrations. Neither preview claims hardware tactile sensing.
 
 ---
 
