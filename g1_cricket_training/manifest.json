@@ -1,0 +1,84 @@
+{
+  "scope": "Optional portable training extension; playback package remains unchanged",
+  "base_runtime_manifest": {
+    "size_bytes": 44882,
+    "sha256": "8d232f5c5f956dfda8b7fb430769a4683d3c177ad5c085723ea6b7d17d97f472"
+  },
+  "auxiliary_files": {
+    "pyproject.toml": {
+      "size_bytes": 833,
+      "sha256": "e1f926864c25dd1f898c3e9fea963646ae535eabc755c0765090795bf92a7c71"
+    },
+    "uv.lock": {
+      "size_bytes": 153077,
+      "sha256": "eb03e23b63fd5294497f4608cd091c76db3c2279bc5e84b735c3dec808ec3aca"
+    },
+    "install_controllers.py": {
+      "size_bytes": 5836,
+      "sha256": "5bf3d1918c46ffb5c49e7c836adcb2e221dd5861a11b644b26499ce5d8ec2c5e"
+    }
+  },
+  "overrides": [
+    "src/integrations/g1_dynamics/amp_bowling_env.py",
+    "src/integrations/g1_dynamics/amp_bowling_ppo.py",
+    "src/integrations/g1_dynamics/amp_bowling_probe.py",
+    "src/integrations/g1_dynamics/batting_runtime_package.py",
+    "src/integrations/g1_dynamics/bowling_sweep_reference.py",
+    "src/integrations/g1_dynamics/groot_batting_evaluate.py",
+    "src/integrations/g1_dynamics/portable_bowling_ppo.py"
+  ],
+  "files": {
+    ".gitignore": {
+      "size_bytes": 28,
+      "sha256": "9b9dc66af90f9ff99fa79101a6e3eb357e4d8b53cafcf51e9a8d2e2e32ca7dbb"
+    },
+    "README.md": {
+      "size_bytes": 3443,
+      "sha256": "e4bee7624845e9738d4612c1e264dc11155c0bfa960b71d6bd32382b3dc0e080"
+    },
+    "install.py": {
+      "size_bytes": 2594,
+      "sha256": "b96b9168c96fd8fa26641faf2d553cf54b548bcd3da25aaf09bbaf93ee1d912f"
+    },
+    "overrides/src/integrations/g1_dynamics/amp_bowling_env.py": {
+      "size_bytes": 13365,
+      "sha256": "b16f3368cae3cb48f8386a931d8ff9d864a714bd42c12b635fbc6a85f141201b"
+    },
+    "overrides/src/integrations/g1_dynamics/amp_bowling_ppo.py": {
+      "size_bytes": 14920,
+      "sha256": "9fa5a90aae0fc33cd6d8bb038e9ecf243e42771204f7b5d260dacc8e8045a458"
+    },
+    "overrides/src/integrations/g1_dynamics/amp_bowling_probe.py": {
+      "size_bytes": 43225,
+      "sha256": "11ad4ad421dc340495ae8e3cd0fe8e076161333d6c907e4d7ddf50bfc7673952"
+    },
+    "overrides/src/integrations/g1_dynamics/batting_runtime_package.py": {
+      "size_bytes": 7388,
+      "sha256": "e7d58ce2e5cbd7481d4a9684162f19369f4e7ebcbb32aca9444bde8f64fe9658"
+    },
+    "overrides/src/integrations/g1_dynamics/bowling_sweep_reference.py": {
+      "size_bytes": 8926,
+      "sha256": "6ae0fbe588ef9a753e50fceb828b6dd5ed9265376545bcf089bafd8569f4f529"
+    },
+    "overrides/src/integrations/g1_dynamics/groot_batting_evaluate.py": {
+      "size_bytes": 10862,
+      "sha256": "215f92253fc8f2e7af36d92f1cb1bf254c114adf95b4556624197ce0157c3129"
+    },
+    "overrides/src/integrations/g1_dynamics/portable_bowling_ppo.py": {
+      "size_bytes": 7066,
+      "sha256": "fbdc78191ac3f07ad942a93cfa9b36cdde06d3767718fabd8607bda2f71e56d7"
+    },
+    "runtime_manifest.json": {
+      "size_bytes": 46135,
+      "sha256": "6d4ee4c8462c3d06cec2311ffcfee6afea13c232f166a2efb5c2a7e7596392f7"
+    },
+    "validation.json": {
+      "size_bytes": 28579,
+      "sha256": "bb5807faca896cd0f7117bbd14908b8880f963fb7517fb00f955e03d09c7f2a8"
+    }
+  },
+  "external_models_included": false,
+  "robot_meshes_included": false,
+  "raw_traces_included": false,
+  "release_goal_complete": false
+}

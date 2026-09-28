@@ -33,6 +33,10 @@ the retained physics and exposes overarm/experimental underarm bowling; it is
 not a ManagerBasedRlEnv rewrite or evidence of improved learned performance.
 [Installed-package validation](g1_cricket_cpu/VALIDATION.md) covers exact
 retained-episode parity and both PPO connection tests.
+[Train bounded bowling torque residuals on CPU](g1_cricket_training/README.md)
+with the separate standalone SKRL PPO extension. Its 400-step native-mjbatch
+run reproduced the development checkpoint and all four evaluations exactly,
+but qualified 0/4 deliveries; this is not evidence of improved cricket skill.
 [All cases, forces, provenance and limitations](g1_cricket_showcase/README.md).
 
 ### Earlier Cricket Demonstrations
