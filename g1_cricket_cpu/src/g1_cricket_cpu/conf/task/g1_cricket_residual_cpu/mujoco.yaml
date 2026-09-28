@@ -1,0 +1,32 @@
+# @package _global_
+training:
+  task_name: G1CricketResidualCpu
+  sim_backend: mujoco
+  device: cpu
+  logger: tensorboard
+  no_play: true
+  nan_guard:
+    enabled: false
+algo:
+  seed: 29
+  num_envs: 1
+  num_steps_per_env: 400
+  max_iterations: 1
+  save_interval: 1
+  obs_groups:
+    actor: [policy]
+    critic: [policy]
+  policy:
+    init_noise_std: 0.05
+    actor_hidden_dims: [64, 64]
+    critic_hidden_dims: [64, 64]
+  algorithm:
+    num_learning_epochs: 1
+    num_mini_batches: 2
+env:
+  runtime_bundle: ???
+  groot_checkout: ???
+  scene_bundle: ???
+  seed: 29
+reward:
+  version: retained_batting_v1

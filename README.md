@@ -17,17 +17,22 @@ UniLab remains an upstream project; this fork does not imply upstream acceptance
 The 67.2-second batting and 30.56-second bowling reels use a UniLab-derived G1
 scene with normal speed, slow replay and failures. Batting combines SKRL PPO
 residuals with frozen GR00T balance/reference control; bowling uses learned
-locomotion, reference arms and a mechanical holder. These are standalone
-development evaluations, not a completed UniLab task/learner integration.
+locomotion, reference arms and a mechanical holder. These are retained
+development evaluations, not new policies trained by the task adapter below.
 
 **Development limits:** 8 qualified batting contacts, 0 boundaries, remaining
 grip/guard failures, and no fully qualified legal bowling deliveries. All 14
 batting and 8 bowling cases also match live native mjbatch execution exactly;
 that is backend parity, not independent training.
 [Run the pinned standalone CPU reproduction](g1_cricket_runtime/README.md),
-including asset/controller installation and complete-cohort evaluation. This
-isolated snapshot does not register the final G1 task in UniLab or replace its
-learner/backend contracts; that integration remains open.
+including asset/controller installation and complete-cohort evaluation.
+[Install the G1 CPU tasks](g1_cricket_cpu/README.md) to use
+`G1CricketResidualCpu` and `G1CricketBowlingCpu` through the ordinary UniLab PPO
+command, without a development `PYTHONPATH`. The separate adapter preserves
+the retained physics and exposes overarm/experimental underarm bowling; it is
+not a ManagerBasedRlEnv rewrite or evidence of improved learned performance.
+[Installed-package validation](g1_cricket_cpu/VALIDATION.md) covers exact
+retained-episode parity and both PPO connection tests.
 [All cases, forces, provenance and limitations](g1_cricket_showcase/README.md).
 
 ### Earlier Cricket Demonstrations

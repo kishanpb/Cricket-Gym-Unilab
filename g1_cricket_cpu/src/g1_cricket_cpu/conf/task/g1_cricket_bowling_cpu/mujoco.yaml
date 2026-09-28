@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_residual_cpu/mujoco
+  - _self_
+training:
+  task_name: G1CricketBowlingCpu
+env:
+  amp_checkout: ???
+  delivery_style: overarm
+reward:
+  version: retained_bowling_v1

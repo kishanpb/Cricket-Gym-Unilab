@@ -1,0 +1,12 @@
+training:
+  task_name: G1CricketResidualCpu
+  sim_backend: mujoco
+  device: cpu
+  no_play: true
+env:
+  runtime_bundle: ???
+  groot_checkout: ???
+  scene_bundle: ???
+  seed: 29
+reward:
+  version: retained_batting_v1

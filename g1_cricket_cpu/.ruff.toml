@@ -1,0 +1,2 @@
+# Generated, hash-checked physics sources; rebuild through the exporter.
+exclude = ["src/**"]

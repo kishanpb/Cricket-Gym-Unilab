@@ -1,0 +1,658 @@
+{
+  "scope": "Installed CPU task adapter; physical qualification remains unchanged and incomplete",
+  "source_files": {
+    "runs/unilab_contact_telemetry/scripts/audit_g1_guard_contacts.py": {
+      "size_bytes": 15396,
+      "sha256": "52810cb060a4f0a7310fe3e9a664dff33dd51f0838f6e0d8928b5813327a1f5a"
+    },
+    "runs/unilab_contact_telemetry/scripts/evaluate_g1_guard_perturbations.py": {
+      "size_bytes": 4783,
+      "sha256": "7f8ec73a94834cd78f28485e2dedf10038ed035a2464101597fc8a5644c94f8f"
+    },
+    "runs/unilab_contact_telemetry/scripts/g1_cricket_delivery_trial.py": {
+      "size_bytes": 15613,
+      "sha256": "ec3c9b467226ec5c850978bc335d1ee9fb5e66372983bca86b2f295d66326b5d"
+    },
+    "runs/unilab_contact_telemetry/scripts/initialize_g1_guard_actor.py": {
+      "size_bytes": 7747,
+      "sha256": "f71998e95c9c0f364f7b76bf644588c16257bf5c3c9844e3748783335212c176"
+    },
+    "integrations/g1_dynamics/amp_bowling_env.py": {
+      "size_bytes": 11345,
+      "sha256": "38e32ab8f5fc724e00a9638314c9a51ccae0864b4d58a137a6c403600f3252ec"
+    },
+    "integrations/g1_dynamics/amp_bowling_probe.py": {
+      "size_bytes": 42908,
+      "sha256": "c390971d1e2191f1093ecbf505766c9676ff875875d1b3bbcf1d71d0baa90e00"
+    },
+    "integrations/g1_dynamics/amp_running_probe.py": {
+      "size_bytes": 14354,
+      "sha256": "151eeaec3910b35f498896d5e5306ef7f9f8bb0ae86c088f452f4c5a3159dbe6"
+    },
+    "integrations/g1_dynamics/arm_clearance.py": {
+      "size_bytes": 1733,
+      "sha256": "36869f9da1e619d9f36f92b04d0844ab01e7a9c545ca1dfa1a852853fb4233cc"
+    },
+    "integrations/g1_dynamics/bowling_support_clock.py": {
+      "size_bytes": 1348,
+      "sha256": "222436381a4f07b10cab9bbab9036b8c5cba81a445b3c9a99cf3576f3fc1b5e5"
+    },
+    "integrations/g1_dynamics/bowling_sweep_reference.py": {
+      "size_bytes": 8407,
+      "sha256": "36603f33958c0ebbc09e7182457ed4da625cf85f692dffdc3f8318cd6b704cf3"
+    },
+    "integrations/g1_dynamics/grip_feedback.py": {
+      "size_bytes": 1977,
+      "sha256": "5c0f8a18c4b641fee846a05cc28a466382e31e73d24f50f9793c22971cb262ed"
+    },
+    "integrations/g1_dynamics/groot_articulated_probe.py": {
+      "size_bytes": 17333,
+      "sha256": "9b8ad50069fa64d9b0f197b0292ed0248a1b7fde4022d4f9b39121dd435f3e01"
+    },
+    "integrations/g1_dynamics/groot_batting_env.py": {
+      "size_bytes": 10718,
+      "sha256": "30dfcb3482bc6acc2d19657791953b1d804da1ee402f7bc1502b42899c5c6d2a"
+    },
+    "integrations/g1_dynamics/groot_batting_evaluate.py": {
+      "size_bytes": 10862,
+      "sha256": "215f92253fc8f2e7af36d92f1cb1bf254c114adf95b4556624197ce0157c3129"
+    },
+    "integrations/g1_dynamics/groot_batting_ppo.py": {
+      "size_bytes": 19045,
+      "sha256": "d2104dc4bb41d766ecad929f1ec282334b530b8f4f14af1ecc5e339b0eeb9551"
+    },
+    "integrations/g1_dynamics/groot_batting_vector.py": {
+      "size_bytes": 3387,
+      "sha256": "eb4bdc3c10ac1dc0aa3e0df2b69e536b9dde852f03f783587bc4cc5b6126539f"
+    },
+    "integrations/g1_dynamics/groot_incoming_probe.py": {
+      "size_bytes": 26274,
+      "sha256": "22a24ac130981c1a5585be06b82656f973c7c7a3c1985de39ab7acd5064982bd"
+    },
+    "integrations/g1_dynamics/groot_swing_timing.py": {
+      "size_bytes": 2402,
+      "sha256": "bb53ed92a7047733dafd7a6708b6ae6918be57db613323aab8e1154773a5c83a"
+    },
+    "integrations/g1_dynamics/impact_grip.py": {
+      "size_bytes": 5229,
+      "sha256": "235d803a6257d7d7f61632407d5b07f82d6d62ef1bc7c41612a989693af66c09"
+    },
+    "integrations/g1_dynamics/impact_schedule.py": {
+      "size_bytes": 2730,
+      "sha256": "ce0c6d19f8f96373753636d344cf36fef92d239a5f87d8fbb18d53fe71f734a6"
+    },
+    "integrations/g1_dynamics/mjbatch_stepper.py": {
+      "size_bytes": 1661,
+      "sha256": "b7502649c254832ce66d9baac198867b1ff9cd672c84b621ef297999f7e3b95b"
+    },
+    "integrations/g1_dynamics/portable_batting.py": {
+      "size_bytes": 5300,
+      "sha256": "1f0a47eee9b97c87d1b0bdd9c6fa020d0db6fc34ffca2324e37fedae1515130a"
+    },
+    "integrations/g1_dynamics/scene_distribution.py": {
+      "size_bytes": 4923,
+      "sha256": "27c654b91ae6a4b6ddce90576a95ee52f2a0c2817d6da413472a1ecbad16ae28"
+    },
+    "integrations/g1_dynamics/twist2_cpu_probe.py": {
+      "size_bytes": 16778,
+      "sha256": "19e63b8cedf538a875ea4f0b6141c5872c364d4d9db3cd806e895fefe847b969"
+    },
+    "integrations/g1_dynamics/unilab_tasks/batting.py": {
+      "size_bytes": 3607,
+      "sha256": "9018083bb7dd8b9bbcb6751020d6dc965295c5da640a01d8261b3d54d849acdb"
+    },
+    "integrations/g1_dynamics/unilab_tasks/bowling.py": {
+      "size_bytes": 2468,
+      "sha256": "02e119ce737fce854751f0a2543660464904c591ccd7d5602e1b54252754374b"
+    },
+    "integrations/g1_dynamics/unirl_batting_env.py": {
+      "size_bytes": 1000,
+      "sha256": "a61be78d08c0027b7515178e46be8e88e4d5a3b28fd00ed0ec43fda46cabd1d8"
+    },
+    "integrations/g1_dynamics/unirl_cricket_env.py": {
+      "size_bytes": 3571,
+      "sha256": "b03337fb24c30a78a2a4b45e3181c3b2ed7019a3563a475860597a04bece2f61"
+    },
+    "runs/unilab_contact_telemetry/scripts/evaluate_g1_articulated_stance.py": {
+      "size_bytes": 13581,
+      "sha256": "ffb5053aa59a8686b59c25698b22652dc043987c876f7b5482aede0346d29718"
+    },
+    "runs/unilab_contact_telemetry/scripts/evaluate_g1_articulated_swing.py": {
+      "size_bytes": 19144,
+      "sha256": "69ffc11943cbc0051a733c9c4abb02a9c2f409bda0fe7375d58cbdce33f940b9"
+    },
+    "runs/unilab_contact_telemetry/scripts/evaluate_g1_incoming_swing.py": {
+      "size_bytes": 10182,
+      "sha256": "df7be068d3e22ab583320a3b6edbe3e9c669503dbe9bb4d3019b8dad6f48013f"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/approach.py": {
+      "size_bytes": 1360,
+      "sha256": "1d1918af4ab9ea7f80a28b6b20251fa8caeac4ee054b0d45fa58c60f0365199d"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/approach_feedback.py": {
+      "size_bytes": 3098,
+      "sha256": "e16a57e6a0493dce78238e99ac7bcccd312fb4a0fa5ecc7c6ad8b3b621d0dc8e"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/approach_learning.py": {
+      "size_bytes": 4500,
+      "sha256": "261bfe8f0c0d0acff6c7e32e8309449cddf526eb23338afa57027928c8c1f786"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/approach_tracking.py": {
+      "size_bytes": 6556,
+      "sha256": "249bb5f4bb16b278775efd39afc76cd724f46049fa52f0d177d1d90121053b72"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/articulated_batting.py": {
+      "size_bytes": 10763,
+      "sha256": "af1daf54cf192d73b91790bab18308c916b8a20ce3d7a1de15868f05bf958d8b"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/articulated_hands.py": {
+      "size_bytes": 8696,
+      "sha256": "e5d8ad5dccd50c3d5f011eda22b4603ce5584b63374555a9bf2b6cfb29961a38"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/articulated_learning.py": {
+      "size_bytes": 16588,
+      "sha256": "7bf6835958811a7f4efda3a807af51cbb1c2a5254568931836af83ed9eeb7f99"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/articulated_scene.py": {
+      "size_bytes": 3624,
+      "sha256": "61e73cf55d3e42e35796568449a016f7b8607ad40aefdc28e4d5a041aabfa3d9"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/articulated_swing.py": {
+      "size_bytes": 13324,
+      "sha256": "bace0e92ab914dc5506e84cf987ab51df540e4fca4f47ab51c0f91bd8fa7dfb5"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/batting_dynamics.py": {
+      "size_bytes": 6737,
+      "sha256": "3acefab339b9981e8971ba0c953da208d83981b708b1279e702a9cc73520b073"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/batting_projection.py": {
+      "size_bytes": 7498,
+      "sha256": "2b15885f61759a6b598bf6dfada72fd6215e5813027e1538ffe0ee1ee53621fa"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/bimanual.py": {
+      "size_bytes": 10831,
+      "sha256": "57ad5803011b869536153465b7212b5a4a4d8fb7a91f54d8c8d38f1aa4a84282"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/bimanual_contact.py": {
+      "size_bytes": 1442,
+      "sha256": "59d1f61f5e29a8b0968f1d2db3809fc2526885ee8ba690d214df83188b141b4b"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/boundary_batting.py": {
+      "size_bytes": 9420,
+      "sha256": "4e6d54ce3b2918bcfe2191e4c0889905487851bf840457d0582d87e20db1b096"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/bowling.py": {
+      "size_bytes": 11527,
+      "sha256": "65da1d7a0a4f4cf16160bb7669344509a082d895abfb28f63c8f703fd3411da6"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/coordinated_learning.py": {
+      "size_bytes": 10675,
+      "sha256": "9ca4c17c192d1354a783904d94517deb533e16d0919db0c1d40696c5fea80314"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/delivery.py": {
+      "size_bytes": 3999,
+      "sha256": "a1a82ea56f4bb0add72b4a3fe96a603e5378c749f7871cac246be4566f1e1a46"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/holder.py": {
+      "size_bytes": 2047,
+      "sha256": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/impact.py": {
+      "size_bytes": 1186,
+      "sha256": "c4cdf46ea64515324292cfe2947be8164c5de4925f67c6763e459fe2632a3a17"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/incoming_swing.py": {
+      "size_bytes": 14745,
+      "sha256": "ebe12ed073ac2c522dc889edc003d8ae69143e48cbd8b39c5e5bc514e74ea86f"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/inertial_feedforward.py": {
+      "size_bytes": 2471,
+      "sha256": "d9c7e3b8b3021518813e37e4cdd3b017bd8d1fbf2f75658169a85f6916b00dab"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/leg_locomotion.py": {
+      "size_bytes": 3234,
+      "sha256": "31926da6d74d8c9e0991f205e234e19c04d4dc5c690cd5c89bbceb53dfbdfd33"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/loaded_balance.py": {
+      "size_bytes": 5888,
+      "sha256": "bb79ed18a427436257ec095c7eb7261b54aae3b7754ccdf350e50d4bb962f779"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/moving_delivery.py": {
+      "size_bytes": 4754,
+      "sha256": "4f252e5d6a07d97c9cb6808db1142f99e0710f0c798168809a4c49fb6be5ec1d"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/one_pitch_delivery.py": {
+      "size_bytes": 1300,
+      "sha256": "51842f13251c1dca98969283efa7b2913a0ed765b3f431a48b43ea590f32a65e"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/palm_grip.py": {
+      "size_bytes": 3981,
+      "sha256": "37a8d92ea7802a0701398573020614599bed7fbbe1f9b5c15d223c25ba687a40"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py": {
+      "size_bytes": 1337,
+      "sha256": "304bffb9013bfec2d8ac57d805f2ce8156421b8024bda316f373f856fa61830f"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/prior.py": {
+      "size_bytes": 7329,
+      "sha256": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/reference_dynamics.py": {
+      "size_bytes": 9334,
+      "sha256": "da2e2c66400d7b462620058dd9ca349251cde68a4385df58cb9d41e27fcc5d12"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/residual.py": {
+      "size_bytes": 6822,
+      "sha256": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/running.py": {
+      "size_bytes": 16080,
+      "sha256": "f0f6fba1a11fe4e3f340c11e7c3ff06c21bf5f88da6656b7f0695932c6025821"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/running_momentum.py": {
+      "size_bytes": 3223,
+      "sha256": "6e421bc7b1350aec8648b0a0b76cdbab613802425e15a145fd24bfffbd64eb40"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/scene.py": {
+      "size_bytes": 6566,
+      "sha256": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/shared_bat_pose.py": {
+      "size_bytes": 8729,
+      "sha256": "17836b769452e2c0e515e75cc07001eeee5516c84e441d7b6ab2c0eb230fc2d1"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/strike_timing.py": {
+      "size_bytes": 2323,
+      "sha256": "0dde88083b2ed40defb43a5ddf43f2d08764a9752cc93c366bab76dcef0bebfd"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/support_allocation.py": {
+      "size_bytes": 3732,
+      "sha256": "14eb63ba06f11cffa63a07982f2e93443abdd99239abda3912eb0b61767deef3"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/task.py": {
+      "size_bytes": 6279,
+      "sha256": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/tasks/manipulation/g1_cricket/tracking.py": {
+      "size_bytes": 9153,
+      "sha256": "d1e903324177aeebefeba1f3253423fbe79d00b48c69e44dc3c9de00a93ab75a"
+    },
+    "runs/unilab_contact_telemetry/src/unilab/training/g1_incoming.py": {
+      "size_bytes": 2765,
+      "sha256": "4e6fa3483eaaa6ef2237c6513af1f4bd01c594d71d0f119ccd250e66e0014605"
+    },
+    "integrations/g1_dynamics/unilab_tasks/conf/config.yaml": {
+      "size_bytes": 215,
+      "sha256": "c13d124c59db9c743f362f2badd2ecdc50e64ab5ea03a7d8aa2a2369df57f405"
+    },
+    "integrations/g1_dynamics/unilab_tasks/conf/task/g1_cricket_residual_cpu/mujoco.yaml": {
+      "size_bytes": 603,
+      "sha256": "fac24b064b3fb3b8b5b8fd241d288c04ba7dc68a2421072243f5870425029711"
+    },
+    "integrations/g1_dynamics/unilab_tasks/conf/task/g1_cricket_bowling_cpu/mujoco.yaml": {
+      "size_bytes": 215,
+      "sha256": "a7340a2248bd7844818603018c70cf338701db36a69fc53981c8ea8b0d028c7e"
+    },
+    "integrations/g1_dynamics/unilab_distribution.py": {
+      "size_bytes": 7457,
+      "sha256": "e2b39f61f4f287e48e042b6f94e375b112ae01dfb4578a18e671bb0b43d3507c"
+    },
+    "integrations/g1_dynamics/unilab_distribution_readme.md": {
+      "size_bytes": 2757,
+      "sha256": "ab19f1cfa91d9622f7e7acec1ceae51b4d4e60beb99b388fee4d4f5908d04054"
+    },
+    "release/g1_batting_runtime/pyproject.toml": {
+      "size_bytes": 833,
+      "sha256": "e1f926864c25dd1f898c3e9fea963646ae535eabc755c0765090795bf92a7c71"
+    },
+    "runs/unilab_contact_telemetry/LICENSE": {
+      "size_bytes": 10774,
+      "sha256": "2191d05c6ee7c145480916b745bd020484adb61653be943c43cff10bc22927a1"
+    }
+  },
+  "files": {
+    "LICENSE": {
+      "size_bytes": 10774,
+      "sha256": "2191d05c6ee7c145480916b745bd020484adb61653be943c43cff10bc22927a1"
+    },
+    "README.md": {
+      "size_bytes": 2757,
+      "sha256": "ab19f1cfa91d9622f7e7acec1ceae51b4d4e60beb99b388fee4d4f5908d04054"
+    },
+    "pyproject.toml": {
+      "size_bytes": 765,
+      "sha256": "ddeb48042e2f29e7a5dba4efd27a9a9a55778f852fbfd284364b9f6d3bc195a9"
+    },
+    "src/g1_cricket_cpu/__init__.py": {
+      "size_bytes": 127,
+      "sha256": "73c167711300306bfe9601128780205b52ce72bf76bed440be08b354e2a0bb24"
+    },
+    "src/g1_cricket_cpu/conf/config.yaml": {
+      "size_bytes": 215,
+      "sha256": "c13d124c59db9c743f362f2badd2ecdc50e64ab5ea03a7d8aa2a2369df57f405"
+    },
+    "src/g1_cricket_cpu/conf/task/g1_cricket_bowling_cpu/mujoco.yaml": {
+      "size_bytes": 215,
+      "sha256": "a7340a2248bd7844818603018c70cf338701db36a69fc53981c8ea8b0d028c7e"
+    },
+    "src/g1_cricket_cpu/conf/task/g1_cricket_residual_cpu/mujoco.yaml": {
+      "size_bytes": 603,
+      "sha256": "fac24b064b3fb3b8b5b8fd241d288c04ba7dc68a2421072243f5870425029711"
+    },
+    "src/g1_cricket_cpu/dynamics/__init__.py": {
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "src/g1_cricket_cpu/dynamics/amp_bowling_env.py": {
+      "size_bytes": 10545,
+      "sha256": "ecd9c0384c1370f7d54850987b374c3afecd861cb2b4c00c21b75ca6835e22ef"
+    },
+    "src/g1_cricket_cpu/dynamics/amp_bowling_probe.py": {
+      "size_bytes": 37847,
+      "sha256": "d2b3f4c57887ba4a3c9cce53fce733df8e00a56e706af331b6f7af8865d9c00f"
+    },
+    "src/g1_cricket_cpu/dynamics/amp_running_probe.py": {
+      "size_bytes": 12431,
+      "sha256": "e295915690b7759a2d3449ab85a00bbbf4e0a2c3391398fb524f1d36a5e49ed2"
+    },
+    "src/g1_cricket_cpu/dynamics/arm_clearance.py": {
+      "size_bytes": 1502,
+      "sha256": "0dece9ba1e544615620743675f0a1c67a9ce07727068ccdc59fe52af221e0f38"
+    },
+    "src/g1_cricket_cpu/dynamics/bowling_support_clock.py": {
+      "size_bytes": 1222,
+      "sha256": "7e32e11e7738955894ed4f1c45ef76e90bdc09ed874a07f323f6f41ca65b2028"
+    },
+    "src/g1_cricket_cpu/dynamics/bowling_sweep_reference.py": {
+      "size_bytes": 7659,
+      "sha256": "8544a062ca0d7c118668d81dbe49acbb22844d39e804c8ea13db57ac581a7fe5"
+    },
+    "src/g1_cricket_cpu/dynamics/grip_feedback.py": {
+      "size_bytes": 1824,
+      "sha256": "8bbec0084c35c6d7d3e74f14d1f7f542c538f254ea9f72b37ae1103ddcfbcef2"
+    },
+    "src/g1_cricket_cpu/dynamics/groot_articulated_probe.py": {
+      "size_bytes": 14789,
+      "sha256": "e2b3eee150c468d69745cfaca4c22e7b2df5408939363bd6f7600d87cdb8b64c"
+    },
+    "src/g1_cricket_cpu/dynamics/groot_batting_env.py": {
+      "size_bytes": 9345,
+      "sha256": "a3f9afa660f41eaa53a7990db44c177cb64ca3e388cbba968014f09f616b6998"
+    },
+    "src/g1_cricket_cpu/dynamics/groot_batting_evaluate.py": {
+      "size_bytes": 9525,
+      "sha256": "3aaaa6bcf5ad0d4e40d8ef0ab61a3fe14fcbeb4e2337a453438883be5d842c86"
+    },
+    "src/g1_cricket_cpu/dynamics/groot_batting_ppo.py": {
+      "size_bytes": 15873,
+      "sha256": "2d9715a8190bf4d6a33a537d8f5523f87fae9d66544200ddac197dc0f0646243"
+    },
+    "src/g1_cricket_cpu/dynamics/groot_batting_vector.py": {
+      "size_bytes": 2871,
+      "sha256": "3792534b9dfcf9d0d58452eb0e414bf1cd6fc9698eaff1a11ea9db9d8d3d64dc"
+    },
+    "src/g1_cricket_cpu/dynamics/groot_incoming_probe.py": {
+      "size_bytes": 22407,
+      "sha256": "94783a9460aa413e38a762adb4dc9a5a613abd93e37fad6613593bf2659beb6e"
+    },
+    "src/g1_cricket_cpu/dynamics/groot_swing_timing.py": {
+      "size_bytes": 2124,
+      "sha256": "5e1b2cee5c7c52a8da3829d559b19ab110e29ce6adde8886a657193411c2c316"
+    },
+    "src/g1_cricket_cpu/dynamics/impact_grip.py": {
+      "size_bytes": 4487,
+      "sha256": "bbc1f3bc3accb756b6b9a70c35e15654fd355ba2916c1fe3a45a825babb02916"
+    },
+    "src/g1_cricket_cpu/dynamics/impact_schedule.py": {
+      "size_bytes": 2522,
+      "sha256": "0955c398930dbd7158c60a3f16f6f89b554f61b125fb1e3cf514974da1e1cba8"
+    },
+    "src/g1_cricket_cpu/dynamics/mjbatch_stepper.py": {
+      "size_bytes": 1616,
+      "sha256": "c00c2fb40c9dac1666ce4c20fb6f031329f52ab8bc9fc65d66e9a64ccbd71da5"
+    },
+    "src/g1_cricket_cpu/dynamics/portable_batting.py": {
+      "size_bytes": 5091,
+      "sha256": "feca97166c47fe067917975cc165f167baba94289fdc9b12bd5e6e8128751018"
+    },
+    "src/g1_cricket_cpu/dynamics/scene_distribution.py": {
+      "size_bytes": 4781,
+      "sha256": "5f25324bbba17d0b1a9bb15b3c219f1f394052e7a64d6cda9131ba343d17ebcd"
+    },
+    "src/g1_cricket_cpu/dynamics/twist2_cpu_probe.py": {
+      "size_bytes": 14877,
+      "sha256": "2475e16641ed0a8d6ba51aa3790dcc21d053390878299fb99331f8c641c5a4a7"
+    },
+    "src/g1_cricket_cpu/dynamics/unilab_tasks/__init__.py": {
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "src/g1_cricket_cpu/dynamics/unilab_tasks/batting.py": {
+      "size_bytes": 3535,
+      "sha256": "8eeb025e08fd3f6caf2bf20d0a6fd54b566d43f686aa84f5db0bdf5609f53ac6"
+    },
+    "src/g1_cricket_cpu/dynamics/unilab_tasks/bowling.py": {
+      "size_bytes": 2388,
+      "sha256": "d5bb2ed618594885e8dcb65e9b56d59c7660d971b87d702529baedce6b8eeb9a"
+    },
+    "src/g1_cricket_cpu/dynamics/unirl_batting_env.py": {
+      "size_bytes": 995,
+      "sha256": "85c4dc2f99a88eaa58ce0fafbd662cecf7c69ae4266acadee6551878939b8c18"
+    },
+    "src/g1_cricket_cpu/dynamics/unirl_cricket_env.py": {
+      "size_bytes": 3442,
+      "sha256": "f74d5739a2c58cfd441c169fcdfb53b0910246563a8b72ea7d27dacdf17f4a47"
+    },
+    "src/g1_cricket_cpu/physics/__init__.py": {
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "src/g1_cricket_cpu/physics/approach.py": {
+      "size_bytes": 1116,
+      "sha256": "c8df1641232c5e23ccad16438d08905727cfac7420cdea8382a82836fe44e9b3"
+    },
+    "src/g1_cricket_cpu/physics/approach_feedback.py": {
+      "size_bytes": 3049,
+      "sha256": "c3b5f9998fa80bc61f1cce96bf090ac2369fe07321073c0991492c63f53361f9"
+    },
+    "src/g1_cricket_cpu/physics/approach_learning.py": {
+      "size_bytes": 4060,
+      "sha256": "794f359c7c519b8075f2cc90d543cd890512029fce31f4e1ca6637008cea3539"
+    },
+    "src/g1_cricket_cpu/physics/approach_tracking.py": {
+      "size_bytes": 6117,
+      "sha256": "4465ea362a02ba058fe54c55f21490f65789c8b6063eea28e6de74e0f19d6807"
+    },
+    "src/g1_cricket_cpu/physics/articulated_batting.py": {
+      "size_bytes": 9666,
+      "sha256": "a6648c0599224cbc9db911eb84cbf084775dbaab0cd57902c48845ce20d2a649"
+    },
+    "src/g1_cricket_cpu/physics/articulated_hands.py": {
+      "size_bytes": 7730,
+      "sha256": "075f5b517eb44f1480fcd0d3b9360322fc004b211d3f204b37180ba5d8140fe6"
+    },
+    "src/g1_cricket_cpu/physics/articulated_learning.py": {
+      "size_bytes": 14739,
+      "sha256": "4dfa45658506ef20f134cf5d99a0966144102e8a00c2450913344f5f46c90e06"
+    },
+    "src/g1_cricket_cpu/physics/articulated_scene.py": {
+      "size_bytes": 3313,
+      "sha256": "d1f09aaa1e7d10a2e89fc96a867abd3f02d7a0f6ed037266e874d83f43ae3752"
+    },
+    "src/g1_cricket_cpu/physics/articulated_swing.py": {
+      "size_bytes": 11895,
+      "sha256": "b854159f097e24d0a066c6771be9bb84fdb308c843a20b7657f13128428e4d19"
+    },
+    "src/g1_cricket_cpu/physics/batting_dynamics.py": {
+      "size_bytes": 5994,
+      "sha256": "4fa4f0b24a7c36d57d28da0bc4e483c6be62c56d6e0f1e7dcfcf129cd632f505"
+    },
+    "src/g1_cricket_cpu/physics/batting_projection.py": {
+      "size_bytes": 6737,
+      "sha256": "613c78636c9a42398e85dfa122c9edf62ecba025aa3b8a364bf1ff68c19d10af"
+    },
+    "src/g1_cricket_cpu/physics/bimanual.py": {
+      "size_bytes": 8838,
+      "sha256": "9264af1685a4f7f4b1e6c5c4f6eabecb58388621b72c30bab9d3cffff32a60c5"
+    },
+    "src/g1_cricket_cpu/physics/bimanual_contact.py": {
+      "size_bytes": 1436,
+      "sha256": "324e284c0ec8f1506dc7fb062c7b061dbc1b8b37b81b7974b3f98553c545f5ed"
+    },
+    "src/g1_cricket_cpu/physics/boundary_batting.py": {
+      "size_bytes": 8744,
+      "sha256": "4b7c8470b0a40032c46a967aa589a57aaba5eb8a01c1ceca985ce06f26d3d43b"
+    },
+    "src/g1_cricket_cpu/physics/bowling.py": {
+      "size_bytes": 10502,
+      "sha256": "4cb6f04d8b72c7cdddb44a451a7cd14111b6de30ae4073212c1f0da5f35998bc"
+    },
+    "src/g1_cricket_cpu/physics/coordinated_learning.py": {
+      "size_bytes": 10025,
+      "sha256": "7482515b8a624dee1bd620b7fb22727d7a69c063baa5e737982df8872998a2aa"
+    },
+    "src/g1_cricket_cpu/physics/delivery.py": {
+      "size_bytes": 3094,
+      "sha256": "e469bd54a15124fe6526e782c54362433d3629cb9c55479bcc2cbd3175783a22"
+    },
+    "src/g1_cricket_cpu/physics/holder.py": {
+      "size_bytes": 1897,
+      "sha256": "bd76c36a582436244a38d455f93b83794f8380c02424c542ad60a17d04d2dccd"
+    },
+    "src/g1_cricket_cpu/physics/impact.py": {
+      "size_bytes": 1088,
+      "sha256": "8ecd7b0cfa7ed940438092636a9e854f02c2e0fe69fcf3a5d578df99f7aa67c3"
+    },
+    "src/g1_cricket_cpu/physics/incoming_swing.py": {
+      "size_bytes": 13110,
+      "sha256": "2b21297c64e0c5f9ca548b4ecf76f76564437acff0c89ceca8f0c9932f8c1a8c"
+    },
+    "src/g1_cricket_cpu/physics/inertial_feedforward.py": {
+      "size_bytes": 2148,
+      "sha256": "8e0afa0031343af00483fe9299c3ae249a882a96acb5a5b3d62ed6bf234c70bc"
+    },
+    "src/g1_cricket_cpu/physics/leg_locomotion.py": {
+      "size_bytes": 3004,
+      "sha256": "f973e03d3e578cc803e31b8f9d4292b1aa5a7e48dd5fce091c8404756645484b"
+    },
+    "src/g1_cricket_cpu/physics/loaded_balance.py": {
+      "size_bytes": 5723,
+      "sha256": "ba1f4ffa310dd94fd754c2d00d5c253d078da3b87dfbe7e19391d788018d1f02"
+    },
+    "src/g1_cricket_cpu/physics/moving_delivery.py": {
+      "size_bytes": 4359,
+      "sha256": "2438710ac91970cd2fd6f4f3faeaa1a2c02b441178d3818aab3828dec22cd176"
+    },
+    "src/g1_cricket_cpu/physics/one_pitch_delivery.py": {
+      "size_bytes": 1192,
+      "sha256": "4abcf8dc9333ff6107e064dbab1b9aafe7c4edaf1097f5bd582b343bc4efdbf1"
+    },
+    "src/g1_cricket_cpu/physics/palm_grip.py": {
+      "size_bytes": 3726,
+      "sha256": "500cd176a30214a1b6b6ac5bd4dc5896439d8499f6ecef76ac7788a0315ae2f4"
+    },
+    "src/g1_cricket_cpu/physics/pitch_contact.py": {
+      "size_bytes": 1072,
+      "sha256": "262b4e6ccf30fc4511bea8cd527bdf3c0f07f980c8d4728ce20915568213fdb1"
+    },
+    "src/g1_cricket_cpu/physics/prior.py": {
+      "size_bytes": 6387,
+      "sha256": "fae72e57860602bea94983bb6589d4c57741dd6dea7553aa2d21c7d7dcd45316"
+    },
+    "src/g1_cricket_cpu/physics/reference_dynamics.py": {
+      "size_bytes": 7993,
+      "sha256": "bc0a3e851c955fbca445f04ddffd3ea303fc1963eeff5b06a6b337276d0284ad"
+    },
+    "src/g1_cricket_cpu/physics/residual.py": {
+      "size_bytes": 6414,
+      "sha256": "a7cc9e4dfdc63b9d2fec0e5d7d42d8323e6b6a6f1e5ec3395654f04aba13bdae"
+    },
+    "src/g1_cricket_cpu/physics/running.py": {
+      "size_bytes": 13728,
+      "sha256": "ebf3eca183a58a3289bc1b711daf83bdfc52bb2255d84433ffe72fad3b0d4404"
+    },
+    "src/g1_cricket_cpu/physics/running_momentum.py": {
+      "size_bytes": 3193,
+      "sha256": "2e2dcfdd70a965fa2322b962867bfd50aa8b2bec1352712eb549d96667844ca1"
+    },
+    "src/g1_cricket_cpu/physics/scene.py": {
+      "size_bytes": 5258,
+      "sha256": "693da15df96077213df4c7850f86e08b2d65d7c5ee5766ed7a9a4d9663539909"
+    },
+    "src/g1_cricket_cpu/physics/shared_bat_pose.py": {
+      "size_bytes": 7884,
+      "sha256": "edcac8d6e7c86c4b9ca9c146d46ceb6e622bf6fdb7ea9a27ea156b8c051d4448"
+    },
+    "src/g1_cricket_cpu/physics/strike_timing.py": {
+      "size_bytes": 2138,
+      "sha256": "19295e54bd3a570bc915f2bd606a933389864c7789012fd5e59727166f02262c"
+    },
+    "src/g1_cricket_cpu/physics/support_allocation.py": {
+      "size_bytes": 3487,
+      "sha256": "ddf20586ed779530c9428ad8af50c6eb6a56e9826d5ae1500b22c1ba6712f7a3"
+    },
+    "src/g1_cricket_cpu/physics/task.py": {
+      "size_bytes": 6073,
+      "sha256": "688330ede35c2633bb62fd266b85677d429ec13e89ca8ecc0554104754e78b10"
+    },
+    "src/g1_cricket_cpu/physics/tracking.py": {
+      "size_bytes": 8697,
+      "sha256": "0be13a5c636f34fcfe071f376fd5651a5a4901ea38b4e6fe78a37dfb4eb80c52"
+    },
+    "src/g1_cricket_cpu/scripts/__init__.py": {
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "src/g1_cricket_cpu/scripts/audit_g1_guard_contacts.py": {
+      "size_bytes": 13732,
+      "sha256": "f2eef7897e4c9760b7decad12408edc712bdbb73bc1d8b2d342fca25045543a3"
+    },
+    "src/g1_cricket_cpu/scripts/evaluate_g1_articulated_stance.py": {
+      "size_bytes": 11952,
+      "sha256": "6dec638b95a5f7ac108cacbef80574f27ced346ac92119561fbbcb985244399e"
+    },
+    "src/g1_cricket_cpu/scripts/evaluate_g1_articulated_swing.py": {
+      "size_bytes": 16848,
+      "sha256": "87f22c755720d2cef476e965890fa4c1f2578f4c67e229125c6717ef3bd364ac"
+    },
+    "src/g1_cricket_cpu/scripts/evaluate_g1_guard_perturbations.py": {
+      "size_bytes": 4359,
+      "sha256": "9f2de52b15c6c5ff503f5b52a4395411f8cf1fa637727968c00f6fb55b846822"
+    },
+    "src/g1_cricket_cpu/scripts/evaluate_g1_incoming_swing.py": {
+      "size_bytes": 9207,
+      "sha256": "0abb84d1c2cf5544830fafcad5f216314a245c3e7bee3232a8c4241f6346bdef"
+    },
+    "src/g1_cricket_cpu/scripts/g1_cricket_delivery_trial.py": {
+      "size_bytes": 13957,
+      "sha256": "5af3ee40527d8d8db97dfaefcc23c739daf8d35860a0a9a914234e4eaf655524"
+    },
+    "src/g1_cricket_cpu/scripts/initialize_g1_guard_actor.py": {
+      "size_bytes": 7109,
+      "sha256": "641378ea4771099aac0541c1f1fde7e94ec325556ba2241fc6ed600c2c1a053c"
+    },
+    "src/g1_cricket_cpu/training/__init__.py": {
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "src/g1_cricket_cpu/training/g1_incoming.py": {
+      "size_bytes": 2374,
+      "sha256": "77505a725b1e5d95308b8dbe0935938367d892adf1090a3ce8864fad36a0b78d"
+    }
+  },
+  "source_module_count": 70,
+  "module_relocations": {
+    "integrations.g1_dynamics": "g1_cricket_cpu.dynamics",
+    "unilab.tasks.manipulation.g1_cricket": "g1_cricket_cpu.physics",
+    "unilab.training.g1_incoming": "g1_cricket_cpu.training.g1_incoming",
+    "scripts": "g1_cricket_cpu.scripts",
+    "audit_g1_guard_contacts": "g1_cricket_cpu.scripts.audit_g1_guard_contacts",
+    "evaluate_g1_guard_perturbations": "g1_cricket_cpu.scripts.evaluate_g1_guard_perturbations",
+    "g1_cricket_delivery_trial": "g1_cricket_cpu.scripts.g1_cricket_delivery_trial",
+    "initialize_g1_guard_actor": "g1_cricket_cpu.scripts.initialize_g1_guard_actor"
+  },
+  "private_helpers_register_legacy_tasks": false,
+  "controllers_included": false,
+  "meshes_included": false,
+  "promotion_allowed": false
+}
