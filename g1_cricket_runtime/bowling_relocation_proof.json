@@ -1,0 +1,42 @@
+{
+  "scope": "Complete relocated native bowling cohort; fresh locked environment and fresh pinned controllers. Not new training, legal bowling or hardware-limit evidence.",
+  "runtime_manifest": {
+    "size_bytes": 44882,
+    "sha256": "8d232f5c5f956dfda8b7fb430769a4683d3c177ad5c085723ea6b7d17d97f472"
+  },
+  "summary": {
+    "size_bytes": 60051,
+    "sha256": "2ce51e839ec338822147d14208ccbc1705e27edfcdfe4bd797dd9a61b2095a82"
+  },
+  "runtime_source": {
+    "size_bytes": 1289262,
+    "sha256": "cccea53725acfd9aede32c40c0af8db9ed32f18d453a0d11226d366100c92e05"
+  },
+  "comparisons": {
+    "overarm": {
+      "parent_summary": {
+        "size_bytes": 91178,
+        "sha256": "0ff0f70a5fdde6a341fe3c619f3c704a7dd6940d3e35797505a9e9f52c085293"
+      },
+      "cases": 4,
+      "arrays_exact": 56,
+      "physics_samples": 768000,
+      "result_rows_exact": true
+    },
+    "underarm": {
+      "parent_summary": {
+        "size_bytes": 92909,
+        "sha256": "2154beb9fd13fe58eb82d3c50e485b6a6ffac177c450d26614d5d0674da785f5"
+      },
+      "cases": 4,
+      "arrays_exact": 56,
+      "physics_samples": 768000,
+      "result_rows_exact": true
+    }
+  },
+  "imported_source_count": 138,
+  "cases": 8,
+  "arrays_exact": 112,
+  "physics_samples": 1536000,
+  "promotion_allowed": false
+}

@@ -1,0 +1,477 @@
+import abc
+import warnings
+from collections.abc import Callable, Mapping
+from dataclasses import dataclass
+from os import PathLike
+from typing import Any, Optional
+
+import gymnasium as gym
+import numpy as np
+from unisim.backend.base import BackendPlayRenderPlan, CameraCfg, DebugOverlayGetter
+
+from .scene import SceneCfg
+
+OnPlaybackFrameFn = Callable[[int, np.ndarray], "np.ndarray | None"]
+
+
+@dataclass(frozen=True)
+class EnvPlayCapabilities:
+    """Env-facing play/render capabilities consumed by training entrypoints."""
+
+    supports_native_interactive_renderer: bool = False
+    supports_physics_state_playback: bool = False
+    supports_native_video_capture: bool = False
+    supports_debug_overlay: bool = False
+    supports_interactive_debug_overlay: bool = False
+
+
+@dataclass
+class EnvCfg:
+    """
+    Config for the environment
+
+    """
+
+    scene: SceneCfg | None = None
+    sim_dt: float = 0.01
+    max_episode_seconds: Optional[float] = None
+    ctrl_dt: float = 0.01
+    render_spacing: float = 1.0
+    render_offset_mode: str = "grid"
+    drake_backend_mode: str = "batch"
+    drake_nthread: int = 0
+    # SuperDex native robots are resolved through the local asset hub registry.
+    # 0 selects affinity-aware native C++ scene batching.
+    superdex_num_workers: int = 0
+    # "batch" steps scenes on native SceneBatchExecutor workers; "serial" steps
+    # every scene on the environment thread for native debugger sessions.
+    superdex_execution_mode: str = "batch"
+    superdex_assets_root: Optional[str] = None
+    superdex_effort_limits: Optional[list[float]] = None
+    superdex_allow_contact_approximation: bool = False
+    motrix_max_iterations: Optional[int] = None
+    post_step_forward_sensor: bool = False
+    mujoco_observe_substeps: bool = False
+    mujoco_substep_engine: str = "rollout"
+    mujoco_group_identical_models: bool = False
+    mujoco_compact_substeps: bool = False
+    adaptive_chunk_size: bool = True
+    chunk_size: Optional[int] = None
+    # Explicit CPU block owned by this env's process (Linux affinity only).
+    # ``cpu_ids[i]`` pins MuJoCo BatchEnvPool worker thread ``i`` to one CPU;
+    # env construction also confines the owning process to the same block and
+    # sizes Numba's parallel pool to ``len(cpu_ids)`` so host-side post-step
+    # compute stays inside the rank's partition. ``None`` keeps the default
+    # OS scheduling behavior.
+    cpu_ids: Optional[list[int]] = None
+    # ``mjwarp`` owns contact/constraint storage independently from MuJoCo.
+    # Keep its capacity knobs explicit in the task owner configuration so a
+    # device profile never relies on an implicit backend-wide allocation size.
+    mjwarp_nconmax: Optional[int] = None
+    mjwarp_njmax: Optional[int] = None
+    # ``newton`` owns MuJoCo-Warp 3.11 capacity and requires explicit CUDA
+    # placement; the process binder supplies the rank-local device when unset.
+    newton_device: Optional[str] = None
+    newton_nconmax: Optional[int] = None
+    newton_njmax: Optional[int] = None
+    newton_capacity_check_steps: int = 1
+    # ``isaacgym`` runs physics in a Python 3.8 worker subprocess (Preview 4 is
+    # EOL and incompatible with the main environment). ``None`` keeps the
+    # backend defaults (device 0, generous handshake/step timeout).
+    isaacgym_device_id: Optional[int] = None
+    isaacgym_worker_timeout_s: Optional[float] = None
+    # ``genesis`` owns one process-wide GPU session.  The explicit device id
+    # must be selected before ``gs.init`` so each data-parallel rank gets its
+    # own simulator device; ``None`` keeps Genesis' current/default device.
+    genesis_device_id: Optional[int] = None
+    # ``genesis`` drops the MJCF global <option> block at import (REPORT #1372
+    # §3.3), so integrator / constraint solver / friction cone / solver
+    # iterations must be explicit owner fields. ``None`` keeps the Genesis
+    # defaults; the backend validates the spellings fail-closed.
+    genesis_integrator: Optional[str] = None
+    genesis_constraint_solver: Optional[str] = None
+    genesis_friction_cone: Optional[str] = None
+    genesis_solver_iterations: Optional[int] = None
+    # ``isaacsim`` runs IsaacLab/PhysX in a dedicated Python 3.11 worker.
+    # Keep its knobs separate from IsaacGym because the two runtimes have
+    # incompatible interpreters and installation roots.  The render intent is
+    # populated only by play/eval config materialization; training leaves it
+    # unset so the worker stays on the cheap headless experience.
+    isaacsim_device_id: Optional[int] = None
+    isaacsim_worker_timeout_s: Optional[float] = None
+    isaacsim_render_mode: Optional[str] = None
+    isaacsim_render_width: int = 1280
+    isaacsim_render_height: int = 720
+
+    @property
+    def max_episode_steps(self) -> Optional[int]:
+        """
+        return the max episode steps
+        """
+        if self.max_episode_seconds is None:
+            return None
+        return int(self.max_episode_seconds / self.ctrl_dt)
+
+    @property
+    def sim_substeps(self) -> int:
+        """
+        return the number of simulation steps per control step
+        """
+        return int(round(self.ctrl_dt / self.sim_dt))
+
+    def validate(self):
+        """
+        validate the config
+        """
+        if self.sim_dt > self.ctrl_dt:
+            raise ValueError("sim_dt must be less than or equal to ctrl_dt")
+        if self.mujoco_substep_engine not in ("rollout", "mjbatch"):
+            raise ValueError("mujoco_substep_engine must be 'rollout' or 'mjbatch'")
+        if self.mujoco_substep_engine == "mjbatch" and not self.mujoco_observe_substeps:
+            raise ValueError("mjbatch requires mujoco_observe_substeps")
+        if self.mujoco_group_identical_models and self.mujoco_substep_engine != "mjbatch":
+            raise ValueError("identical-model grouping requires mjbatch")
+        if self.mujoco_compact_substeps and self.mujoco_substep_engine != "mjbatch":
+            raise ValueError("compact substeps require mjbatch")
+        if (
+            isinstance(self.superdex_num_workers, bool)
+            or not isinstance(self.superdex_num_workers, int)
+            or self.superdex_num_workers < 0
+        ):
+            raise ValueError("superdex_num_workers must be an integer >= 0")
+        if self.superdex_execution_mode not in ("batch", "serial"):
+            raise ValueError("superdex_execution_mode must be 'batch' or 'serial'")
+        if self.superdex_assets_root is not None and (
+            not isinstance(self.superdex_assets_root, str) or not self.superdex_assets_root.strip()
+        ):
+            raise ValueError("superdex_assets_root must be a non-empty string or None")
+        if self.superdex_effort_limits is not None:
+            if not isinstance(self.superdex_effort_limits, list) or not self.superdex_effort_limits:
+                raise ValueError("superdex_effort_limits must be a non-empty list or None")
+            if any(
+                isinstance(value, bool)
+                or not isinstance(value, (int, float))
+                or not np.isfinite(value)
+                or value <= 0
+                for value in self.superdex_effort_limits
+            ):
+                raise ValueError("superdex_effort_limits must contain finite positive numbers")
+        if not isinstance(self.superdex_allow_contact_approximation, bool):
+            raise ValueError("superdex_allow_contact_approximation must be bool")
+        for name, value in (
+            ("mjwarp_nconmax", self.mjwarp_nconmax),
+            ("mjwarp_njmax", self.mjwarp_njmax),
+            ("newton_nconmax", self.newton_nconmax),
+            ("newton_njmax", self.newton_njmax),
+        ):
+            if value is not None and (
+                isinstance(value, bool) or not isinstance(value, int) or value <= 0
+            ):
+                raise ValueError(f"{name} must be a positive integer or None, got {value!r}")
+        if self.newton_device is not None and (
+            not isinstance(self.newton_device, str) or not self.newton_device.strip()
+        ):
+            raise ValueError(
+                "newton_device must be a non-empty CUDA device string or None, "
+                f"got {self.newton_device!r}"
+            )
+        if (
+            isinstance(self.newton_capacity_check_steps, bool)
+            or not isinstance(self.newton_capacity_check_steps, int)
+            or self.newton_capacity_check_steps <= 0
+        ):
+            raise ValueError(
+                "newton_capacity_check_steps must be a positive integer, "
+                f"got {self.newton_capacity_check_steps!r}"
+            )
+        if self.isaacgym_device_id is not None and (
+            isinstance(self.isaacgym_device_id, bool)
+            or not isinstance(self.isaacgym_device_id, int)
+            or self.isaacgym_device_id < 0
+        ):
+            raise ValueError(
+                "isaacgym_device_id must be a non-negative integer or None, "
+                f"got {self.isaacgym_device_id!r}"
+            )
+        if self.isaacgym_worker_timeout_s is not None and (
+            not isinstance(self.isaacgym_worker_timeout_s, (int, float))
+            or isinstance(self.isaacgym_worker_timeout_s, bool)
+            or self.isaacgym_worker_timeout_s <= 0
+        ):
+            raise ValueError(
+                "isaacgym_worker_timeout_s must be a positive number or None, "
+                f"got {self.isaacgym_worker_timeout_s!r}"
+            )
+        if self.genesis_device_id is not None and (
+            isinstance(self.genesis_device_id, bool)
+            or not isinstance(self.genesis_device_id, int)
+            or self.genesis_device_id < 0
+        ):
+            raise ValueError(
+                "genesis_device_id must be a non-negative integer or None, "
+                f"got {self.genesis_device_id!r}"
+            )
+        for name, value in (
+            ("genesis_integrator", self.genesis_integrator),
+            ("genesis_constraint_solver", self.genesis_constraint_solver),
+            ("genesis_friction_cone", self.genesis_friction_cone),
+        ):
+            if value is not None and (not isinstance(value, str) or not value):
+                raise ValueError(f"{name} must be a non-empty string or None, got {value!r}")
+        if self.genesis_solver_iterations is not None and (
+            isinstance(self.genesis_solver_iterations, bool)
+            or not isinstance(self.genesis_solver_iterations, int)
+            or self.genesis_solver_iterations <= 0
+        ):
+            raise ValueError(
+                "genesis_solver_iterations must be a positive integer or None, "
+                f"got {self.genesis_solver_iterations!r}"
+            )
+        if self.isaacsim_device_id is not None and (
+            isinstance(self.isaacsim_device_id, bool)
+            or not isinstance(self.isaacsim_device_id, int)
+            or self.isaacsim_device_id < 0
+        ):
+            raise ValueError(
+                "isaacsim_device_id must be a non-negative integer or None, "
+                f"got {self.isaacsim_device_id!r}"
+            )
+        if self.isaacsim_worker_timeout_s is not None and (
+            not isinstance(self.isaacsim_worker_timeout_s, (int, float))
+            or isinstance(self.isaacsim_worker_timeout_s, bool)
+            or self.isaacsim_worker_timeout_s <= 0
+        ):
+            raise ValueError(
+                "isaacsim_worker_timeout_s must be a positive number or None, "
+                f"got {self.isaacsim_worker_timeout_s!r}"
+            )
+        if self.isaacsim_render_mode is not None:
+            mode = str(self.isaacsim_render_mode).strip().lower()
+            if mode not in {"auto", "interactive", "record", "none"}:
+                raise ValueError(
+                    "isaacsim_render_mode must be one of auto, interactive, record, none, or None; "
+                    f"got {self.isaacsim_render_mode!r}"
+                )
+            self.isaacsim_render_mode = mode
+        for name, value in (
+            ("isaacsim_render_width", self.isaacsim_render_width),
+            ("isaacsim_render_height", self.isaacsim_render_height),
+        ):
+            if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+                raise ValueError(f"{name} must be a positive integer, got {value!r}")
+        if self.cpu_ids is not None:
+            ids = list(self.cpu_ids)
+            if not ids:
+                raise ValueError("cpu_ids must be a non-empty sequence of CPU ids or None")
+            for cpu_id in ids:
+                if isinstance(cpu_id, bool) or not isinstance(cpu_id, int) or cpu_id < 0:
+                    raise ValueError(
+                        f"cpu_ids entries must be non-negative integers, got {cpu_id!r}"
+                    )
+            if len(set(ids)) != len(ids):
+                raise ValueError(f"cpu_ids entries must be unique, got {ids!r}")
+
+
+class ABEnv(abc.ABC):
+    @property
+    def play_capabilities(self) -> EnvPlayCapabilities:
+        """Return env-facing play/render capabilities."""
+        return EnvPlayCapabilities()
+
+    def resolve_play_render_plan(
+        self,
+        *,
+        play_render_mode: str | None,
+        play_steps: int | None,
+        output_video: str | PathLike[str] | None,
+    ) -> BackendPlayRenderPlan:
+        """Resolve high-level playback mode through the backend contract."""
+        raise NotImplementedError(
+            f"{self.__class__.__name__} does not define playback render mode semantics"
+        )
+
+    def run_playback(
+        self,
+        *,
+        initialize: Callable[[], Any],
+        step: Callable[[Any], Any],
+        num_steps: int | None,
+        output_video: str | PathLike[str] | None = None,
+        render_spacing: float | None = None,
+        render_offset_mode: str | None = None,
+        headless: bool | None = None,
+        record_video: bool | None = None,
+        frame_state_getter: Callable[[], np.ndarray] | None = None,
+        camera_kwargs: CameraCfg | Mapping[str, Any] | None = None,
+        debug_overlay_getter: DebugOverlayGetter | None = None,
+        on_frame: OnPlaybackFrameFn | None = None,
+    ) -> str | None:
+        """Execute playback through the backend contract.
+
+        ``debug_overlay_getter`` returns per-env sequences of
+        :class:`unisim.backend.base.DebugPrimitive` with env-local poses
+        (``None`` disables overlays for the frame).  ``on_frame`` is an
+        optional ``(frame_index, frame) -> frame | None`` callback applied to
+        each recorded frame before it is written to the video.
+        """
+        raise NotImplementedError(f"{self.__class__.__name__} does not support playback execution")
+
+    def run_playback_mode(
+        self,
+        *,
+        play_render_mode: str | None,
+        play_steps: int | None,
+        output_video: str | PathLike[str] | None,
+        initialize: Callable[[], Any],
+        step: Callable[[Any], Any],
+        render_spacing: float | None = None,
+        render_offset_mode: str | None = None,
+        frame_state_getter: Callable[[], np.ndarray] | None = None,
+        camera_kwargs: CameraCfg | Mapping[str, Any] | None = None,
+        debug_overlay_getter: DebugOverlayGetter | None = None,
+        on_frame: OnPlaybackFrameFn | None = None,
+        on_plan: Callable[[BackendPlayRenderPlan], None] | None = None,
+    ) -> str | None:
+        """Resolve configured playback mode and execute it through the backend contract.
+
+        Overlay gating follows the resolved plan mode: ``record`` playback
+        requires ``play_capabilities.supports_debug_overlay`` (backends fail
+        closed otherwise); ``interactive`` playback requires
+        ``supports_interactive_debug_overlay`` — when the backend lacks it the
+        getter is dropped with a warning so interactive playback still runs
+        without overlays.
+        """
+        plan = self.resolve_play_render_plan(
+            play_render_mode=play_render_mode,
+            play_steps=play_steps,
+            output_video=output_video,
+        )
+        if on_plan is not None:
+            on_plan(plan)
+        if plan.mode == "none":
+            return None
+        if plan.mode == "interactive" and debug_overlay_getter is not None:
+            if not self.play_capabilities.supports_interactive_debug_overlay:
+                warnings.warn(
+                    f"{self.__class__.__name__} backend does not support interactive debug "
+                    "overlays; dropping debug_overlay_getter for this interactive playback",
+                    stacklevel=2,
+                )
+                debug_overlay_getter = None
+        return self.run_playback(
+            initialize=initialize,
+            step=step,
+            num_steps=plan.num_steps,
+            output_video=plan.output_video,
+            render_spacing=render_spacing,
+            render_offset_mode=render_offset_mode,
+            headless=plan.headless,
+            record_video=plan.record_video,
+            frame_state_getter=frame_state_getter,
+            camera_kwargs=camera_kwargs,
+            debug_overlay_getter=debug_overlay_getter,
+            on_frame=on_frame,
+        )
+
+    @property
+    @abc.abstractmethod
+    def num_envs(self) -> int:
+        """
+        return the size of the env if it is vectorized
+        """
+
+    @property
+    @abc.abstractmethod
+    def cfg(self) -> EnvCfg:
+        """
+        The configuration of the environment
+        """
+
+    @property
+    @abc.abstractmethod
+    def observation_space(self) -> gym.Space:
+        """Observation space"""
+
+    @property
+    @abc.abstractmethod
+    def action_space(self) -> gym.Space:
+        """Action space"""
+
+    @property
+    @abc.abstractmethod
+    def obs_groups_spec(self) -> dict[str, int]:
+        """Map from observation group name to its dimension."""
+
+    @property
+    @abc.abstractmethod
+    def state(self) -> Any:
+        """Current environment state (None before first reset)"""
+
+    @abc.abstractmethod
+    def init_state(self) -> Any:
+        """Initialize environment and return initial state"""
+
+    @abc.abstractmethod
+    def step(self, actions: np.ndarray) -> Any:
+        """Step the environment with given actions, return new state"""
+
+    @abc.abstractmethod
+    def close(self) -> None:
+        """Clean up environment resources"""
+
+    def init_play_renderer(
+        self,
+        render_spacing: float | None = None,
+        render_offset_mode: str | None = None,
+        *,
+        headless: bool = False,
+        capture: bool = False,
+        width: int = 1280,
+        height: int = 720,
+        camera_kwargs: CameraCfg | Mapping[str, Any] | None = None,
+    ) -> None:
+        """Initialize env-facing playback rendering when supported."""
+        raise NotImplementedError(
+            f"{self.__class__.__name__} does not support native playback rendering"
+        )
+
+    def render(self, mode: str = "rgb_array") -> np.ndarray:
+        """Render the current state; ``mode="rgb_array"`` returns an RGB frame.
+
+        Convenience wrapper over :meth:`init_play_renderer` and
+        :meth:`capture_play_video_frame`, gated on
+        ``play_capabilities.supports_native_video_capture``.
+        """
+        raise NotImplementedError(
+            f"{self.__class__.__name__} does not support render(mode={mode!r})"
+        )
+
+    def render_play_frame(self) -> None:
+        """Render one frame through the env-facing interactive playback contract."""
+        raise NotImplementedError(
+            f"{self.__class__.__name__} does not support native interactive playback"
+        )
+
+    def capture_play_video_frame(self) -> np.ndarray:
+        """Capture one RGB frame through the env-facing video contract."""
+        raise NotImplementedError(
+            f"{self.__class__.__name__} does not support native video capture"
+        )
+
+    def get_physics_state_snapshot(self) -> np.ndarray:
+        """Return a physics snapshot for offline playback/video export."""
+        raise NotImplementedError(
+            f"{self.__class__.__name__} does not support physics-state playback"
+        )
+
+    def get_playback_model(self, env_index: int | None = None) -> Any:
+        """Return a model object suitable for backend-specific playback tooling.
+
+        Args:
+            env_index: Optional vectorized environment index whose playback model
+                should be returned when backend model variants differ across envs.
+
+        Returns:
+            A backend-specific playback model object.
+        """
+        raise NotImplementedError(f"{self.__class__.__name__} does not expose a playback model")

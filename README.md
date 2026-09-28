@@ -23,8 +23,11 @@ development evaluations, not a completed UniLab task/learner integration.
 **Development limits:** 8 qualified batting contacts, 0 boundaries, remaining
 grip/guard failures, and no fully qualified legal bowling deliveries. All 14
 batting and 8 bowling cases also match live native mjbatch execution exactly;
-that is backend parity, not independent training. Portable controller/checkpoint
-reproduction remains in progress.
+that is backend parity, not independent training.
+[Run the pinned standalone CPU reproduction](g1_cricket_runtime/README.md),
+including asset/controller installation and complete-cohort evaluation. This
+isolated snapshot does not register the final G1 task in UniLab or replace its
+learner/backend contracts; that integration remains open.
 [All cases, forces, provenance and limitations](g1_cricket_showcase/README.md).
 
 ### Earlier Cricket Demonstrations

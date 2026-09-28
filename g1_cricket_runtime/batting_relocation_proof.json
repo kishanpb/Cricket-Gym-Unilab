@@ -1,0 +1,140 @@
+{
+  "scope": "Complete fourteen-case relocated native batting cohort; fresh environment and freshly downloaded pinned GR00T. Not new training, performance or boundary evidence.",
+  "runtime_manifest": {
+    "size_bytes": 32818,
+    "sha256": "8c51321e2675e6b3f7e72a3f883d669643f12d66955f42784d365745d23bce9e"
+  },
+  "summary": {
+    "size_bytes": 75648,
+    "sha256": "b5008aceb9badaaf697ec0deb4d43e0e09e7df54748ceea68fe149f6c9a3753e"
+  },
+  "runtime_source": {
+    "size_bytes": 532543,
+    "sha256": "ae58aed8664079b2f3890bc4ce87db2ee2647d8fb545472f5c1e1748b274a780"
+  },
+  "parent_summary": {
+    "size_bytes": 100199,
+    "sha256": "f3978e1e29e8fbec143230af4d329fbff37311a09f303f97acfcbfc8e7076703"
+  },
+  "checkpoint": {
+    "size_bytes": 471507,
+    "sha256": "cb9aa53339e48ecf8f0a1f8e8e226dda54045193eb2386ff0e14d2442d267bd0"
+  },
+  "comparisons": [
+    {
+      "case": "right_feed0",
+      "arrays_exact": 10,
+      "physics_samples": 72578,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "right_feed1",
+      "arrays_exact": 10,
+      "physics_samples": 86491,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "right_feed2",
+      "arrays_exact": 10,
+      "physics_samples": 67021,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "right_feed3",
+      "arrays_exact": 10,
+      "physics_samples": 68742,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "right_feed4",
+      "arrays_exact": 10,
+      "physics_samples": 69756,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "right_feed5",
+      "arrays_exact": 10,
+      "physics_samples": 72365,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "right_feed6",
+      "arrays_exact": 10,
+      "physics_samples": 72756,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "left_feed0",
+      "arrays_exact": 10,
+      "physics_samples": 72587,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "left_feed1",
+      "arrays_exact": 10,
+      "physics_samples": 78431,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "left_feed2",
+      "arrays_exact": 10,
+      "physics_samples": 67018,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "left_feed3",
+      "arrays_exact": 10,
+      "physics_samples": 68774,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "left_feed4",
+      "arrays_exact": 10,
+      "physics_samples": 69674,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "left_feed5",
+      "arrays_exact": 10,
+      "physics_samples": 72421,
+      "tactile_exact": true,
+      "results_exact": true
+    },
+    {
+      "case": "left_feed6",
+      "arrays_exact": 10,
+      "physics_samples": 72823,
+      "tactile_exact": true,
+      "results_exact": true
+    }
+  ],
+  "imported_source_count": 119,
+  "cases": 14,
+  "arrays_exact": 140,
+  "physics_samples": 1011437,
+  "metrics": {
+    "cases": 14,
+    "physical_passes": 10,
+    "qualified_hits": 8,
+    "one_pitch_hit_flags": 12,
+    "raw_boundary_cases": 0,
+    "qualified_boundary_cases": 0,
+    "physical_failures": {
+      "relative_grip_retained": 4,
+      "returned_to_guard": 3
+    }
+  },
+  "promotion_allowed": false
+}

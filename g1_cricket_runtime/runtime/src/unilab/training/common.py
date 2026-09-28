@@ -1,0 +1,79 @@
+"""Shared helpers for training entrypoints."""
+
+from __future__ import annotations
+
+import logging
+from pathlib import Path
+
+from hydra.core.hydra_config import HydraConfig
+from omegaconf import DictConfig, OmegaConf
+
+from unilab.base.registry import ensure_registries as _ensure_registries
+
+
+def ensure_registries() -> None:
+    """Import env modules so registry-based entrypoints can instantiate tasks."""
+    _ensure_registries()
+
+
+def get_hydra_runtime_choice(cfg: DictConfig, group: str) -> str | None:
+    """Return a selected Hydra config-group choice when runtime metadata is available."""
+    cfg_choice = OmegaConf.select(cfg, f"hydra.runtime.choices.{group}")
+    if cfg_choice is not None:
+        return str(cfg_choice)
+
+    if not HydraConfig.initialized():
+        return None
+
+    try:
+        runtime_choice = HydraConfig.get().runtime.choices.get(group)
+    except Exception:
+        return None
+    return str(runtime_choice) if runtime_choice is not None else None
+
+
+def assert_offpolicy_task_choice_matches_algo(
+    cfg: DictConfig,
+    *,
+    algo_name: str | None = None,
+) -> None:
+    """Reject off-policy configs whose cfg.algo.algo does not match the requested algo."""
+    cfg_algo_name = str(OmegaConf.select(cfg, "algo.algo"))
+    if algo_name is not None and cfg_algo_name != algo_name:
+        raise ValueError(
+            f"Off-policy algo argument {algo_name!r} is inconsistent with cfg.algo.algo={cfg_algo_name!r}"
+        )
+
+
+def setup_logger(
+    log_dir: str | Path,
+    algo_name: str,
+    *,
+    echo: bool = True,
+    filename: str = "train.log",
+) -> logging.Logger:
+    """Create a simple file-backed logger for script-local progress messages."""
+    path = Path(log_dir)
+    path.mkdir(parents=True, exist_ok=True)
+
+    logger_name = f"unilab.training.{algo_name}.{path.resolve()}"
+    logger = logging.getLogger(logger_name)
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+
+    for handler in list(logger.handlers):
+        logger.removeHandler(handler)
+        handler.close()
+
+    formatter = logging.Formatter("%(message)s")
+
+    file_handler = logging.FileHandler(path / filename, encoding="utf-8")
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+    if echo:
+        stream_handler = logging.StreamHandler()
+        stream_handler.setFormatter(formatter)
+        logger.addHandler(stream_handler)
+
+    return logger

@@ -1,0 +1,726 @@
+{
+  "scope": "Standalone CPU reproduction, not completed framework integration or legal bowling",
+  "files": {
+    ".gitignore": {
+      "size_bytes": 44,
+      "sha256": "ae00c43cecc98e9d947de0c4f74a0c71026a32d7cc0f41dd4f9b100600adeb18"
+    },
+    ".ruff.toml": {
+      "size_bytes": 86,
+      "sha256": "316bbfd7d4126f71bc4b8c0e02528ff13bf64e55dd628b22cc5863d8108d4c49"
+    },
+    "README.md": {
+      "size_bytes": 4997,
+      "sha256": "e8573fe86f6ba78a051b2df91a9255b6b778bee4a64cf71fcc7c3fb4df38e316"
+    },
+    "VALIDATION.md": {
+      "size_bytes": 2105,
+      "sha256": "155ccef55900976fcfc2726382c55ece6959c51078f6288e859c8024cac2a8f9"
+    },
+    "batting_relocation_proof.json": {
+      "size_bytes": 3464,
+      "sha256": "4089d4206dba52990dcc73729722336087d96d5a4a010ac7f7e58731bdfab2fe"
+    },
+    "bowling_relocation_proof.json": {
+      "size_bytes": 1287,
+      "sha256": "14659f4e471834618fe5a3fcaf794878b4f928bf9be6bfd3172f9955a4dfba22"
+    },
+    "g1_scene_source/.gitignore": {
+      "size_bytes": 25,
+      "sha256": "aa50369e1f0cf8bdf7bbd40da7903ff05123fb807c3382cd4e45a4f66152727f"
+    },
+    "g1_scene_source/README.md": {
+      "size_bytes": 1952,
+      "sha256": "a81622d016f58702a5df511cd7a730bf8eb3e6c81a787ac0f17e406b6966b7c5"
+    },
+    "g1_scene_source/UNILAB_LICENSE": {
+      "size_bytes": 10774,
+      "sha256": "2191d05c6ee7c145480916b745bd020484adb61653be943c43cff10bc22927a1"
+    },
+    "g1_scene_source/UNITREE_LICENSE": {
+      "size_bytes": 1558,
+      "sha256": "84aac59fd3246e3ddc49d1387644e8fcf43b0def4f0b9fe687f372e90446df2d"
+    },
+    "g1_scene_source/batting.xml": {
+      "size_bytes": 81836,
+      "sha256": "7c3cb4f67eb25837d19f325f2ef86d008218ca1be0329701b69839bceb37c088"
+    },
+    "g1_scene_source/bowling_left.xml": {
+      "size_bytes": 32044,
+      "sha256": "2f833519771b14ba2d9d50ff88ac6d28542fb5db8d5215f5420200a0ed38f810"
+    },
+    "g1_scene_source/bowling_right.xml": {
+      "size_bytes": 32045,
+      "sha256": "47f6df6bdcbfd0c6db7da4bab55ed494ad68cf648f6fd9d92676d2d87d665108"
+    },
+    "g1_scene_source/install_meshes.py": {
+      "size_bytes": 4923,
+      "sha256": "27c654b91ae6a4b6ddce90576a95ee52f2a0c2817d6da413472a1ecbad16ae28"
+    },
+    "g1_scene_source/manifest.json": {
+      "size_bytes": 11418,
+      "sha256": "f4ef187694e79a15e93a2d554b22b122389510576d714cbfb0281b32e0e02a54"
+    },
+    "g1_scene_source/unitree_assets.json": {
+      "size_bytes": 18100,
+      "sha256": "d1ad42a51a7cb40421554047b5c62863d9e9047b1536e7975aef2ceca570520c"
+    },
+    "native_wheel_smoke.json": {
+      "size_bytes": 2510,
+      "sha256": "02316c4271c43bd9b658a4e6591af454b358ed3ba2224e33e4c500971405301d"
+    },
+    "runtime/.gitignore": {
+      "size_bytes": 26,
+      "sha256": "472f568478bff9056ec56b5c5e8a7ca3d280c651d527321e1eb80892801164be"
+    },
+    "runtime/GYM_CRICKET_LICENSE": {
+      "size_bytes": 1081,
+      "sha256": "d50bf5c13f082f4554a56729b1b463ec5652db7117449c14afa7ce9edb463d16"
+    },
+    "runtime/README.md": {
+      "size_bytes": 6019,
+      "sha256": "7ee8e83663b64c7d98f9e1e9179437b2a29c6d8e248443b0869f20e2280a4870"
+    },
+    "runtime/UNILAB_LICENSE": {
+      "size_bytes": 10774,
+      "sha256": "2191d05c6ee7c145480916b745bd020484adb61653be943c43cff10bc22927a1"
+    },
+    "runtime/data/final.pt": {
+      "size_bytes": 471507,
+      "sha256": "cb9aa53339e48ecf8f0a1f8e8e226dda54045193eb2386ff0e14d2442d267bd0"
+    },
+    "runtime/data/g1_cricket_results/articulated_swing_compact/left_reference.npz": {
+      "size_bytes": 43277,
+      "sha256": "47bbeaf5931bd0f0df0a24c3f45de7198056654fedf0580ff8d771ae0f38f75d"
+    },
+    "runtime/data/g1_cricket_results/articulated_swing_compact/right_reference.npz": {
+      "size_bytes": 45461,
+      "sha256": "3cb152b7bbd5792eb3f872072efbeafacaac0d29fa46cdf0f348e31dfe074e7b"
+    },
+    "runtime/data/left_height-0.04.npz": {
+      "size_bytes": 44386,
+      "sha256": "c465d5c863ec9b41d960936f401b052c8bb9812177d703874a6db06c0de288d2"
+    },
+    "runtime/data/overarm/left_dense_reference.npz": {
+      "size_bytes": 165589,
+      "sha256": "f2d183e2d86f7f199e000fd1653ebd2b32862a1c7770662bce238d1280f2fc59"
+    },
+    "runtime/data/overarm/right_dense_reference.npz": {
+      "size_bytes": 165574,
+      "sha256": "c381d561a914a8499c3729d0c80f14ce4210bbd48e5cdd1faa708b0590039d32"
+    },
+    "runtime/data/right_height-0.04.npz": {
+      "size_bytes": 46537,
+      "sha256": "9a5e44a5ee2eb5a065a090b76f2b23129f859cb573bd2a77dd984805038f33b8"
+    },
+    "runtime/data/underarm/left_dense_reference.npz": {
+      "size_bytes": 164236,
+      "sha256": "f47712f6c0682e427d433e3dbdb1647a60bc55edcc684c76285a6ceb31f8a88f"
+    },
+    "runtime/data/underarm/right_dense_reference.npz": {
+      "size_bytes": 164228,
+      "sha256": "47b90a459ea1d94f565bf09f2a7b69f1a6b8f0439c195ac0c9f6290f2da04648"
+    },
+    "runtime/install_controllers.py": {
+      "size_bytes": 5836,
+      "sha256": "5bf3d1918c46ffb5c49e7c836adcb2e221dd5861a11b644b26499ce5d8ec2c5e"
+    },
+    "runtime/native_build_proof.json": {
+      "size_bytes": 1445,
+      "sha256": "1ad58c2d456d35a6e3d5d7c6c20da1b54e8aeef4dc4b7eb60e97dd2c844b7b72"
+    },
+    "runtime/pyproject.toml": {
+      "size_bytes": 833,
+      "sha256": "e1f926864c25dd1f898c3e9fea963646ae535eabc755c0765090795bf92a7c71"
+    },
+    "runtime/runtime_manifest.json": {
+      "size_bytes": 44882,
+      "sha256": "8d232f5c5f956dfda8b7fb430769a4683d3c177ad5c085723ea6b7d17d97f472"
+    },
+    "runtime/src/integrations/g1_dynamics/amp_bowling_probe.py": {
+      "size_bytes": 42908,
+      "sha256": "c390971d1e2191f1093ecbf505766c9676ff875875d1b3bbcf1d71d0baa90e00"
+    },
+    "runtime/src/integrations/g1_dynamics/amp_running_probe.py": {
+      "size_bytes": 14354,
+      "sha256": "151eeaec3910b35f498896d5e5306ef7f9f8bb0ae86c088f452f4c5a3159dbe6"
+    },
+    "runtime/src/integrations/g1_dynamics/bowling_support_clock.py": {
+      "size_bytes": 1348,
+      "sha256": "222436381a4f07b10cab9bbab9036b8c5cba81a445b3c9a99cf3576f3fc1b5e5"
+    },
+    "runtime/src/integrations/g1_dynamics/bowling_sweep_reference.py": {
+      "size_bytes": 8040,
+      "sha256": "2539c20804ecc5804079e88d120b5e0fcaf1ce30ca50979dd1c58693509723a1"
+    },
+    "runtime/src/integrations/g1_dynamics/grip_feedback.py": {
+      "size_bytes": 1977,
+      "sha256": "5c0f8a18c4b641fee846a05cc28a466382e31e73d24f50f9793c22971cb262ed"
+    },
+    "runtime/src/integrations/g1_dynamics/groot_articulated_probe.py": {
+      "size_bytes": 17333,
+      "sha256": "9b8ad50069fa64d9b0f197b0292ed0248a1b7fde4022d4f9b39121dd435f3e01"
+    },
+    "runtime/src/integrations/g1_dynamics/groot_batting_env.py": {
+      "size_bytes": 10718,
+      "sha256": "30dfcb3482bc6acc2d19657791953b1d804da1ee402f7bc1502b42899c5c6d2a"
+    },
+    "runtime/src/integrations/g1_dynamics/groot_batting_evaluate.py": {
+      "size_bytes": 10814,
+      "sha256": "b47e526770777695b613167ea1020e30575263f2361f64ee0b08ef790df1cbbe"
+    },
+    "runtime/src/integrations/g1_dynamics/groot_batting_ppo.py": {
+      "size_bytes": 19045,
+      "sha256": "d2104dc4bb41d766ecad929f1ec282334b530b8f4f14af1ecc5e339b0eeb9551"
+    },
+    "runtime/src/integrations/g1_dynamics/groot_batting_vector.py": {
+      "size_bytes": 3387,
+      "sha256": "eb4bdc3c10ac1dc0aa3e0df2b69e536b9dde852f03f783587bc4cc5b6126539f"
+    },
+    "runtime/src/integrations/g1_dynamics/groot_incoming_probe.py": {
+      "size_bytes": 26274,
+      "sha256": "22a24ac130981c1a5585be06b82656f973c7c7a3c1985de39ab7acd5064982bd"
+    },
+    "runtime/src/integrations/g1_dynamics/groot_swing_timing.py": {
+      "size_bytes": 2402,
+      "sha256": "bb53ed92a7047733dafd7a6708b6ae6918be57db613323aab8e1154773a5c83a"
+    },
+    "runtime/src/integrations/g1_dynamics/impact_grip.py": {
+      "size_bytes": 5229,
+      "sha256": "235d803a6257d7d7f61632407d5b07f82d6d62ef1bc7c41612a989693af66c09"
+    },
+    "runtime/src/integrations/g1_dynamics/impact_schedule.py": {
+      "size_bytes": 2730,
+      "sha256": "ce0c6d19f8f96373753636d344cf36fef92d239a5f87d8fbb18d53fe71f734a6"
+    },
+    "runtime/src/integrations/g1_dynamics/mjbatch_stepper.py": {
+      "size_bytes": 1661,
+      "sha256": "b7502649c254832ce66d9baac198867b1ff9cd672c84b621ef297999f7e3b95b"
+    },
+    "runtime/src/integrations/g1_dynamics/portable_batting.py": {
+      "size_bytes": 5300,
+      "sha256": "1f0a47eee9b97c87d1b0bdd9c6fa020d0db6fc34ffca2324e37fedae1515130a"
+    },
+    "runtime/src/integrations/g1_dynamics/portable_bowling.py": {
+      "size_bytes": 3934,
+      "sha256": "164457046b3815f96a996c36c9d9ba7dc68cbe251e9c87f479ccbaaa7e740ef3"
+    },
+    "runtime/src/integrations/g1_dynamics/scene_distribution.py": {
+      "size_bytes": 4923,
+      "sha256": "27c654b91ae6a4b6ddce90576a95ee52f2a0c2817d6da413472a1ecbad16ae28"
+    },
+    "runtime/src/integrations/g1_dynamics/twist2_cpu_probe.py": {
+      "size_bytes": 16778,
+      "sha256": "19e63b8cedf538a875ea4f0b6141c5872c364d4d9db3cd806e895fefe847b969"
+    },
+    "runtime/src/scripts/__init__.py": {
+      "size_bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    "runtime/src/scripts/audit_g1_guard_contacts.py": {
+      "size_bytes": 15396,
+      "sha256": "52810cb060a4f0a7310fe3e9a664dff33dd51f0838f6e0d8928b5813327a1f5a"
+    },
+    "runtime/src/scripts/evaluate_g1_articulated_stance.py": {
+      "size_bytes": 13581,
+      "sha256": "ffb5053aa59a8686b59c25698b22652dc043987c876f7b5482aede0346d29718"
+    },
+    "runtime/src/scripts/evaluate_g1_articulated_swing.py": {
+      "size_bytes": 19144,
+      "sha256": "69ffc11943cbc0051a733c9c4abb02a9c2f409bda0fe7375d58cbdce33f940b9"
+    },
+    "runtime/src/scripts/evaluate_g1_guard_perturbations.py": {
+      "size_bytes": 4783,
+      "sha256": "7f8ec73a94834cd78f28485e2dedf10038ed035a2464101597fc8a5644c94f8f"
+    },
+    "runtime/src/scripts/evaluate_g1_incoming_swing.py": {
+      "size_bytes": 10182,
+      "sha256": "df7be068d3e22ab583320a3b6edbe3e9c669503dbe9bb4d3019b8dad6f48013f"
+    },
+    "runtime/src/scripts/g1_cricket_delivery_trial.py": {
+      "size_bytes": 15613,
+      "sha256": "ec3c9b467226ec5c850978bc335d1ee9fb5e66372983bca86b2f295d66326b5d"
+    },
+    "runtime/src/scripts/initialize_g1_guard_actor.py": {
+      "size_bytes": 7747,
+      "sha256": "f71998e95c9c0f364f7b76bf644588c16257bf5c3c9844e3748783335212c176"
+    },
+    "runtime/src/unilab/__init__.py": {
+      "size_bytes": 266,
+      "sha256": "45176e15e36c2c1ff0665a6d4b28a159643501f8ef9cba7f8241298025a0d2e5"
+    },
+    "runtime/src/unilab/assets/__init__.py": {
+      "size_bytes": 241,
+      "sha256": "bc82782cdecf72eb6a27c7e6854ac939738d87a9e2d9b43a87eab6b6d57c4be0"
+    },
+    "runtime/src/unilab/assets/hub.py": {
+      "size_bytes": 17127,
+      "sha256": "671d300f92dbe626ef0b74f816b968f608ceac5e4560314283cf001592ee3931"
+    },
+    "runtime/src/unilab/base/__init__.py": {
+      "size_bytes": 137,
+      "sha256": "565b292f668c0e1612df026ade170d9accb7cbff85a134a07c44795662d6e833"
+    },
+    "runtime/src/unilab/base/backend_constraints.py": {
+      "size_bytes": 1186,
+      "sha256": "9e151629172c85931b0ce08247f8e71f3f90e6084f27011e96f6f10b8d71a583"
+    },
+    "runtime/src/unilab/base/backend_factory.py": {
+      "size_bytes": 8799,
+      "sha256": "9467ddd06e0069af3c37e5bf0336c0b032c11aa28b499d298f32b6750f6523fe"
+    },
+    "runtime/src/unilab/base/backend_substeps.py": {
+      "size_bytes": 1090,
+      "sha256": "1174442bdc5b7dd45da9f1750a909e31d0f2ed4a90aa9599e13d838b02eed19d"
+    },
+    "runtime/src/unilab/base/base.py": {
+      "size_bytes": 20603,
+      "sha256": "f1fa046c5af21cb0c952835dca1729c43a8b147201edbe9391c3348dc9416f60"
+    },
+    "runtime/src/unilab/base/config_adapter.py": {
+      "size_bytes": 7294,
+      "sha256": "f4413d76698aaf482342a1702501da15be2da1b512c7b75751054e88110a0668"
+    },
+    "runtime/src/unilab/base/config_materialization.py": {
+      "size_bytes": 15341,
+      "sha256": "242ce4132287df1afe141153870c8bbec3f07fc8c8787b115d139aa8deae2fd2"
+    },
+    "runtime/src/unilab/base/config_overrides.py": {
+      "size_bytes": 348,
+      "sha256": "5363d36fae11b2dddcc0764399eb46a16066778059585aa00d4418d229e2815e"
+    },
+    "runtime/src/unilab/base/cpu_runtime.py": {
+      "size_bytes": 4399,
+      "sha256": "940f860a7b520a7a5d7629e86ec071975762691bd1aec683b782bf1bf73a6608"
+    },
+    "runtime/src/unilab/base/entity.py": {
+      "size_bytes": 104388,
+      "sha256": "a8252ffc81db7d6b8a53373e0ec37c579509d14e35976312a70a03e643a9fcec"
+    },
+    "runtime/src/unilab/base/np_env.py": {
+      "size_bytes": 29503,
+      "sha256": "ea92dd6d69b9b0047828d8091f7f2a1a1c1f71f7aa7d26809e4838d27a61f842"
+    },
+    "runtime/src/unilab/base/process_device.py": {
+      "size_bytes": 18159,
+      "sha256": "a65289d7150b66ab519e93ab19350e3fac579c1c634e8d1a83ca78f6ca5c4e35"
+    },
+    "runtime/src/unilab/base/registry.py": {
+      "size_bytes": 13939,
+      "sha256": "80e1a42876d02471ba46ded878eae2ddfde083829af69b697b13cdbdc9542011"
+    },
+    "runtime/src/unilab/base/reset_state.py": {
+      "size_bytes": 58880,
+      "sha256": "f32614e1d642a486fc8219081490842353a66b2d3f16a331bcd4607e1fae81a3"
+    },
+    "runtime/src/unilab/base/scene.py": {
+      "size_bytes": 1502,
+      "sha256": "052b6601f998f5384e8f7f9d7fe4f71492961acded74ec20dfc7d82960776f53"
+    },
+    "runtime/src/unilab/dr/__init__.py": {
+      "size_bytes": 1103,
+      "sha256": "bf10afc379a316694f6c851e9135a674ef4b3dfc0a94ca291bad210f04d70d58"
+    },
+    "runtime/src/unilab/dr/manager.py": {
+      "size_bytes": 4645,
+      "sha256": "1b2afc0784e926428a9054419a1b2ae7d5cf36fdb002b947cbb866eba3ccd187"
+    },
+    "runtime/src/unilab/dr/provider.py": {
+      "size_bytes": 1496,
+      "sha256": "3b39678a1bbcb4eae58f4b4273a1ebae29bc6c67725cab1f51ee44c0715217af"
+    },
+    "runtime/src/unilab/dtype_config.py": {
+      "size_bytes": 344,
+      "sha256": "9afa92e9a9bb1058e2d954a0b2c0394d158b567554412dac8ea57b6c4e9a38b0"
+    },
+    "runtime/src/unilab/envs/__init__.py": {
+      "size_bytes": 633,
+      "sha256": "4a5d7924f62db6584381a4070caeaad9c0d7bf15b9b6d9ee61225619ca2e65c0"
+    },
+    "runtime/src/unilab/envs/manager_based_rl_env.py": {
+      "size_bytes": 34261,
+      "sha256": "79886d3264e448fd822b32d07063a43acab52fd8d09188513fc2ac070e9d8b31"
+    },
+    "runtime/src/unilab/envs/mdp/__init__.py": {
+      "size_bytes": 6503,
+      "sha256": "473786efb0e81a3dfa4ff6521f104cb745ca726532f3cd9013279c7034f3f869"
+    },
+    "runtime/src/unilab/envs/mdp/actions/__init__.py": {
+      "size_bytes": 1078,
+      "sha256": "e0e4f33ca093e2e49a33d74b0784d614f2f80f938119abcb911aa7c94789eb9c"
+    },
+    "runtime/src/unilab/envs/mdp/actions/actions.py": {
+      "size_bytes": 11704,
+      "sha256": "0aeab2251946ae10db0b576a9ee49e207d7b070e0b1502064b767f644a06c325"
+    },
+    "runtime/src/unilab/envs/mdp/commands/__init__.py": {
+      "size_bytes": 613,
+      "sha256": "bf4c293bf8be49dac768674caa40038df7b6897efa5ee9041cb054e2c3874a18"
+    },
+    "runtime/src/unilab/envs/mdp/commands/pose_command.py": {
+      "size_bytes": 4193,
+      "sha256": "6468af362e65cab03d00bbfaf906cf1ad8a0ce33ebc3502df6e4ed17be0ec9d2"
+    },
+    "runtime/src/unilab/envs/mdp/commands/velocity_command.py": {
+      "size_bytes": 9478,
+      "sha256": "66f21d1d27b8eae7b2b0a0ff8bf500aa493ea3df2efd22bf3c6d629c060a6a00"
+    },
+    "runtime/src/unilab/envs/mdp/curriculums.py": {
+      "size_bytes": 10712,
+      "sha256": "96041be78d0b508ee2044e8a275802443e046e952fb5632b18077b6f8ebe2694"
+    },
+    "runtime/src/unilab/envs/mdp/events.py": {
+      "size_bytes": 57384,
+      "sha256": "69d6adf2ef47895d12f7b48db3e7fb2690e82276df898afb81b22ec93517faff"
+    },
+    "runtime/src/unilab/envs/mdp/observations.py": {
+      "size_bytes": 10246,
+      "sha256": "d6fa5973abce2134e59f55a1c68601600e8958757d407ff243c784adea201b5a"
+    },
+    "runtime/src/unilab/envs/mdp/recorders.py": {
+      "size_bytes": 970,
+      "sha256": "2348b65a2110b339fa32cd95ed4ce3043bdc3a5792111f1bf00a567f9e1ff729"
+    },
+    "runtime/src/unilab/envs/mdp/rewards.py": {
+      "size_bytes": 14695,
+      "sha256": "e3f58216271cc8df662d37c496555dc522b2e977699b4351a8df24348cb4ce42"
+    },
+    "runtime/src/unilab/envs/mdp/terminations.py": {
+      "size_bytes": 4437,
+      "sha256": "b5fadc28318209f3aaadc24c55d6feddb560749a5c5abb7c61bbce79b11f7c9f"
+    },
+    "runtime/src/unilab/managers/__init__.py": {
+      "size_bytes": 3214,
+      "sha256": "ce824ce5e467e2e4056c4c992f77a5c9ffdb0cf590f7b9016017f64a920fa12d"
+    },
+    "runtime/src/unilab/managers/_buffers/__init__.py": {
+      "size_bytes": 395,
+      "sha256": "ca80f84df91ca521d76d4abe9101ca181fca7d03459b25078c8fc3127a7cf5cf"
+    },
+    "runtime/src/unilab/managers/_buffers/circular_buffer.py": {
+      "size_bytes": 9578,
+      "sha256": "2b366db4cef30555a983e972159617b5ec997a32cdc2c772fbc6c14a7d083773"
+    },
+    "runtime/src/unilab/managers/_buffers/delay_buffer.py": {
+      "size_bytes": 12005,
+      "sha256": "7e919814f70c26611e48e3d522e97fe9d7b0019c83a1167d48d34da191396a7b"
+    },
+    "runtime/src/unilab/managers/_noise/__init__.py": {
+      "size_bytes": 893,
+      "sha256": "504be1a65e737fd31cdc0515f307eb1c807921007ec5ab649c110d1706980998"
+    },
+    "runtime/src/unilab/managers/_noise/noise_cfg.py": {
+      "size_bytes": 5403,
+      "sha256": "a3cb4fd1b8104802bf14a1f37be2626949c4bcda76217d0d4a564d63537ab504"
+    },
+    "runtime/src/unilab/managers/_noise/noise_model.py": {
+      "size_bytes": 3861,
+      "sha256": "36eedf82861d85bd27b13bbd44fd2c9c4b342f07a7dcceb0a23b9e35899bcf51"
+    },
+    "runtime/src/unilab/managers/_types.py": {
+      "size_bytes": 7073,
+      "sha256": "0d1d18824f7899fd179caed15c673f96c4c3427362bf467bc908f0b81b8a3fc0"
+    },
+    "runtime/src/unilab/managers/action_manager.py": {
+      "size_bytes": 9599,
+      "sha256": "b938e7eaa33fd90178a7a4a998411b08c4bf7f3acfc6e9e395b6b4e4c5cf9577"
+    },
+    "runtime/src/unilab/managers/command_manager.py": {
+      "size_bytes": 13286,
+      "sha256": "cb9ee2499a293ddaf334ac13bc57c547fa260b82e1ba1e1537715536909c1274"
+    },
+    "runtime/src/unilab/managers/curriculum_manager.py": {
+      "size_bytes": 6331,
+      "sha256": "27b1f787e3433d7aadd23e1005ef0a6bde0343422c1a70797f0eea960211593a"
+    },
+    "runtime/src/unilab/managers/event_manager.py": {
+      "size_bytes": 13669,
+      "sha256": "87d954607a9174f6082202b57057b296d98c5fe2ae22d1bf2b4c575472ff8112"
+    },
+    "runtime/src/unilab/managers/manager_base.py": {
+      "size_bytes": 5712,
+      "sha256": "48c33b1c08913ea859bd7085f735848cfeeb264fe0e52d1c008172f2d4055503"
+    },
+    "runtime/src/unilab/managers/metrics_manager.py": {
+      "size_bytes": 9463,
+      "sha256": "b44eb63614724319152eb0cc49d9d7bf10735e41fff097b4b8637202e81d6369"
+    },
+    "runtime/src/unilab/managers/observation_manager.py": {
+      "size_bytes": 35244,
+      "sha256": "368e86cfca65fabed86ab0e81d68b0638bade565fe23fe640bcc5194146af04c"
+    },
+    "runtime/src/unilab/managers/recorder_manager.py": {
+      "size_bytes": 10344,
+      "sha256": "51aaeef4615cd220eabc65ce48c26164974227a3493fe04572e6f2e23c7fa091"
+    },
+    "runtime/src/unilab/managers/reward_manager.py": {
+      "size_bytes": 7637,
+      "sha256": "04335d22131c96aeb36cc30869984adc012e92547971df42dee756df9c57bf93"
+    },
+    "runtime/src/unilab/managers/scene_entity_config.py": {
+      "size_bytes": 10871,
+      "sha256": "fe469b20db7ac8ff0bc50cffd5da18be0922cfdfc224f0a76fe7ff757ba66309"
+    },
+    "runtime/src/unilab/managers/termination_manager.py": {
+      "size_bytes": 5052,
+      "sha256": "2349bace33a8d2ee3e9b44bfa57dd251fadc9832023cb128e9e3e35ecdca7e0d"
+    },
+    "runtime/src/unilab/tasks/__init__.py": {
+      "size_bytes": 1142,
+      "sha256": "10583b887d9d1f889bfdb0c4e27787f076411b35799f3e33fdaa5d77c346fcd3"
+    },
+    "runtime/src/unilab/tasks/manipulation/__init__.py": {
+      "size_bytes": 34,
+      "sha256": "4ab3a1c18bed7e69bc0ca4a894614aa6fa4f7b046f70a3e905f817baa3b32a1e"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/__init__.py": {
+      "size_bytes": 1616,
+      "sha256": "e9a36426e2eca20493e738ace292ea2cdc5fc5d5949919d1d501a1bf12278eba"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/approach.py": {
+      "size_bytes": 1360,
+      "sha256": "1d1918af4ab9ea7f80a28b6b20251fa8caeac4ee054b0d45fa58c60f0365199d"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/approach_feedback.py": {
+      "size_bytes": 3098,
+      "sha256": "e16a57e6a0493dce78238e99ac7bcccd312fb4a0fa5ecc7c6ad8b3b621d0dc8e"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/approach_learning.py": {
+      "size_bytes": 4500,
+      "sha256": "261bfe8f0c0d0acff6c7e32e8309449cddf526eb23338afa57027928c8c1f786"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/approach_tracking.py": {
+      "size_bytes": 6556,
+      "sha256": "249bb5f4bb16b278775efd39afc76cd724f46049fa52f0d177d1d90121053b72"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/articulated_batting.py": {
+      "size_bytes": 10763,
+      "sha256": "af1daf54cf192d73b91790bab18308c916b8a20ce3d7a1de15868f05bf958d8b"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/articulated_hands.py": {
+      "size_bytes": 8696,
+      "sha256": "e5d8ad5dccd50c3d5f011eda22b4603ce5584b63374555a9bf2b6cfb29961a38"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/articulated_learning.py": {
+      "size_bytes": 16588,
+      "sha256": "7bf6835958811a7f4efda3a807af51cbb1c2a5254568931836af83ed9eeb7f99"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/articulated_scene.py": {
+      "size_bytes": 3624,
+      "sha256": "61e73cf55d3e42e35796568449a016f7b8607ad40aefdc28e4d5a041aabfa3d9"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/articulated_swing.py": {
+      "size_bytes": 13324,
+      "sha256": "bace0e92ab914dc5506e84cf987ab51df540e4fca4f47ab51c0f91bd8fa7dfb5"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/batting_dynamics.py": {
+      "size_bytes": 6737,
+      "sha256": "3acefab339b9981e8971ba0c953da208d83981b708b1279e702a9cc73520b073"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/batting_projection.py": {
+      "size_bytes": 7498,
+      "sha256": "2b15885f61759a6b598bf6dfada72fd6215e5813027e1538ffe0ee1ee53621fa"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/bimanual.py": {
+      "size_bytes": 10831,
+      "sha256": "57ad5803011b869536153465b7212b5a4a4d8fb7a91f54d8c8d38f1aa4a84282"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/bimanual_contact.py": {
+      "size_bytes": 1442,
+      "sha256": "59d1f61f5e29a8b0968f1d2db3809fc2526885ee8ba690d214df83188b141b4b"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/boundary_batting.py": {
+      "size_bytes": 9420,
+      "sha256": "4e6d54ce3b2918bcfe2191e4c0889905487851bf840457d0582d87e20db1b096"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/bowling.py": {
+      "size_bytes": 11527,
+      "sha256": "65da1d7a0a4f4cf16160bb7669344509a082d895abfb28f63c8f703fd3411da6"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/coordinated_learning.py": {
+      "size_bytes": 10675,
+      "sha256": "9ca4c17c192d1354a783904d94517deb533e16d0919db0c1d40696c5fea80314"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/delivery.py": {
+      "size_bytes": 3999,
+      "sha256": "a1a82ea56f4bb0add72b4a3fe96a603e5378c749f7871cac246be4566f1e1a46"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/holder.py": {
+      "size_bytes": 2047,
+      "sha256": "ebc229895885dc6241b884ca5ae285a5e3de92d7ef93cc7ab3b7d588e9e190d8"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/impact.py": {
+      "size_bytes": 1186,
+      "sha256": "c4cdf46ea64515324292cfe2947be8164c5de4925f67c6763e459fe2632a3a17"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/incoming_swing.py": {
+      "size_bytes": 14745,
+      "sha256": "ebe12ed073ac2c522dc889edc003d8ae69143e48cbd8b39c5e5bc514e74ea86f"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/leg_locomotion.py": {
+      "size_bytes": 3234,
+      "sha256": "31926da6d74d8c9e0991f205e234e19c04d4dc5c690cd5c89bbceb53dfbdfd33"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/loaded_balance.py": {
+      "size_bytes": 5888,
+      "sha256": "bb79ed18a427436257ec095c7eb7261b54aae3b7754ccdf350e50d4bb962f779"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/moving_delivery.py": {
+      "size_bytes": 4754,
+      "sha256": "4f252e5d6a07d97c9cb6808db1142f99e0710f0c798168809a4c49fb6be5ec1d"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/one_pitch_delivery.py": {
+      "size_bytes": 1300,
+      "sha256": "51842f13251c1dca98969283efa7b2913a0ed765b3f431a48b43ea590f32a65e"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/palm_grip.py": {
+      "size_bytes": 3981,
+      "sha256": "37a8d92ea7802a0701398573020614599bed7fbbe1f9b5c15d223c25ba687a40"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py": {
+      "size_bytes": 1337,
+      "sha256": "304bffb9013bfec2d8ac57d805f2ce8156421b8024bda316f373f856fa61830f"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/prior.py": {
+      "size_bytes": 7329,
+      "sha256": "8fbc2f23589af1346d0009e5d22707f967170477af42e60d1909fd3b72310739"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/reference_dynamics.py": {
+      "size_bytes": 9334,
+      "sha256": "da2e2c66400d7b462620058dd9ca349251cde68a4385df58cb9d41e27fcc5d12"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/residual.py": {
+      "size_bytes": 6822,
+      "sha256": "fe40a85c7add8ca4fef2211ab7574a7294d760295072d968ca804305571e829c"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/running.py": {
+      "size_bytes": 16080,
+      "sha256": "f0f6fba1a11fe4e3f340c11e7c3ff06c21bf5f88da6656b7f0695932c6025821"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/running_momentum.py": {
+      "size_bytes": 3223,
+      "sha256": "6e421bc7b1350aec8648b0a0b76cdbab613802425e15a145fd24bfffbd64eb40"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/scene.py": {
+      "size_bytes": 6566,
+      "sha256": "e2339cb76d8866ab56e8bd3ee44d6bfeef1694bbafc46f1bef8cc8eba9f4b2f4"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/shared_bat_pose.py": {
+      "size_bytes": 8729,
+      "sha256": "17836b769452e2c0e515e75cc07001eeee5516c84e441d7b6ab2c0eb230fc2d1"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/strike_timing.py": {
+      "size_bytes": 2323,
+      "sha256": "0dde88083b2ed40defb43a5ddf43f2d08764a9752cc93c366bab76dcef0bebfd"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/support_allocation.py": {
+      "size_bytes": 3732,
+      "sha256": "14eb63ba06f11cffa63a07982f2e93443abdd99239abda3912eb0b61767deef3"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/task.py": {
+      "size_bytes": 6279,
+      "sha256": "88612bd2ef9e98c2d6db1bc4f90a5234badf9253c1081b10b03dfe51da2b4acb"
+    },
+    "runtime/src/unilab/tasks/manipulation/g1_cricket/tracking.py": {
+      "size_bytes": 9153,
+      "sha256": "d1e903324177aeebefeba1f3253423fbe79d00b48c69e44dc3c9de00a93ab75a"
+    },
+    "runtime/src/unilab/tasks/motion_tracking/__init__.py": {
+      "size_bytes": 190,
+      "sha256": "3d974c8260778a9216382fa54c4afa4b38f97b231733c3b68c535e15a387c88c"
+    },
+    "runtime/src/unilab/tasks/motion_tracking/common/__init__.py": {
+      "size_bytes": 72,
+      "sha256": "bafcd7f7fbccd7aac29ae645c9357411a3cbddd0835b0a95a5eeee622b8642f8"
+    },
+    "runtime/src/unilab/tasks/motion_tracking/common/kernels.py": {
+      "size_bytes": 23463,
+      "sha256": "b83231f62c56d9c256ebd73903c480c3c65f05b8b1d51eb2349c2335fdbe2068"
+    },
+    "runtime/src/unilab/tasks/motion_tracking/common/manager_terms.py": {
+      "size_bytes": 45037,
+      "sha256": "897ad0487aa78d70925aa77b049cb6dd8c1bd430f69b7f78209d9a88e3fc4ce6"
+    },
+    "runtime/src/unilab/tasks/motion_tracking/common/motion_loader.py": {
+      "size_bytes": 24313,
+      "sha256": "e350e8cb8f6e1a44b55c5418e0102b9f553b69198ddc6cded1cdacbd195688d2"
+    },
+    "runtime/src/unilab/tasks/motion_tracking/g1/__init__.py": {
+      "size_bytes": 1451,
+      "sha256": "5d478d1329cdad86207b5b8aca9d8385f71383ddf6982e131d2f4583dfecd5b3"
+    },
+    "runtime/src/unilab/tasks/motion_tracking/g1/motion_box_loader.py": {
+      "size_bytes": 6502,
+      "sha256": "870086f56a7bee63a9d92d11a578eecaa1934ecd03fa6d88c82cb73bb8c35e90"
+    },
+    "runtime/src/unilab/training/__init__.py": {
+      "size_bytes": 2212,
+      "sha256": "a704436eb16c3c2bc539f976e799383db74890d00b712f6778d145f3135381e5"
+    },
+    "runtime/src/unilab/training/common.py": {
+      "size_bytes": 2413,
+      "sha256": "40682bad37937f05847738a1dcecdfcced54f4dddc9806203f15fe5a39046ba8"
+    },
+    "runtime/src/unilab/training/experiment.py": {
+      "size_bytes": 18382,
+      "sha256": "60988c8e36f393047ce3bd6a213a0531a270564c287ee9fb1520508afd1d150d"
+    },
+    "runtime/src/unilab/training/g1_incoming.py": {
+      "size_bytes": 2765,
+      "sha256": "4e6fa3483eaaa6ef2237c6513af1f4bd01c594d71d0f119ccd250e66e0014605"
+    },
+    "runtime/src/unilab/training/run.py": {
+      "size_bytes": 5929,
+      "sha256": "9a92003d02b5cfb2ab5aeba8847c3b348dd5b03582e6ca72189693894d4668a8"
+    },
+    "runtime/src/unilab/utils/__init__.py": {
+      "size_bytes": 160,
+      "sha256": "69f90f8c3c229cfd89a8400cc664f86f2dfe7d35f33d104c4b938079d7a09372"
+    },
+    "runtime/src/unilab/utils/checkpoint.py": {
+      "size_bytes": 5613,
+      "sha256": "c234f934eaa358982d7eb82d15d3ed47f95b8479871b877c7705417e82a112d4"
+    },
+    "runtime/src/unilab/utils/device.py": {
+      "size_bytes": 15361,
+      "sha256": "dc9c20bb1d390deb870e1bcd1e6338cae6d1046b414e6cef3c6ccf2bed78224a"
+    },
+    "runtime/src/unilab/utils/monitoring.py": {
+      "size_bytes": 1761,
+      "sha256": "56c49d303d9b70668bf8dd4abcd500986bd120badd5a6075d2c8be7010ab1108"
+    },
+    "runtime/src/unilab/utils/reward.py": {
+      "size_bytes": 2022,
+      "sha256": "034786c14cbc6edd2c050d5d1d5b8162e2cf3530699483a6169c3d18f316760d"
+    },
+    "runtime/src/unilab/utils/rotation.py": {
+      "size_bytes": 16432,
+      "sha256": "cf4e72dab0a09b2d9d09f2aeabcf0a93901ba2acb4f746eec31d99594b73f5d8"
+    },
+    "runtime/src/unilab/utils/seed.py": {
+      "size_bytes": 3564,
+      "sha256": "7fc22ea697fe7f32593406148c469f2268e148aaad1b72d9c9bde724cd2e189d"
+    },
+    "runtime/src/unilab/utils/sim2sim.py": {
+      "size_bytes": 10005,
+      "sha256": "2879f791939df7fd3c61aca068a2f1919832951a8c30b26a38463b1008a4a95e"
+    },
+    "runtime/src/unilab/utils/tensor.py": {
+      "size_bytes": 1779,
+      "sha256": "090df28fa1261ac0b693b8d2dae483c44ace6c1a184cdf90a5b54fcc5e1ec9cc"
+    },
+    "runtime/uv.lock": {
+      "size_bytes": 153077,
+      "sha256": "eb03e23b63fd5294497f4608cd091c76db3c2279bc5e84b735c3dec808ec3aca"
+    },
+    "verify.py": {
+      "size_bytes": 813,
+      "sha256": "66e364de88ad8fcce805067ceaf1119b36e403b209cc9e4e4ebe180b19187e34"
+    }
+  },
+  "raw_traces_included": false,
+  "external_models_included": false,
+  "robot_meshes_included": false,
+  "hardware_validated": false,
+  "release_goal_complete": false
+}

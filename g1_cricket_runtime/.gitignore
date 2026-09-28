@@ -1,0 +1,4 @@
+g1_controllers/
+results/
+__pycache__/
+*.pyc

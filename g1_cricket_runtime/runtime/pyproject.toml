@@ -1,0 +1,35 @@
+[project]
+name = "g1-cricket-runtime-snapshot"
+version = "0.1.0"
+description = "CPU reproduction environment for the retained G1 batting runtime"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "gymnasium==1.2.3",
+    "hydra-core==1.3.2",
+    "imageio==2.37.3",
+    "mujoco==3.11.0",
+    "numpy==2.4.4",
+    "numba==0.67.0",
+    "omegaconf==2.3.0",
+    "onnxruntime==1.24.4",
+    "prettytable==3.18.0",
+    "psutil==7.2.2",
+    "PyYAML==6.0.3",
+    "rsl-rl-lib==5.0.1",
+    "scipy==1.18.1",
+    "skrl==2.1.0",
+    "tensorboard==2.21.0",
+    "tensordict==0.11.0",
+    "torch==2.8.0",
+    "tqdm==4.67.3",
+    "unisim-core==1.2.0",
+    "unilab-rl==1.2.0",
+]
+
+[project.optional-dependencies]
+mjbatch = [
+    "mjbatch @ git+https://github.com/kishanpb/mjbatch@afb866b355d0f0230939cf4f2418d5898823df20",
+]
+
+[tool.uv]
+package = false

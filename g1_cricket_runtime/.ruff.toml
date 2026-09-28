@@ -1,0 +1,2 @@
+# Frozen reproduction files are hash-locked; validate with verify.py.
+exclude = ["*"]

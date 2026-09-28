@@ -1,0 +1,40 @@
+{
+  "scope": "Fresh macOS arm64 native wheel build and focused bridge tests; not full fresh-mjbatch cricket cohort validation",
+  "python": "3.13.13",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "distribution_origin": {
+    "url": "https://github.com/kishanpb/mjbatch",
+    "vcs_info": {
+      "vcs": "git",
+      "commit_id": "afb866b355d0f0230939cf4f2418d5898823df20",
+      "requested_revision": "afb866b355d0f0230939cf4f2418d5898823df20"
+    }
+  },
+  "installation": {
+    "pyproject.toml": {
+      "size_bytes": 833,
+      "sha256": "e1f926864c25dd1f898c3e9fea963646ae535eabc755c0765090795bf92a7c71"
+    },
+    "uv.lock": {
+      "size_bytes": 153077,
+      "sha256": "eb03e23b63fd5294497f4608cd091c76db3c2279bc5e84b735c3dec808ec3aca"
+    }
+  },
+  "backend_files": {
+    "mjbatch/__init__.py": {
+      "size_bytes": 2317,
+      "sha256": "eda0cfcb668bd052f49c0817537356cc5796a53bfa62c9870f4bb75566d005ac"
+    },
+    "mjbatch/_bindings.cpython-313-darwin.so": {
+      "size_bytes": 348896,
+      "sha256": "56469ab2c9c7d18d953a2c875bc864fbfb09f608bfcdfca834aba563bd629266"
+    }
+  },
+  "tests": {
+    "passed": 3,
+    "deselected": 1,
+    "selection": "tests/test_mjbatch_stepper.py -k 'not backend_sources'",
+    "excluded_reason": "The source-tree header inventory test applies to an editable checkout; published wheels omit C++ headers. Build source is bound by the pinned public Git commit."
+  },
+  "promotion_allowed": false
+}
