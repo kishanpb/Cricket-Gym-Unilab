@@ -2,8 +2,8 @@
   "scope": "Video/evidence package integrity only",
   "files": {
     "README.md": {
-      "size_bytes": 4472,
-      "sha256": "31de17239c6e585517aac29c8e4ade739ed16b31fd5d9a1e528ea5c12b102cc1"
+      "size_bytes": 4533,
+      "sha256": "86e6776b2c2484f051f2d308b49ca836273a6817d1b52f63eb6629fcba5d604b"
     },
     "verify.py": {
       "size_bytes": 1750,

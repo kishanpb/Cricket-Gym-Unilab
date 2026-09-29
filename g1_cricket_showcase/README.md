@@ -52,9 +52,10 @@ not hardware tactile taxels. Native motor caps and absence of external support
 are checked; passing those checks does not clear grip or cricket-law failures.
 
 [`evidence.json`](evidence.json) retains every evaluated row and failure, media
-hashes, checkpoint hash and backend-comparison counts. The full controller,
-checkpoint installation recipe and raw per-substep traces are **not included
-in this preview package**; complete portable reproduction remains in progress.
+hashes, checkpoint hash and backend-comparison counts. The
+[portable runtime](../g1_cricket_runtime/README.md) includes the controller,
+our batting checkpoint and installers for external assets. Its evaluation
+commands regenerate raw per-substep traces, which are not shipped with the videos.
 Do not infer that these videos alone complete the integration or legal-bowling goal.
 
 Check downloaded file integrity from this directory with `uv run --no-project

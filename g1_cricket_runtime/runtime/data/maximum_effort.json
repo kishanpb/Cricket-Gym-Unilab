@@ -1,0 +1,11 @@
+{
+  "approach_shifts_m": {
+    "right": 1.8522813511164606,
+    "left": 2.648768112339251
+  },
+  "shift_rule": "Place the most forward retained rear foot-edge at -0.10 m, across both styles and timesteps per hand",
+  "popping_crease_x_m": 0,
+  "bowler_wickets_x_m": -1.22,
+  "native_motor_limits_unchanged": true,
+  "promotion_allowed": false
+}

@@ -77,6 +77,68 @@ rolling (15.53--16.01 m versus 21.18--21.66 m). Release rules differ: this is a
 controller/setup comparison, not a single-axis ablation or a G1 hardware ceiling.
 Underarm is a non-regulation diagnostic, not a legal-delivery substitute.
 
+## Bounded Maximum-Effort Check
+
+The separate effort experiment requests each arm motor's existing force cap
+in the direction of the original controller command during the moving swing.
+It does not increase force/joint limits, inject ball velocity, retrain PPO,
+or optimize a torque trajectory. Servo control ranges still apply, so a
+maximum request is not a guarantee of maximum delivered torque every instant.
+Bowling changes the seven delivery-arm joints; batting changes fourteen arm
+joints, leaving the finger controller and lower-body policy intact.
+
+The bowling setup is moved forward by 1.8523 m (right) or 2.6488 m (left),
+using both retained styles and timesteps to choose one offset per hand.
+The popping crease is x = 0, 1.22 m ahead of the bowler's wickets. All sixteen
+translated control/maximum-effort cases retain part of the front foot behind
+that line at landing. This clears only the front-foot check, not the entire
+delivery. See the [MCC crease definition](https://www.lords.org/mcc/the-laws/the-creases)
+and [no-ball law](https://www.lords.org/mcc/the-laws/no-ball).
+
+Overarm airborne carry changes from 1.90-1.99 m to 2.17-2.20 m; underarm from
+3.72-3.84 m to 4.21-4.40 m. Neither style passes full qualification. Repeated
+bounces and target-corridor failures remain; both maximum-effort left underarm
+cases also fail the 6 mm ball-penetration gate. A ball eventually rolling
+past the batter's x coordinate is not a qualified delivery.
+
+All fourteen maximum-effort batting cases fail physical qualification, versus
+ten physical passes/eight qualified contacts for the retained checkpoint.
+There are zero boundaries in either group. All maximum-effort cases fail grip,
+forbidden-contact and guard-return checks; seven fail planted feet and two
+settled recovery. Native motor caps remain satisfied. More requested torque
+does not by itself produce a faster, well-held cricket shot.
+
+After the installation above, run from `runtime/`:
+
+```sh
+PYTHONPATH=src:src/scripts OMP_NUM_THREADS=1 uv run --frozen python -s -m integrations.g1_dynamics.portable_maximum_effort . ../g1_controllers/groot ../g1_controllers/amp ../g1_scene_source ../results/maximum_effort --workers 2
+PYTHONPATH=src:src/scripts OMP_NUM_THREADS=1 uv run --frozen python -s -m integrations.g1_dynamics.portable_maximum_effort . ../g1_controllers/groot ../g1_controllers/amp ../g1_scene_source ../results/original_effort --original-effort --workers 2
+```
+
+Each command covers fourteen batting feeds and eight bowling cases.
+`--task batting` or `--task bowling` narrows the cohort; `--case batting right 0`
+is only a diagnostic. Bowling uses the same forward placement in both commands.
+To match the original batting experiment's backend, use the pinned optional
+mjbatch installation above and add `--extra mjbatch` to `uv run` and
+`--backend mjbatch --task batting` to the experiment command.
+
+[`maximum_effort_results.json`](maximum_effort_results.json) retains every
+original experiment row and failure. The accepted videos are unchanged;
+these finite tests establish current controller/setup limitations, not G1
+hardware ceilings. Earlier relocation proofs describe the pre-extension
+snapshot. The extension reproduces all eight maximum-effort bowling cases
+exactly (120 arrays, 1,536,000 native samples) and both nominal maximum-effort
+batting cases (20 arrays, 136,608 samples, tactile records and outcomes).
+This last check is two diagnostics, not another full fourteen-feed batting
+evaluation. See [`maximum_effort_relocation.json`](maximum_effort_relocation.json).
+
+Six focused tests cover native force conversion, unchanged controls outside
+the moving arm interval, complete cohort membership and original-effort mode:
+
+```sh
+PYTHONPATH=src:src/scripts uv run --frozen --with pytest==9.0.2 python -m pytest ../tests -q
+```
+
 ## Assets And Licenses
 
 Our PPO checkpoint and reference files are included; external AMP/GR00T weights

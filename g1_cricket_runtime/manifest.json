@@ -10,8 +10,8 @@
       "sha256": "316bbfd7d4126f71bc4b8c0e02528ff13bf64e55dd628b22cc5863d8108d4c49"
     },
     "README.md": {
-      "size_bytes": 4997,
-      "sha256": "e8573fe86f6ba78a051b2df91a9255b6b778bee4a64cf71fcc7c3fb4df38e316"
+      "size_bytes": 8816,
+      "sha256": "53ecdff842d0a155ee44fa8c7af65b01fa8bd366e546dc71f883f2de8c371c5a"
     },
     "VALIDATION.md": {
       "size_bytes": 2105,
@@ -134,12 +134,12 @@
       "sha256": "e1f926864c25dd1f898c3e9fea963646ae535eabc755c0765090795bf92a7c71"
     },
     "runtime/runtime_manifest.json": {
-      "size_bytes": 44882,
-      "sha256": "8d232f5c5f956dfda8b7fb430769a4683d3c177ad5c085723ea6b7d17d97f472"
+      "size_bytes": 45888,
+      "sha256": "49103e2ca898d4920ff6b0170150ffbfb1e4566417db8fb84f4b8f1af20b11f3"
     },
     "runtime/src/integrations/g1_dynamics/amp_bowling_probe.py": {
-      "size_bytes": 42908,
-      "sha256": "c390971d1e2191f1093ecbf505766c9676ff875875d1b3bbcf1d71d0baa90e00"
+      "size_bytes": 43593,
+      "sha256": "4ea8fb66621335964277a4dccbf57f9647078f1c217e69a0ac76c9f9ac2e298c"
     },
     "runtime/src/integrations/g1_dynamics/amp_running_probe.py": {
       "size_bytes": 14354,
@@ -166,8 +166,8 @@
       "sha256": "30dfcb3482bc6acc2d19657791953b1d804da1ee402f7bc1502b42899c5c6d2a"
     },
     "runtime/src/integrations/g1_dynamics/groot_batting_evaluate.py": {
-      "size_bytes": 10814,
-      "sha256": "b47e526770777695b613167ea1020e30575263f2361f64ee0b08ef790df1cbbe"
+      "size_bytes": 10835,
+      "sha256": "1581a87c5cf7f1d63a27be4e61bb314976514118d2ce738cee1941cbf5f45f04"
     },
     "runtime/src/integrations/g1_dynamics/groot_batting_ppo.py": {
       "size_bytes": 19045,
@@ -716,6 +716,42 @@
     "verify.py": {
       "size_bytes": 813,
       "sha256": "66e364de88ad8fcce805067ceaf1119b36e403b209cc9e4e4ebe180b19187e34"
+    },
+    "maximum_effort_results.json": {
+      "size_bytes": 238333,
+      "sha256": "abd4a98761af63d2f82c8f4fe0525e73c051041b6d7486101266b1ea76c68c87"
+    },
+    "maximum_effort_relocation.json": {
+      "size_bytes": 28280,
+      "sha256": "a45fc60bcae89389dae99e3d87da3ab192451372a52ee9b86c50ceae5ef24deb"
+    },
+    "runtime/data/maximum_effort.json": {
+      "size_bytes": 345,
+      "sha256": "719ee9258c1affb5e8c59bd4651c6ece7392b02002bcfdeac82333a22f5116f1"
+    },
+    "tests/test_maximum_effort.py": {
+      "size_bytes": 1576,
+      "sha256": "850cb95e2149993b0b9018a2f7481d546ecebb5f42e33876d17c11038723f547"
+    },
+    "tests/test_portable_maximum_effort.py": {
+      "size_bytes": 1533,
+      "sha256": "eec27c691abb98fb4637d3cf883680d80374201a6b1ef9d68d87e48da6ed90e1"
+    },
+    "tests/test_batting_maximum_effort.py": {
+      "size_bytes": 1567,
+      "sha256": "6df3d5601f3705b4dd3bc13064f3553e292191aa5a9b01e266ba5d394b5fe2ed"
+    },
+    "runtime/src/integrations/g1_dynamics/batting_maximum_effort.py": {
+      "size_bytes": 2359,
+      "sha256": "56e4a0a3ae2c5aeaf98bafa4d7b1f15eaca618230fffc9c75f10f95b662cc120"
+    },
+    "runtime/src/integrations/g1_dynamics/portable_maximum_effort.py": {
+      "size_bytes": 4965,
+      "sha256": "1634db6e65fa243ca1d3ffb6c2cf14ae793e4fe8961579bcb0299680c4ac728a"
+    },
+    "runtime/src/integrations/g1_dynamics/maximum_effort.py": {
+      "size_bytes": 832,
+      "sha256": "3f48487929778a7d0ea19431cb49772d431b7e49324989d9aad2fd17b1be4e95"
     }
   },
   "raw_traces_included": false,

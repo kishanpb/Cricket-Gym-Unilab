@@ -37,6 +37,7 @@ from .twist2_cpu_probe import fingerprint
 from .bowling_sweep_reference import transition
 from .bowling_support_clock import SupportSwingClock, validate_cocked_pause
 from .mjbatch_stepper import MjBatchStepper, backend_inputs
+from .maximum_effort import maximum_effort
 
 
 def build_scene(unilab, destination, hand):
@@ -313,6 +314,7 @@ def rollout_case(
     arm_inertia_compensation=False,
     release_arm_hold=False,
     learn_release=False,
+    maximum_arm_effort=False,
     physics_backend="mujoco",
     delivery_style="overarm",
     underarm_minimum_loft_deg=0.0,
@@ -338,6 +340,7 @@ def rollout_case(
         -model.actuator_biasprm[ids, 2],
     )
     caps = model.actuator_forcerange[ids, 1]
+    maximum_effort_rows = []
     sdk = np.array([JOINTS.index(name.removesuffix("_joint")) for name in SDK_JOINTS])
     lower = sdk[:15]
     balance = None
@@ -607,12 +610,21 @@ def rollout_case(
             -caps,
             caps,
         )
+        effort_active = maximum_arm_effort and 1.7 <= bowling_local <= 2.3
+        if effort_active:
+            requested = torque[bowling].copy()
+            torque[bowling] = maximum_effort(requested, model.actuator_forcerange[ids[bowling]])
+            effort_time = float(data.time)
         data.ctrl[ids] = data.qpos[q] + (torque + native_kd * data.qvel[v]) / native_kp
         if batch_step is None:
             mujoco.mj_step(model, data)
         else:
             batch_step(data)
         mujoco.mj_forward(model, data)
+        if effort_active:
+            maximum_effort_rows.append(np.r_[
+                effort_time, requested, torque[bowling], data.actuator_force[ids[bowling]],
+            ])
         metrics.append(monitor.observe(data))
         if (
             not np.isfinite(np.r_[data.qpos, data.qvel, metrics[-1]]).all()
@@ -650,6 +662,8 @@ def rollout_case(
         residual_rows=residual_rows,
     )
     records = {key: np.asarray(value) for key, value in records.items()}
+    if maximum_arm_effort:
+        records["maximum_effort_rows"] = np.asarray(maximum_effort_rows).reshape(-1, 22)
     if learn_release:
         records["release_action_rows"] = np.asarray(release_action_rows)
     if retain:

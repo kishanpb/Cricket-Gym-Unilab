@@ -1,6 +1,44 @@
 {
-  "scope": "Batting runtime snapshot; not full fork integration or physical success",
-  "files": {
+  "scope": "All eight maximum-effort bowling cases and two nominal maximum-effort batting diagnostics; not a fresh fourteen-feed batting cohort",
+  "bowling": {
+    "cases": 8,
+    "arrays_exact": 120,
+    "native_samples": 1536000,
+    "results_exact": true,
+    "summary": {
+      "size_bytes": 61423,
+      "sha256": "a177407a21bcce7d1c728efab23eded6fcbcb7807c3b78de5b503c82e95d53b9"
+    }
+  },
+  "batting": [
+    {
+      "case": "right_feed0",
+      "arrays_exact": 10,
+      "native_samples": 68300,
+      "tactile_exact": true,
+      "results_exact": true,
+      "summary": {
+        "size_bytes": 18721,
+        "sha256": "c5bf4a0e0daa273962af4f9490207ac515792d132a8114d3688b1b0002c15e18"
+      }
+    },
+    {
+      "case": "left_feed0",
+      "arrays_exact": 10,
+      "native_samples": 68308,
+      "tactile_exact": true,
+      "results_exact": true,
+      "summary": {
+        "size_bytes": 18728,
+        "sha256": "33f551cb20e75ebc9bd07d21cbef58e46fe43c6b156daa0db01ed30c064c6f0e"
+      }
+    }
+  ],
+  "tested_runtime_manifest": {
+    "size_bytes": 45888,
+    "sha256": "49103e2ca898d4920ff6b0170150ffbfb1e4566417db8fb84f4b8f1af20b11f3"
+  },
+  "tested_runtime_files": {
     "GYM_CRICKET_LICENSE": {
       "size_bytes": 1081,
       "sha256": "d50bf5c13f082f4554a56729b1b463ec5652db7117449c14afa7ce9edb463d16"
@@ -634,204 +672,6 @@
       "sha256": "719ee9258c1affb5e8c59bd4651c6ece7392b02002bcfdeac82333a22f5116f1"
     }
   },
-  "module_files": {
-    "integrations.g1_dynamics.scene_distribution": "src/integrations/g1_dynamics/scene_distribution.py",
-    "integrations.g1_dynamics.portable_batting": "src/integrations/g1_dynamics/portable_batting.py",
-    "integrations.g1_dynamics.twist2_cpu_probe": "src/integrations/g1_dynamics/twist2_cpu_probe.py",
-    "unilab": "src/unilab/__init__.py",
-    "unilab.tasks": "src/unilab/tasks/__init__.py",
-    "unilab.tasks.manipulation": "src/unilab/tasks/manipulation/__init__.py",
-    "unilab.utils.device": "src/unilab/utils/device.py",
-    "unilab.utils.tensor": "src/unilab/utils/tensor.py",
-    "unilab.utils": "src/unilab/utils/__init__.py",
-    "unilab.utils.rotation": "src/unilab/utils/rotation.py",
-    "unilab.base.entity": "src/unilab/base/entity.py",
-    "unilab.base.scene": "src/unilab/base/scene.py",
-    "unilab.base.base": "src/unilab/base/base.py",
-    "unilab.base.config_overrides": "src/unilab/base/config_overrides.py",
-    "unilab.base.config_materialization": "src/unilab/base/config_materialization.py",
-    "unilab.base.registry": "src/unilab/base/registry.py",
-    "unilab.base": "src/unilab/base/__init__.py",
-    "unilab.managers._noise.noise_model": "src/unilab/managers/_noise/noise_model.py",
-    "unilab.managers._noise.noise_cfg": "src/unilab/managers/_noise/noise_cfg.py",
-    "unilab.managers._noise": "src/unilab/managers/_noise/__init__.py",
-    "unilab.managers._types": "src/unilab/managers/_types.py",
-    "unilab.managers.scene_entity_config": "src/unilab/managers/scene_entity_config.py",
-    "unilab.managers.manager_base": "src/unilab/managers/manager_base.py",
-    "unilab.managers.action_manager": "src/unilab/managers/action_manager.py",
-    "unilab.managers.command_manager": "src/unilab/managers/command_manager.py",
-    "unilab.managers.curriculum_manager": "src/unilab/managers/curriculum_manager.py",
-    "unilab.managers.event_manager": "src/unilab/managers/event_manager.py",
-    "unilab.managers.metrics_manager": "src/unilab/managers/metrics_manager.py",
-    "unilab.managers._buffers.circular_buffer": "src/unilab/managers/_buffers/circular_buffer.py",
-    "unilab.managers._buffers.delay_buffer": "src/unilab/managers/_buffers/delay_buffer.py",
-    "unilab.managers._buffers": "src/unilab/managers/_buffers/__init__.py",
-    "unilab.managers.observation_manager": "src/unilab/managers/observation_manager.py",
-    "unilab.managers.recorder_manager": "src/unilab/managers/recorder_manager.py",
-    "unilab.managers.reward_manager": "src/unilab/managers/reward_manager.py",
-    "unilab.managers.termination_manager": "src/unilab/managers/termination_manager.py",
-    "unilab.managers": "src/unilab/managers/__init__.py",
-    "unilab.tasks.manipulation.g1_cricket.articulated_hands": "src/unilab/tasks/manipulation/g1_cricket/articulated_hands.py",
-    "unilab.assets": "src/unilab/assets/__init__.py",
-    "unilab.assets.hub": "src/unilab/assets/hub.py",
-    "unilab.base.process_device": "src/unilab/base/process_device.py",
-    "unilab.base.backend_factory": "src/unilab/base/backend_factory.py",
-    "unilab.base.cpu_runtime": "src/unilab/base/cpu_runtime.py",
-    "unilab.base.backend_constraints": "src/unilab/base/backend_constraints.py",
-    "unilab.base.backend_substeps": "src/unilab/base/backend_substeps.py",
-    "unilab.dr.provider": "src/unilab/dr/provider.py",
-    "unilab.dr.manager": "src/unilab/dr/manager.py",
-    "unilab.dr": "src/unilab/dr/__init__.py",
-    "unilab.dtype_config": "src/unilab/dtype_config.py",
-    "unilab.base.np_env": "src/unilab/base/np_env.py",
-    "unilab.base.reset_state": "src/unilab/base/reset_state.py",
-    "unilab.envs.manager_based_rl_env": "src/unilab/envs/manager_based_rl_env.py",
-    "unilab.envs": "src/unilab/envs/__init__.py",
-    "unilab.tasks.manipulation.g1_cricket.scene": "src/unilab/tasks/manipulation/g1_cricket/scene.py",
-    "unilab.tasks.manipulation.g1_cricket.task": "src/unilab/tasks/manipulation/g1_cricket/task.py",
-    "unilab.tasks.manipulation.g1_cricket.prior": "src/unilab/tasks/manipulation/g1_cricket/prior.py",
-    "unilab.tasks.manipulation.g1_cricket.articulated_scene": "src/unilab/tasks/manipulation/g1_cricket/articulated_scene.py",
-    "unilab.tasks.manipulation.g1_cricket.bimanual": "src/unilab/tasks/manipulation/g1_cricket/bimanual.py",
-    "unilab.tasks.manipulation.g1_cricket.tracking": "src/unilab/tasks/manipulation/g1_cricket/tracking.py",
-    "unilab.tasks.manipulation.g1_cricket.articulated_batting": "src/unilab/tasks/manipulation/g1_cricket/articulated_batting.py",
-    "unilab.tasks.manipulation.g1_cricket.reference_dynamics": "src/unilab/tasks/manipulation/g1_cricket/reference_dynamics.py",
-    "unilab.tasks.manipulation.g1_cricket.batting_dynamics": "src/unilab/tasks/manipulation/g1_cricket/batting_dynamics.py",
-    "unilab.tasks.manipulation.g1_cricket.articulated_swing": "src/unilab/tasks/manipulation/g1_cricket/articulated_swing.py",
-    "unilab.tasks.manipulation.g1_cricket.impact": "src/unilab/tasks/manipulation/g1_cricket/impact.py",
-    "unilab.tasks.manipulation.g1_cricket.holder": "src/unilab/tasks/manipulation/g1_cricket/holder.py",
-    "unilab.tasks.manipulation.g1_cricket.residual": "src/unilab/tasks/manipulation/g1_cricket/residual.py",
-    "unilab.tasks.manipulation.g1_cricket.bowling": "src/unilab/tasks/manipulation/g1_cricket/bowling.py",
-    "unilab.tasks.manipulation.g1_cricket.delivery": "src/unilab/tasks/manipulation/g1_cricket/delivery.py",
-    "unilab.tasks.manipulation.g1_cricket.pitch_contact": "src/unilab/tasks/manipulation/g1_cricket/pitch_contact.py",
-    "unilab.tasks.manipulation.g1_cricket.bimanual_contact": "src/unilab/tasks/manipulation/g1_cricket/bimanual_contact.py",
-    "unilab.tasks.manipulation.g1_cricket.palm_grip": "src/unilab/tasks/manipulation/g1_cricket/palm_grip.py",
-    "unilab.tasks.manipulation.g1_cricket.boundary_batting": "src/unilab/tasks/manipulation/g1_cricket/boundary_batting.py",
-    "unilab.tasks.manipulation.g1_cricket.articulated_learning": "src/unilab/tasks/manipulation/g1_cricket/articulated_learning.py",
-    "unilab.tasks.manipulation.g1_cricket": "src/unilab/tasks/manipulation/g1_cricket/__init__.py",
-    "unilab.tasks.manipulation.g1_cricket.batting_projection": "src/unilab/tasks/manipulation/g1_cricket/batting_projection.py",
-    "unilab.utils.reward": "src/unilab/utils/reward.py",
-    "unilab.base.config_adapter": "src/unilab/base/config_adapter.py",
-    "unilab.training.common": "src/unilab/training/common.py",
-    "unilab.utils.sim2sim": "src/unilab/utils/sim2sim.py",
-    "unilab.training.experiment": "src/unilab/training/experiment.py",
-    "unilab.utils.checkpoint": "src/unilab/utils/checkpoint.py",
-    "unilab.training.run": "src/unilab/training/run.py",
-    "unilab.utils.monitoring": "src/unilab/utils/monitoring.py",
-    "unilab.utils.seed": "src/unilab/utils/seed.py",
-    "unilab.training": "src/unilab/training/__init__.py",
-    "unilab.training.g1_incoming": "src/unilab/training/g1_incoming.py",
-    "unilab.tasks.manipulation.g1_cricket.coordinated_learning": "src/unilab/tasks/manipulation/g1_cricket/coordinated_learning.py",
-    "unilab.tasks.manipulation.g1_cricket.leg_locomotion": "src/unilab/tasks/manipulation/g1_cricket/leg_locomotion.py",
-    "unilab.tasks.manipulation.g1_cricket.loaded_balance": "src/unilab/tasks/manipulation/g1_cricket/loaded_balance.py",
-    "unilab.tasks.manipulation.g1_cricket.strike_timing": "src/unilab/tasks/manipulation/g1_cricket/strike_timing.py",
-    "unilab.tasks.manipulation.g1_cricket.support_allocation": "src/unilab/tasks/manipulation/g1_cricket/support_allocation.py",
-    "unilab.tasks.manipulation.g1_cricket.incoming_swing": "src/unilab/tasks/manipulation/g1_cricket/incoming_swing.py",
-    "unilab.tasks.manipulation.g1_cricket.shared_bat_pose": "src/unilab/tasks/manipulation/g1_cricket/shared_bat_pose.py",
-    "integrations.g1_dynamics.grip_feedback": "src/integrations/g1_dynamics/grip_feedback.py",
-    "scripts": "src/scripts/__init__.py",
-    "scripts.evaluate_g1_articulated_stance": "src/scripts/evaluate_g1_articulated_stance.py",
-    "scripts.evaluate_g1_articulated_swing": "src/scripts/evaluate_g1_articulated_swing.py",
-    "integrations.g1_dynamics.groot_articulated_probe": "src/integrations/g1_dynamics/groot_articulated_probe.py",
-    "unilab.tasks.manipulation.g1_cricket.one_pitch_delivery": "src/unilab/tasks/manipulation/g1_cricket/one_pitch_delivery.py",
-    "integrations.g1_dynamics.groot_swing_timing": "src/integrations/g1_dynamics/groot_swing_timing.py",
-    "integrations.g1_dynamics.impact_schedule": "src/integrations/g1_dynamics/impact_schedule.py",
-    "integrations.g1_dynamics.impact_grip": "src/integrations/g1_dynamics/impact_grip.py",
-    "initialize_g1_guard_actor": "src/scripts/initialize_g1_guard_actor.py",
-    "evaluate_g1_guard_perturbations": "src/scripts/evaluate_g1_guard_perturbations.py",
-    "audit_g1_guard_contacts": "src/scripts/audit_g1_guard_contacts.py",
-    "scripts.evaluate_g1_incoming_swing": "src/scripts/evaluate_g1_incoming_swing.py",
-    "integrations.g1_dynamics.groot_incoming_probe": "src/integrations/g1_dynamics/groot_incoming_probe.py",
-    "integrations.g1_dynamics.mjbatch_stepper": "src/integrations/g1_dynamics/mjbatch_stepper.py",
-    "integrations.g1_dynamics.groot_batting_env": "src/integrations/g1_dynamics/groot_batting_env.py",
-    "integrations.g1_dynamics.groot_batting_vector": "src/integrations/g1_dynamics/groot_batting_vector.py",
-    "integrations.g1_dynamics.groot_batting_ppo": "src/integrations/g1_dynamics/groot_batting_ppo.py",
-    "integrations.g1_dynamics.groot_batting_evaluate": "src/integrations/g1_dynamics/groot_batting_evaluate.py",
-    "integrations.g1_dynamics.portable_bowling": "src/integrations/g1_dynamics/portable_bowling.py",
-    "g1_cricket_delivery_trial": "src/scripts/g1_cricket_delivery_trial.py",
-    "unilab.tasks.manipulation.g1_cricket.approach": "src/unilab/tasks/manipulation/g1_cricket/approach.py",
-    "unilab.tasks.motion_tracking.common": "src/unilab/tasks/motion_tracking/common/__init__.py",
-    "unilab.tasks.motion_tracking.common.motion_loader": "src/unilab/tasks/motion_tracking/common/motion_loader.py",
-    "unilab.tasks.motion_tracking.g1.motion_box_loader": "src/unilab/tasks/motion_tracking/g1/motion_box_loader.py",
-    "unilab.tasks.motion_tracking.g1": "src/unilab/tasks/motion_tracking/g1/__init__.py",
-    "unilab.tasks.motion_tracking": "src/unilab/tasks/motion_tracking/__init__.py",
-    "unilab.envs.mdp.actions.actions": "src/unilab/envs/mdp/actions/actions.py",
-    "unilab.envs.mdp.actions": "src/unilab/envs/mdp/actions/__init__.py",
-    "unilab.envs.mdp.commands.pose_command": "src/unilab/envs/mdp/commands/pose_command.py",
-    "unilab.envs.mdp.commands.velocity_command": "src/unilab/envs/mdp/commands/velocity_command.py",
-    "unilab.envs.mdp.commands": "src/unilab/envs/mdp/commands/__init__.py",
-    "unilab.envs.mdp.curriculums": "src/unilab/envs/mdp/curriculums.py",
-    "unilab.envs.mdp.events": "src/unilab/envs/mdp/events.py",
-    "unilab.envs.mdp.observations": "src/unilab/envs/mdp/observations.py",
-    "unilab.envs.mdp.recorders": "src/unilab/envs/mdp/recorders.py",
-    "unilab.envs.mdp.rewards": "src/unilab/envs/mdp/rewards.py",
-    "unilab.envs.mdp.terminations": "src/unilab/envs/mdp/terminations.py",
-    "unilab.envs.mdp": "src/unilab/envs/mdp/__init__.py",
-    "unilab.tasks.motion_tracking.common.kernels": "src/unilab/tasks/motion_tracking/common/kernels.py",
-    "unilab.tasks.motion_tracking.common.manager_terms": "src/unilab/tasks/motion_tracking/common/manager_terms.py",
-    "unilab.tasks.manipulation.g1_cricket.approach_tracking": "src/unilab/tasks/manipulation/g1_cricket/approach_tracking.py",
-    "unilab.tasks.manipulation.g1_cricket.approach_learning": "src/unilab/tasks/manipulation/g1_cricket/approach_learning.py",
-    "unilab.tasks.manipulation.g1_cricket.approach_feedback": "src/unilab/tasks/manipulation/g1_cricket/approach_feedback.py",
-    "unilab.tasks.manipulation.g1_cricket.running_momentum": "src/unilab/tasks/manipulation/g1_cricket/running_momentum.py",
-    "unilab.tasks.manipulation.g1_cricket.running": "src/unilab/tasks/manipulation/g1_cricket/running.py",
-    "unilab.tasks.manipulation.g1_cricket.moving_delivery": "src/unilab/tasks/manipulation/g1_cricket/moving_delivery.py",
-    "integrations.g1_dynamics.amp_running_probe": "src/integrations/g1_dynamics/amp_running_probe.py",
-    "integrations.g1_dynamics.bowling_sweep_reference": "src/integrations/g1_dynamics/bowling_sweep_reference.py",
-    "integrations.g1_dynamics.bowling_support_clock": "src/integrations/g1_dynamics/bowling_support_clock.py",
-    "integrations.g1_dynamics.amp_bowling_probe": "src/integrations/g1_dynamics/amp_bowling_probe.py",
-    "integrations.g1_dynamics.batting_maximum_effort": "src/integrations/g1_dynamics/batting_maximum_effort.py",
-    "integrations.g1_dynamics.portable_maximum_effort": "src/integrations/g1_dynamics/portable_maximum_effort.py",
-    "integrations.g1_dynamics.maximum_effort": "src/integrations/g1_dynamics/maximum_effort.py"
-  },
-  "upstream_files": {
-    "decoupled_wbc/__init__.py": {
-      "size_bytes": 83,
-      "sha256": "dddffffc674c613c1b5d19e63690c1d9813adf6a83dc5b8bcc369b2900bdfe59"
-    },
-    "decoupled_wbc/control/__init__.py": {
-      "size_bytes": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    "decoupled_wbc/control/base/__init__.py": {
-      "size_bytes": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    "decoupled_wbc/control/base/policy.py": {
-      "size_bytes": 1503,
-      "sha256": "ac73ce1b8e34299dd2cf3c7d8f8546ff368b849c0f7f4c38f7406a7994bcc1e8"
-    },
-    "decoupled_wbc/control/policy/__init__.py": {
-      "size_bytes": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    "decoupled_wbc/control/policy/g1_gear_wbc_policy.py": {
-      "size_bytes": 11913,
-      "sha256": "833bc58c7bacabf8634a9d458da821bc86b179af8420075ad9824e317d054e3e"
-    },
-    "decoupled_wbc/control/utils/__init__.py": {
-      "size_bytes": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    "decoupled_wbc/control/utils/gear_wbc_utils.py": {
-      "size_bytes": 3751,
-      "sha256": "0224a06cedafb896f950bb768d120193abcd50081f5858e1dfe5376225aa8478"
-    },
-    "decoupled_wbc/sim2mujoco/resources/robots/g1/g1_gear_wbc.yaml": {
-      "size_bytes": 1011,
-      "sha256": "31226a224ca8450e89d9ce17d5cb31c052192a9cbfedc8d145f1cb95627ac7a2"
-    },
-    "decoupled_wbc/sim2mujoco/resources/robots/g1/policy/GR00T-WholeBodyControl-Balance.onnx": {
-      "size_bytes": 1886682,
-      "sha256": "f645da599d4ca3d29ed273c8f4712620bb680d34977469ca3aeabe5bb9631c18"
-    },
-    "decoupled_wbc/sim2mujoco/resources/robots/g1/policy/GR00T-WholeBodyControl-Walk.onnx": {
-      "size_bytes": 1886682,
-      "sha256": "7c82255b6905ffcc4468fa7f8ddcf7b70db168cf1042107ccab887cb6a8e5407"
-    },
-    "decoupled_wbc/version.py": {
-      "size_bytes": 390,
-      "sha256": "9b92825310bc4038a56b7899ccfb018e5a74acde6ea59ff9604f6967330c5ddf"
-    }
-  },
   "runtime_versions": {
     "mujoco": "3.11.0",
     "numpy": "2.4.4",
@@ -846,161 +686,7 @@
     "tensordict": "0.11.0",
     "rsl-rl-lib": "5.0.1"
   },
-  "references": [
-    "data/right_height-0.04.npz",
-    "data/left_height-0.04.npz"
-  ],
-  "scene": {
-    "size_bytes": 81836,
-    "sha256": "7c3cb4f67eb25837d19f325f2ef86d008218ca1be0329701b69839bceb37c088"
-  },
-  "environment_options": {
-    "whole_body": true,
-    "condition_timing": true,
-    "swing_power": 0.65
-  },
-  "case_keys": [
-    [
-      "right",
-      0
-    ],
-    [
-      "right",
-      1
-    ],
-    [
-      "right",
-      2
-    ],
-    [
-      "right",
-      3
-    ],
-    [
-      "right",
-      4
-    ],
-    [
-      "right",
-      5
-    ],
-    [
-      "right",
-      6
-    ],
-    [
-      "left",
-      0
-    ],
-    [
-      "left",
-      1
-    ],
-    [
-      "left",
-      2
-    ],
-    [
-      "left",
-      3
-    ],
-    [
-      "left",
-      4
-    ],
-    [
-      "left",
-      5
-    ],
-    [
-      "left",
-      6
-    ]
-  ],
-  "bowling": {
-    "overarm": {
-      "options": {
-        "gather_deceleration": true,
-        "arm_clearance": false,
-        "native_target_limits": true,
-        "delivery_rate": 1.0,
-        "minimum_release_speed": 6.0,
-        "native_delivery_impedance": true,
-        "native_bowling_elbow_impedance": true,
-        "compensate_torso_heading": true,
-        "bowling_torso_pitch": 0.0,
-        "carry_roll": 0.5,
-        "carry_elbow": null,
-        "steady_carry": true,
-        "preserve_lane_direction": true,
-        "lane_damping": 1.0,
-        "heading_damping": 0.0,
-        "lane_offset": 0.9,
-        "support_triggered_swing": true,
-        "synchronize_reference_arms": true,
-        "approach_gate_x": null,
-        "reference_start": 1.3,
-        "arm_inertia_compensation": false,
-        "release_arm_hold": false,
-        "delivery_style": "overarm",
-        "underarm_minimum_loft_deg": 0.0,
-        "start_x": -4.5,
-        "gather_start": 1.8,
-        "deceleration_start": 1.8
-      },
-      "parent_summary": {
-        "size_bytes": 91178,
-        "sha256": "0ff0f70a5fdde6a341fe3c619f3c704a7dd6940d3e35797505a9e9f52c085293"
-      }
-    },
-    "underarm": {
-      "options": {
-        "gather_deceleration": true,
-        "arm_clearance": false,
-        "native_target_limits": true,
-        "delivery_rate": 1.0,
-        "minimum_release_speed": 3.0,
-        "native_delivery_impedance": true,
-        "native_bowling_elbow_impedance": true,
-        "compensate_torso_heading": true,
-        "bowling_torso_pitch": 0.0,
-        "carry_roll": 0.5,
-        "carry_elbow": null,
-        "steady_carry": true,
-        "preserve_lane_direction": true,
-        "lane_damping": 1.0,
-        "heading_damping": 0.0,
-        "lane_offset": 0.9,
-        "support_triggered_swing": true,
-        "synchronize_reference_arms": true,
-        "approach_gate_x": null,
-        "reference_start": 1.3,
-        "arm_inertia_compensation": false,
-        "release_arm_hold": false,
-        "delivery_style": "underarm",
-        "underarm_minimum_loft_deg": 25.0,
-        "start_x": -4.5,
-        "gather_start": 1.8,
-        "deceleration_start": 1.8
-      },
-      "parent_summary": {
-        "size_bytes": 92909,
-        "sha256": "2154beb9fd13fe58eb82d3c50e485b6a6ffac177c450d26614d5d0674da785f5"
-      }
-    }
-  },
-  "amp_checkpoint": {
-    "size_bytes": 19815093,
-    "sha256": "5de7628fe92bd74118016c592b95eb17183547a5289708622c80a7815da025ac"
-  },
-  "bowling_scenes": {
-    "bowling_right.xml": {
-      "size_bytes": 32045,
-      "sha256": "47f6df6bdcbfd0c6db7da4bab55ed494ad68cf648f6fd9d92676d2d87d665108"
-    },
-    "bowling_left.xml": {
-      "size_bytes": 32044,
-      "sha256": "2f833519771b14ba2d9d50ff88ac6d28542fb5db8d5215f5420200a0ed38f810"
-    }
-  }
+  "raw_relocation_traces_retained": false,
+  "canonical_experiment_traces_retained": true,
+  "promotion_allowed": false
 }

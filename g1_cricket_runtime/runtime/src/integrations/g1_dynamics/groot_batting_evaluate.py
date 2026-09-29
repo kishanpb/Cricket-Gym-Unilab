@@ -59,7 +59,7 @@ def mean_action(policy, observation):
     return action[0].numpy()
 
 
-def evaluate_case(job, *, scene_file=None):
+def evaluate_case(job, *, scene_file=None, env_class=GrootBattingEnv):
     (
         upstream,
         checkout,
@@ -73,7 +73,7 @@ def evaluate_case(job, *, scene_file=None):
     ) = job
     started = time.monotonic()
     torch.set_num_threads(1)
-    env = GrootBattingEnv(
+    env = env_class(
         upstream,
         checkout,
         baseline / "scene.xml" if scene_file is None else scene_file,
