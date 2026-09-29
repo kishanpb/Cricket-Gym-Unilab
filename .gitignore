@@ -129,3 +129,5 @@ APPO_HARDWARE_TIMING_ANALYSIS.md
 
 # Training log artifacts (checkpoints, ONNX exports)
 log/
+
+g1_cricket_cpu/policy_v77/assets/

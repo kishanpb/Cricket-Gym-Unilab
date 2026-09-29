@@ -11,6 +11,7 @@ CASES = tuple(((hand, dt) for hand in ('right', 'left') for dt in (6.25e-05, 3.1
 ROLLOUT_OPTIONS = ('gather_deceleration', 'groot_gather', 'arm_clearance', 'native_target_limits', 'delivery_rate', 'minimum_release_speed', 'native_delivery_impedance', 'arm_reference_directory', 'reference_start', 'arm_inertia_compensation', 'start_x', 'gather_start', 'deceleration_start')
 FLIGHT_FAILURES = {'first_bounce_outside_delivery_zone', 'not_exactly_one_bounce_before_target', 'target_corridor_missed'}
 FLIGHT_REWARD_COLUMNS = ('time_s', 'total_reward', 'flight_credit_change', 'flight_credit')
+FLIGHT_FRONTIER_COLUMNS = ('time_s', 'frontier_time_s', 'frontier_x_m', 'frontier_y_m', 'frontier_z_m')
 
 def first_bounce_credit(release, bounce, failures):
     """Bounded measured-flight shaping, never a substitute for qualification."""
@@ -23,6 +24,25 @@ def first_bounce_credit(release, bounce, failures):
     progress = np.clip((x - start) / (TARGET_POPPING_X - start), 0, 1)
     alignment = np.clip(1 - abs(y) / RETURN_Y, 0, 1)
     return float(5 * progress * alignment)
+
+def one_bounce_flight_credit(release, bounce, frontier, failures):
+    """Measured progress before the second bounce, capped at the target plane."""
+    if release is None or bounce is None or frontier is None or failures:
+        return 0.0
+    bx, by, _ = bounce['position']
+    if not (4 < bx < TARGET_POPPING_X and abs(by) < RETURN_Y):
+        return 0.0
+    start = release['position'][0]
+    if start >= TARGET_POPPING_X:
+        return 0.0
+    x, y, _ = frontier['position']
+    progress = np.clip((x - start) / (TARGET_POPPING_X - start), 0, 1)
+    alignment = np.clip(1 - abs(y) / RETURN_Y, 0, 1)
+    return float(5 * progress * alignment)
+
+def validate_flight_mode(one_bounce_flight, flight_curriculum):
+    if one_bounce_flight and (not flight_curriculum):
+        raise ValueError('One-bounce flight credit requires flight curriculum')
 
 def bowling_reward(speed_gain, limit_excess, new_failures, action, result=None, *, release_curriculum=False):
     """Dense shaping is not delivery qualification; only full gates earn success."""
@@ -49,21 +69,38 @@ def support_observation(monitor, time):
             landings.extend(np.zeros(6))
     return np.r_[monitor.swing_local / 8, monitor.swing_rate, monitor.swing_started, monitor.foot_loads / 100, landings]
 
+def approach_torque_enabled(observation, *, prepare_swing_residuals=False):
+    if prepare_swing_residuals:
+        return observation[..., -17] >= 1.0 / 8
+    return (observation[..., -17] >= 1.7 / 8) & (observation[..., -15] > 0)
+
+def bounded_action(action, observation, *, freeze_approach=False, learn_release=False, prepare_swing_residuals=False):
+    applied = np.clip(action, -1, 1)
+    if freeze_approach and (not approach_torque_enabled(observation, prepare_swing_residuals=prepare_swing_residuals)):
+        applied[:len(applied) - int(learn_release)] = 0
+    return applied
+
 class AmpBowlingEnv(gym.Env):
     """Privileged state, holder force and simulated foot/hand contact aggregates."""
     metadata = {'render_modes': []}
     device = 'cpu'
 
-    def __init__(self, upstream, unilab, parent, *, release_curriculum=False, learn_release=False, allow_upward_release=False, flight_curriculum=False, post_saturation_residual=False, bowling_arm_actions=False, physics_backend='mujoco', rollout_options=None, scene_files=None):
+    def __init__(self, upstream, unilab, parent, *, release_curriculum=False, learn_release=False, allow_upward_release=False, flight_curriculum=False, one_bounce_flight=False, post_saturation_residual=False, bowling_arm_actions=False, freeze_approach=False, prepare_swing_residuals=False, physics_backend='mujoco', rollout_options=None, scene_files=None):
         if physics_backend not in ('mujoco', 'mjbatch'):
             raise ValueError('Expected mujoco or mjbatch physics backend')
+        if prepare_swing_residuals and (not freeze_approach):
+            raise ValueError('Preparation residuals require approach freeze')
+        validate_flight_mode(one_bounce_flight, flight_curriculum)
         self.physics_backend = physics_backend
         self.release_curriculum = release_curriculum
         self.learn_release = learn_release
         self.allow_upward_release = allow_upward_release
         self.flight_curriculum = flight_curriculum
+        self.one_bounce_flight = one_bounce_flight
         self.post_saturation_residual = post_saturation_residual
         self.bowling_arm_actions = bowling_arm_actions
+        self.freeze_approach = freeze_approach
+        self.prepare_swing_residuals = prepare_swing_residuals
         self.parent, self.unilab = (Path(parent), Path(unilab))
         summary = json.loads((self.parent / 'summary.json').read_text()) if rollout_options is None else rollout_options
         self.options = {key: summary[key] for key in ROLLOUT_OPTIONS}
@@ -72,6 +109,8 @@ class AmpBowlingEnv(gym.Env):
             raise ValueError('Upward release requires learned overarm release')
         self.options['underarm_minimum_loft_deg'] = summary.get('underarm_minimum_loft_deg', 0.0)
         self.options['support_triggered_swing'] = summary.get('support_triggered_swing', False)
+        if freeze_approach and (not self.options['support_triggered_swing']):
+            raise ValueError('Approach freeze requires support-triggered swing')
         self.options['synchronize_reference_arms'] = summary.get('synchronize_reference_arms', False)
         self.options['release_arm_hold'] = summary.get('release_arm_hold', False)
         self.options['native_bowling_elbow_impedance'] = summary.get('native_bowling_elbow_impedance', False)
@@ -128,6 +167,7 @@ class AmpBowlingEnv(gym.Env):
         self.steps, self.episode_return = (0, 0.0)
         self.flight_credit = 0.0
         self.reward_rows = []
+        self.flight_frontier_rows = []
         self.result, self.records = (None, None)
         return (self.observation(), {'hand': self.hand, 'timestep': self.dt})
 
@@ -178,7 +218,7 @@ class AmpBowlingEnv(gym.Env):
             raise ValueError(f'Expected {self.action_space.shape[0]} finite residual actions')
         if self.rollout is None:
             raise RuntimeError('Reset before stepping a finished environment')
-        self.action = np.clip(action, -1, 1)
+        self.action = bounded_action(action, self.observation() if self.freeze_approach else None, freeze_approach=self.freeze_approach, learn_release=self.learn_release, prepare_swing_residuals=self.prepare_swing_residuals)
         physical_action = self.expand_action(self.action)
         try:
             self.model, self.data, self.monitor = self.rollout.send(physical_action)
@@ -199,7 +239,12 @@ class AmpBowlingEnv(gym.Env):
                 failures.update(set(self.result['failures']) - FLIGHT_FAILURES)
             if excess > 1e-06:
                 failures.add('joint_limit')
-            credit = first_bounce_credit(events.release_record, events.first_bounce, failures)
+            if self.one_bounce_flight:
+                frontier = self.monitor.one_bounce_frontier
+                credit = one_bounce_flight_credit(events.release_record, events.first_bounce, frontier, failures)
+                self.flight_frontier_rows.append([float(self.data.time), *([-1.0, 0.0, 0.0, 0.0] if frontier is None else [frontier['time'], *frontier['position']])])
+            else:
+                credit = first_bounce_credit(events.release_record, events.first_bounce, failures)
             reward += credit - self.flight_credit
             self.reward_rows.append([float(self.data.time), reward, credit - self.flight_credit, credit])
             self.flight_credit = credit
@@ -210,7 +255,11 @@ class AmpBowlingEnv(gym.Env):
             self.episodes.append({'return': self.episode_return, **self.result})
             if self.flight_curriculum:
                 self.records['reward_rows'] = np.asarray(self.reward_rows)
-                self.episodes[-1]['first_bounce_credit'] = self.flight_credit
+                key = 'one_bounce_flight_credit' if self.one_bounce_flight else 'first_bounce_credit'
+                self.episodes[-1][key] = self.flight_credit
+                if self.one_bounce_flight:
+                    self.records['flight_frontier_rows'] = np.asarray(self.flight_frontier_rows)
+                    self.episodes[-1]['one_bounce_frontier'] = self.monitor.one_bounce_frontier
         return (self.observation(), reward, terminated, False, {'result': self.result} if terminated else {})
 
     def close(self):

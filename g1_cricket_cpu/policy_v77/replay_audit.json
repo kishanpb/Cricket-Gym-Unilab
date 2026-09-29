@@ -1,0 +1,55 @@
+{
+  "status": "installed_public_replay_exact",
+  "rows": [
+    {
+      "case": "right_dt3.125e-05",
+      "arrays_exact": 19,
+      "physics_samples": 256000,
+      "trace_byte_equal": true
+    },
+    {
+      "case": "right_dt6.25e-05",
+      "arrays_exact": 19,
+      "physics_samples": 128000,
+      "trace_byte_equal": true
+    },
+    {
+      "case": "left_dt6.25e-05",
+      "arrays_exact": 19,
+      "physics_samples": 128000,
+      "trace_byte_equal": true
+    },
+    {
+      "case": "left_dt3.125e-05",
+      "arrays_exact": 19,
+      "physics_samples": 256000,
+      "trace_byte_equal": true
+    }
+  ],
+  "qualified_deliveries": 0,
+  "replay_summary": {
+    "size_bytes": 23821,
+    "sha256": "ad732aca7a53371db0ff2feb58a85e0462c1b5d9758cc43254a88912e5f486bd"
+  },
+  "parent_summary": {
+    "size_bytes": 200027,
+    "sha256": "f8144ca3fe1db2995c6e736f59c8b43d58c6e6cdf8c9f42ae03d799b7a0ed564"
+  },
+  "wheels": {
+    "g1_cricket_cpu-0.1.2-py3-none-any.whl": {
+      "fingerprint": {
+        "size_bytes": 216023,
+        "sha256": "4f9b5105e0b53b43ff01615a1962a0db7f9e32ed3fcc4c69bd28e81c7f08dabd"
+      },
+      "installed_files_verified": 90
+    },
+    "unilab-1.2.0-py3-none-any.whl": {
+      "fingerprint": {
+        "size_bytes": 43094800,
+        "sha256": "a10ed94a5a83edbab31b5716f727c709f61c8b30755050a258fc1187caa17047"
+      },
+      "installed_files_verified": 574
+    }
+  },
+  "promotion_allowed": false
+}

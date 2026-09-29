@@ -13,6 +13,15 @@ class SupportSwingClock:
     def __init__(self):
         self.started_at = None
 
+    def can_release(self, time, events, *, enforce_footwork=True):
+        if self.started_at is None:
+            return False
+        if not enforce_footwork:
+            return True
+        front = events.landings[events.front][-1] if events.landings[events.front] else None
+        back = events.landings[events.hand][-1] if events.landings[events.hand] else None
+        return not feet_failures(front, back, events.side, time)
+
     def advance(self, time, local, events, front_load):
         if self.started_at is not None:
             return (1.7 + time - self.started_at, 1.0)

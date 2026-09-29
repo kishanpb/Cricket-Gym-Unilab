@@ -39,13 +39,42 @@ For bowling, select `task=g1_cricket_bowling_cpu/mujoco` and additionally set
 the separate experimental delivery. Choose a distinct output directory.
 Replace capitalized placeholders with installed asset paths.
 
+Version 0.1.2 also registers `G1CricketBowlingPolicyCpu`. Select
+`task=g1_cricket_bowling_policy_cpu/mujoco` and provide
+`env.policy_bundle=POLICY_BUNDLE` in addition to the existing runtime, scene
+and controller paths. This separate overarm-only profile preserves the v77
+checkpoint's 30-action interface, learned release decision, reference arms,
+native caps and one-bounce shaping reward. It verifies the checkpoint,
+references, scenes and controller fingerprints before construction. The old
+29-action overarm/underarm task is unchanged.
+
+The profile includes a retained SKRL PPO checkpoint for replay; the normal
+UniLab training command still initializes a new learner and does not import
+that checkpoint. All four retained v77 cases fail delivery qualification.
+Do not describe the profile as a UniLab-trained skill or successful bowling.
+
+To evaluate that checkpoint instead of training a new learner, install its
+meshes and run the complete four-case cohort from the fork root:
+
+```sh
+.venv/bin/python g1_cricket_cpu/policy_v77/install_meshes.py g1_cricket_cpu/policy_v77
+UNILAB_EXTRA_REGISTRY_PACKAGES=g1_cricket_cpu OMP_NUM_THREADS=1 .venv/bin/python -m g1_cricket_cpu.dynamics.unilab_tasks.bowling_policy_replay \
+  RUNTIME_BUNDLE GROOT_CHECKOUT AMP_CHECKOUT SCENE_BUNDLE \
+  g1_cricket_cpu/policy_v77 NEW_RESULTS
+```
+
+The output contains all four physical traces, contact/force records,
+observations, policy means, rewards and delivery failures. This is CPU MuJoCo
+evaluation, not independent mjbatch training. Keep the source/model licenses;
+external controller weights and Unitree meshes are not redistributed here.
+
 ## Scope
 
 The supplied command config is a 400-step, one-iteration PPO connection test,
 not a trained-skill result. It initializes a new learner, not the retained
 batting PPO checkpoint. Actions, rewards, contact telemetry, native force
 limits and qualification rules retain the existing environment contract.
-Both task registrations use CPU MuJoCo; this is not a ManagerBasedRlEnv rewrite
+All task registrations use CPU MuJoCo; this is not a ManagerBasedRlEnv rewrite
 or an installed mjbatch task registration.
 
 Batting uses a physical two-handed bat grasp, reference motion, frozen GR00T

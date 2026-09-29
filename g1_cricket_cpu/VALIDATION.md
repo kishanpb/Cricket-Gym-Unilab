@@ -7,6 +7,42 @@ it in a fresh environment without a development `PYTHONPATH`.
 
 ## Environment Parity
 
+### Checkpoint Profile: 0.1.2
+
+Validated September 29 in a separate installed environment with fixed runtime
+dependency versions and no development `PYTHONPATH`. The opt-in
+`G1CricketBowlingPolicyCpu` profile preserves the retained 6,400-transition
+SKRL PPO policy's 30-action interface, release decision, v64 scene, reference
+arms, frozen AMP/GR00T priors and one-bounce shaping reward. It is not a new
+UniLab-trained skill and does not replace either published video.
+
+The documented public replay command reproduces all four hand/resolution
+cases byte-for-byte: four NPZ files, 76 arrays, 1,600 controls and 768,000 native
+samples in 269.38 seconds. Physical/contact records, policy means, observations,
+rewards and complete outcomes are retained. Every delivery still fails the
+one-bounce and target-corridor checks: zero qualified deliveries. See the
+[complete results](policy_v77/evaluation.json) and [replay audit](policy_v77/replay_audit.json).
+Reference traces are not redistributed; the command generates them locally.
+
+All 90 adapter and 574 framework package files match the tested wheels. The
+source tree rebuilds the adapter wheel byte-for-byte. All 81 focused
+development tests, 486 bowling regression tests and six installed package
+tests pass (the development suites overlap). This is scoped
+adapter validation, not repository-wide CI approval or upstream acceptance.
+
+The first compatibility check caught underarm drift: applying the newer
+release-time footwork veto to the old reference diagnostic changed its
+trajectory. The veto is now scoped to learned release; the legacy diagnostic
+keeps its original behavior and still fails the unchanged qualification gates.
+Tests exercise both modes and retain the strict learned-release veto.
+
+After the fix, all eight original overarm/underarm episodes match 112 retained
+arrays and 1,536,000 native samples, plus their observation/reward/result
+streams. The original zero-residual batting episode also matches. All loaded
+task/framework modules originate in the isolated installation. This repeats
+one batting episode, not the complete fourteen-case trained batting cohort
+previously verified for 0.1.1. See the [legacy replay audit](policy_v77/legacy_replay_audit.json).
+
 ### Recovery Fade Fix: 0.1.1
 
 The registered batting factory in 0.1.0 omitted the accepted policy's
@@ -81,17 +117,19 @@ this is not a framework-wide CI result or upstream approval.
 | --- | --- |
 | g1_cricket_cpu-0.1.0-py3-none-any.whl | `4dda1b34c012384686b3d6cd89f87bbcb5f1556d7e6dcf89a4c87c43e3bc97ad` |
 | g1_cricket_cpu-0.1.1-py3-none-any.whl | `722f49e916bcd0edaa3c1639cef8ce243eccf10cd7c00b231fcf3a9822ae372a` |
+| g1_cricket_cpu-0.1.2-py3-none-any.whl | `4f9b5105e0b53b43ff01615a1962a0db7f9e32ed3fcc4c69bd28e81c7f08dabd` |
 | unilab-1.2.0-py3-none-any.whl | `a10ed94a5a83edbab31b5716f727c709f61c8b30755050a258fc1187caa17047` |
 
-The current source tree rebuilds the tested 0.1.1 wheel byte-for-byte; the 0.1.0
-hash is retained for historical comparison. Meshes and controllers remain
+The current source tree rebuilds the tested 0.1.2 wheel byte-for-byte; older
+hashes are retained for historical comparison. Meshes and controllers remain
 separate asset inputs.
 
 ## Physical Limits Remain
 
-Packaging changes neither the accepted videos nor the physics. No bowling
-case fully qualifies: overarm retains three delivery failures per case,
-underarm seven. Underarm has greater airborne carry in this setup, not greater
+Packaging changes neither the accepted videos nor their physics. No bowling
+case fully qualifies: the original overarm task retains three delivery failures
+per case, underarm seven, and the separate v77 profile retains two. Underarm
+has greater airborne carry in the original setup, not greater
 total distance including roll, and uses different release settings. It is an
 experimental controller/setup comparison, not proof of a G1 hardware limit.
 Mechanical ball holding and reference-arm control remain explicit limitations;

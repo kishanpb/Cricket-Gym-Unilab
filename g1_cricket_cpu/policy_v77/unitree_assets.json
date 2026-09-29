@@ -1,0 +1,296 @@
+{
+  "scope": "Mesh bytes and source license only; not scene/controller release approval",
+  "repository": "https://github.com/unitreerobotics/unitree_ros",
+  "revision": "ccfc6fd8430a17ba3dacef9a1e2faf64ff3b0aee",
+  "license": "BSD-3-Clause",
+  "license_url": "https://raw.githubusercontent.com/unitreerobotics/unitree_ros/ccfc6fd8430a17ba3dacef9a1e2faf64ff3b0aee/LICENSE",
+  "license_file": "UNITREE_LICENSE",
+  "license_sha256": "84aac59fd3246e3ddc49d1387644e8fcf43b0def4f0b9fe687f372e90446df2d",
+  "source_tree_sha256": "d7aed5d416015f6a9ac750c5eb0e8dd7d4fca482f421ef8be75e83ff92d819ec",
+  "assets": {
+    "assets/5ba6bbc888e630550140d3c26763f10206da8c8bd30ed886b8ede41c61f57a31.stl": {
+      "size_bytes": 1060884,
+      "sha256": "5ba6bbc888e630550140d3c26763f10206da8c8bd30ed886b8ede41c61f57a31",
+      "git_blob": "691a779b9c9f4c97f48eaa9edf9eb336ca3b4411",
+      "upstream_paths": [
+        "robots/g1_description/meshes/pelvis.STL"
+      ]
+    },
+    "assets/5cc5c2c7a312329e3feeb2b03d3fc09fc29705bd01864f6767e51be959662420.stl": {
+      "size_bytes": 1805184,
+      "sha256": "5cc5c2c7a312329e3feeb2b03d3fc09fc29705bd01864f6767e51be959662420",
+      "git_blob": "42434339abf5a0a3816f890389e3e61af3b1e03c",
+      "upstream_paths": [
+        "robots/g1_description/meshes/pelvis_contour_link.STL"
+      ]
+    },
+    "assets/4725168105ee768ee31638ef22b53f6be2d7641bfd7cfefe803488d884776fa4.stl": {
+      "size_bytes": 181684,
+      "sha256": "4725168105ee768ee31638ef22b53f6be2d7641bfd7cfefe803488d884776fa4",
+      "git_blob": "5b751c767ecf03b29c707b19f1faf5367e8d33d2",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_hip_pitch_link.STL"
+      ]
+    },
+    "assets/91f25922ee8a7c3152790051bebad17b4d9cd243569c38fe340285ff93a97acf.stl": {
+      "size_bytes": 192184,
+      "sha256": "91f25922ee8a7c3152790051bebad17b4d9cd243569c38fe340285ff93a97acf",
+      "git_blob": "778437ffe61731915fa4cb7cf2390e9cbe738c43",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_hip_roll_link.STL"
+      ]
+    },
+    "assets/a16d88aa6ddac8083aa7ad55ed317bea44b1fa003d314fba88965b7ed0f3b55b.stl": {
+      "size_bytes": 296284,
+      "sha256": "a16d88aa6ddac8083aa7ad55ed317bea44b1fa003d314fba88965b7ed0f3b55b",
+      "git_blob": "383093ab96ed3a099ab79f5d6ed144fc0b7067a9",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_hip_yaw_link.STL"
+      ]
+    },
+    "assets/8d92b9e3d3a636761150bb8025e32514c4602b91c7028d523ee42b3e632de477.stl": {
+      "size_bytes": 854884,
+      "sha256": "8d92b9e3d3a636761150bb8025e32514c4602b91c7028d523ee42b3e632de477",
+      "git_blob": "f2e98e54e8f1980eb62ad25c7a838044c23bbadf",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_knee_link.STL"
+      ]
+    },
+    "assets/d49e3abc6f5b12e532062cd575b87b5ef40cd2a3fc18f54a1ca5bba4f773d51d.stl": {
+      "size_bytes": 71184,
+      "sha256": "d49e3abc6f5b12e532062cd575b87b5ef40cd2a3fc18f54a1ca5bba4f773d51d",
+      "git_blob": "69de8490184afc698f633e34bb74e65351bd4689",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_ankle_pitch_link.STL"
+      ]
+    },
+    "assets/c4092af943141d4d9f74232f3cfa345afc6565f46a077793b8ae0e68b39dc33f.stl": {
+      "size_bytes": 653384,
+      "sha256": "c4092af943141d4d9f74232f3cfa345afc6565f46a077793b8ae0e68b39dc33f",
+      "git_blob": "8864e9f98103190883d1ba027aba5469925f2bca",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_ankle_roll_link.STL"
+      ]
+    },
+    "assets/e4f3c99d7f4a7d34eadbef9461fc66e3486cb5442db1ec50c86317d459f1a9c6.stl": {
+      "size_bytes": 181284,
+      "sha256": "e4f3c99d7f4a7d34eadbef9461fc66e3486cb5442db1ec50c86317d459f1a9c6",
+      "git_blob": "998a0a0f5c248b217cf82c5088d6d365d9654ecd",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_hip_pitch_link.STL"
+      ]
+    },
+    "assets/4c254ef66a356f492947f360dd931965477b631e3fcc841f91ccc46d945d54f6.stl": {
+      "size_bytes": 192684,
+      "sha256": "4c254ef66a356f492947f360dd931965477b631e3fcc841f91ccc46d945d54f6",
+      "git_blob": "47b2eebdd36c7289679eebb9583c65a15514e194",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_hip_roll_link.STL"
+      ]
+    },
+    "assets/e479c2936ca2057e9eb2f7dff6c189b7419d7b8484dea0b298cbb36a2a6aa668.stl": {
+      "size_bytes": 296284,
+      "sha256": "e479c2936ca2057e9eb2f7dff6c189b7419d7b8484dea0b298cbb36a2a6aa668",
+      "git_blob": "371856427c7cc31ae7463c83f00ef6652c72d672",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_hip_yaw_link.STL"
+      ]
+    },
+    "assets/63c4008449c9bbe701a6e2b557b7a252e90cf3a5abcf54cee46862b9a69f8ec8.stl": {
+      "size_bytes": 852284,
+      "sha256": "63c4008449c9bbe701a6e2b557b7a252e90cf3a5abcf54cee46862b9a69f8ec8",
+      "git_blob": "76d21a3d81e4e34520c5d6b3f28d7e43c1874364",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_knee_link.STL"
+      ]
+    },
+    "assets/15be426539ec1be70246d4d82a168806db64a41301af8b35c197a33348c787a9.stl": {
+      "size_bytes": 71184,
+      "sha256": "15be426539ec1be70246d4d82a168806db64a41301af8b35c197a33348c787a9",
+      "git_blob": "e77d8a2fe1e5d56fac049833d254d6ffa4f6b350",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_ankle_pitch_link.STL"
+      ]
+    },
+    "assets/4b66222ea56653e627711b56d0a8949b4920da5df091da0ceb343f54e884e3a5.stl": {
+      "size_bytes": 653784,
+      "sha256": "4b66222ea56653e627711b56d0a8949b4920da5df091da0ceb343f54e884e3a5",
+      "git_blob": "d4261dd7ccf39dd9c54cad37c1982f1d50e6fccc",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_ankle_roll_link.STL"
+      ]
+    },
+    "assets/ec6db442b11f25eed898b5add07940c85d804f300de24dcbd264ccd8be7d554c.stl": {
+      "size_bytes": 619984,
+      "sha256": "ec6db442b11f25eed898b5add07940c85d804f300de24dcbd264ccd8be7d554c",
+      "git_blob": "0fabb63d37627cb77f64c5d2a46cf25d4acc66fc",
+      "upstream_paths": [
+        "robots/g1_description/meshes/waist_yaw_link_rev_1_0.STL"
+      ]
+    },
+    "assets/b67c347a05abc3e8ddae600d98a082bee273bb39f8e651647708b0a7140a8a97.stl": {
+      "size_bytes": 85884,
+      "sha256": "b67c347a05abc3e8ddae600d98a082bee273bb39f8e651647708b0a7140a8a97",
+      "git_blob": "a64f330c592582dc31cdf38f4d08cfff06681c5f",
+      "upstream_paths": [
+        "robots/g1_description/meshes/waist_roll_link_rev_1_0.STL"
+      ]
+    },
+    "assets/11ddb46f2098efbbd8816b1d65893632d8e78be936376c7cdcd6771899ccc723.stl": {
+      "size_bytes": 2570584,
+      "sha256": "11ddb46f2098efbbd8816b1d65893632d8e78be936376c7cdcd6771899ccc723",
+      "git_blob": "8a759a709750ad97e1f372db0ebbff246daedcc1",
+      "upstream_paths": [
+        "robots/g1_description/meshes/torso_link_rev_1_0.STL"
+      ]
+    },
+    "assets/8571a0a19bc4916fa55f91449f51d5fdefd751000054865a842449429d5f155b.stl": {
+      "size_bytes": 243384,
+      "sha256": "8571a0a19bc4916fa55f91449f51d5fdefd751000054865a842449429d5f155b",
+      "git_blob": "e9792098504b64b359fbffa983373e5e6fa1b50a",
+      "upstream_paths": [
+        "robots/g1_description/meshes/logo_link.STL"
+      ]
+    },
+    "assets/005fb67fbd3eff94aa8bf4a6e83238174e9f91b6721f7111594322f223724411.stl": {
+      "size_bytes": 932784,
+      "sha256": "005fb67fbd3eff94aa8bf4a6e83238174e9f91b6721f7111594322f223724411",
+      "git_blob": "2ee5fba15de3ccd4c31774bc7a66de7aeefab770",
+      "upstream_paths": [
+        "robots/g1_description/meshes/head_link.STL"
+      ]
+    },
+    "assets/f0d1cfd02fcf0d42f95e678eeca33da3afbcc366ffba5c052847773ec4f31d52.stl": {
+      "size_bytes": 176784,
+      "sha256": "f0d1cfd02fcf0d42f95e678eeca33da3afbcc366ffba5c052847773ec4f31d52",
+      "git_blob": "e698311fb12d3f22f018b668c40dab667c39b8d3",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_shoulder_pitch_link.STL"
+      ]
+    },
+    "assets/fb9df21687773522598dc384f1a2945c7519f11cbc8bd372a49170316d6eee88.stl": {
+      "size_bytes": 400284,
+      "sha256": "fb9df21687773522598dc384f1a2945c7519f11cbc8bd372a49170316d6eee88",
+      "git_blob": "80bca84aca41137f8270fb35e263dcc5d9658e43",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_shoulder_roll_link.STL"
+      ]
+    },
+    "assets/1aa97e9748e924336567992181f78c7cd0652fd52a4afcca3df6b2ef6f9e712e.stl": {
+      "size_bytes": 249184,
+      "sha256": "1aa97e9748e924336567992181f78c7cd0652fd52a4afcca3df6b2ef6f9e712e",
+      "git_blob": "281e699055ffafe094f52a440547eb4b64f83bfa",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_shoulder_yaw_link.STL"
+      ]
+    },
+    "assets/fa752198accd104d5c4c3a01382e45165b944fbbc5acce085059223324e5bed3.stl": {
+      "size_bytes": 88784,
+      "sha256": "fa752198accd104d5c4c3a01382e45165b944fbbc5acce085059223324e5bed3",
+      "git_blob": "1a96d99ba469960173129084ab6dd3bf8a732a71",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_elbow_link.STL"
+      ]
+    },
+    "assets/edc387c9a0ba8c2237e9b296d32531426fabeb6f53e58df45c76106bca74148c.stl": {
+      "size_bytes": 356184,
+      "sha256": "edc387c9a0ba8c2237e9b296d32531426fabeb6f53e58df45c76106bca74148c",
+      "git_blob": "f3c263a7ab3fc1e902bf2513064d4bc666c6b59f",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_wrist_roll_link.STL"
+      ]
+    },
+    "assets/b251d8e05047f695d0f536cd78c11973cfa4e78d08cfe82759336cc3471de3a9.stl": {
+      "size_bytes": 85984,
+      "sha256": "b251d8e05047f695d0f536cd78c11973cfa4e78d08cfe82759336cc3471de3a9",
+      "git_blob": "82cc224a8e41251d879502f9809e31d0988ec7f9",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_wrist_pitch_link.STL"
+      ]
+    },
+    "assets/83f8fb3a726bf9613d65dd14f0f447cb918c3c95b3938042a0c9c09749267d3b.stl": {
+      "size_bytes": 318684,
+      "sha256": "83f8fb3a726bf9613d65dd14f0f447cb918c3c95b3938042a0c9c09749267d3b",
+      "git_blob": "31be4fd45fa18987b35b3386fdce2ce98c798774",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_wrist_yaw_link.STL"
+      ]
+    },
+    "assets/cff2221a690fa69303f61fce68f2d155c1517b52efb6ca9262dd56e0bc6e70fe.stl": {
+      "size_bytes": 2287484,
+      "sha256": "cff2221a690fa69303f61fce68f2d155c1517b52efb6ca9262dd56e0bc6e70fe",
+      "git_blob": "c44830f1fd519ee28750cad04d7d0adb209c265f",
+      "upstream_paths": [
+        "robots/g1_description/meshes/left_rubber_hand.STL"
+      ]
+    },
+    "assets/24cdb387e0128dfe602770a81c56cdce3a0181d34d039a11d1aaf8819b7b8c02.stl": {
+      "size_bytes": 176784,
+      "sha256": "24cdb387e0128dfe602770a81c56cdce3a0181d34d039a11d1aaf8819b7b8c02",
+      "git_blob": "3f5b4ed47ade68e83f617ef3fd65cb810e9b0e07",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_shoulder_pitch_link.STL"
+      ]
+    },
+    "assets/962b97c48f9ce9e8399f45dd9522e0865d19aa9fd299406b2d475a8fc4a53e81.stl": {
+      "size_bytes": 401884,
+      "sha256": "962b97c48f9ce9e8399f45dd9522e0865d19aa9fd299406b2d475a8fc4a53e81",
+      "git_blob": "179d61753d48b3a55165b81ded2c14e84deb81c2",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_shoulder_roll_link.STL"
+      ]
+    },
+    "assets/a0b76489271da0c72461a344c9ffb0f0c6e64f019ea5014c1624886c442a2fe5.stl": {
+      "size_bytes": 249984,
+      "sha256": "a0b76489271da0c72461a344c9ffb0f0c6e64f019ea5014c1624886c442a2fe5",
+      "git_blob": "2ba6076a8853edac5e3e17cffd2c256318e88d92",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_shoulder_yaw_link.STL"
+      ]
+    },
+    "assets/1be925d7aa268bb8fddf5362b9173066890c7d32092c05638608126e59d1e2ab.stl": {
+      "size_bytes": 88784,
+      "sha256": "1be925d7aa268bb8fddf5362b9173066890c7d32092c05638608126e59d1e2ab",
+      "git_blob": "f259e3812efb9985d6463c04d3e8a4b53793a699",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_elbow_link.STL"
+      ]
+    },
+    "assets/a7ee9212ff5b94d6cb7f52bb1bbf3f352194d5b598acff74f4c77d340c5b344f.stl": {
+      "size_bytes": 356084,
+      "sha256": "a7ee9212ff5b94d6cb7f52bb1bbf3f352194d5b598acff74f4c77d340c5b344f",
+      "git_blob": "26868d2282b7e38c2ba40e00968d2c92c421fbd2",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_wrist_roll_link.STL"
+      ]
+    },
+    "assets/d22f8f3b3127f15a63e5be1ee273cd5075786c3142f1c3d9f76cbf43d2a26477.stl": {
+      "size_bytes": 79584,
+      "sha256": "d22f8f3b3127f15a63e5be1ee273cd5075786c3142f1c3d9f76cbf43d2a26477",
+      "git_blob": "da194543c40df9d492abb0553c06cc614a78caae",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_wrist_pitch_link.STL"
+      ]
+    },
+    "assets/bc9dece2d12509707e0057ba2e48df8f3d56db0c79410212963a25e8a50f61a6.stl": {
+      "size_bytes": 341484,
+      "sha256": "bc9dece2d12509707e0057ba2e48df8f3d56db0c79410212963a25e8a50f61a6",
+      "git_blob": "d788902867014c5984e6029fce822508579f73dc",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_wrist_yaw_link.STL"
+      ]
+    },
+    "assets/99533b778bca6246144fa511bb9d4e555e075c641f2a0251e04372869cd99d67.stl": {
+      "size_bytes": 2192684,
+      "sha256": "99533b778bca6246144fa511bb9d4e555e075c641f2a0251e04372869cd99d67",
+      "git_blob": "0aacffbb8168f0bb588f8cba3f37f9e2c6e0421a",
+      "upstream_paths": [
+        "robots/g1_description/meshes/right_rubber_hand.STL"
+      ]
+    }
+  },
+  "verifier": {
+    "size_bytes": 3096,
+    "sha256": "69aea16d56b98823cfac33be6efb1bf0ae0e20247a538445edbf968d14a33c5d"
+  }
+}

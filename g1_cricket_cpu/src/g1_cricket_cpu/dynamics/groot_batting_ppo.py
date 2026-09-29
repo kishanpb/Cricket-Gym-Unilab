@@ -48,9 +48,9 @@ class Value(DeterministicMixin, Model):
     def compute(self, inputs, role=''):
         return (self.net(inputs['observations']), {})
 
-def make_agent(env, steps, *, gae_lambda=0.95, rollouts=EPISODE_STEPS, initial_mean=None, log_std=-3.0):
+def make_agent(env, steps, *, gae_lambda=0.95, rollouts=EPISODE_STEPS, initial_mean=None, log_std=-3.0, policy_class=Policy):
     cfg = dict(rollouts=rollouts, learning_epochs=4, mini_batches=4, learning_rate=0.0003, gae_lambda=gae_lambda, discount_factor=0.995, random_timesteps=0, learning_starts=0, time_limit_bootstrap=False, experiment=dict(write_interval=0, checkpoint_interval=0, wandb=False))
-    agent = PPO(models={'policy': Policy(env.observation_space, env.action_space, initial_mean=initial_mean, log_std=log_std), 'value': Value(env.observation_space, env.action_space)}, memory=RandomMemory(memory_size=rollouts, num_envs=getattr(env, 'num_envs', 1), device='cpu'), observation_space=env.observation_space, action_space=env.action_space, device='cpu', cfg=cfg)
+    agent = PPO(models={'policy': policy_class(env.observation_space, env.action_space, initial_mean=initial_mean, log_std=log_std), 'value': Value(env.observation_space, env.action_space)}, memory=RandomMemory(memory_size=rollouts, num_envs=getattr(env, 'num_envs', 1), device='cpu'), observation_space=env.observation_space, action_space=env.action_space, device='cpu', cfg=cfg)
     agent.init(trainer_cfg=TrainerCfg(timesteps=steps))
     return (agent, cfg)
 

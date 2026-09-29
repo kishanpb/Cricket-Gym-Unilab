@@ -18,12 +18,12 @@
       "sha256": "f71998e95c9c0f364f7b76bf644588c16257bf5c3c9844e3748783335212c176"
     },
     "integrations/g1_dynamics/amp_bowling_env.py": {
-      "size_bytes": 14414,
-      "sha256": "03a34e684ef78fff102066b77c352093b3abfa198d276f480af64bc7d192bc0c"
+      "size_bytes": 17753,
+      "sha256": "9d4a5f84b884a545551523a813c39c455e7311e1029c3cd74c931634a4212c45"
     },
     "integrations/g1_dynamics/amp_bowling_probe.py": {
-      "size_bytes": 51742,
-      "sha256": "6384e9e6f4da164e1ddb4c6cf5a89de89236fb16a9a758aec6577714e147dcd6"
+      "size_bytes": 53039,
+      "sha256": "43410261b736e4ecc4a2ea4523dd633ea2d98bbf98975feeb37e566d67956660"
     },
     "integrations/g1_dynamics/amp_running_probe.py": {
       "size_bytes": 14354,
@@ -49,13 +49,17 @@
       "size_bytes": 8019,
       "sha256": "c603cfc2ea4bbc622fd8274c4f0b7e5cb30dfc55091878567b0fde61db85f444"
     },
+    "integrations/g1_dynamics/bowling_policy_bundle.py": {
+      "size_bytes": 6327,
+      "sha256": "345b7b029caddc91dcb0de8dbccd080b62728fd8e48904bc14673d32f8b33ddf"
+    },
     "integrations/g1_dynamics/bowling_release_window.py": {
       "size_bytes": 7075,
       "sha256": "ee3df480cfaf3f676e1f153c21aaeeb1290f9576e24ba27bd8171b145cfb245e"
     },
     "integrations/g1_dynamics/bowling_support_clock.py": {
-      "size_bytes": 1348,
-      "sha256": "222436381a4f07b10cab9bbab9036b8c5cba81a445b3c9a99cf3576f3fc1b5e5"
+      "size_bytes": 1782,
+      "sha256": "458008df4d9b2f2ef87b487ce251be465c6a445fdd23530d6262ba83c70429dd"
     },
     "integrations/g1_dynamics/bowling_sweep_reference.py": {
       "size_bytes": 9717,
@@ -78,8 +82,8 @@
       "sha256": "215f92253fc8f2e7af36d92f1cb1bf254c114adf95b4556624197ce0157c3129"
     },
     "integrations/g1_dynamics/groot_batting_ppo.py": {
-      "size_bytes": 19045,
-      "sha256": "d2104dc4bb41d766ecad929f1ec282334b530b8f4f14af1ecc5e339b0eeb9551"
+      "size_bytes": 19076,
+      "sha256": "8a59f69f5498092574ca6f743c7d79b9625118d49c898d2a645b6024e859fbee"
     },
     "integrations/g1_dynamics/groot_batting_vector.py": {
       "size_bytes": 3387,
@@ -130,8 +134,12 @@
       "sha256": "e689ab8eb41c18593ebc4d7e3d658101bd319e3e63d114ee1a9bd7617556fe24"
     },
     "integrations/g1_dynamics/unilab_tasks/bowling.py": {
-      "size_bytes": 2468,
-      "sha256": "02e119ce737fce854751f0a2543660464904c591ccd7d5602e1b54252754374b"
+      "size_bytes": 3360,
+      "sha256": "12119f2c9cfc046566a0e85127ec3391ff314fd50475c803223ed7996857741f"
+    },
+    "integrations/g1_dynamics/unilab_tasks/bowling_policy_replay.py": {
+      "size_bytes": 4367,
+      "sha256": "7c6f50fb3b3aa71411d3f58e5d5c98d24a5f1acafcd7599bb3adf8b683d98061"
     },
     "integrations/g1_dynamics/unirl_batting_env.py": {
       "size_bytes": 1000,
@@ -317,6 +325,10 @@
       "size_bytes": 215,
       "sha256": "c13d124c59db9c743f362f2badd2ecdc50e64ab5ea03a7d8aa2a2369df57f405"
     },
+    "integrations/g1_dynamics/unilab_tasks/conf/task/g1_cricket_bowling_policy_cpu/mujoco.yaml": {
+      "size_bytes": 223,
+      "sha256": "939bae1a1e248532a64432301a7800462d9d1e8a796615465442eb730909ec7d"
+    },
     "integrations/g1_dynamics/unilab_tasks/conf/task/g1_cricket_residual_cpu/mujoco.yaml": {
       "size_bytes": 603,
       "sha256": "fac24b064b3fb3b8b5b8fd241d288c04ba7dc68a2421072243f5870425029711"
@@ -326,12 +338,12 @@
       "sha256": "a7340a2248bd7844818603018c70cf338701db36a69fc53981c8ea8b0d028c7e"
     },
     "integrations/g1_dynamics/unilab_distribution.py": {
-      "size_bytes": 7457,
-      "sha256": "0d78fe406544b3041a1f688167c2801cb58de34599f594b6648d3aa151d22c00"
+      "size_bytes": 7535,
+      "sha256": "b7cf8a2012d6ab0f4d0f1cc6c6437f023a194f01559f91813f3249c5d5ffe7e3"
     },
     "integrations/g1_dynamics/unilab_distribution_readme.md": {
-      "size_bytes": 2972,
-      "sha256": "411c4c226af0a6df11d6f4578ff9473b4f557f9ece54d8629c9ee3982660af48"
+      "size_bytes": 4602,
+      "sha256": "2c196a3066c52a7d27628f80a51ead1106c3cfdaf1188ce4497f9ae1473cbbfc"
     },
     "release/g1_batting_runtime/pyproject.toml": {
       "size_bytes": 833,
@@ -348,12 +360,12 @@
       "sha256": "2191d05c6ee7c145480916b745bd020484adb61653be943c43cff10bc22927a1"
     },
     "README.md": {
-      "size_bytes": 2972,
-      "sha256": "411c4c226af0a6df11d6f4578ff9473b4f557f9ece54d8629c9ee3982660af48"
+      "size_bytes": 4602,
+      "sha256": "2c196a3066c52a7d27628f80a51ead1106c3cfdaf1188ce4497f9ae1473cbbfc"
     },
     "pyproject.toml": {
       "size_bytes": 765,
-      "sha256": "6fb1f546e9bd5241c08bd45a7c5659c3c99b05e5c4ed104fd6feee871c99dbd3"
+      "sha256": "b9e7098ff05c0f6cfd6b35a1a6b9cae9bf54cb40c0b1413681a5e429042455dc"
     },
     "src/g1_cricket_cpu/__init__.py": {
       "size_bytes": 127,
@@ -367,6 +379,10 @@
       "size_bytes": 215,
       "sha256": "a7340a2248bd7844818603018c70cf338701db36a69fc53981c8ea8b0d028c7e"
     },
+    "src/g1_cricket_cpu/conf/task/g1_cricket_bowling_policy_cpu/mujoco.yaml": {
+      "size_bytes": 223,
+      "sha256": "939bae1a1e248532a64432301a7800462d9d1e8a796615465442eb730909ec7d"
+    },
     "src/g1_cricket_cpu/conf/task/g1_cricket_residual_cpu/mujoco.yaml": {
       "size_bytes": 603,
       "sha256": "fac24b064b3fb3b8b5b8fd241d288c04ba7dc68a2421072243f5870425029711"
@@ -376,12 +392,12 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "src/g1_cricket_cpu/dynamics/amp_bowling_env.py": {
-      "size_bytes": 13508,
-      "sha256": "a717ba617f170e90ee2d974fe75a180f197e90f3a6192fe5f16ae0ae271d1e7f"
+      "size_bytes": 16593,
+      "sha256": "9c1eb9f293d7886981e8fe9a4179d2745e8315c523ed5070b6e8301765384a7c"
     },
     "src/g1_cricket_cpu/dynamics/amp_bowling_probe.py": {
-      "size_bytes": 46024,
-      "sha256": "c313e989e43a0f14867be97b1d039ef768cb794b6eebcc060abf15e2b31b2799"
+      "size_bytes": 47187,
+      "sha256": "f53e291bc54c1c83a5a9f734250ea04c1fe1020d95ce069bb19f1b94b74a8826"
     },
     "src/g1_cricket_cpu/dynamics/amp_running_probe.py": {
       "size_bytes": 12431,
@@ -407,13 +423,17 @@
       "size_bytes": 7690,
       "sha256": "386d55525f6184b18f58601c3c9ef5591c2b4e292b07fbaa70977084cc004867"
     },
+    "src/g1_cricket_cpu/dynamics/bowling_policy_bundle.py": {
+      "size_bytes": 6109,
+      "sha256": "7e54a2bb62c4df1e0600f0767f7bd6b122d7cb400f07401f5d46d54d258d25c8"
+    },
     "src/g1_cricket_cpu/dynamics/bowling_release_window.py": {
       "size_bytes": 6658,
       "sha256": "6586195c0603b544cb6f99a29dff836848cfa24ae44d86604a8414850fda3502"
     },
     "src/g1_cricket_cpu/dynamics/bowling_support_clock.py": {
-      "size_bytes": 1222,
-      "sha256": "7e32e11e7738955894ed4f1c45ef76e90bdc09ed874a07f323f6f41ca65b2028"
+      "size_bytes": 1656,
+      "sha256": "d73c1d4d0bd93ded5bcc492fe7e4163af54e977589a07cc5d55bae271c103cb6"
     },
     "src/g1_cricket_cpu/dynamics/bowling_sweep_reference.py": {
       "size_bytes": 8851,
@@ -436,8 +456,8 @@
       "sha256": "3aaaa6bcf5ad0d4e40d8ef0ab61a3fe14fcbeb4e2337a453438883be5d842c86"
     },
     "src/g1_cricket_cpu/dynamics/groot_batting_ppo.py": {
-      "size_bytes": 15873,
-      "sha256": "2d9715a8190bf4d6a33a537d8f5523f87fae9d66544200ddac197dc0f0646243"
+      "size_bytes": 15900,
+      "sha256": "436aea9848323ff798d4b7bf9bae1bad076023cc2b591de1d6385c78c09f121b"
     },
     "src/g1_cricket_cpu/dynamics/groot_batting_vector.py": {
       "size_bytes": 2871,
@@ -492,8 +512,12 @@
       "sha256": "4118bb822f6c59685841a028d133d53257ab9568b745176178285f3a17af13d2"
     },
     "src/g1_cricket_cpu/dynamics/unilab_tasks/bowling.py": {
-      "size_bytes": 2388,
-      "sha256": "d5bb2ed618594885e8dcb65e9b56d59c7660d971b87d702529baedce6b8eeb9a"
+      "size_bytes": 3241,
+      "sha256": "14b0e5b126448498ae952d1cb8ca4b686be8eb632fb7126cbc54e3a295709320"
+    },
+    "src/g1_cricket_cpu/dynamics/unilab_tasks/bowling_policy_replay.py": {
+      "size_bytes": 4173,
+      "sha256": "57a36b65ef50bcf9d5688749cedb8a74d79d94ee716f0b2b25f0b99013ad2459"
     },
     "src/g1_cricket_cpu/dynamics/unirl_batting_env.py": {
       "size_bytes": 995,
@@ -704,7 +728,7 @@
       "sha256": "77505a725b1e5d95308b8dbe0935938367d892adf1090a3ce8864fad36a0b78d"
     }
   },
-  "source_module_count": 78,
+  "source_module_count": 80,
   "module_relocations": {
     "integrations.g1_dynamics": "g1_cricket_cpu.dynamics",
     "unilab.tasks.manipulation.g1_cricket": "g1_cricket_cpu.physics",

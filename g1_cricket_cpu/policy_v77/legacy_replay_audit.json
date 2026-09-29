@@ -1,0 +1,85 @@
+{
+  "scope": "Wheel-installed adapter: one zero-residual batting episode and complete eight-case bowling parity",
+  "results": [
+    {
+      "style": "batting",
+      "control_steps": 400,
+      "stream_sha256": "4f63e599bcd07563d7f5e0a9e121ee29f2684edcbc66811d5537a4f10f54809d",
+      "exact_result_parity": true,
+      "native_trace_comparisons": [],
+      "installed_module_count": 183
+    },
+    {
+      "style": "overarm",
+      "control_steps": 1600,
+      "stream_sha256": "c4d533bd7c87c4bba58db333518de877b17641b3a2187752a28e0e3bb4ae2a72",
+      "exact_result_parity": true,
+      "native_trace_comparisons": [
+        {
+          "case": "right_dt3.125e-05",
+          "arrays_exact": 14,
+          "physics_samples": 256000
+        },
+        {
+          "case": "right_dt6.25e-05",
+          "arrays_exact": 14,
+          "physics_samples": 128000
+        },
+        {
+          "case": "left_dt6.25e-05",
+          "arrays_exact": 14,
+          "physics_samples": 128000
+        },
+        {
+          "case": "left_dt3.125e-05",
+          "arrays_exact": 14,
+          "physics_samples": 256000
+        }
+      ],
+      "installed_module_count": 157
+    },
+    {
+      "style": "underarm",
+      "control_steps": 1600,
+      "stream_sha256": "0d47ae96ed921dd85507f88a1243b97ccb9cf24365b94fe2e8174b472bff510b",
+      "exact_result_parity": true,
+      "native_trace_comparisons": [
+        {
+          "case": "right_dt3.125e-05",
+          "arrays_exact": 14,
+          "physics_samples": 256000
+        },
+        {
+          "case": "right_dt6.25e-05",
+          "arrays_exact": 14,
+          "physics_samples": 128000
+        },
+        {
+          "case": "left_dt6.25e-05",
+          "arrays_exact": 14,
+          "physics_samples": 128000
+        },
+        {
+          "case": "left_dt3.125e-05",
+          "arrays_exact": 14,
+          "physics_samples": 256000
+        }
+      ],
+      "installed_module_count": 183
+    }
+  ],
+  "wheels": {
+    "g1_cricket_cpu-0.1.2-py3-none-any.whl": {
+      "size_bytes": 216023,
+      "sha256": "4f9b5105e0b53b43ff01615a1962a0db7f9e32ed3fcc4c69bd28e81c7f08dabd"
+    },
+    "unilab-1.2.0-py3-none-any.whl": {
+      "size_bytes": 43094800,
+      "sha256": "a10ed94a5a83edbab31b5716f727c709f61c8b30755050a258fc1187caa17047"
+    }
+  },
+  "source_summary_sha256": "68b942837716d65c67cbade4b4eda42fe70e56b370b16c0a21812b99d5b4acaa",
+  "full_batting_cohort_verified": false,
+  "learned_skill_improved": false,
+  "promotion_allowed": false
+}

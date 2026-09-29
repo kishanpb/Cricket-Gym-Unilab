@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - /task/g1_cricket_bowling_cpu/mujoco
+  - _self_
+training:
+  task_name: G1CricketBowlingPolicyCpu
+env:
+  policy_bundle: ???
+  delivery_style: overarm
+reward:
+  version: checkpoint_bowling_v1

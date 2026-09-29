@@ -33,6 +33,10 @@ the retained physics and exposes overarm/experimental underarm bowling; it is
 not a ManagerBasedRlEnv rewrite or evidence of improved learned performance.
 [Installed-package validation](g1_cricket_cpu/VALIDATION.md) covers exact
 retained-episode parity and both PPO connection tests.
+Adapter 0.1.2 adds a separate [30-action bowling checkpoint profile](g1_cricket_cpu/README.md)
+with a public replay command and complete contact/force traces. All four
+retained cases reproduce exactly but still fail delivery qualification; this
+is reproducibility progress, not a new successful bowling video.
 [Train bounded bowling torque residuals on CPU](g1_cricket_training/README.md)
 with the separate standalone SKRL PPO extension. Its 400-step native-mjbatch
 run reproduced the development checkpoint and all four evaluations exactly,

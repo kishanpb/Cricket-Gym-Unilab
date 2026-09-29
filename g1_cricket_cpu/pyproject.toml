@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "g1-cricket-cpu"
-version = "0.1.1"
+version = "0.1.2"
 description = "CPU G1 cricket tasks with explicit external controller and scene assets"
 requires-python = ">=3.13,<3.14"
 license = "Apache-2.0"
