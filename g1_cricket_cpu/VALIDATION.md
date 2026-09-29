@@ -43,6 +43,34 @@ task/framework modules originate in the isolated installation. This repeats
 one batting episode, not the complete fourteen-case trained batting cohort
 previously verified for 0.1.1. See the [legacy replay audit](policy_v77/legacy_replay_audit.json).
 
+The subsequent full trained-batting replay on 0.1.2 also passes, through the
+installed `G1CricketResidualCpu` registry with the retained SKRL PPO weights.
+All fourteen ordered hand/feed cases match exactly: 140 trace arrays,
+1,011,437 native samples, 5,614 observations, 5,600 actions/rewards, every
+simulated tactile record and every physical outcome. Both hands retain the
+same pattern: feeds 0, 3, 5 and 6 are qualified hits; feeds 1 and 4 fail the
+physical checks; feed 2 passes physics but is not a qualified hit. No case
+scores a boundary. Thus the complete cohort remains 10 physical passes,
+8 qualified hits and zero boundaries, not fourteen successful attempts.
+
+The CPU replay took 1,116.93 seconds with two workers, one per hand. Its saved
+summary SHA-256 is
+`d44b5634c3d6ff11114443df409a9e6d36def3060543ecd24409c26c4f56bbe3`;
+the executed-source archive SHA-256 is
+`86523643e22ef1d161f88fedd8309b7d87146709d80b963030c29acadc1d55db`.
+Input, parent-trace and installed-source fingerprints remain unchanged; all
+90 adapter and 574 framework files still match the wheels below. All 22
+focused replay-verifier tests pass. This closes the current-wheel batting
+replay gap, not the physical failure cases or the legal-bowling requirement.
+No policy, package, video or historical training result changed.
+
+For this documentation update, `uv run --no-sync pytest
+tests/scripts/test_check_docs.py -q` gives 18 passed and one failure: the
+existing `check_file_paths` regex raises `IndexError: no such group` on the
+unchanged root README, also reproduced from `HEAD`. The edited document's
+local links pass separately. The prescribed Sphinx HTML build with
+`UNILAB_DOCS_SKIP_AUTODOC=1` succeeds; this is not a clean repository-wide gate.
+
 ### Recovery Fade Fix: 0.1.1
 
 The registered batting factory in 0.1.0 omitted the accepted policy's
