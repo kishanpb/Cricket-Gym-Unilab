@@ -11,7 +11,7 @@ def transition(time, start, end):
     x = np.clip((np.asarray(time) - start) / (end - start), 0, 1)
     return x ** 3 * (10 - 15 * x + 6 * x ** 2)
 
-def sweep_positions(times, original, names, hand, *, duration=0.2, cocked_pitch=-3.0, cocking_start=1.0, elbow_angle=1.3, sweep_pitch=-1.2, sweep_knot_speed=0.0, wrist_flick=0.0, shoulder_yaw_sweep=0.0, shoulder_roll=0.6):
+def sweep_positions(times, original, names, hand, *, duration=0.2, cocked_pitch=-3.0, cocking_start=1.0, elbow_angle=1.3, sweep_pitch=-1.2, sweep_knot_speed=0.0, wrist_flick=0.0, shoulder_yaw_sweep=0.0, shoulder_roll=0.6, shoulder_yaw_delay=0.0, shoulder_yaw_preload=None):
     result = original.copy()
     shift = duration - 0.2
     envelope = transition(times, cocking_start, 1.5) * (1 - transition(times, 2.2 + shift, 2.7))
@@ -33,7 +33,10 @@ def sweep_positions(times, original, names, hand, *, duration=0.2, cocked_pitch=
             value = -shoulder_roll if hand == 'right' else shoulder_roll
         elif 'shoulder_yaw' in name and shoulder_yaw_sweep:
             direction = 1 if hand == 'right' else -1
-            value = direction * shoulder_yaw_sweep * (0.25 + 0.75 * transition(times, 1.7, 1.9 + shift)) * (1 - transition(times, 1.9 + shift, 2.1 + shift))
+            yaw_time = times - shoulder_yaw_delay
+            value = direction * shoulder_yaw_sweep * (0.25 + 0.75 * transition(yaw_time, 1.7, 1.9 + shift)) * (1 - transition(yaw_time, 1.9 + shift, 2.1 + shift))
+            if shoulder_yaw_preload is not None:
+                value += direction * (shoulder_yaw_preload - 0.25 * shoulder_yaw_sweep) * (1 - transition(yaw_time, 1.7, 1.9 + shift)) * (1 - transition(yaw_time, 1.9 + shift, 2.1 + shift))
         elif 'elbow' in name:
             value = elbow_angle
             weight = elbow_envelope
@@ -43,7 +46,7 @@ def sweep_positions(times, original, names, hand, *, duration=0.2, cocked_pitch=
         result[:, index] += weight * (value - original[:, index])
     return result
 
-def generate(source, scenes, output, *, duration=0.2, cocked_pitch=-3.0, cocking_start=1.0, elbow_angle=1.3, sweep_pitch=-1.2, sweep_knot_speed=0.0, wrist_flick=0.0, shoulder_yaw_sweep=0.0, shoulder_roll=0.6, delivery_style='overarm'):
+def generate(source, scenes, output, *, duration=0.2, cocked_pitch=-3.0, cocking_start=1.0, elbow_angle=1.3, sweep_pitch=-1.2, sweep_knot_speed=0.0, wrist_flick=0.0, shoulder_yaw_sweep=0.0, shoulder_roll=0.6, delivery_style='overarm', shoulder_yaw_delay=0.0, shoulder_yaw_preload=None):
     if delivery_style not in {'overarm', 'underarm'}:
         raise ValueError('Unknown delivery style')
     pitch_bounds = (-3.0, -2.5) if delivery_style == 'overarm' else (0.3, 1.0)
@@ -64,6 +67,10 @@ def generate(source, scenes, output, *, duration=0.2, cocked_pitch=-3.0, cocking
         raise ValueError('shoulder yaw sweep outside the declared design range')
     if not 0.25 <= shoulder_roll <= 0.8:
         raise ValueError('shoulder roll outside the declared design range')
+    if not 0 <= shoulder_yaw_delay <= 0.1 or (shoulder_yaw_delay and (not shoulder_yaw_sweep)):
+        raise ValueError('shoulder yaw delay must be in [0, 0.1] and requires a yaw sweep')
+    if shoulder_yaw_preload is not None and (not -0.5 <= shoulder_yaw_preload <= 0.5 or not shoulder_yaw_sweep):
+        raise ValueError('shoulder yaw preload must be in [-0.5, 0.5] and requires a yaw sweep')
     output.mkdir(parents=True, exist_ok=False)
     rows = []
     inputs = {str(Path(__file__)): fingerprint(Path(__file__))}
@@ -78,7 +85,7 @@ def generate(source, scenes, output, *, duration=0.2, cocked_pitch=-3.0, cocking
         with np.load(path) as data:
             times = data['times'].copy()
             poses = data['qpos'].copy()
-        poses[:, q] = sweep_positions(times, poses[:, q], names, hand, duration=duration, cocked_pitch=cocked_pitch, cocking_start=cocking_start, elbow_angle=elbow_angle, sweep_pitch=sweep_pitch, sweep_knot_speed=sweep_knot_speed, wrist_flick=wrist_flick, shoulder_yaw_sweep=shoulder_yaw_sweep, shoulder_roll=shoulder_roll)
+        poses[:, q] = sweep_positions(times, poses[:, q], names, hand, duration=duration, cocked_pitch=cocked_pitch, cocking_start=cocking_start, elbow_angle=elbow_angle, sweep_pitch=sweep_pitch, sweep_knot_speed=sweep_knot_speed, wrist_flick=wrist_flick, shoulder_yaw_sweep=shoulder_yaw_sweep, shoulder_roll=shoulder_roll, shoulder_yaw_delay=shoulder_yaw_delay, shoulder_yaw_preload=shoulder_yaw_preload)
         interpolator = PchipInterpolator(times, poses[:, q], axis=0)
         check_times = np.arange(0, 2.7001, 0.001)
         sampled = interpolator(check_times)
@@ -89,7 +96,7 @@ def generate(source, scenes, output, *, duration=0.2, cocked_pitch=-3.0, cocking
         destination = output / path.name
         np.savez_compressed(destination, times=times, qpos=poses)
         rows.append(dict(hand=hand, maximum_sampled_rate_rad_s=float(np.abs(interpolator(check_times, nu=1)[:, bowling]).max()), maximum_sampled_acceleration_rad_s2=float(np.abs(interpolator(check_times, nu=2)[:, bowling]).max()), joint_range_pass=True, artifact=fingerprint(destination)))
-    summary = dict(scope='Offline arm targets only; no executed dynamics, learned policy or promotion', delivery_style=delivery_style, inputs=inputs, duration_s=duration, cocked_pitch_rad=cocked_pitch, cocking_start_s=cocking_start, elbow_angle_rad=elbow_angle, sweep_pitch_rad=sweep_pitch, sweep_knot_speed_rad_s=sweep_knot_speed, wrist_flick_rad=wrist_flick, shoulder_yaw_sweep_rad=shoulder_yaw_sweep, shoulder_roll_rad=shoulder_roll, rows=rows, promotion_allowed=False)
+    summary = dict(scope='Offline arm targets only; no executed dynamics, learned policy or promotion', delivery_style=delivery_style, inputs=inputs, duration_s=duration, cocked_pitch_rad=cocked_pitch, cocking_start_s=cocking_start, elbow_angle_rad=elbow_angle, sweep_pitch_rad=sweep_pitch, sweep_knot_speed_rad_s=sweep_knot_speed, wrist_flick_rad=wrist_flick, shoulder_yaw_sweep_rad=shoulder_yaw_sweep, shoulder_roll_rad=shoulder_roll, shoulder_yaw_delay_s=shoulder_yaw_delay, shoulder_yaw_preload_rad=shoulder_yaw_preload, rows=rows, promotion_allowed=False)
     (output / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
     print(json.dumps(summary), flush=True)
 if __name__ == '__main__':
@@ -105,6 +112,8 @@ if __name__ == '__main__':
     parser.add_argument('--wrist-flick', type=float, default=0.0)
     parser.add_argument('--shoulder-yaw-sweep', type=float, default=0.0)
     parser.add_argument('--shoulder-roll', type=float, default=0.6)
+    parser.add_argument('--shoulder-yaw-delay', type=float, default=0.0)
+    parser.add_argument('--shoulder-yaw-preload', type=float)
     parser.add_argument('--delivery-style', choices=('overarm', 'underarm'), default='overarm')
     args = parser.parse_args()
-    generate(args.source, args.scenes, args.output, duration=args.duration, cocked_pitch=args.cocked_pitch, cocking_start=args.cocking_start, elbow_angle=args.elbow_angle, sweep_pitch=args.sweep_pitch, sweep_knot_speed=args.sweep_knot_speed, wrist_flick=args.wrist_flick, shoulder_yaw_sweep=args.shoulder_yaw_sweep, shoulder_roll=args.shoulder_roll, delivery_style=args.delivery_style)
+    generate(args.source, args.scenes, args.output, duration=args.duration, cocked_pitch=args.cocked_pitch, cocking_start=args.cocking_start, elbow_angle=args.elbow_angle, sweep_pitch=args.sweep_pitch, sweep_knot_speed=args.sweep_knot_speed, wrist_flick=args.wrist_flick, shoulder_yaw_sweep=args.shoulder_yaw_sweep, shoulder_roll=args.shoulder_roll, shoulder_yaw_delay=args.shoulder_yaw_delay, shoulder_yaw_preload=args.shoulder_yaw_preload, delivery_style=args.delivery_style)

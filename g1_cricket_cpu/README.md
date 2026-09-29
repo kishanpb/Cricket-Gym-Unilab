@@ -49,7 +49,10 @@ Both task registrations use CPU MuJoCo; this is not a ManagerBasedRlEnv rewrite
 or an installed mjbatch task registration.
 
 Batting uses a physical two-handed bat grasp, reference motion, frozen GR00T
-balance and optional learned residual control. Bowling uses learned locomotion
+balance and optional learned residual control. Version 0.1.1 restores the
+retained policy's recovery fade, which attenuates residual actions after the
+swing; 0.1.0 omitted this setting in the registered task. Its zero-action check
+could not expose the omission. Bowling uses learned locomotion
 priors, reference arms and a mechanical ball holder, not learned free-finger
 release. Current bowling fails the full delivery checks; underarm is an
 experimental comparison. Simulated contact signals are not hardware tactile

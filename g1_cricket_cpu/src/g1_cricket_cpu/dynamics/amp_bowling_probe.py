@@ -19,8 +19,11 @@ from .twist2_cpu_probe import fingerprint
 from .bowling_sweep_reference import transition
 from .bowling_support_clock import SupportSwingClock, validate_cocked_pause
 from .mjbatch_stepper import MjBatchStepper, backend_inputs
+from .wicket_contact import VERSION as WICKET_CONTACT_VERSION, add_wicket_pairs
+from .bowling_launch_control import LaunchController, launch_ready
+from .maximum_effort import maximum_effort
 
-def build_scene(unilab, destination, hand):
+def build_scene(unilab, destination, hand, *, wicket_contact=False):
     source = unilab / 'src/unilab/assets/robots/g1/g1.xml'
     G1CricketDeliveryPitchV2Cfg(handedness=hand).build_scene(source, destination)
     tree = ET.parse(destination)
@@ -28,6 +31,8 @@ def build_scene(unilab, destination, hand):
     for sensor in list(sensors):
         if sensor.get('name') not in {'holder_force', 'holder_quat'}:
             sensors.remove(sensor)
+    if wicket_contact:
+        add_wicket_pairs(tree.getroot())
     tree.write(destination, encoding='unicode')
 
 class DeliveryMonitor:
@@ -142,6 +147,11 @@ def residual_torque(action, caps):
     fractions = np.array([0.1 if any((part in name for part in ('hip', 'knee', 'ankle'))) else 0.3 for name in JOINTS])
     return action * fractions * caps
 
+def bounded_torque(request, correction, caps, *, post_saturation_residual=False):
+    if post_saturation_residual:
+        request = np.clip(request, -caps, caps)
+    return np.clip(request + correction, -caps, caps)
+
 def torso_heading_command(yaw, blend):
     return np.array([0.0, 0.0, blend * np.clip(-yaw, -0.6, 0.6)])
 
@@ -179,10 +189,30 @@ def release_hold_targets(elapsed, pose, target, velocity):
     rate = 6 * phase * (1 - phase) / 0.2
     return (pose + blend * (target - pose), blend * velocity + rate * (target - pose))
 
+def overarm_release_ready(position, velocity, shoulder, elbow, *, allow_upward=False):
+    if not allow_upward:
+        return forward_release_ready(position, velocity, shoulder, elbow)
+    return (position[..., 2] > shoulder[..., 2] + 0.12) & (elbow[..., 2] > shoulder[..., 2]) & (velocity[..., 0] > 1) & (np.abs(velocity[..., 1]) < 2)
+
 def underarm_release_ready(position, velocity, shoulder, minimum_loft_deg=0.0):
     return (position[..., 2] < shoulder[..., 2] - 0.1) & (velocity[..., 0] > 1) & (velocity[..., 2] > np.tan(np.deg2rad(minimum_loft_deg)) * velocity[..., 0]) & (np.abs(velocity[..., 1]) < 2)
 
-def rollout_case(actor, unilab, output, hand, dt, *, gather_deceleration=False, groot_gather=None, arm_clearance=False, native_target_limits=False, delivery_rate=1.0, minimum_release_speed=1.0, native_delivery_impedance=False, native_bowling_elbow_impedance=False, compensate_torso_heading=False, bowling_torso_pitch=0.0, carry_roll=None, carry_elbow=None, steady_carry=False, preserve_lane_direction=False, lane_damping=0.0, heading_damping=0.0, lane_offset=0.5, support_triggered_swing=False, synchronize_reference_arms=False, approach_gate_x=None, arm_reference_directory=None, reference_start=REFERENCE_START, arm_inertia_compensation=False, release_arm_hold=False, learn_release=False, physics_backend='mujoco', delivery_style='overarm', underarm_minimum_loft_deg=0.0, start_x=-10.5, gather_start=3.0, deceleration_start=3.0, retain=True, scene_file=None):
+def rollout_case(actor, unilab, output, hand, dt, *, gather_deceleration=False, groot_gather=None, arm_clearance=False, native_target_limits=False, delivery_rate=1.0, minimum_release_speed=1.0, native_delivery_impedance=False, native_bowling_elbow_impedance=False, compensate_torso_heading=False, bowling_torso_pitch=0.0, carry_roll=None, carry_elbow=None, steady_carry=False, preserve_lane_direction=False, lane_damping=0.0, heading_damping=0.0, lane_offset=0.5, support_triggered_swing=False, synchronize_reference_arms=False, approach_gate_x=None, arm_reference_directory=None, reference_start=REFERENCE_START, arm_inertia_compensation=False, release_arm_hold=False, learn_release=False, allow_upward_release=False, maximum_arm_effort=False, post_saturation_residual=False, physics_backend='mujoco', delivery_style='overarm', underarm_minimum_loft_deg=0.0, start_x=-10.5, gather_start=3.0, deceleration_start=3.0, retain=True, scene_file=None, model_launch=False, model_launch_lookahead=False, shoulder_plan=None):
+    if allow_upward_release and (not learn_release or delivery_style != 'overarm'):
+        raise ValueError('Upward release requires learned overarm release')
+    if model_launch_lookahead and (not model_launch):
+        raise ValueError('Launch lookahead requires model launch')
+    if model_launch and (delivery_style != 'overarm' or not support_triggered_swing or learn_release):
+        raise ValueError('Model launch requires support-triggered overarm without learned release')
+    if shoulder_plan is not None:
+        if delivery_style != 'overarm' or not support_triggered_swing or model_launch or maximum_arm_effort or learn_release:
+            raise ValueError('Shoulder plan requires support-triggered overarm without another arm/release override')
+        from .bowling_launch_shooting import KNOTS, shoulder_schedule, shoulder_torque
+        plan_parameters = np.asarray(shoulder_plan['parameters'], dtype=float)
+        plan_mode = shoulder_plan['control_mode']
+        plan_axis = shoulder_plan.get('shoulder_axis', 'all')
+        shoulder_schedule(KNOTS[1], plan_parameters, hand)
+        shoulder_torque(np.zeros(3), np.zeros(3), np.ones(3), 0, plan_mode, plan_axis)
     scene = output / f'{hand}.xml' if scene_file is None else scene_file
     if scene_file is None and (not scene.exists()):
         build_scene(unilab, scene, hand)
@@ -196,6 +226,19 @@ def rollout_case(actor, unilab, output, hand, dt, *, gather_deceleration=False, 
     kp, kd = policy_gains()
     native_kp, native_kd = (model.actuator_gainprm[ids, 0], -model.actuator_biasprm[ids, 2])
     caps = model.actuator_forcerange[ids, 1]
+    plan_selected = np.array([i for i, name in enumerate(JOINTS) if name.startswith(hand + '_shoulder_')])
+    plan_rows, plan_native_rows = ([], [])
+    launch_controller = LaunchController(model, hand) if model_launch else None
+    launch_torque = None
+    launch_rows = []
+    maximum_effort_rows = []
+    launch_warmstart_rows = []
+    lookahead = None
+    if model_launch_lookahead:
+        from .bowling_launch_lookahead import LaunchLookahead
+        lookahead = LaunchLookahead(model, hand)
+    launch_fraction = 1.0
+    launch_selection_rows, launch_lookahead_rows, launch_prediction_rows = ([], [], [])
     sdk = np.array([JOINTS.index(name.removesuffix('_joint')) for name in SDK_JOINTS])
     lower = sdk[:15]
     balance = None
@@ -345,9 +388,11 @@ def rollout_case(actor, unilab, output, hand, dt, *, gather_deceleration=False, 
                 feedforward[bowling] = window * arm_inertia_request(model, data, v[bowling], acceleration)
             if monitor.events.release_record is None and release_permitted and (not support_triggered_swing or swing_clock.started_at is not None) and (REFERENCE_START + GATHER_TIME <= bowling_phase <= REFERENCE_START + END_TIME):
                 shoulder, elbow, _ = data.xpos[monitor.arm]
-                ready = forward_release_ready(data.qpos[None, bq:bq + 3], data.qvel[None, bv:bv + 3], shoulder[None], elbow[None])[0]
+                ready = overarm_release_ready(data.qpos[None, bq:bq + 3], data.qvel[None, bv:bv + 3], shoulder[None], elbow[None], allow_upward=allow_upward_release)[0]
                 if delivery_style == 'underarm':
                     ready = underarm_release_ready(data.qpos[None, bq:bq + 3], data.qvel[None, bv:bv + 3], shoulder[None], underarm_minimum_loft_deg)[0]
+                if model_launch or shoulder_plan is not None:
+                    ready = launch_ready(data.qpos[bq:bq + 3], data.qvel[bv:bv + 3], shoulder, elbow, -float(model.opt.gravity[2]), float(model.geom('ball_geom').size[0]))
                 if ready and data.qvel[bv] > minimum_release_speed:
                     upper, angle = arm_geometry(*data.xpos[monitor.arm])
                     monitor.events.release(time, data.qpos[bq:bq + 3], data.qvel[bv:bv + 3], float(shoulder[2]), upper, angle)
@@ -356,6 +401,27 @@ def rollout_case(actor, unilab, output, hand, dt, *, gather_deceleration=False, 
                         release_pose = data.qpos[q[bowling]].copy()
             if release_pose is not None:
                 target[bowling], velocity[bowling] = release_hold_targets(time - monitor.events.release_record['time'], release_pose, target[bowling], velocity[bowling])
+            if shoulder_plan is not None:
+                plan_command = shoulder_schedule(bowling_local, plan_parameters, hand, plan_axis) * caps[plan_selected]
+                plan_blend = float(np.interp(bowling_local, KNOTS, [0, 1, 1, 1, 0]))
+                plan_rows.append(np.r_[bowling_local, plan_blend, plan_command])
+            if launch_controller is not None:
+                launch_warmstart_rows.append(data.qacc_warmstart.copy())
+                launch_torque = None
+                diagnostic = np.zeros(9)
+                if monitor.events.release_record is None and 1.7 <= bowling_local <= 2.0:
+                    baseline = bounded_torque(effective_kp * (target - data.qpos[q]) + effective_kd * (velocity - data.qvel[v]) + feedforward, correction, caps, post_saturation_residual=post_saturation_residual)
+                    launch_torque, diagnostic = launch_controller.command(data, baseline)
+                launch_rows.append(np.r_[launch_torque is not None, np.zeros(3) if launch_torque is None else launch_torque, diagnostic])
+                if lookahead is not None:
+                    selection, predictions = (np.zeros(2), np.zeros((5, 7)))
+                    predicted_state = np.zeros_like(state)
+                    if launch_torque is not None:
+                        selection, predictions, predicted_state = lookahead.choose(data, np.r_[target, velocity], np.r_[effective_kp, effective_kd], feedforward, launch_torque)
+                        launch_fraction = selection[0]
+                    launch_selection_rows.append(selection)
+                    launch_lookahead_rows.append(predictions)
+                    launch_prediction_rows.append(predicted_state)
             mujoco.mj_getState(model, data, state, mujoco.mjtState.mjSTATE_FULLPHYSICS)
             states.append(state.copy())
             observations.append(obs)
@@ -364,13 +430,33 @@ def rollout_case(actor, unilab, output, hand, dt, *, gather_deceleration=False, 
             impedance_rows.append(np.r_[effective_kp, effective_kd])
             feedforward_rows.append(feedforward.copy())
             released.append(monitor.events.release_record is not None)
-        torque = np.clip(effective_kp * (target - data.qpos[q]) + effective_kd * (velocity - data.qvel[v]) + feedforward + correction, -caps, caps)
+        torque = bounded_torque(effective_kp * (target - data.qpos[q]) + effective_kd * (velocity - data.qvel[v]) + feedforward, correction, caps, post_saturation_residual=post_saturation_residual)
+        if launch_torque is not None:
+            selected = launch_controller.selected
+            if launch_fraction == 1:
+                torque[selected] = launch_torque
+            elif launch_fraction:
+                torque[selected] += launch_fraction * (launch_torque - torque[selected])
+        plan_active = shoulder_plan is not None and plan_blend > 0
+        if plan_active:
+            plan_baseline = torque[plan_selected].copy()
+            torque[plan_selected] = shoulder_torque(plan_baseline, plan_command, caps[plan_selected], plan_blend, plan_mode, plan_axis)
+            plan_time = float(data.time)
+        effort_active = maximum_arm_effort and 1.7 <= bowling_local <= 2.3
+        if effort_active:
+            requested = torque[bowling].copy()
+            torque[bowling] = maximum_effort(requested, model.actuator_forcerange[ids[bowling]])
+            effort_time = float(data.time)
         data.ctrl[ids] = data.qpos[q] + (torque + native_kd * data.qvel[v]) / native_kp
         if batch_step is None:
             mujoco.mj_step(model, data)
         else:
             batch_step(data)
         mujoco.mj_forward(model, data)
+        if plan_active:
+            plan_native_rows.append(np.r_[plan_time, plan_baseline, torque[plan_selected], data.actuator_force[ids[plan_selected]]])
+        if effort_active:
+            maximum_effort_rows.append(np.r_[effort_time, requested, torque[bowling], data.actuator_force[ids[bowling]]])
         metrics.append(monitor.observe(data))
         if not np.isfinite(np.r_[data.qpos, data.qvel, metrics[-1]]).all() or data.warning.number.any():
             raise RuntimeError('invalid native bowling dynamics')
@@ -387,8 +473,20 @@ def rollout_case(actor, unilab, output, hand, dt, *, gather_deceleration=False, 
     trace = output / f'{name}.npz'
     records = dict(states=states, sequence_rows=sequence_rows, swing_rows=swing_rows, observations=observations, actions=actions, targets=targets, metrics=metrics, released=released, balance_rows=balance_rows, torso_command_rows=torso_command_rows, clearance_rows=clearance_rows, impedance_rows=impedance_rows, feedforward_rows=feedforward_rows, residual_rows=residual_rows)
     records = {key: np.asarray(value) for key, value in records.items()}
+    if maximum_arm_effort:
+        records['maximum_effort_rows'] = np.asarray(maximum_effort_rows).reshape(-1, 22)
+    if shoulder_plan is not None:
+        records['shoulder_plan_rows'] = np.asarray(plan_rows).reshape(-1, 5)
+        records['shoulder_plan_native_rows'] = np.asarray(plan_native_rows).reshape(-1, 10)
     if learn_release:
         records['release_action_rows'] = np.asarray(release_action_rows)
+    if model_launch:
+        records['launch_rows'] = np.asarray(launch_rows)
+        records['launch_warmstart_rows'] = np.asarray(launch_warmstart_rows)
+    if model_launch_lookahead:
+        records['launch_selection_rows'] = np.asarray(launch_selection_rows)
+        records['launch_lookahead_rows'] = np.asarray(launch_lookahead_rows)
+        records['launch_prediction_rows'] = np.asarray(launch_prediction_rows)
     if retain:
         np.savez_compressed(trace, **records)
     result = monitor.events.finish(terminal == 'complete')
@@ -405,7 +503,11 @@ def run_case(actor, unilab, output, hand, dt, **options):
         except StopIteration as finished:
             return finished.value[0]
 
-def run(upstream, unilab, output, *, gather_deceleration=False, groot_gather=None, arm_clearance=False, native_target_limits=False, delivery_rate=1.0, minimum_release_speed=1.0, native_delivery_impedance=False, native_bowling_elbow_impedance=False, compensate_torso_heading=False, bowling_torso_pitch=0.0, carry_roll=None, carry_elbow=None, steady_carry=False, preserve_lane_direction=False, lane_damping=0.0, heading_damping=0.0, lane_offset=0.5, support_triggered_swing=False, synchronize_reference_arms=False, approach_gate_x=None, arm_reference_directory=None, reference_start=REFERENCE_START, arm_inertia_compensation=False, release_arm_hold=False, physics_backend='mujoco', delivery_style='overarm', underarm_minimum_loft_deg=0.0, start_x=-10.5, gather_start=3.0, deceleration_start=3.0):
+def run(upstream, unilab, output, *, gather_deceleration=False, groot_gather=None, arm_clearance=False, native_target_limits=False, delivery_rate=1.0, minimum_release_speed=1.0, native_delivery_impedance=False, native_bowling_elbow_impedance=False, compensate_torso_heading=False, bowling_torso_pitch=0.0, carry_roll=None, carry_elbow=None, steady_carry=False, preserve_lane_direction=False, lane_damping=0.0, heading_damping=0.0, lane_offset=0.5, support_triggered_swing=False, synchronize_reference_arms=False, approach_gate_x=None, arm_reference_directory=None, reference_start=REFERENCE_START, arm_inertia_compensation=False, release_arm_hold=False, physics_backend='mujoco', delivery_style='overarm', underarm_minimum_loft_deg=0.0, start_x=-10.5, gather_start=3.0, deceleration_start=3.0, wicket_contact=False, model_launch=False, model_launch_lookahead=False):
+    if model_launch_lookahead and (not model_launch):
+        raise ValueError('Launch lookahead requires model launch')
+    if model_launch and (delivery_style != 'overarm' or not support_triggered_swing):
+        raise ValueError('Model launch requires support-triggered overarm')
     if physics_backend not in {'mujoco', 'mjbatch'}:
         raise ValueError('Unknown physics backend')
     if delivery_style not in {'overarm', 'underarm'}:
@@ -478,14 +580,16 @@ def run(upstream, unilab, output, *, gather_deceleration=False, groot_gather=Non
                 archive.write(path, arcname=path)
     rows = []
     for hand in ('right', 'left'):
+        if wicket_contact:
+            build_scene(unilab, output / f'{hand}.xml', hand, wicket_contact=True)
         for dt in (6.25e-05, 3.125e-05):
             print('START', hand, dt, flush=True)
-            row = run_case(actor, unilab, output, hand, dt, gather_deceleration=gather_deceleration, groot_gather=groot_gather, arm_clearance=arm_clearance, native_target_limits=native_target_limits, delivery_rate=delivery_rate, minimum_release_speed=minimum_release_speed, native_delivery_impedance=native_delivery_impedance, native_bowling_elbow_impedance=native_bowling_elbow_impedance, compensate_torso_heading=compensate_torso_heading, bowling_torso_pitch=bowling_torso_pitch, carry_roll=carry_roll, carry_elbow=carry_elbow, steady_carry=steady_carry, preserve_lane_direction=preserve_lane_direction, lane_damping=lane_damping, heading_damping=heading_damping, lane_offset=lane_offset, support_triggered_swing=support_triggered_swing, synchronize_reference_arms=synchronize_reference_arms, approach_gate_x=approach_gate_x, arm_reference_directory=arm_reference_directory, reference_start=reference_start, arm_inertia_compensation=arm_inertia_compensation, release_arm_hold=release_arm_hold, physics_backend=physics_backend, delivery_style=delivery_style, underarm_minimum_loft_deg=underarm_minimum_loft_deg, start_x=start_x, gather_start=gather_start, deceleration_start=deceleration_start)
+            row = run_case(actor, unilab, output, hand, dt, gather_deceleration=gather_deceleration, groot_gather=groot_gather, arm_clearance=arm_clearance, native_target_limits=native_target_limits, delivery_rate=delivery_rate, minimum_release_speed=minimum_release_speed, native_delivery_impedance=native_delivery_impedance, native_bowling_elbow_impedance=native_bowling_elbow_impedance, compensate_torso_heading=compensate_torso_heading, bowling_torso_pitch=bowling_torso_pitch, carry_roll=carry_roll, carry_elbow=carry_elbow, steady_carry=steady_carry, preserve_lane_direction=preserve_lane_direction, lane_damping=lane_damping, heading_damping=heading_damping, lane_offset=lane_offset, support_triggered_swing=support_triggered_swing, synchronize_reference_arms=synchronize_reference_arms, approach_gate_x=approach_gate_x, arm_reference_directory=arm_reference_directory, reference_start=reference_start, arm_inertia_compensation=arm_inertia_compensation, release_arm_hold=release_arm_hold, physics_backend=physics_backend, delivery_style=delivery_style, underarm_minimum_loft_deg=underarm_minimum_loft_deg, start_x=start_x, gather_start=gather_start, deceleration_start=deceleration_start, model_launch=model_launch, model_launch_lookahead=model_launch_lookahead)
             rows.append(row)
             print(json.dumps(row, allow_nan=False), flush=True)
     for path, expected in inputs.items():
         assert fingerprint(Path(path)) == expected, path
-    result = dict(scope='Published AMP locomotion plus reference arms and mechanical ball holder; not locally learned cricket or a free finger grasp', delivery_style=delivery_style, physics_backend=physics_backend, underarm_minimum_loft_deg=underarm_minimum_loft_deg, regulation_note='Underarm range comparison only; original overarm qualification failures remain visible. MCC Law 21 requires prior agreement for underarm bowling.' if delivery_style == 'underarm' else 'Full overarm delivery checks apply.', inputs=inputs, gather_deceleration=gather_deceleration, arm_clearance=arm_clearance, native_target_limits=native_target_limits, delivery_rate=delivery_rate, minimum_release_speed=minimum_release_speed, native_delivery_impedance=native_delivery_impedance, native_bowling_elbow_impedance=native_bowling_elbow_impedance, compensate_torso_heading=compensate_torso_heading, bowling_torso_pitch=bowling_torso_pitch, carry_roll=carry_roll, carry_elbow=carry_elbow, steady_carry=steady_carry, preserve_lane_direction=preserve_lane_direction, lane_damping=lane_damping, heading_damping=heading_damping, lane_offset=lane_offset, support_triggered_swing=support_triggered_swing, synchronize_reference_arms=synchronize_reference_arms, approach_gate_x=approach_gate_x, arm_reference_directory=str(arm_reference_directory) if arm_reference_directory is not None else None, reference_start=reference_start, arm_inertia_compensation=arm_inertia_compensation, release_arm_hold=release_arm_hold, start_x=start_x, gather_start=gather_start, deceleration_start=deceleration_start, groot_gather=str(groot_gather) if groot_gather is not None else None, rows=rows, promotion_allowed=False, scene_version='existing_delivery_pitch_v2', artifacts={p.name: fingerprint(p) for p in output.iterdir() if p.is_file()})
+    result = dict(scope='Published AMP locomotion plus reference arms, native-model shoulder steering and mechanical ball holder; not learned cricket or a free finger grasp' if model_launch else 'Published AMP locomotion plus reference arms and mechanical ball holder; not locally learned cricket or a free finger grasp', delivery_style=delivery_style, physics_backend=physics_backend, underarm_minimum_loft_deg=underarm_minimum_loft_deg, regulation_note='Underarm range comparison only; original overarm qualification failures remain visible. MCC Law 21 requires prior agreement for underarm bowling.' if delivery_style == 'underarm' else 'Full overarm delivery checks apply.', inputs=inputs, gather_deceleration=gather_deceleration, arm_clearance=arm_clearance, native_target_limits=native_target_limits, delivery_rate=delivery_rate, minimum_release_speed=minimum_release_speed, native_delivery_impedance=native_delivery_impedance, native_bowling_elbow_impedance=native_bowling_elbow_impedance, compensate_torso_heading=compensate_torso_heading, bowling_torso_pitch=bowling_torso_pitch, carry_roll=carry_roll, carry_elbow=carry_elbow, steady_carry=steady_carry, preserve_lane_direction=preserve_lane_direction, lane_damping=lane_damping, heading_damping=heading_damping, lane_offset=lane_offset, support_triggered_swing=support_triggered_swing, synchronize_reference_arms=synchronize_reference_arms, approach_gate_x=approach_gate_x, arm_reference_directory=str(arm_reference_directory) if arm_reference_directory is not None else None, reference_start=reference_start, arm_inertia_compensation=arm_inertia_compensation, release_arm_hold=release_arm_hold, start_x=start_x, gather_start=gather_start, deceleration_start=deceleration_start, groot_gather=str(groot_gather) if groot_gather is not None else None, rows=rows, promotion_allowed=False, model_launch=model_launch, model_launch_lookahead=model_launch_lookahead, scene_version=WICKET_CONTACT_VERSION if wicket_contact else 'existing_delivery_pitch_v2', artifacts={p.name: fingerprint(p) for p in output.iterdir() if p.is_file()})
     (output / 'summary.json').write_text(json.dumps(result, indent=2, allow_nan=False) + '\n')
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
@@ -521,5 +625,8 @@ if __name__ == '__main__':
     parser.add_argument('--start-x', type=float, default=-10.5)
     parser.add_argument('--gather-start', type=float, default=3.0)
     parser.add_argument('--deceleration-start', type=float, default=3.0)
+    parser.add_argument('--wicket-contact', action='store_true', help='Opt-in numerical ball/stump contact; not material-calibrated')
+    parser.add_argument('--model-launch', action='store_true', help='Experimental model-based shoulder control and ballistic release trigger; not learned cricket')
+    parser.add_argument('--model-launch-lookahead', action='store_true', help='Filter model-launch torques with 20 ms native predictions; not a safety guarantee')
     args = parser.parse_args()
-    run(args.upstream, args.unilab, args.output, gather_deceleration=args.gather_deceleration, groot_gather=args.groot_gather, arm_clearance=args.arm_clearance, native_target_limits=args.native_target_limits, delivery_rate=args.delivery_rate, minimum_release_speed=args.minimum_release_speed, native_delivery_impedance=args.native_delivery_impedance, native_bowling_elbow_impedance=args.native_bowling_elbow_impedance, compensate_torso_heading=args.compensate_torso_heading, bowling_torso_pitch=args.bowling_torso_pitch, carry_roll=args.carry_roll, carry_elbow=args.carry_elbow, steady_carry=args.steady_carry, preserve_lane_direction=args.preserve_lane_direction, lane_damping=args.lane_damping, heading_damping=args.heading_damping, lane_offset=args.lane_offset, support_triggered_swing=args.support_triggered_swing, synchronize_reference_arms=args.synchronize_reference_arms, approach_gate_x=args.approach_gate_x, arm_reference_directory=args.arm_reference_directory, reference_start=args.reference_start, arm_inertia_compensation=args.arm_inertia_compensation, release_arm_hold=args.release_arm_hold, physics_backend=args.physics_backend, delivery_style=args.delivery_style, underarm_minimum_loft_deg=args.underarm_minimum_loft_deg, start_x=args.start_x, gather_start=args.gather_start, deceleration_start=args.deceleration_start)
+    run(args.upstream, args.unilab, args.output, gather_deceleration=args.gather_deceleration, groot_gather=args.groot_gather, arm_clearance=args.arm_clearance, native_target_limits=args.native_target_limits, delivery_rate=args.delivery_rate, minimum_release_speed=args.minimum_release_speed, native_delivery_impedance=args.native_delivery_impedance, native_bowling_elbow_impedance=args.native_bowling_elbow_impedance, compensate_torso_heading=args.compensate_torso_heading, bowling_torso_pitch=args.bowling_torso_pitch, carry_roll=args.carry_roll, carry_elbow=args.carry_elbow, steady_carry=args.steady_carry, preserve_lane_direction=args.preserve_lane_direction, lane_damping=args.lane_damping, heading_damping=args.heading_damping, lane_offset=args.lane_offset, support_triggered_swing=args.support_triggered_swing, synchronize_reference_arms=args.synchronize_reference_arms, approach_gate_x=args.approach_gate_x, arm_reference_directory=args.arm_reference_directory, reference_start=args.reference_start, arm_inertia_compensation=args.arm_inertia_compensation, release_arm_hold=args.release_arm_hold, physics_backend=args.physics_backend, delivery_style=args.delivery_style, underarm_minimum_loft_deg=args.underarm_minimum_loft_deg, start_x=args.start_x, gather_start=args.gather_start, deceleration_start=args.deceleration_start, wicket_contact=args.wicket_contact, model_launch=args.model_launch, model_launch_lookahead=args.model_launch_lookahead)

@@ -91,7 +91,7 @@ def make_cricket_env(cfg, *, num_envs=1, backend_type='mujoco'):
         raise ValueError('This task registers only the retained MuJoCo runtime')
     bundle, upstream, scenes = map(Path, (cfg.runtime_bundle, cfg.groot_checkout, cfg.scene_bundle))
     manifest = verify_bundle(bundle, upstream, scenes)
-    options = dict(manifest['environment_options'], physics_backend='mujoco')
+    options = dict(manifest['environment_options'], physics_backend='mujoco', recovery_fade=True)
     options['reference_files'] = [bundle / path for path in manifest['references']]
     factory = batting_env_factory(upstream, bundle / 'data', scenes / 'batting.xml', seed=cfg.seed, **options)
     return G1CricketResidualEnv(cfg, factory(num_envs, None))
